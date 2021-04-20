@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({title}) => {
+const Header = ({ title }) => {
   const classes = useStyles();
 
   return (
@@ -44,7 +44,7 @@ const Header = ({title}) => {
 //414  * 56
 const HeadContainer = styled.header`
   padding: 0 20px;
-  height: 56px;
+  height: ${({ theme: { heights } }) => heights.header}px;
   border: 1px solid black;
 `;
 

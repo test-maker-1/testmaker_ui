@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 const BottomBtn = memo((props) => {
-  console.log(props)
+  console.log(props);
   return <BtnBox>BUTTON</BtnBox>;
 });
 
@@ -15,7 +15,7 @@ const BtnBox = styled.footer`
   bottom: 0px;
   transform: translateX(-50%);
 
-  width: min(414px, 100%);
+  width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: 80px;
 
   border: 1px solid black;
