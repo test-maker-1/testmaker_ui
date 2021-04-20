@@ -41,8 +41,14 @@ const MainBox = styled.div`
 `;
 
 const Main = styled.main`
-  padding: 0 20px;
-  min-height: calc(100vh - 58px);
+  padding: 0 20px 80px 20px;
+  min-height: calc(100vh - 140px);
+  display: flex;
+
+  /* view component */
+  & > div {
+    flex: 1;
+  }
 `;
 
 export default App;
