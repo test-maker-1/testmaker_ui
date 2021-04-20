@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 const BottomBtn = memo((props) => {
+  console.log(props)
   return <BtnBox>BUTTON</BtnBox>;
 });
 

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = () => {
+const Header = ({title}) => {
   const classes = useStyles();
 
   return (
@@ -31,7 +31,7 @@ const Header = () => {
           <LeftBtn>A</LeftBtn>
         </Grid>
         <Grid item className={classes.center}>
-          <h1>Header</h1>
+          <h1>{title}</h1>
         </Grid>
         <Grid item className={classes.side}>
           <RightBtn>B</RightBtn>
