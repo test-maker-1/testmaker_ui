@@ -2,7 +2,12 @@ import React from 'react'
 import styled from "styled-components";
 
 const Drawer = ({setOpen}) => {
-  return (<Dimmed onClick={()=> setOpen(false)}><DrawContainer>TEST</DrawContainer></Dimmed>)
+  return (
+    <>
+      <Dimmed onClick={()=> setOpen(false)}/>
+      <DrawContainer>TEST</DrawContainer>
+    </>
+  )
 }
 
 const Dimmed = styled.div`
