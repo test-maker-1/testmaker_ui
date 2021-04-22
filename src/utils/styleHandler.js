@@ -1,3 +1,4 @@
+// scrollable: boolean;
 export const handleScroll = (scrollable) => {
   const body = document.querySelector("body");
   const overflowStyle = scrollable ? "auto" : "hidden";
