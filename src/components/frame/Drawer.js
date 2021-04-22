@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Drawer = ({ setOpen }) => {
+const Drawer = ({ onClose }) => {
   return (
     <>
       <Dimmed>
-        <DrawCloser onClick={() => setOpen(false)}></DrawCloser>
+        <DrawCloser onClick={onClose}></DrawCloser>
         <DrawContainer>
           <ul>
             <Item>

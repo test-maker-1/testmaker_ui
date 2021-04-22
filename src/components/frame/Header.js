@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ title, open, setOpen }) => {
+const Header = ({ title, onToggle }) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +34,7 @@ const Header = ({ title, open, setOpen }) => {
           <h1>{title}</h1>
         </Grid>
         <Grid item className={classes.side}>
-          <RightBtn onClick={() => setOpen(!open)}>B</RightBtn>
+          <RightBtn onClick={onToggle}>B</RightBtn>
         </Grid>
       </Grid>
     </HeadContainer>
