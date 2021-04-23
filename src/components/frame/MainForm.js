@@ -1,9 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import Header from "./Header";
+import Drawer from "./Drawer";
 import BottomBtn from "./BottomBtn";
+
+import { handleScroll } from "../../utils/styleHandler";
+import useOpen from "../../hooks/useOpen";
 
 //js 모듈 분리도 가능
 const getConfiguration = (plocation) => {
@@ -22,11 +26,22 @@ const MainForm = ({ children, history, location, match }) => {
   const { title, buttons } = useMemo(() => getConfiguration(location), [location]);
   const [showTitle, showBtns] = [title.length > 0, buttons.length > 0];
 
-  console.log(children, history, location, match, title, buttons);
+  const { open: openDrawer, onClose, onToggle } = useOpen();
+
+  useEffect(() => {
+    handleScroll(!openDrawer);
+    return () => handleScroll(false);
+  }, [openDrawer]);
+
+  useEffect(() => {
+    onClose();
+  }, [location]);
+
   return (
     <BackGround>
+      {openDrawer && <Drawer onClose={onClose} />}
       <MainBox>
-        {showTitle && <Header title={title} />}
+        {showTitle && <Header title={title} onToggle={onToggle} />}
         <Main showTitle={showTitle} showBtns={showBtns}>
           {children}
         </Main>

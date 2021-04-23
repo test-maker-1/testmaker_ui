@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "./Drawer";
 
 const dynamicHB = "#ffffff"; //white or opacity
 const btnArea = 50;
@@ -22,13 +21,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ title }) => {
+const Header = ({ title, onToggle }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
   return (
     <HeadContainer>
-      {open && <Drawer setOpen={setOpen}/>}
       <Grid container className={classes.container} direction="row" justify="center" alignItems="stretch">
         <Grid item className={classes.side}>
           <LeftBtn>A</LeftBtn>
@@ -37,7 +34,7 @@ const Header = ({ title }) => {
           <h1>{title}</h1>
         </Grid>
         <Grid item className={classes.side}>
-          <RightBtn onClick={()=> setOpen(!open)}>B</RightBtn>
+          <RightBtn onClick={onToggle}>B</RightBtn>
         </Grid>
       </Grid>
     </HeadContainer>
@@ -46,6 +43,8 @@ const Header = ({ title }) => {
 
 //414  * 56
 const HeadContainer = styled.header`
+  position: sticky;
+  top: 0;
   padding: 0 20px;
   height: ${({ theme: { heights } }) => heights.header}px;
   border: 1px solid black;
