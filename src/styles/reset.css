@@ -18,6 +18,10 @@ html::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
+button {
+  cursor: pointer;
+}
+
 div,
 span,
 applet,
