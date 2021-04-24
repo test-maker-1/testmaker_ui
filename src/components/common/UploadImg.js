@@ -24,7 +24,8 @@ export const UploadImg = (props) => {
       setList(fileArr);
       setImgURL(e.target.result);
     };
-
+    
+    setHover(false);
     document.getElementById("uploadImage").value = null;  //init
   }
 
