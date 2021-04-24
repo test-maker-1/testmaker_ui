@@ -1,6 +1,12 @@
-import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import {
+  Container,
+  InputContainer,
+  RadioWrap,
+  InputWrap,
+  OptionText
+} from "../../styles/Options";
 
 import addIcon from "../../resources/add.svg";
 import cancleIcon from "../../resources/cancle.svg";
@@ -60,43 +66,3 @@ export const AddOptionBtn = ({ onClick }) => {
     </Button>
   );
 };
-
-const Container = styled.li`
-  display: flex;
-  align-items: center;
-  margin-bottom: 9px;
-`;
-
-const InputContainer = styled.div`
-  margin-right: 9px;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background: ${({ bgColor }) => bgColor};
-  border-radius: 5px;
-`;
-
-const RadioWrap = styled.div`
-  display: flex;
-  padding: 20px 13px;
-  border-right: 1px solid #f1f2f4;
-
-  .check-answer {
-    margin: auto;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-  }
-`;
-
-const InputWrap = styled.div`
-  padding: 15px 9px;
-  flex: 1;
-`;
-
-const OptionText = styled.textarea`
-  width: 100%;
-  font-size: 16px;
-  color: #697382;
-  resize: none;
-`;
