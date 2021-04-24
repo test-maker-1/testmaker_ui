@@ -4,10 +4,10 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 //#region 기본 버튼
-export const BtnField = ({text, reverse, style, onClick}) => {
+export const BtnField = ({name, reverse, style, onClick}) => {
   const classes = useStyles({style, reverse});
 
-  return (<Button className={classes.btn} onClick={onClick}>{text}</Button>);
+  return (<Button className={classes.btn} onClick={onClick}>{name}</Button>);
 };
 //#endregion
 
