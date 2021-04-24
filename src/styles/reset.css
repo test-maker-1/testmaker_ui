@@ -145,6 +145,7 @@ button {
 textarea {
   border: none;
   background: none;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 table {
   border-collapse: collapse;
