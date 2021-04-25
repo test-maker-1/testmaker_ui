@@ -23,62 +23,45 @@ const useStyles = makeStyles((theme, color) => ({
     },
 }));
 
-const NoticeAlert = ({
-    open,
-    close,
-    content,
-    left,
-    right,
-    onClickLeftBtn,
-    onClickRightBtn,
-}) => {
+const NoticeAlert = ({ icon, content, btns, handleOnClick, onCloseModal }) => {
     const classes = useStyles();
-
-    const onClickLeft = useCallback(() => {
-        onClickLeftBtn();
-    }, [onClickLeftBtn]);
-
-    const onClickRight = useCallback(() => {
-        onClickRightBtn();
-    }, [onClickRightBtn]);
 
     return (
         <>
-            {open ? (
-                <Modal>
-                    <ModalCloser onClick={close} />
-                    <Section>
-                        <ModalMain>
-                            <NoticeContainer>
-                                <Notice>
-                                    {/* <img src={warning} alt="warning" /> */}
-                                    <div>🚫</div>
-                                    <div>{content}</div>
-                                </Notice>
-                            </NoticeContainer>
-                        </ModalMain>
-                        <ModalFooter>
-                            <Button
-                                className={classes.leftBtn}
-                                onClick={onClickLeft}
-                            >
-                                {left}
-                            </Button>
-
-                            <Button
-                                className={classes.rightBtn}
-                                onClick={onClickRight}
-                            >
-                                {right}
-                            </Button>
-                        </ModalFooter>
-                    </Section>
-                </Modal>
-            ) : null}
+            <Modal>
+                <ModalCloser onClick={onCloseModal} />
+                <Section>
+                    <ModalMain>
+                        <NoticeContainer>
+                            <Notice>
+                                {/* <img src={warning} alt="warning" /> */}
+                                <div>{icon}</div>
+                                <div>{content}</div>
+                            </Notice>
+                        </NoticeContainer>
+                    </ModalMain>
+                    <ModalFooter>
+                        {btns.map((oneBtn) => {
+                            return (
+                                <Button
+                                    key={oneBtn.id}
+                                    className={
+                                        oneBtn.id == "left"
+                                            ? classes.leftBtn
+                                            : classes.rightBtn
+                                    }
+                                    onClick={() => handleOnClick(oneBtn.id)}
+                                >
+                                    {oneBtn.content}
+                                </Button>
+                            );
+                        })}
+                    </ModalFooter>
+                </Section>
+            </Modal>
         </>
     );
 };
-
 export default NoticeAlert;
 
 const Modal = styled.div`
