@@ -23,7 +23,9 @@ const getConfiguration = (plocation) => {
 };
 
 const MainForm = ({ children, history, location, match }) => {
-  const { title, buttons } = useMemo(() => getConfiguration(location), [location]);
+  const { title, buttons } = useMemo(() => getConfiguration(location), [
+    location
+  ]);
   const [showTitle, showBtns] = [title.length > 0, buttons.length > 0];
 
   const { open: openDrawer, onClose, onToggle } = useOpen();
