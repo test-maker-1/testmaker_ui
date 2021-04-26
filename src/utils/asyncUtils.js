@@ -1,3 +1,7 @@
+export const createActionString = (type) => {
+  return { success: `${type}Success`, error: `${type}Error` };
+};
+
 export const reducerUtils = {
   init: () => ({
     data: null,
