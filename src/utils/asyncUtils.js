@@ -1,9 +1,14 @@
 import { call, put } from "redux-saga/effects";
 
+/* type: string; -> action.type */
 export const createActionString = (type) => {
   return { success: `${type}Success`, error: `${type}Error` };
 };
 
+/*
+ * type: string; -> action.type
+ * promiseCreato: api function; ex) UserAPI.getMyInfo
+ */
 export const createPromiseSaga = (type, promiseCreator) => {
   const { success, error } = createActionString(type);
 
