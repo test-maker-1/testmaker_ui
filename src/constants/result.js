@@ -6,7 +6,10 @@ const multiple = (nextResultId) => ({
   resultTitle: "",
   thumbnail: null,
   content: "",
-  scope: {} // 결과 범위
+  pointBound: {
+    end: null,
+    start: null
+  } // 결과 범위
 });
 
 const mbti = {};
