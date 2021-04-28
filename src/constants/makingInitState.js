@@ -1,5 +1,7 @@
 /* 테스트 메이킹 공통 데이터 */
 const common = {
+  editFlag: false,  //테스트 수정 여부
+
   testId: null,
   type: "", // 테스트 종류 ex) "multiple" | "mbti" | "weight"
   testName: "",
@@ -12,6 +14,7 @@ const common = {
 
   userId: "", // 테스트 메이커 ID
   data: {} // type에 따라 내용 상이
+  
 };
 
 /* 객관식 테스트 */
