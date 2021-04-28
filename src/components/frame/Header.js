@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import LeftBtn from "../Header/LeftBtn";
+import RightBtn from "../Header/RightBtn";
 
 const dynamicHB = "#ffffff"; //white or opacity
 const btnArea = 50;
@@ -21,20 +23,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ title, onToggle }) => {
+/*
+ * header: object; ex) { title, leftType, rightType }
+ * onToggle: function;
+ */
+const Header = ({ header, onToggle }) => {
+  const { leftType, rightType, title } = header;
   const classes = useStyles();
 
   return (
     <HeadContainer>
-      <Grid container className={classes.container} direction="row" justify="center" alignItems="stretch">
+      <Grid
+        container
+        className={classes.container}
+        direction="row"
+        justify="center"
+        alignItems="stretch"
+      >
         <Grid item className={classes.side}>
-          <LeftBtn>A</LeftBtn>
+          <LeftBtn type={leftType} />
         </Grid>
         <Grid item className={classes.center}>
           <h1>{title}</h1>
         </Grid>
         <Grid item className={classes.side}>
-          <RightBtn onClick={onToggle}>B</RightBtn>
+          <RightBtn type={rightType} onToggleMenu={onToggle} />
         </Grid>
       </Grid>
     </HeadContainer>
@@ -48,16 +61,6 @@ const HeadContainer = styled.header`
   padding: 0 20px;
   height: ${({ theme: { heights } }) => heights.header}px;
   border: 1px solid black;
-`;
-
-const LeftBtn = styled.button`
-  width: 10px;
-  height: 10px;
-`;
-
-const RightBtn = styled.button`
-  width: 10px;
-  height: 10px;
 `;
 
 export default Header;

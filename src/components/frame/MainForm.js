@@ -4,30 +4,13 @@ import styled, { css } from "styled-components";
 
 import Header from "./Header";
 import Drawer from "./Drawer";
-import BottomBtn from "./BottomBtn";
 
-import { handleScroll } from "../../utils/styleHandler";
 import useOpen from "../../hooks/useOpen";
-
-//js 모듈 분리도 가능
-const getConfiguration = (plocation) => {
-  let title = "";
-  let buttons = [];
-
-  if (plocation.pathname === "/") {
-    title = "TEST MAKER";
-    buttons = ["테스트 만들기 도전"];
-  }
-
-  return { title, buttons };
-};
+import { handleScroll } from "../../utils/styleHandler";
+import { getConfiguration } from "../../utils/handler";
 
 const MainForm = ({ children, history, location, match }) => {
-  const { title, buttons } = useMemo(() => getConfiguration(location), [
-    location
-  ]);
-  const [showTitle, showBtns] = [title.length > 0, buttons.length > 0];
-
+  const { header } = useMemo(() => getConfiguration(location), [location]);
   const { open: openDrawer, onClose, onToggle } = useOpen();
 
   useEffect(() => {
@@ -43,11 +26,9 @@ const MainForm = ({ children, history, location, match }) => {
     <BackGround>
       {openDrawer && <Drawer onClose={onClose} />}
       <MainBox>
-        {showTitle && <Header title={title} onToggle={onToggle} />}
-        <Main showTitle={showTitle} showBtns={showBtns}>
-          {children}
-        </Main>
-        {showBtns && <BottomBtn buttons={buttons} />}
+        <Header header={header} onToggle={onToggle} />
+        <Main>{children}</Main>
+        {/* <BottomBtn>{bottomBtns}</BottomBtn> */}
       </MainBox>
     </BackGround>
   );
@@ -69,16 +50,15 @@ const MainBox = styled.div`
 const Main = styled.main`
   display: flex;
 
-  ${({ theme, showTitle, showBtns }) => {
+  ${({ theme, showBtns }) => {
+    // 아래 주석 처리된 부분 -> bottomBtn 여부에 따라 padding 추가(주석 해제)하는 로직 필요
     const { paddings, heights } = theme;
-    let HeightToSubtrat = 0;
-
-    HeightToSubtrat += showTitle && heights.header;
-    HeightToSubtrat += showBtns && heights.bottomBtn;
+    let HeightToSubtrat = heights.header;
+    // HeightToSubtrat += showBtns && heights.bottomBtn;
 
     return css`
       padding: 0 ${paddings.main}px;
-      padding-bottom: ${showBtns ? heights.bottomBtn : 0}px;
+      /* padding-bottom: ${showBtns ? heights.bottomBtn : 0}px; */
       min-height: calc(100vh - ${HeightToSubtrat}px);
     `;
   }}
