@@ -38,7 +38,7 @@ const BottomBtn = memo((props) => {
     const type = target.type;
 
     //메뉴 내 정의한 함수 실행
-    if(target.customClick !== undefined) await target.customClick();
+    if(target.customClick !== undefined) await target.customClick(target.name, event);
 
     /**
      * type을 정의할 경우 공통 로직 실행 (페이지 이동)

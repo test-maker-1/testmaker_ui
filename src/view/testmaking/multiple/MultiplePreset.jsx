@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import BottomBtn from "../../../components/frame/BottomBtn";
 import {TitleBox, BtnField, BtnShare, UploadImg} from "../../../components/common";
+import ENUM from "../../../constants/Enum";
+
+const {HOME, PICKTEST, PREVIEW, MOVENEXT, SHARE} = ENUM;
 
 class MultiplePreset extends Component {
   handleChange = (a,b,c) => {
@@ -19,7 +22,7 @@ class MultiplePreset extends Component {
         <TitleBox title="난이도를 골라주세요">
           <div>TEST AREA</div>
         </TitleBox>
-        <BottomBtn btnArr={[{name: "left", type: "picktest", customClick: this.handleChange}, {name: "right", type: "home"}]}/>
+        <BottomBtn btnArr={[{name: "홈으로", type: HOME, customClick: this.handleChange}, {name: "공유", customClick: this.handleChange}]}/>
       </div>
     );
   }
