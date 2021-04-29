@@ -14,7 +14,7 @@ export const initHeader = {
 
 const headerInfo = {
   "/test/multiple": {
-    leftType: "back",
+    leftType: BACK,
     title: "객관식테스트"
   }
 };
