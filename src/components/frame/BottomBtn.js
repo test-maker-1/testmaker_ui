@@ -19,9 +19,9 @@ const getNextPageURL = (pmatch) => {
         break;
     case test:  //테스트메이킹
       const sequence = seqTest[module];
-      const nextPage = sequence.indexOf(step) + 1;
-      //ex) /test/multiple/preset
-      nextUrl = `/${where}/${module}/${nextPage}`;
+      const nextIDX = sequence.indexOf(step) + 1;
+      //ex) test/multiple/preset
+      nextUrl = `${where}/${module}/${sequence[nextIDX]}`;
       break;
     case testing: //테스트
       break;

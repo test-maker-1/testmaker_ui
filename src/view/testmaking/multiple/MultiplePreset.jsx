@@ -22,7 +22,7 @@ class MultiplePreset extends Component {
         <TitleBox title="난이도를 골라주세요">
           <div>TEST AREA</div>
         </TitleBox>
-        <BottomBtn btnArr={[{name: "홈으로", type: HOME, customClick: this.handleChange}, {name: "공유", customClick: this.handleChange}]}/>
+        <BottomBtn btnArr={[{name: "홈으로", type: HOME, customClick: this.handleChange}, {name: "다 적었어요", type: MOVENEXT}]}/>
       </div>
     );
   }
