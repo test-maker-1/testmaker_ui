@@ -20,7 +20,7 @@ const getNextPageURL = (pmatch) => {
     case test:  //테스트메이킹
       const sequence = seqTest[module];
       const nextPage = sequence.indexOf(step) + 1;
-      //ex) /test/multi/preset
+      //ex) /test/multiple/preset
       nextUrl = `/${where}/${module}/${nextPage}`;
       break;
     case testing: //테스트

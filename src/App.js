@@ -16,7 +16,7 @@ const App = () => {
           <Route exact path="/" component={Feed} />
           {/* test making */}
           <Route exact path="/pick-test" component={PickTest} />
-          {/* module: multi, mbti, weight */}
+          {/* module: multiple, mbti, weight */}
           <Route exact path="/test/:module/:step" component={TestMaking} />
         </Switch>
       </MainForm>

@@ -3,7 +3,7 @@ export const [
   login,
   test,
   testing,
-  multi,
+  multiple,
   mbti,
   weight,
   picktest,
@@ -19,7 +19,7 @@ export const [
   "login",
   "test",
   "test-ing",
-  "multi",
+  "multiple",
   "mbti",
   "weight",
   "pick-test",
@@ -34,7 +34,7 @@ export const [
 
 //https://www.notion.so/depromeet/Routing-URL-9a3efbefa3d84b679a23ea4a798a299f
 export const seqTest = {
-  [multi]: [picktest, preset, qna, result, detail, replay, release],
+  [multiple]: [picktest, preset, qna, result, detail, replay, release],
   [mbti]: [picktest, preset, qna, detail, replay, release],
   [weight]: [picktest, preset, result, qna, detail, replay, release],
 };
