@@ -20,16 +20,17 @@ export const createPromiseSaga = (type, promiseCreator) => {
   const { success, error } = createActionString(type);
 
   return function* (action) {
-    try {
-      const response = yield call(promiseCreator, action.payload);
+    const { data, status } = yield call(promiseCreator, action.payload);
+
+    if (status === SUCCESS) {
       yield put({
         type: success,
-        payload: response
+        payload: data
       });
-    } catch (err) {
+    } else {
       yield put({
         type: error,
-        payload: err.message
+        payload: data
       });
     }
   };

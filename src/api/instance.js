@@ -1,4 +1,5 @@
 import axios from "axios";
+import { reducerUtils } from "../utils/asyncUtils";
 
 const baseURL = "https://test.dev"; // 추후 .env에서 가져와서 넣어야 함
 const photoBaseURL = "https://photo.dev"; // 추후 .env에서 가져와서 넣어야 함
@@ -21,8 +22,8 @@ const get = (path, type = DEFAULT) => {
   return new Promise((resolve, reject) => {
     instance
       .get(path)
-      .then((response) => resolve(response.data))
-      .catch((e) => reject(e.message));
+      .then(({ data }) => resolve(reducerUtils.success(data)))
+      .catch((e) => resolve(reducerUtils.error(e.message)));
   });
 };
 
@@ -31,8 +32,8 @@ const post = (path, params = null, type = DEFAULT) => {
   return new Promise((resolve, reject) => {
     instance
       .post(path, params)
-      .then((response) => resolve(response.data))
-      .catch((e) => reject(e.message));
+      .then(({ data }) => resolve(reducerUtils.success(data)))
+      .catch((e) => resolve(reducerUtils.error(e.message)));
   });
 };
 
