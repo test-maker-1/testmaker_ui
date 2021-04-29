@@ -1,5 +1,12 @@
 import { call, put } from "redux-saga/effects";
 
+export const [INIT, LOADING, SUCCESS, ERROR] = [
+  "init",
+  "loading",
+  "success",
+  "error"
+];
+
 /* type: string; -> action.type */
 export const createActionString = (type) => {
   return { success: `${type}Success`, error: `${type}Error` };
@@ -13,17 +20,17 @@ export const createPromiseSaga = (type, promiseCreator) => {
   const { success, error } = createActionString(type);
 
   return function* (action) {
-    try {
-      const response = yield call(promiseCreator, action.payload);
+    const { data, status } = yield call(promiseCreator, action.payload);
+
+    if (status === SUCCESS) {
       yield put({
         type: success,
-        payload: response
+        payload: data
       });
-    } catch (err) {
+    } else {
       yield put({
         type: error,
-        payload: err.message,
-        error: true
+        payload: data
       });
     }
   };
@@ -32,25 +39,21 @@ export const createPromiseSaga = (type, promiseCreator) => {
 export const reducerUtils = {
   init: () => ({
     data: null,
-    loading: false,
-    error: false
+    status: INIT
   }),
 
   loading: (prevData = null) => ({
     data: prevData,
-    loading: true,
-    error: false
+    status: LOADING
   }),
 
   success: (data = null) => ({
     data: data,
-    loading: false,
-    error: false
+    status: SUCCESS
   }),
 
-  error: (error) => ({
-    data: error,
-    loading: false,
-    error: true
+  error: (msg) => ({
+    data: msg,
+    status: ERROR
   })
 };
