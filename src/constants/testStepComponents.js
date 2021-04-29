@@ -1,9 +1,10 @@
-import MultipleStep1 from "../view/testmaking/multiple/MultipleStep1";
+import MultiplePreset from "../view/testmaking/multiple/MultiplePreset";
 import MultipleQA from "../view/testmaking/multiple/MultipleQA";
+import {preset, qna} from "../constants/urlInfo";
 
 export const multipleComponents = {
-  1: <MultipleStep1 />,
-  2: <MultipleQA />
+  [preset]: <MultiplePreset />,
+  [qna]: <MultipleQA />
 };
 
 export const mbtiComponents = {};

@@ -16,6 +16,7 @@ export const [
   release,
 ] = [
   "",
+  "login",
   "test",
   "test-ing",
   "multi",
