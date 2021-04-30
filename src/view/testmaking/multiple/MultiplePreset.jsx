@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BottomBtn from "../../../components/frame/BottomBtn";
+import BottomBtn, {PageContainer} from "../../../components/frame/BottomBtn";
 import {TitleBox, BtnField, BtnShare, UploadImg} from "../../../components/common";
 import ENUM from "../../../constants/Enum";
 
@@ -11,7 +11,7 @@ class MultiplePreset extends Component {
   }
   render() {
     return (
-      <div>
+      <PageContainer>
         <h1>임시 테스트 페이지</h1>
         <BtnField name={"질문 추가하기"} onClick={this.handleChange}/>
         <BtnShare />
@@ -23,7 +23,7 @@ class MultiplePreset extends Component {
           <div>TEST AREA</div>
         </TitleBox>
         <BottomBtn btnArr={[{name: "홈으로", type: HOME, customClick: this.handleChange}, {name: "다 적었어요", type: MOVENEXT}]}/>
-      </div>
+      </PageContainer>
     );
   }
 }

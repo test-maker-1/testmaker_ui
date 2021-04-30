@@ -28,7 +28,6 @@ const MainForm = ({ children, history, location, match }) => {
       <MainBox>
         <Header header={header} onToggle={onToggle} />
         <Main>{children}</Main>
-        {/* <BottomBtn>{bottomBtns}</BottomBtn> */}
       </MainBox>
     </BackGround>
   );
@@ -51,15 +50,10 @@ const Main = styled.main`
   display: flex;
 
   ${({ theme, showBtns }) => {
-    // 아래 주석 처리된 부분 -> bottomBtn 여부에 따라 padding 추가(주석 해제)하는 로직 필요
     const { paddings, heights } = theme;
-    let HeightToSubtrat = heights.header;
-    // HeightToSubtrat += showBtns && heights.bottomBtn;
-
     return css`
       padding: 0 ${paddings.main}px;
-      /* padding-bottom: ${showBtns ? heights.bottomBtn : 0}px; */
-      min-height: calc(100vh - ${HeightToSubtrat}px);
+      min-height: calc(100vh - ${heights.header}px);
     `;
   }}
 

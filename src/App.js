@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import MainForm from "./components/frame/MainForm";
 import TestMaking from "./components/frame/TestMaking";
-// import MultipleMaking from "./components/frame/MultipleMaking";
 
 import Feed from "./view/Feed";
 import PickTest from "./view/PickTest";
