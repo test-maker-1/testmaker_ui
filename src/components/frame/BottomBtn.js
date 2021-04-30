@@ -1,34 +1,11 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
-import {seqTest} from "../../constants/urlInfo";
-import {home, login, test, testing, picktest, preview} from "../../constants/urlInfo";
+import {home, picktest, preview} from "../../constants/urlInfo";
 import ENUM from "../../constants/Enum";
+import {getNextPageURL} from "../../utils/handler"
 
 const {HOME, PICKTEST, PREVIEW, MOVENEXT, SHARE} = ENUM;
-
-//다음 페이지 URL 반환
-const getNextPageURL = (pmatch) => {
-  const {params: {module, step}, path, url} = pmatch;
-  const reg = new RegExp("\/([A-Za-z]*)","gi");
-  const where = (reg.exec(path) || "")[1];
-  let nextUrl = "";
-
-  switch(where){
-    case login: //로그인
-        break;
-    case test:  //테스트메이킹
-      const sequence = seqTest[module];
-      const nextIDX = sequence.indexOf(step) + 1;
-      //ex) test/multiple/preset
-      nextUrl = `${where}/${module}/${sequence[nextIDX]}`;
-      break;
-    case testing: //테스트
-      break;
-  }
-
-  return nextUrl;
-}
 
 const BottomBtn = memo((props) => {
   const {btnArr, history, location, match} = props;
