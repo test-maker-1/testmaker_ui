@@ -1,7 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { TitleBox, ListCard } from "../components/common/index.js";
+import useMaking from "../hooks/useMaking.js";
+
 import { mbti, multiple, weight } from "../constants/urlInfo.js";
 import testInfo from "../constants/testInfo.js";
 
@@ -17,12 +20,23 @@ const PickTest = () => {
   );
 };
 
+// type: string; ex) "multiple" | "mbti" | "weight"
 const TestCard = ({ type }) => {
   const { name, desc } = testInfo[type];
+  const { updateCommon } = useMaking();
+  const history = useHistory();
+
+  const setTestType = async () => {
+    updateCommon("type", type);
+    history.push(`/test/${type}/preset`);
+  };
+
   return (
-    <ListCard title={`${name} 테스트`}>
-      <TestDesc>{desc}</TestDesc>
-    </ListCard>
+    <div onClick={setTestType}>
+      <ListCard title={`${name} 테스트`}>
+        <TestDesc>{desc}</TestDesc>
+      </ListCard>
+    </div>
   );
 };
 

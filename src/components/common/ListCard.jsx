@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   border: 1px solid #e5e8ec;
   border-radius: 5px;
   background: #fafafa;
+  cursor: pointer;
 
   @media (max-width: ${breakWidth}px) {
     flex-direction: column;
