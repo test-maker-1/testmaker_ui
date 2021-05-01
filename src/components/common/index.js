@@ -4,4 +4,4 @@ export { UploadImg } from "./UploadImg";
 export { Option, AddOptionBtn } from "./Options";
 export { default as TagInputBox } from "./TagInputBox";
 export { default as NoticeAlert } from "./NoticeAlert";
-export { ListCard } from "./ListCard";
+export { default as ListCard } from "./ListCard";
