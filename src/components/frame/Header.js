@@ -38,7 +38,7 @@ const Header = ({ header, onToggle }) => {
         className={classes.container}
         direction="row"
         justify="center"
-        alignItems="stretch"
+        alignItems="center"
       >
         <Grid item className={classes.side}>
           <LeftBtn type={leftType} />

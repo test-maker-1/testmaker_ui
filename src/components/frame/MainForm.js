@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import Header from "./Header";
 import Drawer from "./Drawer";
@@ -49,13 +49,8 @@ const MainBox = styled.div`
 const Main = styled.main`
   display: flex;
 
-  ${({ theme, showBtns }) => {
-    const { paddings, heights } = theme;
-    return css`
-      padding: 0 ${paddings.main}px;
-      min-height: calc(100vh - ${heights.header}px);
-    `;
-  }}
+  min-height: ${({ theme: { heights } }) =>
+    `calc(100vh - ${heights.header}px)`};
 
   /* view component */
   & > div {
