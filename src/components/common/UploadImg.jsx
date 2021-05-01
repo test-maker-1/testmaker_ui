@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import styled from "styled-components";
 import {BtnField} from "./BtnField";
+import SVG from "./SVG";
+import Enum from "../../constants/Enum";
 
 export const UploadImg = (props) => {
   const fileInput = useRef();
@@ -20,7 +22,6 @@ export const UploadImg = (props) => {
 
     reader.readAsDataURL(files[0]);
     reader.onload = (e) => {
-      console.log("onload",e)
       setList(fileArr);
       setImgURL(e.target.result);
     };
@@ -41,7 +42,7 @@ export const UploadImg = (props) => {
   return (
     <>
       {list.length === 0 ?
-        <BtnField reverse name={"사진 추가하기"} style={addBtnStyle} onClick={handleOnCick}/>
+        <SVG type={Enum.PICTURE} style={{width: "18", height: "18"}} onClick={handleOnCick}/>
         :
         <div style={{position: "relative", width:"374px", height: "169px"}}>
         <DimmImg isHover={isHover} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
