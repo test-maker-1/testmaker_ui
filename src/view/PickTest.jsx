@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import { TitleBox, ListCard } from "../components/common/index.js";
@@ -7,6 +6,7 @@ import useMaking from "../hooks/useMaking.js";
 
 import { mbti, multiple, weight } from "../constants/urlInfo.js";
 import testInfo from "../constants/testInfo.js";
+import usePage from "../hooks/usePage.js";
 
 const PickTest = () => {
   return (
@@ -24,11 +24,11 @@ const PickTest = () => {
 const TestCard = ({ type }) => {
   const { name, desc } = testInfo[type];
   const { updateCommon } = useMaking();
-  const history = useHistory();
+  const { goPage } = usePage();
 
   const setTestType = async () => {
     updateCommon("type", type);
-    history.push(`/test/${type}/preset`);
+    goPage(`/test/${type}/preset`);
   };
 
   return (
