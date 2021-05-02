@@ -26,13 +26,13 @@ const TestCard = ({ type }) => {
   const { updateCommon } = useMaking();
   const { goPage } = usePage();
 
-  const setTestType = async () => {
+  const onSetType = () => {
     updateCommon("type", type);
     goPage(`/test/${type}/preset`);
   };
 
   return (
-    <div onClick={setTestType}>
+    <div onClick={onSetType}>
       <ListCard title={`${name} 테스트`}>
         <TestDesc>{desc}</TestDesc>
       </ListCard>
