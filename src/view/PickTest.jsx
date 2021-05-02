@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { TitleBox, ListCard } from "../components/common/index.js";
+import usePage from "../hooks/usePage.js";
 import useMaking from "../hooks/useMaking.js";
 
-import { mbti, multiple, weight } from "../constants/urlInfo.js";
+import { mbti, multiple, weight } from "../constants/Enum.js";
 import testInfo from "../constants/testInfo.js";
-import usePage from "../hooks/usePage.js";
 
 const PickTest = () => {
   return (
