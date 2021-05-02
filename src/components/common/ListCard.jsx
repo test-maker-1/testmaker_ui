@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import tempImg from "../../resources/temp-img.svg";
+import tempImg from "../../resources/temp-img.png";
 
 const breakWidth = 350;
 const [pt, pl] = [20, 25];
