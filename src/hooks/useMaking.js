@@ -8,7 +8,12 @@ const useMaking = () => {
   const updateCommon = (key, value) =>
     dispatch(updateCommonData({ key, value }));
 
-  return { data, updateCommon };
+  const updateCommonByInput = (e) => {
+    const { name, value } = e.target;
+    updateCommon(name, value);
+  };
+
+  return { data, updateCommon, updateCommonByInput };
 };
 
 export default useMaking;
