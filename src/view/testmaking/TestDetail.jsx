@@ -2,7 +2,7 @@ import React from "react";
 import { TitleBox } from "../../components/common/index";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 
-import { InputTitle } from "../../styles/index";
+import { Input, InputTitle } from "../../styles/index";
 import ENUM, { lg } from "../../constants/Enum";
 
 const { PREVIEW, MOVENEXT } = ENUM;
@@ -16,6 +16,9 @@ const TestDetail = (props) => {
           placeholder="테스트 제목을 적어주세요"
           defaultValue=""
         />
+      </TitleBox>
+      <TitleBox title="나를 더 홍보할래요!" noline>
+        <Input placeholder="url 주소를 적어주세요" defaultValue="" />
       </TitleBox>
       <BottomBtn
         btnArr={[

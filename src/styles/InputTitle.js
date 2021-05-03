@@ -15,6 +15,8 @@ const style = {
 // size: string; ex) "md" || "lg"
 const InputTitle = styled.input`
   margin-bottom: 16px;
+  width: 100%;
+
   font-size: ${({ size }) => style[size].fontSize}px;
   font-weight: bold;
   line-height: ${({ size }) => style[size].lineHeight}px;
