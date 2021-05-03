@@ -7,6 +7,11 @@ const ENUM = {
   PREVIEW: "preview",
   MOVENEXT: "movenext",
   SHARE: "share",
+  
+  // svg type
+  ADD: "add",
+  CANCEL: "cancel",
+  PICTURE: "picture",
 };
 
 export default ENUM;
