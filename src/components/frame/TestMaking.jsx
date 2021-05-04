@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
+import Error from "../../view/Error";
 import { updateCommonData } from "../../redux/reducer/makingReducer";
 import components from "../../constants/testStepComponents";
 import initState from "../../constants/makingInitState";
@@ -10,7 +11,6 @@ const TestMaking = ({
     params: { module, step },
   },
 }) => {
-  const history = useHistory();
   const [state, dispatch] = useReducer(updateCommonData, initState.common);
 
   const handleBreak = (event) => {
@@ -31,16 +31,14 @@ const TestMaking = ({
 
   // undefined module
   if (!components.hasOwnProperty(module)) {
-    history.push("/error");
-    return null;
+    return <Error />;
   }
 
   let makingComponent = components[module];
 
   // undefined step
   if (!makingComponent.hasOwnProperty(step)) {
-    history.push("/error");
-    return null;
+    return <Error />;
   }
 
   return makingComponent[step];
