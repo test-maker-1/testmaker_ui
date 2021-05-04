@@ -15,6 +15,9 @@ const ENUM = {
   ADD: "add",
   CANCEL: "cancel",
   PICTURE: "picture",
+
+  // key type
+  ENTER: "Enter",
 };
 
 export default ENUM;

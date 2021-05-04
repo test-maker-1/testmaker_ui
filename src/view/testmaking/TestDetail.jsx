@@ -7,11 +7,23 @@ import { Input, InputTitle, TextArea } from "../../styles/index";
 import useMaking from "../../hooks/useMaking";
 import ENUM, { lg } from "../../constants/Enum";
 
-const { PREVIEW, MOVENEXT } = ENUM;
+const { PREVIEW, MOVENEXT, ENTER } = ENUM;
 
 const TestDetail = () => {
-  const { data, updateCommonByInput } = useMaking();
+  const { data, updateCommonByInput, addTag } = useMaking();
   const { testName, testDesc, optionalURL } = data;
+
+  const onEnterPress = (e) => {
+    const {
+      key,
+      target: { value: newTag },
+    } = e;
+
+    if (key === ENTER) {
+      addTag(newTag);
+      e.target.value = "";
+    }
+  };
 
   return (
     <PageContainer>
@@ -32,16 +44,24 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
+
       <TitleBox>
         {/* tags */}
-        <Input placeholder="테스트에 태그를 달아보세요" />
-        <Tag tag="태그명1" />
-        <Tag tag="태그명2" />
-        <Tag tag="태그명3" />
+        <Input
+          name="tag"
+          defaultValue=""
+          placeholder="테스트에 태그를 달아보세요"
+          onKeyPress={onEnterPress}
+        />
+        {data.tags.map((tag) => (
+          <Tag key={tag} tag={tag} />
+        ))}
       </TitleBox>
+
       <TitleBox title="나를 더 홍보할래요!" noline>
         {/* optionalURL */}
         <Input
+          type="url"
           name="optionalURL"
           placeholder="url 주소를 적어주세요"
           defaultValue={optionalURL}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 
 import { SVG } from "../common/index";
@@ -50,4 +50,4 @@ const TagBox = styled.span`
   }
 `;
 
-export default Tag;
+export default memo(Tag);
