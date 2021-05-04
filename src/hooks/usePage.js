@@ -8,14 +8,14 @@ const usePage = () => {
     history.push({
       pathname,
       search,
-      state
+      state,
     });
   };
 
   const go = () => history.go(); // go front
-  const back = () => history.back(); // go back
+  const goBack = () => history.goBack(); // go back
 
-  return { goPage, go, back };
+  return { goPage, go, goBack };
 };
 
 export default usePage;
