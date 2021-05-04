@@ -1,31 +1,53 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const Tag = ({ tag, onDelete }) => {
-  const onClick = useCallback(() => {
-    onDelete(tag);
-  }, []);
+import { SVG } from "../common/index";
+import ENUM from "../../constants/Enum";
+
+const svgStyles = {
+  width: 16,
+  height: 16,
+};
+
+/*
+ * tag: string;
+ * onDelete: function;
+ */
+const Tag = ({ tag, onDelete = null }) => {
+  const onDeleteTag = (e) => {
+    if (!onDelete) onDelete(e);
+  };
+
   return (
     <TagBox>
-      {tag}
-      <button onClick={onClick}>❌</button>
+      <span>{tag}</span>
+      <button onClick={onDeleteTag}>
+        <SVG type={ENUM.CANCEL} style={svgStyles} />
+      </button>
     </TagBox>
   );
 };
 
-export default Tag;
-Tag.propTypes = {};
-
-const TagBox = styled.div`
-  display: flex;
-  height: 31px;
-  width: max-content;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  border-radius: 5px;
-  padding: 6px 10px;
-  border: 1px solid black;
+const TagBox = styled.span`
   margin-right: 10px;
+  padding: 6px 10px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 5px;
+  background: #fafafa;
+  color: #8a929e;
+
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 19px;
+  letter-spacing: -0.3px;
+
+  button {
+    margin-left: 4px;
+    display: flex;
+  }
 `;
+
+export default Tag;

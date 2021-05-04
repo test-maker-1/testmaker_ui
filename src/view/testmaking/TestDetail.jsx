@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TitleBox } from "../../components/common/index";
+import { TitleBox, Tag } from "../../components/common/index";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { Input, InputTitle, TextArea } from "../../styles/index";
 
@@ -16,6 +16,7 @@ const TestDetail = () => {
   return (
     <PageContainer>
       <TitleBox>
+        {/* testName */}
         <InputTitle
           size={lg}
           name="testName"
@@ -23,6 +24,7 @@ const TestDetail = () => {
           defaultValue={testName}
           onBlur={updateCommonByInput}
         />
+        {/* testDesc */}
         <TextArea
           name="testDesc"
           defaultValue={testDesc}
@@ -30,15 +32,21 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
+      <TitleBox>
+        {/* tags */}
+        <Input placeholder="테스트에 태그를 달아보세요" />
+        <Tag tag="태그명1" />
+        <Tag tag="태그명2" />
+        <Tag tag="태그명3" />
+      </TitleBox>
       <TitleBox title="나를 더 홍보할래요!" noline>
-        <form>
-          <Input
-            name="optionalURL"
-            placeholder="url 주소를 적어주세요"
-            defaultValue={optionalURL}
-            onBlur={updateCommonByInput}
-          />
-        </form>
+        {/* optionalURL */}
+        <Input
+          name="optionalURL"
+          placeholder="url 주소를 적어주세요"
+          defaultValue={optionalURL}
+          onBlur={updateCommonByInput}
+        />
       </TitleBox>
       <BottomBtn
         btnArr={[
