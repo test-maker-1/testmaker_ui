@@ -10,7 +10,7 @@ import ENUM, { lg } from "../../constants/Enum";
 const { PREVIEW, MOVENEXT, ENTER } = ENUM;
 
 const TestDetail = () => {
-  const { data, updateCommonByInput, addTag } = useMaking();
+  const { data, updateCommonByInput, addNewTag } = useMaking();
   const { testName, testDesc, optionalURL } = data;
 
   const onEnterPress = (e) => {
@@ -20,7 +20,7 @@ const TestDetail = () => {
     } = e;
 
     if (key === ENTER) {
-      addTag(newTag);
+      addNewTag(newTag);
       e.target.value = "";
     }
   };
@@ -68,6 +68,7 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
+
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },

@@ -48,7 +48,7 @@ const making = createSlice({
     },
 
     /* add data */
-    addNewTag: ({ tags }, { payload }) => {
+    addTag: ({ tags }, { payload }) => {
       tags.push(payload);
     },
 
@@ -64,11 +64,16 @@ const making = createSlice({
   },
 });
 
-/* initialize */
+/* initialize*/
 export const { initCommonData, initTypeData } = making.actions;
-export const { updateCommonData, updateTypeData } = making.actions;
 
 /* update */
-export const { addNewTag, deleteTag, addQuestion, addResult } = making.actions;
+export const { updateCommonData, updateTypeData } = making.actions;
+
+/* add */
+export const { addTag, addQuestion, addResult } = making.actions;
+
+/* delete */
+export const { deleteTag } = making.actions;
 
 export default making;
