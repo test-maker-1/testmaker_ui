@@ -1,18 +1,13 @@
 import React from "react";
-import qs from "query-string";
+import usePage from "../hooks/usePage";
 
 // code: number;
-const Error = ({ location, code = 404 }) => {
-  const queryJson =
-    location.hasOwnProperty("search") && location.search.length > 0
-      ? qs.parse(location.search)
-      : null;
-
-  const errorCode = queryJson ? Number(queryJson.code) : code;
-
+const Error = ({ code = 404 }) => {
+  const { goBack } = usePage();
   return (
     <div>
-      <h1>{`에러 페이지 - 에러 코드: ${errorCode}`}</h1>
+      <h1>{`에러 페이지 - 에러 코드: ${code}`}</h1>
+      <button onClick={goBack}>뒤로가기 버튼 (click)</button>
     </div>
   );
 };
