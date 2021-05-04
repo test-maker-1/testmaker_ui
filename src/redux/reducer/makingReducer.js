@@ -53,6 +53,11 @@ const making = createSlice({
     },
 
     /* delete */
+    deleteTag: (state, { payload }) => {
+      const { tags } = state;
+      state.tags = tags.filter((tag) => tag !== payload);
+    },
+
     deleteQuestion: (state, action) => {},
     deleteOption: (state, action) => {},
     deleteResult: (state, action) => {},
@@ -64,6 +69,6 @@ export const { initCommonData, initTypeData } = making.actions;
 export const { updateCommonData, updateTypeData } = making.actions;
 
 /* update */
-export const { addNewTag, addQuestion, addResult } = making.actions;
+export const { addNewTag, deleteTag, addQuestion, addResult } = making.actions;
 
 export default making;

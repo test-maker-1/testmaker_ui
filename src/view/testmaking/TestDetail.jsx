@@ -54,7 +54,7 @@ const TestDetail = () => {
           onKeyPress={onEnterPress}
         />
         {data.tags.map((tag) => (
-          <Tag key={tag} tag={tag} />
+          <Tag key={tag} tag={tag} deletable />
         ))}
       </TitleBox>
 

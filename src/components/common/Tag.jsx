@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 import { SVG } from "../common/index";
+import useMaking from "../../hooks/useMaking";
 import ENUM from "../../constants/Enum";
 
 const svgStyles = {
@@ -13,17 +14,22 @@ const svgStyles = {
  * tag: string;
  * onDelete: function;
  */
-const Tag = ({ tag, onDelete = null }) => {
-  const onDeleteTag = (e) => {
-    if (!onDelete) onDelete(e);
+const Tag = ({ tag, deletable = false }) => {
+  const { dispatch, deleteTag } = useMaking();
+
+  const onClick = (e) => {
+    if (deletable) dispatch(deleteTag(tag));
   };
 
   return (
     <TagBox>
       <span>{tag}</span>
-      <button onClick={onDeleteTag}>
-        <SVG type={ENUM.CANCEL} style={svgStyles} />
-      </button>
+      {/* delete btn */}
+      {deletable && (
+        <button onClick={onClick}>
+          <SVG type={ENUM.CANCEL} style={svgStyles} />
+        </button>
+      )}
     </TagBox>
   );
 };
