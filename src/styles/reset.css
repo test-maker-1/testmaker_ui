@@ -30,6 +30,12 @@ a {
   color: initial;
 }
 
+/* input */
+input,
+textarea {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
 div,
 span,
 applet,
@@ -155,9 +161,14 @@ button {
   padding: 0;
 }
 textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  outline: none;
   border: none;
-  background: none;
-  font-family: "Noto Sans KR", sans-serif !important;
+  resize: none;
+}
+textarea::-webkit-scrollbar {
+  display: none;
 }
 table {
   border-collapse: collapse;
