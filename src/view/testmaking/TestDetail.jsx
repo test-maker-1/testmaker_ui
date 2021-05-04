@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 import { TitleBox, Tag } from "../../components/common/index";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
@@ -47,15 +48,17 @@ const TestDetail = () => {
 
       <TitleBox>
         {/* tags */}
-        <Input
+        <TagInput
           name="tag"
           defaultValue=""
           placeholder="테스트에 태그를 달아보세요"
           onKeyPress={onEnterPress}
         />
-        {data.tags.map((tag) => (
-          <Tag key={tag} tag={tag} deletable />
-        ))}
+        <Tags>
+          {data.tags.map((tag) => (
+            <Tag key={tag} tag={tag} deletable />
+          ))}
+        </Tags>
       </TitleBox>
 
       <TitleBox title="나를 더 홍보할래요!" noline>
@@ -78,5 +81,15 @@ const TestDetail = () => {
     </PageContainer>
   );
 };
+
+const TagInput = styled(Input)`
+  margin-bottom: 0;
+`;
+
+const Tags = styled.div`
+  .tag {
+    margin-top: 16px;
+  }
+`;
 
 export default TestDetail;

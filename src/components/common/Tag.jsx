@@ -22,7 +22,7 @@ const Tag = ({ tag, deletable = false }) => {
   };
 
   return (
-    <TagBox>
+    <TagBox className="tag">
       <span>{tag}</span>
       {/* delete btn */}
       {deletable && (
