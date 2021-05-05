@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag } from "../../components/common/index";
+import { TitleBox, Tag, UploadImg } from "../../components/common/index";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { Input, InputTitle, TextArea } from "../../styles/index";
 
@@ -37,6 +37,8 @@ const TestDetail = () => {
           defaultValue={testName}
           onBlur={updateCommonByInput}
         />
+        {/* coverImg */}
+        <UploadImg />
         {/* testDesc */}
         <TextArea
           name="testDesc"

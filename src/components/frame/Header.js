@@ -54,13 +54,13 @@ const Header = ({ header, onToggle }) => {
   );
 };
 
-//414  * 56
 const HeadContainer = styled.header`
   position: sticky;
   top: 0;
   padding: 0 20px;
   height: ${({ theme: { heights } }) => heights.header}px;
   border: 1px solid black;
+  z-index: 100;
 `;
 
 export default Header;
