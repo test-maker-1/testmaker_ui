@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import { SVG } from "../common/index";
+import useOpen from "../../hooks/useOpen";
 import ENUM from "../../constants/Enum";
 
 import defaultPhoto from "../../resources/temp-img.png"; // default photo
@@ -16,6 +17,7 @@ const svgStyles = {
 export const UploadImg = () => {
   const fileInput = useRef();
   const [imgURL, setImgURL] = useState(defaultPhoto);
+  const { open: edit, onToggle } = useOpen();
 
   // upload and delete image
   const handleOnCick = () => fileInput.current.click();
@@ -37,19 +39,21 @@ export const UploadImg = () => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper onClick={onToggle}>
         <DimmImg>
           <img src={imgURL} alt={"test cover img"} />
         </DimmImg>
         {/* edit */}
-        <Dimmed>
-          <EditBtn onClick={handleOnCick}>
-            <SVG type={CHANGE} style={svgStyles} />
-          </EditBtn>
-          <EditBtn onClick={handleDelClick}>
-            <SVG type={CANCEL} style={svgStyles} />
-          </EditBtn>
-        </Dimmed>
+        {edit && (
+          <Dimmed>
+            <EditBtn onClick={handleOnCick}>
+              <SVG type={CHANGE} style={svgStyles} />
+            </EditBtn>
+            <EditBtn onClick={handleDelClick}>
+              <SVG type={CANCEL} style={svgStyles} />
+            </EditBtn>
+          </Dimmed>
+        )}
       </Wrapper>
       {/* required multiple */}
       <input
@@ -64,32 +68,10 @@ export const UploadImg = () => {
   );
 };
 
-const Dimmed = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  opacity: 0;
-  z-index: 2;
-  transition: all 0.2s ease-in-out;
-`;
-
 const Wrapper = styled.div`
   position: relative;
   height: 155px;
   margin-bottom: 16px;
-
-  &:hover {
-    ${Dimmed} {
-      opacity: 1;
-    }
-  }
 `;
 
 const DimmImg = styled.div`
@@ -107,6 +89,21 @@ const DimmImg = styled.div`
     height: 100%;
     object-fit: cover;
   }
+`;
+
+const Dimmed = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
 `;
 
 const EditBtn = styled.button`
