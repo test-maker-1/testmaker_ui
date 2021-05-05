@@ -15,6 +15,7 @@ const ENUM = {
   ADD: "add",
   CANCEL: "cancel",
   PICTURE: "picture",
+  CHANGE: "change",
 
   // key type
   ENTER: "Enter",
