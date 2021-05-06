@@ -37,10 +37,12 @@ textarea {
 }
 
 select {
+  cursor: pointer;
   -webkit-appearance: none; /* chrome */
-  -moz-appearance: none; /* FireFox*/
+  -moz-appearance: none; /* FireFox */
   appearance: none;
   background: transparent;
+  border: none;
   outline: none;
 }
 
