@@ -7,3 +7,4 @@ export { default as TagInputBox } from "./TagInputBox";
 export { default as NoticeAlert } from "./NoticeAlert";
 export { default as ListCard } from "./ListCard";
 export { default as SVG } from "./SVG";
+export { default as Select } from "./Select";

@@ -36,6 +36,14 @@ textarea {
   font-family: "Noto Sans KR", sans-serif !important;
 }
 
+select {
+  -webkit-appearance: none; /* chrome */
+  -moz-appearance: none; /* FireFox*/
+  appearance: none;
+  background: transparent;
+  outline: none;
+}
+
 div,
 span,
 applet,

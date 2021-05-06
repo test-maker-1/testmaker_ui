@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const inputStyles = `
+export const inputStyles = `
   width: 100%;
   border: none;
   outline: none;
   border-radius: 5px;
-  background-color: #fafafa;
+  background-color: #fafafa !important;
   color: #697382;
 
   &::placeholder {
