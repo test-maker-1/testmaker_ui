@@ -1,4 +1,4 @@
-import React, {useMemo, useCallback} from "react";
+import React, {useMemo, useCallback, memo} from "react";
 import styled from "styled-components"
 import {svgInfo} from "../../resources/svgInfo";
 
@@ -29,4 +29,4 @@ const SvgItem = styled.svg`
   cursor: ${(props) => props.onClick ? "pointer" : "default"};
 `;
 
-export default SVG;
+export default memo(SVG);

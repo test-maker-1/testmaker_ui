@@ -47,18 +47,33 @@ const making = createSlice({
       results.push(emptyResult);
     },
 
+    /* add data */
+    addTag: ({ tags }, { payload }) => {
+      tags.push(payload);
+    },
+
     /* delete */
+    deleteTag: (state, { payload }) => {
+      const { tags } = state;
+      state.tags = tags.filter((tag) => tag !== payload);
+    },
+
     deleteQuestion: (state, action) => {},
     deleteOption: (state, action) => {},
-    deleteResult: (state, action) => {}
-  }
+    deleteResult: (state, action) => {},
+  },
 });
 
-/* initialize */
+/* initialize*/
 export const { initCommonData, initTypeData } = making.actions;
-export const { updateCommonData, updateTypeData } = making.actions;
 
 /* update */
-export const { addQuestion, addResult } = making.actions;
+export const { updateCommonData, updateTypeData } = making.actions;
+
+/* add */
+export const { addTag, addQuestion, addResult } = making.actions;
+
+/* delete */
+export const { deleteTag } = making.actions;
 
 export default making;

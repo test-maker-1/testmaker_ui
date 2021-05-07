@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { updateCommonData } from "../redux/reducer/makingReducer";
+import {
+  updateCommonData,
+  addTag,
+  deleteTag,
+} from "../redux/reducer/makingReducer";
 
 const useMaking = () => {
   const data = useSelector((state) => state.making);
@@ -8,7 +12,32 @@ const useMaking = () => {
   const updateCommon = (key, value) =>
     dispatch(updateCommonData({ key, value }));
 
-  return { data, updateCommon };
+  const updateCommonByInput = (e) => {
+    const { name, value } = e.target;
+    updateCommon(name, value);
+  };
+
+  // tag: string;
+  const addNewTag = (tag) => {
+    const { tags } = data;
+
+    if (tag.replace(/(\s*)/g, "") < 1) return; // empty string
+    if (tags.includes(tag)) return; // duplicate
+
+    dispatch(addTag(tag));
+  };
+
+  return {
+    data,
+    dispatch,
+    // update
+    updateCommon,
+    updateCommonByInput,
+    // add
+    addNewTag,
+    // delete
+    deleteTag,
+  };
 };
 
 export default useMaking;

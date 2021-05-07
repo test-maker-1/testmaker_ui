@@ -1,4 +1,9 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -23,6 +28,12 @@ html::-webkit-scrollbar {
 a {
   text-decoration: none;
   color: initial;
+}
+
+/* input */
+input,
+textarea {
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 div,
@@ -150,9 +161,14 @@ button {
   padding: 0;
 }
 textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  outline: none;
   border: none;
-  background: none;
-  font-family: "Noto Sans KR", sans-serif !important;
+  resize: none;
+}
+textarea::-webkit-scrollbar {
+  display: none;
 }
 table {
   border-collapse: collapse;

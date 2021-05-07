@@ -1,66 +1,78 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import {BtnField} from "./BtnField";
-import SVG from "./SVG";
-import Enum from "../../constants/Enum";
 
-export const UploadImg = (props) => {
+import { SVG } from "../common/index";
+import useOpen from "../../hooks/useOpen";
+import ENUM from "../../constants/Enum";
+
+import defaultPhoto from "../../resources/temp-img.png"; // default photo
+
+const { CANCEL, CHANGE } = ENUM;
+
+const svgStyles = {
+  width: 40,
+  height: 40,
+};
+
+export const UploadImg = () => {
   const fileInput = useRef();
-  const [list, setList] = useState([]);
-  const [imgURL, setImgURL] = useState("");
-  const [isHover, setHover] = useState(false);
+  const [imgURL, setImgURL] = useState(defaultPhoto);
+  const { open: edit, onToggle } = useOpen();
 
-  const handleOnCick = (event) => {
-    //upload image
-    fileInput.current.click();
-  }
+  // upload and delete image
+  const handleOnCick = () => fileInput.current.click();
+  const handleDelClick = () => setImgURL(defaultPhoto);
 
   const handleOnUpload = (event) => {
     const files = event.target.files;
-    const fileArr = Array.prototype.slice.call(files);
     const reader = new FileReader();
 
+    // 추후 사진 업로드, redux 처리
     reader.readAsDataURL(files[0]);
-    reader.onload = (e) => {
-      setList(fileArr);
+    reader.onload = async (e) => {
       setImgURL(e.target.result);
     };
-    
-    setHover(false);
-    document.getElementById("uploadImage").value = null;  //init
-  }
 
-  const handleEnter = (event) => setHover(true);
-  const handleLeave = (event) => setHover(false);
-
-  const handleModClick = (event) => handleOnCick({});
-  const handleDelClick = (event) => {
-    setList([]);
-    setImgURL("");
-  }
+    // init
+    fileInput.current.value = null;
+  };
 
   return (
     <>
-      {list.length === 0 ?
-        <SVG type={Enum.PICTURE} style={{width: "18", height: "18"}} onClick={handleOnCick}/>
-        :
-        <div style={{position: "relative", width:"374px", height: "169px"}}>
-        <DimmImg isHover={isHover} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-          <img src={imgURL} alt={"이미지"} style={imgStyle}/>
-          {isHover && 
-            <Dimmed>
-              <BtnField name={"수정"} style={{marginRight: "8px", ...btnStyle}} onClick={handleModClick}/>
-              <BtnField name={"삭제"} style={btnStyle} onClick={handleDelClick}/>
-            </Dimmed>
-          }
+      <Wrapper onClick={onToggle}>
+        <DimmImg>
+          <img src={imgURL} alt={"test cover img"} />
         </DimmImg>
-        </div>
-      }
+        {/* edit */}
+        {edit && (
+          <Dimmed>
+            <EditBtn onClick={handleOnCick}>
+              <SVG type={CHANGE} style={svgStyles} />
+            </EditBtn>
+            <EditBtn onClick={handleDelClick}>
+              <SVG type={CANCEL} style={svgStyles} />
+            </EditBtn>
+          </Dimmed>
+        )}
+      </Wrapper>
       {/* required multiple */}
-      <input type="file" id="uploadImage" ref={fileInput} accept="img/*"  onChange={handleOnUpload} style={{ width: 0, display: "none" }}/>
+      <input
+        type="file"
+        id="uploadImage"
+        ref={fileInput}
+        accept="img/*"
+        onChange={handleOnUpload}
+        style={{ width: 0, display: "none" }}
+      />
     </>
   );
-}
+};
+
+const Wrapper = styled.div`
+  position: relative;
+  height: 155px;
+  margin-bottom: 16px;
+`;
 
 const DimmImg = styled.div`
   position: absolute;
@@ -68,36 +80,37 @@ const DimmImg = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: #000;
-  opacity: ${({isHover}) => isHover ? "0.3" : "1"};
+
+  border-radius: 5px;
+  z-index: 1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const Dimmed = styled.div`
   position: absolute;
-  top: 50px;
-  left: 104px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
 `;
 
-const addBtnStyle = {
-  height: "40", 
-  fontSize: "16px", 
-  lineHeight: "23px",
-  fontWeight: "bold",
-}
-
-const imgStyle = {
-  width: "100%",
-  height: "100%"
-}
-
-const btnStyle= {
-  backgroundColor:"#EBEDF1",
-  width:"80px",
-  height:"80px",
-  borderRadius: "40px",
-  opacity: "0.8"
-}
-
-  // color: #8A929E;
-  // background: #EBEDF1;
-  // opacity: 0.8;
+const EditBtn = styled.button`
+  margin: 0 4px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ebedf1;
+  opacity: 0.8;
+`;
