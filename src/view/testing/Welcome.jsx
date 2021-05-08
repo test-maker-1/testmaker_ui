@@ -11,9 +11,9 @@ const { PREVIEW, MOVENEXT } = ENUM;
 
 const Welcome = () => {
   return (
-    <TEMP>
+    <PageContainer background={"#F1F2F4"}>
       <div style={{padding: "10px 1.25em"}}>
-      <TestIntro />      
+        <TestIntro />      
       </div>
       <RoundContiner>
         <CoHead><Title>댓글</Title><Entire>10개 전체보기</Entire></CoHead>
@@ -27,13 +27,9 @@ const Welcome = () => {
           { name: "시작하기", type: MOVENEXT },
         ]}
       />
-    </TEMP>
+    </PageContainer>
   );
 };
-
-const TEMP = styled.div`
-  background: #F1F2F4;
-`;
 
 const CoHead = styled.div`
   height: 30px;

@@ -1,18 +1,39 @@
 import React, { memo } from 'react';
 import styled from "styled-components";
+import Avatar from '@material-ui/core/Avatar';
+import { styled  as mstyled } from '@material-ui/core/styles';
+import SVG from "../../../components/common/SVG";
+import Ename from "../../../constants/Enum";
 
 const TestIntro = memo((props) => {
   return (
     <>
       <div style={{height: "2.5em"}}>
         <Title>우정 테스트</Title>
-        <More>:</More>
+        <More><SVG type={Ename.MORE}/></More>
       </div>
-      <TBox><Partition>메이커짱짱 | 참여인원 1,000명</Partition></TBox>
+      <TBox>
+        <TEMP>
+          <AvatarIcon alt="user" src="/static/images/avatar/1.jpg"/>
+        </TEMP>
+        <Partition>메이커짱짱</Partition>
+        <SVG type={Ename.SPLIT} style={{width: "12px", height: "12px"}}/>
+        <Partition>참여인원 1,000명</Partition>
+      </TBox>
       <div><Box/></div>
       <Inform>총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.</Inform>
     </>
   );
+});
+
+const TEMP = styled.div`
+  display: inline-block;
+  margin-right: 8px;
+`;
+
+const AvatarIcon = mstyled(Avatar)({
+  width: "32px",
+  height: "32px",
 });
 
 const TBox = styled.div`
@@ -32,16 +53,17 @@ const Title = styled.p`
 const More = styled.p`
   display: inline;
   float: right;
-  font-weight: bold;
   line-height: 36px;
-  color: #697382;
-  margin-right: 5px;
 `;
 
 const Partition = styled.p`
+  display: inline-block;
   font-size: 0.8em; /*14px*/
   line-height: 21px;
   letter-spacing: -0.3px;
+  &: last-child {
+    margin-left: 8px;
+  }
 `;
 
 /*374px * 212px : 1.7*/

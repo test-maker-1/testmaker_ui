@@ -1,16 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import SVG from "../../../components/common/SVG";
+import Enum from "../../../constants/Enum";
 
 const Mention = () => {
   return (
     <MenContainer>
-      <Avatar />
-      <UserName>USERNAME</UserName>
-      <Timer>20분전</Timer>
+      <TEMP>
+        <Avatar />
+        <UserName>USERNAME</UserName>
+        <Timer>20분전</Timer>
+        <SVG type={Enum.MORE} style={{float: "right"}}/>
+      </TEMP>
       <Speech>너무 너무 너무나게 재밌게 하구 가요~ 테스트 잘 만드신거 같아요!!!</Speech>
     </MenContainer>
   );
 };
+
+const TEMP = styled.div`
+  height: 21px;
+  margin-bottom: 8px;
+`;
 
 const MenContainer = styled.div`
   padding: 15px 0px 0px;  
@@ -28,6 +38,7 @@ const MenContainer = styled.div`
 
 const Avatar = styled.div`
   display: inline-block;
+  float: left;
   width: 24px;
   height: 24px;
   border-radius: 12px;
@@ -36,6 +47,7 @@ const Avatar = styled.div`
 
 const UserName = styled.p`
   display: inline-block;
+  float: left;
   margin: 0px 10px;
   font-size: 14px;
   line-height: 21px;
@@ -45,6 +57,7 @@ const UserName = styled.p`
 
 const Timer = styled.p`
   display: inline-block;
+  float: left;
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.3px;
