@@ -19,6 +19,10 @@ const ENUM = {
 
   // key type
   ENTER: "Enter",
+
+  // boolean type (string)
+  TRUE: "true",
+  FALSE: "false"
 };
 
 export default ENUM;

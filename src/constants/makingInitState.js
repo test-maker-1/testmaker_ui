@@ -10,7 +10,7 @@ const common = {
 
   tags: [],
   optionalURL: "", // 추가 홍보 URL
-  private: false, // 테스트 공개 여부
+  onFeed: true, // 테스트 공개 여부
 
   userId: "", // 테스트 메이커 ID
   data: {} // type에 따라 내용 상이
