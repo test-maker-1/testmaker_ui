@@ -76,6 +76,7 @@ const Button = styled.button`
 // bottomBtn이 있는 page일 경우 최상위 div로 사용
 export const PageContainer = styled.div`
   padding-bottom: ${({ theme: { heights } }) => heights.bottomBtn}px;
+  ${({ background}) => background ? `background: ${background};`: ""}
 `;
 
 export default withRouter(BottomBtn);
