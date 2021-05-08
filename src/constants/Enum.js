@@ -10,6 +10,8 @@ const ENUM = {
   PREVIEW: "preview",
   MOVENEXT: "movenext",
   SHARE: "share",
+  SPLIT: "split",
+  MORE: "more",
 
   // svg type
   ADD: "add",

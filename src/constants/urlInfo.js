@@ -13,11 +13,14 @@ export const [
   replay,
   preview,
   release,
+  welcome,
+  comments,
+  exam,
 ] = [
   "",
   "login",
   "test",
-  "test-ing",
+  "testing",
   "pick-test",
   "preset",
   "qna",
@@ -26,6 +29,10 @@ export const [
   "replay",
   "preview",
   "release",
+  "welcome",
+  "comments",
+  "exam",
+  "result"
 ];
 
 // https://www.notion.so/depromeet/Routing-URL-9a3efbefa3d84b679a23ea4a798a299f
@@ -33,4 +40,5 @@ export const seqTest = {
   [multiple]: [preset, qna, result, detail, replay, release],
   [mbti]: [preset, qna, detail, replay, release],
   [weight]: [preset, result, qna, detail, replay, release],
+  [testing]: [welcome, exam, result]
 };

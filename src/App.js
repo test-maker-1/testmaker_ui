@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import MainForm from "./components/frame/MainForm";
+import Testing from "./components/frame/Testing";
 import TestMaking from "./components/frame/TestMaking";
 
 import Feed from "./view/Feed";
@@ -18,6 +19,8 @@ const App = () => {
           <Route exact path="/test/pick-test" component={PickTest} />
           {/* module: multiple, mbti, weight */}
           <Route exact path="/test/:module/:step" component={TestMaking} />
+          {/* Testing */}
+          <Route exact path="/testing/:module" component={Testing} />
           <Route exact component={Error} />
         </Switch>
       </MainForm>

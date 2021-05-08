@@ -43,6 +43,9 @@ export const getNextPageURL = (pmatch) => {
       nextUrl = `${where}/${module}/${sequence[nextIDX]}`;
       break;
     case testing: //테스트
+      const seque = seqTest[testing];
+      //ex) testing/welcome
+      nextUrl = `${where}/${seque[seque.indexOf(module) + 1]}`;
       break;
   }
 

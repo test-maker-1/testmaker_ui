@@ -1,7 +1,7 @@
 import React from "react";
 import Enum from "../constants/Enum";
 
-const {ADD, CANCEL, PICTURE, CHANGE} = Enum;
+const {ADD, CANCEL, PICTURE, CHANGE, SPLIT, MORE} = Enum;
 
 export const svgInfo = {
   [ADD]: {
@@ -41,6 +41,25 @@ export const svgInfo = {
     inContext: [
       <path d="M20.1509 31.8809V36.6667L26.7318 29.9286L20.1276 23.1905V28.2857C17.9806 28.3333 15.8337 27.5476 14.2001 25.8809C11.5864 23.2143 11.1663 19.2143 12.8232 16.0476L10.2562 13.4286C7.26913 18.0476 7.7592 24.3333 11.7498 28.4048C14.0367 30.7143 17.0238 31.8809 20.0109 31.8809H20.1509Z" fill="#8A929E"/>,
       <path d="M27.1752 23.9524L29.7423 26.5714C32.7294 21.9524 32.2393 15.6429 28.2721 11.5952C25.9617 9.21428 22.9046 8.09523 19.8709 8.14285V3.33333L13.2666 10.0714L19.8709 16.7857V11.6667H20.0109C22.1112 11.6667 24.1882 12.4762 25.7984 14.119C28.4121 16.7857 28.8321 20.7857 27.1752 23.9524Z" fill="#8A929E"/>
+    ]
+  },
+  [SPLIT]: {
+    width: "2",
+    height: "12",
+    viewBox: "0 0 2 12",
+    fill: "none",
+    inContext: [
+      <path d="M1 0V12" stroke="#CFD3DB"/>
+    ]
+  },
+  [MORE]: {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    inContext: [
+      <circle cx="12" cy="8.5" r="2" fill="#C4C4C4"/>,
+      <circle cx="12" cy="15.5" r="2" fill="#C4C4C4"/>
     ]
   }
 };
