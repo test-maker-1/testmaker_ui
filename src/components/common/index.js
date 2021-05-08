@@ -1,4 +1,4 @@
-export { TitleBox } from "./TitleBox";
+export { TitleBox, Title } from "./TitleBox";
 export { BtnField, BtnShare } from "./BtnField";
 export { UploadImg } from "./UploadImg";
 export { Option, AddOptionBtn } from "./Options";
