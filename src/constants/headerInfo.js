@@ -27,6 +27,7 @@ const headerInfo = {
         leftType: BACK,
         title: "로그인",
     },
+
     "/register": {
         leftType: BACK,
         title: "회원가입",
