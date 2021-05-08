@@ -8,10 +8,8 @@ const Exam = memo((props) => {
     console.log(id, e)
   }
   return (
-    <div style={{padding: "10px 1em"}}>
+    <div style={{padding: "10px 1.25em"}}>
       <Question>내가 좋아하는 여행시는 어디일까요? <br/> 2주일 때는 아래로 내려주세요.</Question>
-      <SVG type="split"/>
-      <SVG type="more"/>
       <Box/>
       <div>
         {

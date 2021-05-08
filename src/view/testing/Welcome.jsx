@@ -12,7 +12,7 @@ const { PREVIEW, MOVENEXT } = ENUM;
 const Welcome = () => {
   return (
     <TEMP>
-      <div style={{padding: "10px 1em"}}>
+      <div style={{padding: "10px 1.25em"}}>
       <TestIntro />      
       </div>
       <RoundContiner>
@@ -37,6 +37,7 @@ const TEMP = styled.div`
 
 const CoHead = styled.div`
   height: 30px;
+  margin-bottom: 16px;
 `;
 
 const Entire = styled.p`

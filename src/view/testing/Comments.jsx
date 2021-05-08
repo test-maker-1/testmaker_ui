@@ -15,7 +15,7 @@ const Comments = props => {
 };
 
 const TEMP = styled.div`
-  padding: 0px 1em;
+  padding: 0px 1.25em;
 `;
 
 

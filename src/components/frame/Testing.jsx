@@ -15,18 +15,17 @@ const Testing = ({
 
   switch(module){
     case welcome: //웰컴
-      return <Welcome />
+      return <Welcome />;
     case comments: //댓글
-      return <Comments />
+      return <Comments />;
     case exam:    //테스트
-      return <Exam />
+      return <Exam />;
     case result:  //테스트결과 (module)
-      break;
+      return <Exam />;
     default:
       // history.push("/error");
       break;
   }
-  return (<h1>???</h1>);
 };
 
 export default withRouter(Testing);
