@@ -14,7 +14,7 @@ const SVG = ({type, onClick, style={}}) => {
   return(
     <SvgItem width={_width} height={_height} fill={_fill} 
           x={0} y={0} viewBox={viewBox}
-          onClick={handleOnClick}
+          onClick={onClick ? handleOnClick : null}
           preserveAspectRatio={"xMaxYMin meet"}
           xmlns="http://www.w3.org/2000/svg">
       {inContext.map((context, idx)=>{
