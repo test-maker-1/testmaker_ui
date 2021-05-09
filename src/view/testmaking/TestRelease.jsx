@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-import { TitleBox, Title } from "../../components/common";
+import { TitleBox, Title, BtnShare } from "../../components/common";
 import BottomBtn from "../../components/frame/BottomBtn";
 import { FeedBtn } from "../../components/making";
 
@@ -46,6 +46,9 @@ const TestRelease = () => {
               공개할래요
             </FeedBtn>
           </ButtonGroup>
+        </TitleBox>
+        <TitleBox title="친구에게 공유할래요!" noline>
+          <BtnShare />
         </TitleBox>
       </div>
       <BottomBtn btnArr={[{ name: "홈으로 가기", type: HOME }]} />
