@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-import { TitleBox, Title } from "../../components/common/index";
+import { TitleBox, Title } from "../../components/common";
 import BottomBtn from "../../components/frame/BottomBtn";
+import { FeedBtn } from "../../components/making";
 
 import useMaking from "../../hooks/useMaking";
 import ENUM from "../../constants/Enum";
 
 import tempImg from "../../resources/temp-img.png";
 
-const { TRUE, HOME } = ENUM;
-
-const [SELECTED, UNSELECTED] = ["#e5e8ec", "#f1f2f4"];
+const { TRUE, HOME, FALSE } = ENUM;
 
 const TestRelease = () => {
   const {
@@ -20,7 +20,7 @@ const TestRelease = () => {
   } = useMaking();
 
   const onBoolClick = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.currentTarget;
     if (value === TRUE) updateCommon(name, true);
     else updateCommon(name, false);
   };
@@ -29,6 +29,7 @@ const TestRelease = () => {
     <>
       <div>
         <TitleBox noline>
+          {/* success */}
           <ImgWrap>
             <img src={tempImg} alt="success thumbnail" />
           </ImgWrap>
@@ -36,18 +37,15 @@ const TestRelease = () => {
           <Guide>테스트 관리는 마이페이지에서 할 수 있어요!</Guide>
         </TitleBox>
         <TitleBox title="홈 피드에 공개할까요?">
-          <Buttons>
-            <Item bgColor={onFeed ? UNSELECTED : SELECTED}>
-              <Button name="onFeed" value={false} onClick={onBoolClick}>
-                안 할래요
-              </Button>
-            </Item>
-            <Item bgColor={onFeed ? SELECTED : UNSELECTED}>
-              <Button name="onFeed" value={true} onClick={onBoolClick}>
-                공개할래요
-              </Button>
-            </Item>
-          </Buttons>
+          {/* setting onFeed */}
+          <ButtonGroup fullWidth={true}>
+            <FeedBtn onFeed={onFeed} value={FALSE} onClick={onBoolClick}>
+              안 할래요
+            </FeedBtn>
+            <FeedBtn onFeed={onFeed} value={TRUE} onClick={onBoolClick}>
+              공개할래요
+            </FeedBtn>
+          </ButtonGroup>
         </TitleBox>
       </div>
       <BottomBtn btnArr={[{ name: "홈으로 가기", type: HOME }]} />
@@ -76,27 +74,6 @@ const Guide = styled.p`
   font-size: 16px;
   line-height: 29px;
   letter-spacing: -0.5px;
-  color: #8a929e;
-`;
-
-const Buttons = styled.ul`
-  display: flex;
-  border-radius: 5px;
-`;
-
-const Item = styled.li`
-  flex: 1;
-  text-align: center;
-  background-color: ${({ bgColor }) => bgColor};
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 13px 0;
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: -0.5px;
-  line-height: 27px;
   color: #8a929e;
 `;
 
