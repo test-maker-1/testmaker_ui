@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { SVG } from "../../../components/common";
-import { BtnAdd } from "../../../components/making";
+import { BtnAdd, BtnAddOption } from "../../../components/making";
 
 import theme from "../../../styles/theme";
 import ENUM from "../../../constants/Enum";
@@ -32,6 +32,7 @@ const MultipleQnA = () => {
         </GuideText>
       </RandomGuide>
       <BtnAdd />
+      <BtnAddOption />
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
