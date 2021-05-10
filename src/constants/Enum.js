@@ -15,6 +15,8 @@ export const [
     REGISTER,
     NEXT,
     PWERROR,
+    HOME,
+    MAKINGTEST,
 ] = [
     "로그인 하기",
     "카카오톡으로 시작",
@@ -25,6 +27,8 @@ export const [
     "회원가입",
     "다음",
     "비밀번호가 달라요! 다시 확인해주세요",
+    "홈으로",
+    "테스트만들기",
 ];
 
 const ENUM = {
