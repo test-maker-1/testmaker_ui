@@ -3,7 +3,12 @@ import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { SVG } from "../../../components/common";
-import { BtnAdd, BtnAddOption } from "../../../components/making";
+import {
+  BtnAdd,
+  BtnAddOption,
+  SubTitle,
+  BtnIcon,
+} from "../../../components/making";
 
 import theme from "../../../styles/theme";
 import ENUM from "../../../constants/Enum";
@@ -31,8 +36,14 @@ const MultipleQnA = () => {
           <p>주사위를 누르면 랜덤으로 제공해드려요.</p>
         </GuideText>
       </RandomGuide>
+
+      {/* component test */}
+      <SubTitle title="1번 질문">
+        <BtnIcon type={CASINO} onClick={() => alert("hello")} />
+      </SubTitle>
       <BtnAdd />
       <BtnAddOption />
+
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
