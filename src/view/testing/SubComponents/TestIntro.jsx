@@ -2,25 +2,26 @@ import React, { memo } from 'react';
 import styled from "styled-components";
 import Avatar from '@material-ui/core/Avatar';
 import { styled  as mstyled } from '@material-ui/core/styles';
-import SVG from "../../../components/common/SVG";
-import Ename from "../../../constants/Enum";
+import {SVG} from "../../../components/common";
+import Enum from "../../../constants/Enum";
+import ImageView from "../../../components/common/ImageView";
 
 const TestIntro = memo((props) => {
   return (
     <>
       <div style={{height: "2.5em"}}>
         <Title>우정 테스트</Title>
-        <More><SVG type={Ename.MORE}/></More>
+        <More><SVG type={Enum.MORE}/></More>
       </div>
       <TBox>
         <TEMP>
           <AvatarIcon alt="user" src="/static/images/avatar/1.jpg"/>
         </TEMP>
         <Partition>메이커짱짱</Partition>
-        <SVG type={Ename.SPLIT} style={{width: "12px", height: "12px"}}/>
+        <SVG type={Enum.SPLIT} style={{width: "12px", height: "12px"}}/>
         <Partition>참여인원 1,000명</Partition>
       </TBox>
-      <div><Box/></div>
+      <div><ImageView imageUrl={null}/></div>
       <Inform>총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.</Inform>
     </>
   );

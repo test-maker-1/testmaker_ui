@@ -10,14 +10,14 @@ const ENUM = {
   PREVIEW: "preview",
   MOVENEXT: "movenext",
   SHARE: "share",
-  SPLIT: "split",
-  MORE: "more",
-
+  
   // svg type
   ADD: "add",
   CANCEL: "cancel",
   PICTURE: "picture",
   CHANGE: "change",
+  SPLIT: "split",
+  MORE: "more",
 
   // key type
   ENTER: "Enter",
