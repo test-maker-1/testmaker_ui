@@ -27,6 +27,10 @@ const SVG = ({type, onClick, style={}}) => {
 const SvgItem = styled.svg`
   display: inline-block;
   cursor: ${(props) => props.onClick ? "pointer" : "default"};
+  
+  path {
+    fill: ${({fill}) => fill};
+  }
 `;
 
 export default memo(SVG);
