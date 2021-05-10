@@ -5,20 +5,24 @@ export const [multiple, mbti, weight] = ["multiple", "mbti", "weight"];
 export const [md, lg] = ["md", "lg"];
 
 const ENUM = {
-  HOME: "home",
-  PICKTEST: "picktest",
-  PREVIEW: "preview",
-  MOVENEXT: "movenext",
-  SHARE: "share",
+    HOME: "home",
+    PICKTEST: "picktest",
+    PREVIEW: "preview",
+    MOVENEXT: "movenext",
+    SHARE: "share",
 
-  // svg type
-  ADD: "add",
-  CANCEL: "cancel",
-  PICTURE: "picture",
-  CHANGE: "change",
+    // svg type
+    ADD: "add",
+    CANCEL: "cancel",
+    PICTURE: "picture",
+    CHANGE: "change",
+    MENU: "menu",
+    SEARCH: "search",
+    BACK: "back",
+    HEADERLOGO: "headerLogo",
 
-  // key type
-  ENTER: "Enter",
+    // key type
+    ENTER: "Enter",
 };
 
 export default ENUM;
