@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import ENUM from "../../../constants/Enum";
-
 import { SVG } from "../../../components/common";
+import { BtnAdd } from "../../../components/making";
+
+import ENUM from "../../../constants/Enum";
 
 const { MOVENEXT, PREVIEW, CASINO } = ENUM;
 
@@ -14,7 +15,7 @@ const svgStyles = {
   fill: "#0B70FD",
 };
 
-const MultipleQA = () => {
+const MultipleQnA = () => {
   return (
     <PageContainer>
       <RandomGuide>
@@ -26,6 +27,7 @@ const MultipleQA = () => {
           <p>주사위를 누르면 랜덤으로 제공해드려요.</p>
         </GuideText>
       </RandomGuide>
+      <BtnAdd />
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
@@ -39,12 +41,12 @@ const MultipleQA = () => {
 const RandomGuide = styled.section`
   padding: 18px ${({ theme: { paddings } }) => paddings.main}px;
   display: flex;
+  align-items: center;
   background-color: #fafafa;
 `;
 
 const GuideText = styled.div`
   margin-left: 12px;
-  align-items: center;
 
   h2 {
     font-weight: bold;
@@ -61,4 +63,4 @@ const GuideText = styled.div`
   }
 `;
 
-export default MultipleQA;
+export default MultipleQnA;
