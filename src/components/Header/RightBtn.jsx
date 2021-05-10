@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
+import { SVG } from "../common";
+import ENUM from "../../constants/Enum";
 import { MENU, SEARCH, NOTHING } from "../../constants/headerInfo";
 
 /*
@@ -8,18 +9,18 @@ import { MENU, SEARCH, NOTHING } from "../../constants/headerInfo";
  * onToggleMenu: function;
  */
 const RightBtn = ({ type = MENU, onToggleMenu }) => {
-  if (type === NOTHING) return null;
+    if (type === NOTHING) return null;
 
-  const onClickEvent = () => {
-    if (type === MENU) onToggleMenu();
-  };
+    const onClickEvent = () => {
+        if (type === MENU) onToggleMenu();
+    };
 
-  return <Button onClick={onClickEvent}>{rightBtn[type]}</Button>;
+    return <Button onClick={onClickEvent}>{rightBtn[type]}</Button>;
 };
 
 const rightBtn = {
-  [MENU]: "메뉴",
-  [SEARCH]: "검색"
+    [MENU]: <SVG type={ENUM.MENU} style={{ width: "24", height: "24" }} />,
+    [SEARCH]: <SVG type={ENUM.SEARCH} style={{ width: "24", height: "24" }} />,
 };
 
 const Button = styled.button``;
