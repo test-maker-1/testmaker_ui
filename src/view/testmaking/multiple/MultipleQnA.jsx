@@ -5,19 +5,23 @@ import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { SVG } from "../../../components/common";
 import { BtnAdd } from "../../../components/making";
 
+import theme from "../../../styles/theme";
 import ENUM from "../../../constants/Enum";
 
 const { MOVENEXT, PREVIEW, CASINO } = ENUM;
 
+const { blue, white, bodyGray, darkGray } = theme.colors;
+
 const svgStyles = {
   width: 32,
   height: 32,
-  fill: "#0B70FD",
+  fill: blue,
 };
 
 const MultipleQnA = () => {
   return (
     <PageContainer>
+      {/* random guide */}
       <RandomGuide>
         <div>
           <SVG type={CASINO} style={svgStyles} />
@@ -42,7 +46,7 @@ const RandomGuide = styled.section`
   padding: 18px ${({ theme: { paddings } }) => paddings.main}px;
   display: flex;
   align-items: center;
-  background-color: #fafafa;
+  background-color: ${white};
 `;
 
 const GuideText = styled.div`
@@ -53,13 +57,14 @@ const GuideText = styled.div`
     font-size: 20px;
     line-height: 30px;
     letter-spacing: -1px;
+    color: ${darkGray};
   }
 
   p {
     font-size: 15px;
     line-height: 24px;
     letter-spacing: -0.5px;
-    color: #515966;
+    color: ${bodyGray};
   }
 `;
 
