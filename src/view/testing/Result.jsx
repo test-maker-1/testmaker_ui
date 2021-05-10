@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import styled from "styled-components";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import {TitleBox} from "../../components/common/TitleBox";
-import {BtnField} from "../../components/common";
+import {ImageView, BtnField} from "../../components/common";
 import RoundContiner from "./SubComponents/RoundContainer";
 import Mention from "./SubComponents/Mention";
 import ENUM from "../../constants/Enum";
@@ -19,7 +19,7 @@ const Result = memo((props) => {
       <div style={{padding: "24px 1.25em"}}>
         <Title>당신은 나의 찐친입니다.</Title>
         <SubTitle>27%의 참여자와 같은 유형이에요!</SubTitle>
-        <div><Box/></div>
+        <ImageView imageUrl={null}/>
         <Inform>총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.</Inform>
         {/* font-size: 19px, line-height: 28px, text-align: center; */}
         <BtnField name={"테스트 다시하기"} onClick={handleonClick} style={{width: "100%", height: "3.6em", fontSize: "1em", background: "#DADEE6"}}/>
@@ -85,16 +85,6 @@ const SubTitle = styled.p`
   text-align: center;
   letter-spacing: -0.5px;
   color: #697382;
-`;
-
-/*374px * 212px : 1.7*/
-const Box = styled.div`
-  width: 100%;
-  padding-top: calc(100% / 1.7);
-  background: #FAFAFA;
-  border: 1px solid #E5E8EC;
-  box-sizing: border-box;
-  border-radius: 5px;
 `;
 
 const Inform = styled.div`

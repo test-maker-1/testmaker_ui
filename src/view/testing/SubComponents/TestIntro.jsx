@@ -4,7 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { styled  as mstyled } from '@material-ui/core/styles';
 import {SVG} from "../../../components/common";
 import Enum from "../../../constants/Enum";
-import ImageView from "../../../components/common/ImageView";
+import {ImageView} from "../../../components/common";
 
 const TestIntro = memo((props) => {
   return (
