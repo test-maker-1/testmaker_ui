@@ -1,17 +1,17 @@
 import React, { useCallback } from "react";
-import { useHistory } from "react-router-dom";
 import LoginBtn from "../../components/common/LoginBtn";
 import styled from "styled-components";
 import { KAKAO, OTHER } from "../../constants/Enum";
+import usePage from "../../hooks/usePage";
 
 const Login = (props) => {
-    const history = useHistory();
+    const { goPage } = usePage();
     const handleOnClick = useCallback(
         (btnName, e) => {
-            if (btnName === KAKAO) history.push("/login/kakao");
-            else history.push("/login/other");
+            if (btnName === KAKAO) goPage("/login/kakao");
+            else goPage("/login/other");
         },
-        [history]
+        [goPage]
     );
     return (
         <PageContainer>

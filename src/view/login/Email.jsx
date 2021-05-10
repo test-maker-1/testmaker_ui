@@ -1,11 +1,12 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoginBtn from "../../components/common/LoginBtn";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { REGISTER } from "../../constants/Enum";
 import { PageContainer, Summary } from "./Login";
+import usePage from "../../hooks/usePage";
 
 const useStyles = makeStyles((theme, color) => ({
     useBtn: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme, color) => ({
 
 const Email = ({}) => {
     const classes = useStyles();
-    const history = useHistory();
+    const { replace, goPage } = usePage();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -44,18 +45,17 @@ const Email = ({}) => {
                 return;
             }
             console.log("맞음");
-            // return history.push("/");
+            return replace("/");
         },
-        [email, password, errors]
+        [email, password, errors, replace]
     );
 
     const handleOnClick = useCallback(
         (btnName, e) => {
-            if (btnName == REGISTER)
-                return history.push("/register/email-auth");
+            if (btnName === REGISTER) return goPage("/register/email-auth");
             return;
         },
-        [history]
+        [goPage]
     );
 
     return (
@@ -91,11 +91,13 @@ const Email = ({}) => {
 export default Email;
 
 export const Title = styled.div`
-    margin: 70px 0 18px 0;
+    margin: 4.375rem 0 1.125rem 0;
     text-align: start;
-    font-size: 30px;
+    font-size: 1.875rem; /* 30px */
     font-weight: 700;
     color: #515966;
+    line-height: 2.75rem; /* 44px */
+    letter-spacing: -1px;
 `;
 
 const Form = styled.form`
@@ -124,7 +126,7 @@ export const Input = styled.input`
     border-radius: 10px;
     background: #fafafa;
     margin: 6px 0;
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15px */
     color: #697382;
     line-height: 22px;
     padding: 12px;
@@ -138,7 +140,7 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.div`
-    font-size: 14px;
+    font-size: 0.875rem; /* 24px */
     text-align: start;
     margin: 2px 0 6px 0;
     color: red;

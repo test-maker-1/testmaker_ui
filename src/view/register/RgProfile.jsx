@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback } from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +6,7 @@ import ENUM from "../../constants/Enum";
 import { SVG } from "../../components/common";
 
 import { PageContainer } from "../login/Login";
+import usePage from "../../hooks/usePage";
 
 const useStyles = makeStyles((theme, color) => ({
     profileBtn: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme, color) => ({
 const RgProfile = (props) => {
     const classes = useStyles();
     const fileInput = useRef();
-    const history = useHistory();
+    const { replace } = usePage();
 
     const [list, setList] = useState([]);
     const [imgURL, setImgURL] = useState("");
@@ -89,9 +89,9 @@ const RgProfile = (props) => {
     );
     const onSkip = useCallback(
         (e) => {
-            return history.push("/");
+            return replace("/register/complete");
         },
-        [history]
+        [replace]
     );
 
     const onComplete = useCallback(
@@ -100,9 +100,9 @@ const RgProfile = (props) => {
                 // console.log("다쓰기 전까지 넘어갈 수 없다!");
                 return;
             }
-            return history.push("/");
+            return replace("/register/complete");
         },
-        [list, imgURL, nickname]
+        [list, imgURL, nickname, replace]
     );
     return (
         <PageContainer>

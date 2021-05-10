@@ -5,21 +5,22 @@ import styled from "styled-components";
 import { EMAIL, NAVER, GOOGLE } from "../../constants/Enum";
 
 import { PageContainer, Logo, Name, Summary } from "./Login";
+import usePage from "../../hooks/usePage";
 
 const Other = ({}) => {
-    const history = useHistory();
+    const { goPage } = usePage();
     const handleOnClick = useCallback(
         (btnName, e) => {
             switch (btnName) {
                 case EMAIL:
-                    return history.push("/login/email");
+                    return goPage("/login/email");
                 case NAVER:
-                    return history.push("/login/naver");
+                    return goPage("/login/naver");
                 case GOOGLE:
-                    return history.push("/login/google");
+                    return goPage("/login/google");
             }
         },
-        [history]
+        [goPage]
     );
 
     return (

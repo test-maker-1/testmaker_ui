@@ -1,6 +1,4 @@
 import React, { useState, useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LoginBtn from "../../components/common/LoginBtn";
@@ -8,6 +6,7 @@ import { NEXT } from "../../constants/Enum";
 import { PageContainer, Summary } from "../login/Login";
 import { Title, Input, Error } from "../login/Email";
 import { EmailForm, EmailInput } from "../login/findPw/PwEmailAuth";
+import usePage from "../../hooks/usePage";
 
 const useStyles = makeStyles((theme, color) => ({
     useBtn: {
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme, color) => ({
 
 const RgEmailAuth = (props) => {
     const classes = useStyles();
-    const history = useHistory();
+    const { replace } = usePage();
     const [email, setEmail] = useState("");
     const [authNumber, setAuthNumber] = useState("");
 
@@ -39,9 +38,9 @@ const RgEmailAuth = (props) => {
     const onComplete = useCallback(
         (e) => {
             e.preventDefault();
-            return history.push("/register/pw-setting");
+            return replace("/register/pw-setting");
         },
-        [email, authNumber]
+        [email, authNumber, replace]
     );
 
     return (

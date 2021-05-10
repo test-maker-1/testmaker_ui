@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import LoginBtn from "../../../components/common/LoginBtn";
 import { NEXT, PWERROR } from "../../../constants/Enum";
 import { PageContainer } from "../Login";
 import { Title, Input, Error } from "../Email";
+import usePage from "../../../hooks/usePage";
 
 const PwSetting = (props) => {
-    const history = useHistory();
+    const { replace } = usePage();
     const [password, setPassword] = useState("");
     const [passwordCheck, setPasswordCheck] = useState("");
     const [error, setError] = useState(false);
@@ -20,9 +19,9 @@ const PwSetting = (props) => {
                 setError(true);
                 return;
             }
-            return history.push("/login/find-pw/complete");
+            return replace("/login/find-pw/complete");
         },
-        [password, passwordCheck, setError]
+        [password, passwordCheck, setError, replace]
     );
 
     return (
