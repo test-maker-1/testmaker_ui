@@ -69,7 +69,7 @@ const ImgWrap = styled.div`
 const SuccessTitle = styled(Title)`
   padding-bottom: 8px;
   text-align: center;
-  color: #363d4a;
+  color: ${({ theme: { colors } }) => colors.darkGray};
 `;
 
 const Guide = styled.p`
@@ -77,7 +77,7 @@ const Guide = styled.p`
   font-size: 16px;
   line-height: 29px;
   letter-spacing: -0.5px;
-  color: #8a929e;
+  color: ${({ theme: { colors } }) => colors.deepGray};
 `;
 
 export default TestRelease;

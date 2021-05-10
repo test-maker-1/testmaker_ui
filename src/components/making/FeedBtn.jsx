@@ -1,19 +1,31 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import theme from "../../styles/theme";
 
-const [SELECTED, UNSELECTED] = ["#e5e8ec", "#f1f2f4"];
+const { blue, deepGray, ghostGray } = theme.colors;
+
+const btnColors = {
+  selected: {
+    bgColor: blue,
+    color: "white",
+  },
+  unselected: {
+    bgColor: "white",
+    color: deepGray,
+  },
+};
 
 const useStyles = makeStyles((theme) => ({
-  feedBtn: ({ bgColor }) => ({
+  feedBtn: ({ bgColor, color }) => ({
     flex: 1,
     padding: "13px 0",
     fontSize: 18,
     fontWeight: "bold",
     letterSpacing: -0.5,
     lineHeight: "27px",
-    color: "#8a929e",
-    border: "none",
+    color: color,
+    border: `1px solid ${ghostGray}`,
     backgroundColor: bgColor,
     "&:hover": {
       backgroundColor: bgColor,
@@ -27,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
  * onClick: function;
  */
 const FeedBtn = ({ onFeed, value, onClick, children }) => {
-  const bgColor =
-    String(onFeed) === value ? { bgColor: SELECTED } : { bgColor: UNSELECTED };
-  const classes = useStyles(bgColor);
+  const btnStyles =
+    String(onFeed) === value ? btnColors.selected : btnColors.unselected;
+  const classes = useStyles(btnStyles);
 
   return (
     <Button
