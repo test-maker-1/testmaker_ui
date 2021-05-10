@@ -5,13 +5,12 @@ const {ADD, CANCEL, PICTURE, CHANGE, CASINO, CHECK, DELETE} = Enum;
 
 export const svgInfo = {
   [ADD]: {
-    width: "24",
-    height: "24",
-    viewBox: "0 0 24 24",
+    width: "14",
+    height: "14",
+    viewBox: "0 0 14 14",
     fill: "none",
     inContext: [
-      <circle cx="12" cy="12" r="12" fill="#F1F2F4"/>,
-      <path d="M12.2358 18.8354V5.16467M19.0711 12L5.40039 12" stroke="#CFD3DB" strokeWidth="3"/>
+      <path d="M6.83537 13.6707V0M13.6707 6.83536L0 6.83537" stroke="#CFD3DB" strokeWidth="3"/>
     ]
   },
   [CANCEL]: {
