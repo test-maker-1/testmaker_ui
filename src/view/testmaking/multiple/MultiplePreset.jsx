@@ -1,34 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import {
-  TitleBox,
-  BtnField,
-  BtnShare,
-  UploadImg,
-} from "../../../components/common";
+import { TitleBox, Select } from "../../../components/common/index";
+import useMaking from "../../../hooks/useMaking";
 import ENUM from "../../../constants/Enum";
 
-class MultiplePreset extends Component {
-  handleChange = (a, b, c) => {
-    console.log(a, b, c);
-  };
-  render() {
-    return (
-      <PageContainer>
-        <h1>임시 테스트 페이지</h1>
-        <BtnField name={"질문 추가하기"} onClick={this.handleChange} />
-        <BtnShare />
-        <UploadImg />
-        <TitleBox title="누구에게 공유하실건가요?">
-          <div>TEST AREA</div>
-        </TitleBox>
-        <TitleBox title="난이도를 골라주세요">
-          <div>TEST AREA</div>
-        </TitleBox>
-        <BottomBtn btnArr={[{ name: "정했어요", type: ENUM.MOVENEXT }]} />
-      </PageContainer>
-    );
-  }
-}
+const [FRITEND, FAMILY] = ["friend", "family"];
+
+const MultiplePreset = () => {
+  const {
+    data: { data },
+    updateTypeDataByInput,
+  } = useMaking();
+
+  const value = data.hasOwnProperty("target") ? data.target : FRITEND;
+
+  return (
+    <PageContainer>
+      <TitleBox title="누구에게 공유하실건가요?">
+        {/* select target */}
+        <Select name="target" value={value} onChange={updateTypeDataByInput}>
+          <option value={FRITEND}>친구에게 보낼거예요</option>
+          <option value={FAMILY}>가족한테 보낼거예요</option>
+        </Select>
+      </TitleBox>
+      <BottomBtn btnArr={[{ name: "정했어요", type: ENUM.MOVENEXT }]} />
+    </PageContainer>
+  );
+};
 
 export default MultiplePreset;

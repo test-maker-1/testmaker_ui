@@ -1,4 +1,3 @@
 // input
-export { default as Input } from "./Input";
+export { Input, TextArea, inputStyles } from "./InputText";
 export { default as InputTitle } from "./InputTitle";
-export { default as TextArea } from "./TextArea";
