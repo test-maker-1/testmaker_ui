@@ -2,26 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import { SVG, InfoText } from "../../../components/common";
-import {
-  BtnAdd,
-  BtnAddOption,
-  SubTitle,
-  BtnIcon,
-  Option,
-} from "../../../components/making";
-
+import { SVG } from "../../../components/common";
+import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
+
 import ENUM from "../../../constants/Enum";
 
 const { MOVENEXT, PREVIEW, CASINO } = ENUM;
-
 const { blue, white, bodyGray, darkGray } = theme.colors;
 
 const svgStyles = {
   width: 32,
   height: 32,
   fill: blue,
+};
+
+const testData = {
+  question: "내가 가장 좋아하는 여행지는?",
+  answer: "런던",
+  point: 1,
+  options: ["보라카이", "런던", "파리"],
 };
 
 const MultipleQnA = () => {
@@ -39,14 +39,8 @@ const MultipleQnA = () => {
       </RandomGuide>
 
       {/* component test */}
-      <SubTitle title="1번 질문">
-        <BtnIcon type={CASINO} onClick={() => alert("hello")} />
-      </SubTitle>
+      <Question subTitle="1번 질문" data={testData} />
       <BtnAdd />
-      <BtnAddOption />
-      <InfoText text="정답 항목을 체크해주세요" color="blue" />
-      <Option value="보라카이" answer="보라카이" />
-      <Option value="제주도" answer="보라카이" />
 
       <BottomBtn
         btnArr={[
@@ -59,6 +53,7 @@ const MultipleQnA = () => {
 };
 
 const RandomGuide = styled.section`
+  margin-bottom: 24px;
   padding: 18px ${({ theme: { paddings } }) => paddings.main}px;
   display: flex;
   align-items: center;

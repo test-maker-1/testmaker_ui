@@ -40,6 +40,7 @@ export const BtnIcon = ({ type, onClick }) => {
 };
 
 const Container = styled.div`
+  margin-bottom: 16px;
   padding: 12px ${({ theme: { paddings } }) => paddings.main}px;
   display: flex;
   justify-content: space-between;
