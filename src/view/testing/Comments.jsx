@@ -6,8 +6,8 @@ const Comments = props => {
   return (
     <TEMP>
       <ul>
-        {[1, 2, 3].map((item)=>{
-          return <li><Mention /></li>;
+        {[1, 2, 3].map((item, idx)=>{
+          return <li key={idx}><Mention /></li>;
         })}
       </ul>
     </TEMP>

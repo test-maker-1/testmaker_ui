@@ -1,33 +1,61 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from "styled-components";
 import Avatar from '@material-ui/core/Avatar';
 import { styled  as mstyled } from '@material-ui/core/styles';
-import {SVG} from "../../../components/common";
+import {SVG, Tag, ImageView} from "../../../components/common";
 import Enum from "../../../constants/Enum";
-import {ImageView} from "../../../components/common";
 
 const TestIntro = memo((props) => {
+  const handleOnClick = useCallback((e)=>{
+    props.openAlert("report");
+  }, []);
+
+  const handleOnDelete = () => {
+    console.log("handleOnDelete")
+  }
+
   return (
-    <>
-      <div style={{height: "2.5em"}}>
+    <InfoContainer>
+      <InfoTitle>
         <Title>우정 테스트</Title>
-        <More><SVG type={Enum.MORE}/></More>
-      </div>
-      <TBox>
-        <TEMP>
+        <More><SVG type={Enum.MORE} onClick={handleOnClick}/></More>
+      </InfoTitle>
+      <InfoUser>
+        <InfoAva>
           <AvatarIcon alt="user" src="/static/images/avatar/1.jpg"/>
-        </TEMP>
+        </InfoAva>
         <Partition>메이커짱짱</Partition>
         <SVG type={Enum.SPLIT} style={{width: "12px", height: "12px"}}/>
         <Partition>참여인원 1,000명</Partition>
-      </TBox>
-      <div><ImageView imageUrl={null}/></div>
+      </InfoUser>
+      <InfoImg><ImageView imageUrl={null}/></InfoImg>
+      {[{tag: "# 111"}, {tag: 222}, {tag: "# 111"}, {tag: 333}, {tag: "# 111"}, {tag: "# 111"}, {tag: "# 111"}].map((tag, idx)=>{
+        return <Tag key={tag.tag} tag={tag.tag} onDelete={handleOnDelete}/>
+      })}
       <Inform>총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.</Inform>
-    </>
+    </InfoContainer>
   );
 });
 
-const TEMP = styled.div`
+const InfoContainer = styled.div`
+  padding: 12px 1.25em; /*20px*/
+`;
+
+const InfoTitle = styled.div`
+  height: 36px; /*2.5em*/
+  line-height: 36px;
+`;
+
+const Title = styled.p`
+  display: inline-block;
+  float: left;
+  font-size: 1.5em; /*24px*/
+  font-weight: bold;
+  letter-spacing: -1px;
+  color: #697382;
+`;
+
+const InfoAva = styled.div`
   display: inline-block;
   margin-right: 8px;
 `;
@@ -37,24 +65,17 @@ const AvatarIcon = mstyled(Avatar)({
   height: "32px",
 });
 
-const TBox = styled.div`
-  margin: 7px 0px 24px;
+const InfoUser = styled.div`
+  margin-top: 7px;
 `;
 
-const Title = styled.p`
-  display: inline-block;
-  float: left;
-  font-size: 1.5em; /*24px*/
-  font-weight: bold;
-  line-height: 36px;
-  letter-spacing: -1px;
-  color: #697382;
+const InfoImg = styled.div`
+  margin: 24px 0px;
 `;
 
 const More = styled.p`
   display: inline;
   float: right;
-  line-height: 36px;
 `;
 
 const Partition = styled.p`
