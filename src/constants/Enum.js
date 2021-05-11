@@ -19,6 +19,7 @@ const ENUM = {
   CASINO: "casino",
   CHECK: "check",
   DELETE: "delete",
+  INFO: "info",
 
   // key type
   ENTER: "Enter",

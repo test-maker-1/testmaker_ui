@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import { SVG } from "../../../components/common";
+import { SVG, InfoText } from "../../../components/common";
 import {
   BtnAdd,
   BtnAddOption,
@@ -43,6 +43,7 @@ const MultipleQnA = () => {
       </SubTitle>
       <BtnAdd />
       <BtnAddOption />
+      <InfoText text="정답 항목을 체크해주세요" color="blue" />
 
       <BottomBtn
         btnArr={[

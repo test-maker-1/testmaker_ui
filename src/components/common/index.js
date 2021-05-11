@@ -8,3 +8,4 @@ export { default as NoticeAlert } from "./NoticeAlert";
 export { default as ListCard } from "./ListCard";
 export { default as SVG } from "./SVG";
 export { default as Select } from "./Select";
+export { default as InfoText } from "./InfoText";
