@@ -51,7 +51,7 @@ const DrawCloser = styled.div`
 
 const DrawContainer = styled.nav`
   position: absolute;
-  width: min(274px, 100%);
+  width: min(66%,100%); /*274px*/
   height: 100%;
   right: 0;
   background: #fafafa;
