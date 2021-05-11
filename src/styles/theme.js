@@ -40,6 +40,11 @@ const heights = {
   bottomBtn: 80,
 };
 
-const theme = { colors, fontSizes, widths, heights, paddings };
+const zIndex = {
+  layer_1: 1,
+  layer_99: 99,
+}
+
+const theme = { colors, fontSizes, widths, heights, paddings, zIndex };
 
 export default theme;
