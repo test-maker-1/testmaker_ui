@@ -57,7 +57,7 @@ export const svgInfo = {
     viewBox: "0 0 24 24",
     fill: "none",
     inContext: [
-      <path d="M5 10.1053L11.1765 16L19 8" stroke="#DADEE6" stroke-width="2.5"/>
+      <path d="M5 10.1053L11.1765 16L19 8" stroke="#DADEE6" strokeWidth="2.5"/>
     ]
   },
   [DELETE]: {

@@ -8,6 +8,7 @@ import {
   BtnAddOption,
   SubTitle,
   BtnIcon,
+  Option,
 } from "../../../components/making";
 
 import theme from "../../../styles/theme";
@@ -44,6 +45,8 @@ const MultipleQnA = () => {
       <BtnAdd />
       <BtnAddOption />
       <InfoText text="정답 항목을 체크해주세요" color="blue" />
+      <Option value="보라카이" answer="보라카이" />
+      <Option value="제주도" answer="보라카이" />
 
       <BottomBtn
         btnArr={[
