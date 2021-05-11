@@ -5,8 +5,8 @@ import { InfoText } from "../common";
 import { SubTitle, BtnIcon, Option, BtnAddOption } from ".";
 import { InputTitle, Section } from "../../styles";
 
-import ENUM, { md } from "../../constants/Enum";
 import useMaking from "../../hooks/useMaking";
+import ENUM, { md } from "../../constants/Enum";
 
 const Question = ({ subTitle, data, questionIdx }) => {
   const { question, img, answer, point, options } = data;
@@ -44,7 +44,7 @@ const Question = ({ subTitle, data, questionIdx }) => {
               />
             ))}
           </ul>
-          <BtnAddOption />
+          <BtnAddOption questionIdx={questionIdx} />
           {/* point */}
           <InfoText text="정답 항목을 체크해주세요" color="blue" />
         </Wrapper>

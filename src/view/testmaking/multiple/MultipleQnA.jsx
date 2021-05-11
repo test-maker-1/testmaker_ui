@@ -20,7 +20,7 @@ const svgStyles = {
 };
 
 const MultipleQnA = () => {
-  const { data } = useMaking();
+  const { data, dispatch, addQuestion } = useMaking();
 
   // redirection step
   if (!data.hasOwnProperty("type") || data.type !== multiple)
@@ -53,7 +53,7 @@ const MultipleQnA = () => {
           questionIdx={idx}
         />
       ))}
-      <BtnAdd />
+      <BtnAdd onClick={() => dispatch(addQuestion())} />
 
       <BottomBtn
         btnArr={[

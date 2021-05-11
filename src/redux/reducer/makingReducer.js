@@ -42,7 +42,9 @@ const making = createSlice({
       questions.push(emptyQuestion);
       state.data.questionsCnt += 1;
     },
-    addOption: (state, action) => {},
+    addOption: ({ data: { questions } }, { payload }) => {
+      questions[payload].options.push("");
+    },
     addResult: (state) => {
       const { results } = state.data;
       const emptyResult = getResult(state.type);
@@ -80,7 +82,7 @@ export const {
 } = making.actions;
 
 /* add */
-export const { addTag, addQuestion, addResult } = making.actions;
+export const { addTag, addQuestion, addResult, addOption } = making.actions;
 
 /* delete */
 export const { deleteTag } = making.actions;
