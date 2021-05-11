@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getQuestion, getResult } from "../../utils/constHandler";
 import initState from "../../constants/makingInitState";
-import question from "../../constants/question";
-import result from "../../constants/result";
 
 const prefix = "making";
 
@@ -30,16 +29,20 @@ const making = createSlice({
     },
 
     /* add empty data */
-    addQuestion: (state, { payload }) => {
+    addQuestion: (state) => {
       const { questions } = state.data;
-      const emptyQuestion = question[state.type];
+      const emptyQuestion = getQuestion(state.type);
+
       questions.push(emptyQuestion);
+      state.data.questionsCnt += 1;
     },
     addOption: (state, action) => {},
-    addResult: (state, { payload: { cnt } }) => {
+    addResult: (state) => {
       const { results } = state.data;
-      const emptyResult = result[state.type];
+      const emptyResult = getResult(state.type);
+
       results.push(emptyResult);
+      state.data.resultsCnt += 1;
     },
 
     /* add data */
@@ -59,7 +62,7 @@ const making = createSlice({
   },
 });
 
-/* initialize*/
+/* initialize */
 export const { initCommonData, initTypeData } = making.actions;
 
 /* update */

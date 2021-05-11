@@ -1,7 +1,7 @@
-const multiple = () => ({
+const multiple = {
   questionsCnt: 6,
   resultsCnt: 3,
-});
+};
 
 const mbti = {};
 
