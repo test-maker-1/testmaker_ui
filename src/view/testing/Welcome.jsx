@@ -4,6 +4,7 @@ import {NoticeAlert} from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
 import Mention from "./SubComponents/Mention";
+import { ComInput } from "./SubComponents/Reply";
 import RoundContiner from "./SubComponents/RoundContainer";
 import usePage from "../../hooks/usePage";
 import ENUM from "../../constants/Enum";
@@ -52,6 +53,7 @@ const Welcome = () => {
           <Title>댓글</Title>
           <Entire onClick={()=> goPage(`/${testing}/${comments}`)}>10개 전체보기</Entire>
         </CommentTitle>
+        <ComInput />
         {[1, 2, 3].map((item, idx)=>{
           return <Mention key={`c_${idx}`} idx={idx}/>;
         })}
