@@ -1,16 +1,18 @@
 /*
  * nextResultId: number;
  */
-const multiple = (nextResultId) => ({
-  resultId: nextResultId, // 결과 편집 시 식별 위해 ID 부여
-  resultTitle: "",
-  thumbnail: null,
-  content: "",
+const multiple = {
+  description: "",
+  title: "",
+
+  img: null, // 썸네일
+  imgPath: null, // 썸네일 편집
+
   pointBound: {
     end: null,
-    start: null
-  } // 결과 범위
-});
+    start: null,
+  }, // 결과 범위
+};
 
 const mbti = {};
 

@@ -1,34 +1,33 @@
 /* 테스트 메이킹 공통 데이터 */
 const common = {
-  editFlag: false,  //테스트 수정 여부
+  makerUid: null,
+  makerName: null,
 
   testId: null,
-  type: "", // 테스트 종류 ex) "multiple" | "mbti" | "weight"
-  testName: "",
-  testDesc: "", // 테스트 소개
-  thumbnail: null,
+  type: null, // ex) "multiple" | "mbti" | "weight"
+  title: "",
+  description: "",
+  coverImg: null, // 썸네일
+  coverImgPath: null, // 썸네일 편집
 
-  tags: [],
-  optionalURL: "", // 추가 홍보 URL
-  private: false, // 테스트 공개 여부
+  tags: [], // string[]
+  onFeed: true,
+  optionalURL: "", // 홍보 URL (선택)
+  step: null, // 테스트 제작 단계
 
-  userId: "", // 테스트 메이커 ID
-  data: {} // type에 따라 내용 상이
-  
+  theme: null,
+  data: {}, // type에 따라 내용 상이
 };
 
 /* 객관식 테스트 */
 const multiple = {
   target: null, // 누구에게 공유하실건가요?
 
-  questionCnt: null, // 질문 개수 -> 난이도에 따르거나 직접 입력 가능
-  resultCnt: null, // 결과 개수 -> 난이도에 따르거나 직접 입력 가능
+  questionsCnt: 0, // 질문 개수
+  resultsCnt: 0, // 결과 개수
 
-  nextQuestionId: 0, // 다음에 추가될 질문 ID
   questions: [],
-
-  nextResultId: 0, // 다음에 추가될 결과 ID
-  results: []
+  results: [],
 };
 
 /* 성격 테스트 */
@@ -41,7 +40,7 @@ const initState = {
   common,
   multiple,
   mbti,
-  weight
+  weight,
 };
 
 export default initState;
