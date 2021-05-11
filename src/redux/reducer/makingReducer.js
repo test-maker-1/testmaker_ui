@@ -11,7 +11,7 @@ const making = createSlice({
 
   reducers: {
     /* initialize */
-    initCommonData: (state, action) => {
+    initCommonData: () => {
       return initState.common;
     },
     initTypeData: (state, { payload }) => {
@@ -32,18 +32,14 @@ const making = createSlice({
 
     /* add empty data */
     addQuestion: (state, { payload }) => {
-      const { nextQuestionId, questions } = state.data;
-      const emptyQuestion = question[payload](nextQuestionId);
-
-      state.data.nextQuestionId += 1;
+      const { questions } = state.data;
+      const emptyQuestion = question[payload];
       questions.push(emptyQuestion);
     },
     addOption: (state, action) => {},
     addResult: (state, { payload }) => {
-      const { nextResultId, results } = state.data;
-      const emptyResult = result[payload](nextResultId);
-
-      state.data.nextResultId += 1;
+      const { results } = state.data;
+      const emptyResult = result[payload];
       results.push(emptyResult);
     },
 

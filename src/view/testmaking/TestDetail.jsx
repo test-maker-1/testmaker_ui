@@ -12,7 +12,7 @@ const { PREVIEW, MOVENEXT, ENTER } = ENUM;
 
 const TestDetail = () => {
   const { data, updateCommonByInput, addNewTag } = useMaking();
-  const { testName, testDesc, optionalURL } = data;
+  const { title, description, optionalURL } = data;
 
   const onEnterPress = (e) => {
     const {
@@ -29,20 +29,20 @@ const TestDetail = () => {
   return (
     <PageContainer>
       <TitleBox>
-        {/* testName */}
+        {/* title */}
         <InputTitle
           size={lg}
-          name="testName"
+          name="title"
           placeholder="테스트 제목을 적어주세요"
-          defaultValue={testName}
+          defaultValue={title}
           onBlur={updateCommonByInput}
         />
         {/* coverImg */}
         <UploadImg />
-        {/* testDesc */}
+        {/* description */}
         <TextArea
-          name="testDesc"
-          defaultValue={testDesc}
+          name="description"
+          defaultValue={description}
           placeholder="테스트를 설명해주세요"
           onBlur={updateCommonByInput}
         />
