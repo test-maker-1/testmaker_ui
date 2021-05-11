@@ -6,9 +6,16 @@ import { SubTitle, BtnIcon, Option, BtnAddOption } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import ENUM, { md } from "../../constants/Enum";
+import useMaking from "../../hooks/useMaking";
 
-const Question = ({ subTitle, data }) => {
+const Question = ({ subTitle, data, questionIdx }) => {
   const { question, img, answer, point, options } = data;
+  const { updateQuestion } = useMaking();
+
+  const onUpdate = (e) => {
+    const { name, value } = e.target;
+    if (name === "question") updateQuestion(name, value, questionIdx);
+  };
 
   return (
     <li>
@@ -23,6 +30,7 @@ const Question = ({ subTitle, data }) => {
             defaultValue={question}
             size={md}
             placeholder="질문을 입력해주세요"
+            onBlur={onUpdate}
           />
           {/* options */}
           <ul>

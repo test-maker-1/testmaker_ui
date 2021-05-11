@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { SVG } from "../common";
 import {
   Container,
@@ -40,4 +41,4 @@ const Option = ({ value, answer = null, onCheck, onCancel }) => {
   );
 };
 
-export default Option;
+export default memo(Option);

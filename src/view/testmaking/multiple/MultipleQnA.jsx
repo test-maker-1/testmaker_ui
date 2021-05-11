@@ -50,7 +50,7 @@ const MultipleQnA = () => {
           key={`question-${idx}`}
           subTitle={`${idx + 1}번 질문`}
           data={question}
-          idx={idx}
+          questionIdx={idx}
         />
       ))}
       <BtnAdd />

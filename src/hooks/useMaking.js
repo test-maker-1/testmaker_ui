@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateCommonData,
   updateTypeData,
+  updateQuestionData,
   addTag,
   deleteTag,
   initTypeData,
@@ -24,6 +25,10 @@ const useMaking = () => {
   const updateTypeDataByInput = (e) => {
     const { name, value } = e.target;
     dispatch(updateTypeData({ key: name, value }));
+  };
+
+  const updateQuestion = (key, value, idx = null) => {
+    dispatch(updateQuestionData({ key, value, idx }));
   };
 
   const initStateByType = (type) => {
@@ -57,6 +62,7 @@ const useMaking = () => {
     updateCommon,
     updateCommonByInput,
     updateTypeDataByInput,
+    updateQuestion,
     // add
     addNewTag,
     // delete
