@@ -23,8 +23,8 @@ const common = {
 const multiple = {
   target: null, // 누구에게 공유하실건가요?
 
-  questionsCnt: 0, // 질문 개수
-  resultsCnt: 0, // 결과 개수
+  questionsCnt: 6, // 질문 개수
+  resultsCnt: 3, // 결과 개수
 
   questions: [],
   results: [],

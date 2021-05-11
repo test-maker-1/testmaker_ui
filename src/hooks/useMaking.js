@@ -4,7 +4,12 @@ import {
   updateTypeData,
   addTag,
   deleteTag,
+  initTypeData,
 } from "../redux/reducer/makingReducer";
+
+import question from "../constants/question";
+import result from "../constants/result";
+import preset from "../constants/preset";
 
 const useMaking = () => {
   const data = useSelector((state) => state.making);
@@ -23,6 +28,18 @@ const useMaking = () => {
     dispatch(updateTypeData({ key: name, value }));
   };
 
+  const initStateByType = (type) => {
+    const { questionsCnt, resultsCnt } = preset[type]();
+
+    const emptyQuestion = question[type]();
+    const questions = new Array(questionsCnt).fill(emptyQuestion);
+
+    const emptyResult = result[type]();
+    const results = new Array(resultsCnt).fill(emptyResult);
+
+    dispatch(initTypeData({ type, questions, results }));
+  };
+
   // tag: string;
   const addNewTag = (tag) => {
     const { tags } = data;
@@ -36,6 +53,8 @@ const useMaking = () => {
   return {
     data,
     dispatch,
+    // init
+    initStateByType,
     // update
     updateCommon,
     updateCommonByInput,

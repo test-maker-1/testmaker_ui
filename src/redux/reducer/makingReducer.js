@@ -14,12 +14,11 @@ const making = createSlice({
     initCommonData: () => {
       return initState.common;
     },
-    initTypeData: (state, { payload }) => {
-      state.type = payload;
-      state.data = initState[payload];
-    },
-    initQNA: (state, { payload }) => {
-      // 여기서 질문, 결과 개수에 따라 빈 질문과 결과들 초기화 필요
+    initTypeData: (state, { payload: { type, questions, results } }) => {
+      state.type = type;
+      state.data = initState[type];
+      state.data.questions = [...questions];
+      state.data.results = [...results];
     },
 
     /* update */
@@ -33,13 +32,13 @@ const making = createSlice({
     /* add empty data */
     addQuestion: (state, { payload }) => {
       const { questions } = state.data;
-      const emptyQuestion = question[payload];
+      const emptyQuestion = question[state.type];
       questions.push(emptyQuestion);
     },
     addOption: (state, action) => {},
-    addResult: (state, { payload }) => {
+    addResult: (state, { payload: { cnt } }) => {
       const { results } = state.data;
-      const emptyResult = result[payload];
+      const emptyResult = result[state.type];
       results.push(emptyResult);
     },
 

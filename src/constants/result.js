@@ -1,7 +1,7 @@
 /*
  * nextResultId: number;
  */
-const multiple = {
+const multiple = () => ({
   description: "",
   title: "",
 
@@ -12,7 +12,7 @@ const multiple = {
     end: null,
     start: null,
   }, // 결과 범위
-};
+});
 
 const mbti = {};
 
