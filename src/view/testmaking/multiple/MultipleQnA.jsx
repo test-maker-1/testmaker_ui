@@ -22,6 +22,10 @@ const svgStyles = {
 const MultipleQnA = () => {
   const { data } = useMaking();
 
+  // redirection step
+  if (!data.hasOwnProperty("type") || data.type !== multiple)
+    return <Error code={401} />;
+
   const {
     type,
     data: { questions = [] },
