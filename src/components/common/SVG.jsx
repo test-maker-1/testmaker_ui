@@ -30,7 +30,6 @@ const SvgItem = styled.svg`
   path {
     fill: ${({fill, infill}) => infill || fill};
   }
-  ${(props) => props.float ? `float:${props.float};` : ""}
 `;
 
 export default memo(SVG);
