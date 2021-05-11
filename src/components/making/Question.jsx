@@ -8,13 +8,7 @@ import { InputTitle, Section } from "../../styles";
 import ENUM, { md } from "../../constants/Enum";
 
 const Question = ({ subTitle, data }) => {
-  const {
-    question = "",
-    img = null,
-    answer = null,
-    point = 1,
-    options = [],
-  } = data;
+  const { question, img, answer, point, options } = data;
 
   return (
     <li>
@@ -24,11 +18,16 @@ const Question = ({ subTitle, data }) => {
         </SubTitle>
         <Wrapper>
           {/* question */}
-          <InputTitle size={md} defaultValue={question} name="question" />
+          <InputTitle
+            name="question"
+            defaultValue={question}
+            size={md}
+            placeholder="질문을 입력해주세요"
+          />
           {/* options */}
           <ul>
-            {options.map((option) => (
-              <Option key={option} value={option} answer={answer} />
+            {options.map((option, idx) => (
+              <Option key={`option-${idx}`} value={option} answer={answer} />
             ))}
           </ul>
           <BtnAddOption />

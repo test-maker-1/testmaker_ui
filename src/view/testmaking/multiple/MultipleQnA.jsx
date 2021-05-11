@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
+import Error from "../../../view/Error";
 import { SVG } from "../../../components/common";
 import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
 
-import ENUM from "../../../constants/Enum";
+import useMaking from "../../../hooks/useMaking";
+import ENUM, { multiple } from "../../../constants/Enum";
 
 const { MOVENEXT, PREVIEW, CASINO } = ENUM;
 const { blue, white, bodyGray, darkGray } = theme.colors;
@@ -17,14 +19,14 @@ const svgStyles = {
   fill: blue,
 };
 
-const testData = {
-  question: "내가 가장 좋아하는 여행지는?",
-  answer: "런던",
-  point: 1,
-  options: ["보라카이", "런던", "파리"],
-};
-
 const MultipleQnA = () => {
+  const { data } = useMaking();
+
+  const {
+    type,
+    data: { questions = [] },
+  } = data;
+
   return (
     <PageContainer>
       {/* random guide */}
@@ -38,8 +40,15 @@ const MultipleQnA = () => {
         </GuideText>
       </RandomGuide>
 
-      {/* component test */}
-      <Question subTitle="1번 질문" data={testData} />
+      {/* questions */}
+      {questions.map((question, idx) => (
+        <Question
+          key={`question-${idx}`}
+          subTitle={`${idx + 1}번 질문`}
+          data={question}
+          idx={idx}
+        />
+      ))}
       <BtnAdd />
 
       <BottomBtn
