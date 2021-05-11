@@ -7,6 +7,7 @@ const { white, deepGray } = theme.colors;
 
 const useStyles = makeStyles(() => ({
   addBtn: () => ({
+    marginBottom: 16,
     padding: "12px 0",
     fontSize: 15,
     fontWeight: "bold",
