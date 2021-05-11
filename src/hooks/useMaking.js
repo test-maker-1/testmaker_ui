@@ -3,6 +3,7 @@ import {
   updateCommonData,
   updateTypeData,
   updateQuestionData,
+  updateOptionData,
   addTag,
   deleteTag,
   initTypeData,
@@ -27,8 +28,12 @@ const useMaking = () => {
     dispatch(updateTypeData({ key: name, value }));
   };
 
-  const updateQuestion = (key, value, idx = null) => {
+  const updateQuestion = (key, value, idx) => {
     dispatch(updateQuestionData({ key, value, idx }));
+  };
+
+  const updateOption = (questionIdx, idx, value) => {
+    dispatch(updateOptionData({ questionIdx, idx, value }));
   };
 
   const initStateByType = (type) => {
@@ -63,6 +68,7 @@ const useMaking = () => {
     updateCommonByInput,
     updateTypeDataByInput,
     updateQuestion,
+    updateOption,
     // add
     addNewTag,
     // delete

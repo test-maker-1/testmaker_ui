@@ -8,22 +8,29 @@ import {
   OptionText,
   CancelWrap,
 } from "../../styles/Options";
+import useMaking from "../../hooks/useMaking";
 
 import ENUM from "../../constants/Enum";
 
 /*
  * value: string;
  * answer: string;
- * onCheck, onCancel: function;
+ * onCheck: function;
  */
-const Option = ({ value, answer = null, onCheck, onCancel }) => {
+const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
   const isAnswer = answer && answer === value;
+  const { updateOption } = useMaking();
+
+  const handleUpdate = (e) => {
+    const { value } = e.target;
+    updateOption(questionIdx, optionIdx, value);
+  };
 
   return (
     <Container bgColor={isAnswer ? "blue" : "white"}>
       <InputContainer>
         <CheckWrap>
-          <SVG type={ENUM.CHECK} onClick={onCheck} />
+          <SVG type={ENUM.CHECK} />
         </CheckWrap>
         <InputWrap>
           <OptionText
@@ -31,11 +38,12 @@ const Option = ({ value, answer = null, onCheck, onCancel }) => {
             defaultValue={value}
             rows={1}
             color={isAnswer ? "white" : "darkGray"}
+            onBlur={handleUpdate}
           />
         </InputWrap>
       </InputContainer>
       <CancelWrap>
-        <SVG type={ENUM.CANCEL} onClick={onCancel} />
+        <SVG type={ENUM.CANCEL} />
       </CancelWrap>
     </Container>
   );

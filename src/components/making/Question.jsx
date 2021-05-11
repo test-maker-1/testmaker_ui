@@ -12,7 +12,7 @@ const Question = ({ subTitle, data, questionIdx }) => {
   const { question, img, answer, point, options } = data;
   const { updateQuestion } = useMaking();
 
-  const onUpdate = (e) => {
+  const handleUpdate = (e) => {
     const { name, value } = e.target;
     if (name === "question") updateQuestion(name, value, questionIdx);
   };
@@ -30,12 +30,18 @@ const Question = ({ subTitle, data, questionIdx }) => {
             defaultValue={question}
             size={md}
             placeholder="질문을 입력해주세요"
-            onBlur={onUpdate}
+            onBlur={handleUpdate}
           />
           {/* options */}
           <ul>
             {options.map((option, idx) => (
-              <Option key={`option-${idx}`} value={option} answer={answer} />
+              <Option
+                key={`option-${idx}`}
+                value={option}
+                answer={answer}
+                questionIdx={questionIdx}
+                optionIdx={idx}
+              />
             ))}
           </ul>
           <BtnAddOption />
