@@ -1,6 +1,6 @@
 import React from "react";
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import { TitleBox, Select } from "../../../components/common/index";
+import { TitleBox, Select } from "../../../components/common";
 import useMaking from "../../../hooks/useMaking";
 import ENUM from "../../../constants/Enum";
 
@@ -12,7 +12,8 @@ const MultiplePreset = () => {
     updateTypeDataByInput,
   } = useMaking();
 
-  const value = data.hasOwnProperty("target") ? data.target : FRITEND;
+  const value =
+    data.hasOwnProperty("target") && data.target ? data.target : FRITEND;
 
   return (
     <PageContainer>
