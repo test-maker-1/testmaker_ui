@@ -3,12 +3,9 @@ import styled from "styled-components";
 import {NoticeAlert} from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
-import Mention from "./SubComponents/Mention";
-import { ComInput } from "./SubComponents/Reply";
 import RoundContiner from "./SubComponents/RoundContainer";
-import usePage from "../../hooks/usePage";
+import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
-import {testing, comments} from "../../constants/urlInfo";
 
 const { PREVIEW, MOVENEXT } = ENUM;
 const def_alert = {
@@ -17,6 +14,7 @@ const def_alert = {
   btn: []
 };
 
+//Alert 창
 const returnALInfo = (type) => {
   let result = {};
   
@@ -31,7 +29,6 @@ const returnALInfo = (type) => {
 };
 
 const Welcome = () => {
-  const { goPage } = usePage();
   const [alertInfo, setALInfo] = useState(def_alert);
   const openAlert = (type ) => {    
     const alert_info = Object.assign({}, def_alert, returnALInfo(type));
@@ -49,14 +46,7 @@ const Welcome = () => {
       <TestIntro openAlert={openAlert}/>
       {/* 댓글 영역 */}
       <RoundContiner>
-        <CommentTitle>
-          <Title>댓글</Title>
-          <Entire onClick={()=> goPage(`/${testing}/${comments}`)}>10개 전체보기</Entire>
-        </CommentTitle>
-        <ComInput />
-        {[1, 2, 3].map((item, idx)=>{
-          return <Mention key={`c_${idx}`} idx={idx}/>;
-        })}
+        <Reply />
       </RoundContiner>
       <BottomBtn
         btnArr={[
@@ -73,30 +63,6 @@ const Welcome = () => {
     </PageContainer>
   );
 };
-
-const CommentTitle = styled.div`
-  height: 2.25em; /*36px;*/
-  line-height: 2.25em; /*36px;*/
-`;
-
-const Title = styled.h1`
-  display: inline-block;
-  float: left;
-  font-size: 1.5em; /*24px*/
-  font-weight: bold;
-  letter-spacing: -1px;
-  color: #697382;
-`;
-
-const Entire = styled.p`
-  display: inline-block;
-  float: right;
-  font-size: 1em; /*16px*/
-  text-align: right;
-  letter-spacing: -0.5px;
-  color: #8A929E;
-  cursor: pointer;
-`;
 
 const Avatar = styled.div`
   /* Ellipse 187 */
