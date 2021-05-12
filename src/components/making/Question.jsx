@@ -1,16 +1,20 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 
-import { InfoText } from "../common";
+import { InfoText, UploadImg } from "../common";
 import { SubTitle, BtnIcon, Option, BtnAddOption } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
+import useOpen from "../../hooks/useOpen";
+
 import ENUM, { md } from "../../constants/Enum";
 
-const Question = ({ subTitle, data, questionIdx }) => {
+const Question = ({ data, questionIdx }) => {
   const { question, img, answer, point, options } = data;
+
   const { dispatch, deleteQuestion, updateQuestion } = useMaking();
+  const { open, onToggle } = useOpen();
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
@@ -22,6 +26,7 @@ const Question = ({ subTitle, data, questionIdx }) => {
       <div>
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
+          onUpload={onToggle}
           onDelete={() => dispatch(deleteQuestion(questionIdx))}
         >
           <BtnIcon type={ENUM.CASINO} />
@@ -35,6 +40,8 @@ const Question = ({ subTitle, data, questionIdx }) => {
             placeholder="질문을 입력해주세요"
             onBlur={handleUpdate}
           />
+          {/* coverImg */}
+          {open && <UploadImg />}
           {/* options */}
           <ul>
             {options.map((option, idx) => (
