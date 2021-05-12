@@ -19,20 +19,25 @@ import ENUM from "../../constants/Enum";
  */
 const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
   const isAnswer = answer && answer === value;
-  const { updateOption, deleteOption } = useMaking();
+  const { updateQuestion, updateOption, deleteOption } = useMaking();
 
-  const handleUpdate = (e) => {
+  const onUpdate = (e) => {
     const { value } = e.target;
     updateOption(questionIdx, optionIdx, value);
   };
 
   const onDelete = () => deleteOption(questionIdx, optionIdx);
 
+  const onCheckAnswer = () => {
+    if (value.length < 1) return;
+    updateQuestion("answer", value, questionIdx);
+  };
+
   return (
     <Container bgColor={isAnswer ? "blue" : "white"}>
       <InputContainer>
         <CheckWrap>
-          <SVG type={ENUM.CHECK} />
+          <SVG type={ENUM.CHECK} onClick={onCheckAnswer} />
         </CheckWrap>
         <InputWrap>
           <OptionText
@@ -40,7 +45,7 @@ const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
             defaultValue={value}
             rows={1}
             color={isAnswer ? "white" : "darkGray"}
-            onBlur={handleUpdate}
+            onBlur={onUpdate}
           />
         </InputWrap>
       </InputContainer>
