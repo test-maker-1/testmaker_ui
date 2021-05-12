@@ -39,7 +39,7 @@ const Question = ({ subTitle, data, questionIdx }) => {
           <ul>
             {options.map((option, idx) => (
               <Option
-                key={`option-${idx}`}
+                key={`${idx}-${option}`}
                 value={option}
                 answer={answer}
                 questionIdx={questionIdx}

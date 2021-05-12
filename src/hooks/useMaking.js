@@ -9,6 +9,7 @@ import {
   addOption,
   deleteTag,
   deleteQuestion,
+  deleteOptionData,
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
@@ -61,6 +62,10 @@ const useMaking = () => {
     dispatch(addTag(tag));
   };
 
+  const deleteOption = (questionIdx, optionIdx) => {
+    dispatch(deleteOptionData({ questionIdx, optionIdx }));
+  };
+
   return {
     data,
     dispatch,
@@ -79,6 +84,7 @@ const useMaking = () => {
     // delete
     deleteTag,
     deleteQuestion,
+    deleteOption,
   };
 };
 

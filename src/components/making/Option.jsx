@@ -19,12 +19,14 @@ import ENUM from "../../constants/Enum";
  */
 const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
   const isAnswer = answer && answer === value;
-  const { updateOption } = useMaking();
+  const { updateOption, deleteOption } = useMaking();
 
   const handleUpdate = (e) => {
     const { value } = e.target;
     updateOption(questionIdx, optionIdx, value);
   };
+
+  const onDelete = () => deleteOption(questionIdx, optionIdx);
 
   return (
     <Container bgColor={isAnswer ? "blue" : "white"}>
@@ -43,7 +45,7 @@ const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
         </InputWrap>
       </InputContainer>
       <CancelWrap>
-        <SVG type={ENUM.CANCEL} />
+        <SVG type={ENUM.CANCEL} onClick={onDelete} />
       </CancelWrap>
     </Container>
   );
