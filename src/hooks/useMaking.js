@@ -8,6 +8,7 @@ import {
   addQuestion,
   addOption,
   deleteTag,
+  deleteQuestion,
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
@@ -77,6 +78,7 @@ const useMaking = () => {
     addOption,
     // delete
     deleteTag,
+    deleteQuestion,
   };
 };
 

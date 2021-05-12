@@ -10,7 +10,7 @@ import ENUM, { md } from "../../constants/Enum";
 
 const Question = ({ subTitle, data, questionIdx }) => {
   const { question, img, answer, point, options } = data;
-  const { updateQuestion } = useMaking();
+  const { dispatch, deleteQuestion, updateQuestion } = useMaking();
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
@@ -20,7 +20,10 @@ const Question = ({ subTitle, data, questionIdx }) => {
   return (
     <li>
       <div>
-        <SubTitle title={subTitle}>
+        <SubTitle
+          title={`${questionIdx + 1}번 질문`}
+          onDelete={() => dispatch(deleteQuestion(questionIdx))}
+        >
           <BtnIcon type={ENUM.CASINO} />
         </SubTitle>
         <Wrapper>

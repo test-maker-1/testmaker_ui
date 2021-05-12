@@ -63,8 +63,11 @@ const making = createSlice({
       const { tags } = state;
       state.tags = tags.filter((tag) => tag !== payload);
     },
-
-    deleteQuestion: (state, action) => {},
+    deleteQuestion: (state, { payload }) => {
+      const { questions } = state.data;
+      questions.splice(payload, 1);
+      state.data.questionsCnt -= 1;
+    },
     deleteOption: (state, action) => {},
     deleteResult: (state, action) => {},
   },
@@ -85,6 +88,6 @@ export const {
 export const { addTag, addQuestion, addResult, addOption } = making.actions;
 
 /* delete */
-export const { deleteTag } = making.actions;
+export const { deleteTag, deleteQuestion } = making.actions;
 
 export default making;

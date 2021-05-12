@@ -47,10 +47,9 @@ const MultipleQnA = () => {
       {/* questions */}
       {questions.map((question, idx) => (
         <Question
-          key={`question-${idx}`}
-          subTitle={`${idx + 1}번 질문`}
-          data={question}
+          key={`${idx}-${question.question}`}
           questionIdx={idx}
+          data={question}
         />
       ))}
       <BtnAdd onClick={() => dispatch(addQuestion())} />
