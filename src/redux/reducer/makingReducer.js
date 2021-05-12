@@ -30,8 +30,14 @@ const making = createSlice({
     updateQuestionData: (state, { payload: { key, value, idx } }) => {
       state.data.questions[idx][key] = value;
     },
-    updateOptionData: (state, { payload: { questionIdx, idx, value } }) => {
-      state.data.questions[questionIdx].options[idx] = value;
+    updateOptionData: (
+      { data: { questions } },
+      { payload: { questionIdx, idx, beforeOption, option } }
+    ) => {
+      if (beforeOption === questions[questionIdx].answer) {
+        questions[questionIdx].answer = option;
+      }
+      questions[questionIdx].options[idx] = option;
     },
 
     /* add empty data */

@@ -22,8 +22,8 @@ const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
   const { updateQuestion, updateOption, deleteOption } = useMaking();
 
   const onUpdate = (e) => {
-    const { value } = e.target;
-    updateOption(questionIdx, optionIdx, value);
+    const { value: newOption } = e.target;
+    updateOption(questionIdx, optionIdx, value, newOption);
   };
 
   const onDelete = () => deleteOption(questionIdx, optionIdx);

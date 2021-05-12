@@ -36,8 +36,8 @@ const useMaking = () => {
     dispatch(updateQuestionData({ key, value, idx }));
   };
 
-  const updateOption = (questionIdx, idx, value) => {
-    dispatch(updateOptionData({ questionIdx, idx, value }));
+  const updateOption = (questionIdx, idx, beforeOption, option) => {
+    dispatch(updateOptionData({ questionIdx, idx, beforeOption, option }));
   };
 
   const initStateByType = (type) => {
