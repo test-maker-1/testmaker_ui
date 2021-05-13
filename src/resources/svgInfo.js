@@ -232,24 +232,24 @@ export const svgInfo = {
           fill='#0B70FD'
         />
       </g>
-    ],
-    [SPLIT]: {
-      width: '2',
-      height: '12',
-      viewBox: '0 0 2 12',
-      fill: 'none',
-      inContext: [<path d='M1 0V12' stroke='#CFD3DB' />]
-    },
-    [MORE]: {
-      width: '24',
-      height: '24',
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      inContext: [
-        <circle cx='12' cy='8.5' r='2' fill='#C4C4C4' />,
-        <circle cx='12' cy='15.5' r='2' fill='#C4C4C4' />
-      ]
-    }
+    ]
+  },
+  [SPLIT]: {
+    width: '2',
+    height: '12',
+    viewBox: '0 0 2 12',
+    fill: 'none',
+    inContext: [<path d='M1 0V12' stroke='#CFD3DB' />]
+  },
+  [MORE]: {
+    width: '24',
+    height: '24',
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    inContext: [
+      <circle cx='12' cy='8.5' r='2' fill='#C4C4C4' />,
+      <circle cx='12' cy='15.5' r='2' fill='#C4C4C4' />
+    ]
   }
 }
 
