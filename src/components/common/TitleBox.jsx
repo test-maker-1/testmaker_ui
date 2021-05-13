@@ -14,13 +14,13 @@ export const TitleBox = ({ title = null, noline = false, children }) => {
 };
 
 export const Box = styled.div`
-  padding: 24px ${({ theme: { paddings } }) => paddings.main}px;
+  padding: 24px ${({ theme: { paddings } }) => paddings.main}rem;
   border-bottom: ${({ noline }) => (noline ? "0px" : "1px solid #EBEDF1")};
 `;
 
 export const Title = styled.h1`
   padding-bottom: 24px;
-  font-size: 24px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem;
   font-weight: bold;
   color: #697382;
 `;
