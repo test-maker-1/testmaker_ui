@@ -10,52 +10,52 @@ import { handleScroll } from "../../utils/styleHandler";
 import { getConfiguration } from "../../utils/handler";
 
 const MainForm = ({ children, history, location, match }) => {
-    const { header } = useMemo(() => getConfiguration(location), [location]);
-    const { open: openDrawer, onClose, onToggle } = useOpen();
+  const { header } = useMemo(() => getConfiguration(location), [location]);
+  const { open: openDrawer, onClose, onToggle } = useOpen();
 
-    useEffect(() => {
-        handleScroll(!openDrawer);
-        return () => handleScroll(false);
-    }, [openDrawer]);
+  useEffect(() => {
+    handleScroll(!openDrawer);
+    return () => handleScroll(false);
+  }, [openDrawer]);
 
-    useEffect(() => {
-        onClose();
-    }, [location]);
+  useEffect(() => {
+    onClose();
+  }, [location]);
 
-    return (
-        <BackGround>
-            {openDrawer && <Drawer onClose={onClose} />}
-            <MainBox>
-                <Header header={header} onToggle={onToggle} />
-                <Main>{children}</Main>
-            </MainBox>
-        </BackGround>
-    );
+  return (
+    <BackGround>
+      {openDrawer && <Drawer onClose={onClose} />}
+      <MainBox>
+        <Header header={header} onToggle={onToggle} />
+        <Main>{children}</Main>
+      </MainBox>
+    </BackGround>
+  );
 };
 
 const BackGround = styled.div`
-    min-height: 100%;
-    background: #e6e6e6;
+  min-height: 100%;
+  background: #e6e6e6;
 `;
 
 const MainBox = styled.div`
-    position: relative;
-    margin: 0px auto;
-    width: min(${({ theme: { widths } }) => widths.main}px, 100%);
-    height: 100%;
-    background: #ffffff;
+  position: relative;
+  margin: 0px auto;
+  width: min(${({ theme: { widths } }) => widths.main}px, 100%);
+  height: 100%;
+  background: #ffffff;
 `;
 
 const Main = styled.main`
-    display: flex;
+  display: flex;
 
-    min-height: ${({ theme: { heights } }) =>
-        `calc(100vh - ${heights.header}px)`};
+  min-height: ${({ theme: { heights } }) =>
+    `calc(100vh - ${heights.header}px)`};
 
-    /* view component */
-    & > div {
-        flex: 1;
-    }
+  /* view component */
+  & > div {
+    flex: 1;
+  }
 `;
 
 export default withRouter(MainForm);

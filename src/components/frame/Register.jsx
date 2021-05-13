@@ -3,19 +3,19 @@ import { withRouter, useHistory } from "react-router-dom";
 import { registerComponents } from "../../constants/loginModuleComponents";
 
 const RegisterFrame = ({
-    match: {
-        params: { module },
-    },
+  match: {
+    params: { module },
+  },
 }) => {
-    const history = useHistory();
-    let components = module && registerComponents;
+  const history = useHistory();
+  let components = module && registerComponents;
 
-    if (!components.hasOwnProperty(module)) {
-        history.push("/error");
-        return null;
-    }
+  if (!components.hasOwnProperty(module)) {
+    history.push("/error");
+    return null;
+  }
 
-    return components[module];
+  return components[module];
 };
 
 export default withRouter(RegisterFrame);
