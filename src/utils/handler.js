@@ -1,6 +1,6 @@
 import headerInfo, { initHeader } from "../constants/headerInfo";
-import {seqTest} from "../constants/urlInfo";
-import {login, test, testing} from "../constants/urlInfo";
+import { seqTest } from "../constants/urlInfo";
+import { login, test, testing } from "../constants/urlInfo";
 /*
  * plocation: string; => path
  */
@@ -17,7 +17,7 @@ export const getConfiguration = (plocation) => {
 
   const header = {
     ...initHeader,
-    ...updateHeader
+    ...updateHeader,
   };
 
   return { header };
@@ -28,15 +28,19 @@ export const getConfiguration = (plocation) => {
  *  pmatch:object => url:string
  */
 export const getNextPageURL = (pmatch) => {
-  const {params: {module, step}, path, url} = pmatch;
-  const reg = new RegExp("\/([A-Za-z]*)","gi");
+  const {
+    params: { module, step },
+    path,
+    url,
+  } = pmatch;
+  const reg = new RegExp("/([A-Za-z]*)", "gi");
   const where = (reg.exec(path) || "")[1];
   let nextUrl = "";
 
-  switch(where){
+  switch (where) {
     case login: //로그인
-        break;
-    case test:  //테스트메이킹
+      break;
+    case test: //테스트메이킹
       const sequence = seqTest[module];
       const nextIDX = sequence.indexOf(step) + 1;
       //ex) test/multiple/preset
@@ -47,4 +51,4 @@ export const getNextPageURL = (pmatch) => {
   }
 
   return nextUrl;
-}
+};

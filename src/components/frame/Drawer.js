@@ -21,6 +21,9 @@ const Drawer = ({ onClose }) => {
             <Item>
               <Link to="/">로그아웃</Link>
             </Item>
+            <Item>
+              <Link to="/login">로그인</Link>
+            </Item>
           </ul>
         </DrawContainer>
       </Dimmed>
