@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getQuestion, getResult } from "../../utils/constHandler";
 import initState from "../../constants/makingInitState";
-import question from "../../constants/question";
-import result from "../../constants/result";
 
 const prefix = "making";
 
@@ -11,40 +10,47 @@ const making = createSlice({
 
   reducers: {
     /* initialize */
-    initCommonData: (state, action) => {
+    initCommonData: () => {
       return initState.common;
     },
-    initTypeData: (state, { payload }) => {
-      state.type = payload;
-      state.data = initState[payload];
-    },
-    initQNA: (state, { payload }) => {
-      // 여기서 질문, 결과 개수에 따라 빈 질문과 결과들 초기화 필요
+    initTypeData: (state, { payload: { type, questions, results } }) => {
+      state.type = type;
+      state.data = initState[type];
+      state.data.questions = [...questions];
+      state.data.results = [...results];
     },
 
     /* update */
     updateCommonData: (state, { payload: { key, value } }) => {
       state[key] = value;
     },
-    updateTypeData: (state, { payload: { key, value } }) => {
-      state.data[key] = value;
+    updateTypeData: ({ data }, { payload: { key, value } }) => {
+      data[key] = value;
+    },
+    updateQuestionData: ({ data }, { payload: { key, value, idx } }) => {
+      data.questions[idx][key] = value;
+    },
+    updateOptionData: (
+      { data: { questions } },
+      { payload: { questionIdx, idx, beforeOption, option } }
+    ) => {
+      if (beforeOption === questions[questionIdx].answer) {
+        questions[questionIdx].answer = option;
+      }
+      questions[questionIdx].options[idx] = option;
     },
 
     /* add empty data */
-    addQuestion: (state, { payload }) => {
-      const { nextQuestionId, questions } = state.data;
-      const emptyQuestion = question[payload](nextQuestionId);
-
-      state.data.nextQuestionId += 1;
-      questions.push(emptyQuestion);
+    addQuestion: ({ type, data: { questions, questionsCnt } }) => {
+      questions.push(getQuestion(type));
+      questionsCnt += 1;
     },
-    addOption: (state, action) => {},
-    addResult: (state, { payload }) => {
-      const { nextResultId, results } = state.data;
-      const emptyResult = result[payload](nextResultId);
-
-      state.data.nextResultId += 1;
-      results.push(emptyResult);
+    addOption: ({ data: { questions } }, { payload }) => {
+      questions[payload].options.push("");
+    },
+    addResult: ({ type, data: { results, resultsCnt } }) => {
+      results.push(getResult(type));
+      resultsCnt += 1;
     },
 
     /* add data */
@@ -53,27 +59,38 @@ const making = createSlice({
     },
 
     /* delete */
-    deleteTag: (state, { payload }) => {
-      const { tags } = state;
-      state.tags = tags.filter((tag) => tag !== payload);
+    deleteTag: ({ tags }, { payload }) => {
+      tags = tags.filter((tag) => tag !== payload);
     },
-
-    deleteQuestion: (state, action) => {},
-    deleteOption: (state, action) => {},
+    deleteQuestion: ({ data: { questions, questionsCnt } }, { payload }) => {
+      questions.splice(payload, 1);
+      questionsCnt -= 1;
+    },
+    deleteOptionData: (
+      { data: { questions } },
+      { payload: { questionIdx, optionIdx } }
+    ) => {
+      questions[questionIdx].options.splice(optionIdx, 1);
+    },
     deleteResult: (state, action) => {},
   },
 });
 
-/* initialize*/
+/* initialize */
 export const { initCommonData, initTypeData } = making.actions;
 
 /* update */
-export const { updateCommonData, updateTypeData } = making.actions;
+export const {
+  updateCommonData,
+  updateTypeData,
+  updateQuestionData,
+  updateOptionData,
+} = making.actions;
 
 /* add */
-export const { addTag, addQuestion, addResult } = making.actions;
+export const { addTag, addQuestion, addResult, addOption } = making.actions;
 
 /* delete */
-export const { deleteTag } = making.actions;
+export const { deleteTag, deleteQuestion, deleteOptionData } = making.actions;
 
 export default making;

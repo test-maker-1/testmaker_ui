@@ -23,11 +23,11 @@ const PickTest = () => {
 // type: string; ex) "multiple" | "mbti" | "weight"
 const TestCard = ({ type }) => {
   const { name, desc } = testInfo[type];
-  const { updateCommon } = useMaking();
+  const { initStateByType } = useMaking();
   const { goPage } = usePage();
 
   const onSetType = () => {
-    updateCommon("type", type);
+    initStateByType(type);
     goPage(`/test/${type}/preset`);
   };
 

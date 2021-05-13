@@ -2,9 +2,18 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateCommonData,
   updateTypeData,
+  updateQuestionData,
+  updateOptionData,
   addTag,
+  addQuestion,
+  addOption,
   deleteTag,
+  deleteQuestion,
+  deleteOptionData,
+  initTypeData,
 } from "../redux/reducer/makingReducer";
+
+import { getQuestion, getResult, getPreset } from "../utils/constHandler";
 
 const useMaking = () => {
   const data = useSelector((state) => state.making);
@@ -23,6 +32,26 @@ const useMaking = () => {
     dispatch(updateTypeData({ key: name, value }));
   };
 
+  const updateQuestion = (key, value, idx) => {
+    dispatch(updateQuestionData({ key, value, idx }));
+  };
+
+  const updateOption = (questionIdx, idx, beforeOption, option) => {
+    dispatch(updateOptionData({ questionIdx, idx, beforeOption, option }));
+  };
+
+  const initStateByType = (type) => {
+    const { questionsCnt, resultsCnt } = getPreset(type);
+
+    const emptyQuestion = getQuestion(type);
+    const questions = new Array(questionsCnt).fill(emptyQuestion);
+
+    const emptyResult = getResult(type);
+    const results = new Array(resultsCnt).fill(emptyResult);
+
+    dispatch(initTypeData({ type, questions, results }));
+  };
+
   // tag: string;
   const addNewTag = (tag) => {
     const { tags } = data;
@@ -33,17 +62,29 @@ const useMaking = () => {
     dispatch(addTag(tag));
   };
 
+  const deleteOption = (questionIdx, optionIdx) => {
+    dispatch(deleteOptionData({ questionIdx, optionIdx }));
+  };
+
   return {
     data,
     dispatch,
+    // init
+    initStateByType,
     // update
     updateCommon,
     updateCommonByInput,
     updateTypeDataByInput,
+    updateQuestion,
+    updateOption,
     // add
     addNewTag,
+    addQuestion,
+    addOption,
     // delete
     deleteTag,
+    deleteQuestion,
+    deleteOption,
   };
 };
 

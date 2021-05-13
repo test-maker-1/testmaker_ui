@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import { SVG } from "../common/index";
+import ImageView from "./ImageView";
+
 import useOpen from "../../hooks/useOpen";
 import ENUM from "../../constants/Enum";
-
-import defaultPhoto from "../../resources/temp-img.png"; // default photo
 
 const { CANCEL, CHANGE } = ENUM;
 
@@ -16,12 +16,12 @@ const svgStyles = {
 
 export const UploadImg = () => {
   const fileInput = useRef();
-  const [imgURL, setImgURL] = useState(defaultPhoto);
+  const [imgURL, setImgURL] = useState(null);
   const { open: edit, onToggle } = useOpen();
 
   // upload and delete image
   const handleOnCick = () => fileInput.current.click();
-  const handleDelClick = () => setImgURL(defaultPhoto);
+  const handleDelClick = () => setImgURL(null);
 
   const handleOnUpload = (event) => {
     const files = event.target.files;
@@ -40,9 +40,7 @@ export const UploadImg = () => {
   return (
     <>
       <Wrapper onClick={onToggle}>
-        <DimmImg>
-          <img src={imgURL} alt={"test cover img"} />
-        </DimmImg>
+        <ImageView imageUrl={imgURL} />
         {/* edit */}
         {edit && (
           <Dimmed>
@@ -70,28 +68,11 @@ export const UploadImg = () => {
 
 const Wrapper = styled.div`
   position: relative;
-  height: 155px;
   margin-bottom: 16px;
 `;
 
-const DimmImg = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  border-radius: 5px;
-  z-index: 1;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 const Dimmed = styled.div`
+  margin-bottom: 16px;
   position: absolute;
   top: 0;
   left: 0;

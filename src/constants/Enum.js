@@ -44,6 +44,10 @@ const ENUM = {
   PICTURE: "picture",
   CHANGE: "change",
   ADDPROFILE: "addprofile",
+  CASINO: "casino",
+  CHECK: "check",
+  DELETE: "delete",
+  INFO: "info",
 
   // key type
   ENTER: "Enter",

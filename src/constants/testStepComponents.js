@@ -4,7 +4,7 @@ import TestRelease from "../view/testmaking/TestRelease";
 
 // multiple
 import MultiplePreset from "../view/testmaking/multiple/MultiplePreset";
-import MultipleQA from "../view/testmaking/multiple/MultipleQA";
+import MultipleQnA from "../view/testmaking/multiple/MultipleQnA";
 import MultipleResult from "../view/testmaking/multiple/MultipleResult";
 import MultipleReplay from "../view/testmaking/multiple/MultipleReplay";
 
@@ -19,7 +19,7 @@ import {
 
 const multiple = {
   [preset]: <MultiplePreset />,
-  [qna]: <MultipleQA />,
+  [qna]: <MultipleQnA />,
   [result]: <MultipleResult />,
   [detail]: <TestDetail />,
   [replay]: <MultipleReplay />,
