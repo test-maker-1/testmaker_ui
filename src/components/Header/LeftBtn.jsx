@@ -1,34 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import { SVG } from "../common";
+import usePage from "../../hooks/usePage";
 
-import { BACK, SEARCH, LOGO, NOTHING } from "../../constants/headerInfo";
+import { BACK, NOTHING } from "../../constants/headerInfo";
 
 /*
  * type: string;
  */
 const LeftBtn = ({ type = BACK }) => {
-  return <>{leftBtn[type]}</>;
-};
+  const { goBack } = usePage();
+  const onClickEvent = () => {
+    switch (type) {
+      case BACK:
+        return goBack();
+      default:
+        return null;
+    }
+  };
 
-const BackBtn = () => {
-  return <Button>뒤로</Button>;
-};
+  if (type === NOTHING) return null;
 
-const SearchBtn = () => {
-  return <Button>검색</Button>;
+  return (
+    <SVG
+      type={type}
+      onClick={onClickEvent}
+      style={{ width: "24", height: "24" }}
+    />
+  );
 };
-
-const LogoBtn = () => {
-  return <Button>로고</Button>;
-};
-
-const leftBtn = {
-  [BACK]: <BackBtn />,
-  [SEARCH]: <SearchBtn />,
-  [LOGO]: <LogoBtn />,
-  [NOTHING]: null
-};
-
-const Button = styled.button``;
 
 export default LeftBtn;

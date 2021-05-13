@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
-import { MENU, SEARCH, NOTHING } from "../../constants/headerInfo";
+import { SVG } from "../common";
+import { MENU, NOTHING } from "../../constants/headerInfo";
 
 /*
  * type: string;
@@ -14,14 +14,13 @@ const RightBtn = ({ type = MENU, onToggleMenu }) => {
     if (type === MENU) onToggleMenu();
   };
 
-  return <Button onClick={onClickEvent}>{rightBtn[type]}</Button>;
+  return (
+    <SVG
+      type={type}
+      onClick={onClickEvent}
+      style={{ width: "24", height: "24" }}
+    />
+  );
 };
-
-const rightBtn = {
-  [MENU]: "메뉴",
-  [SEARCH]: "검색"
-};
-
-const Button = styled.button``;
 
 export default RightBtn;

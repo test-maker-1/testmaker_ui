@@ -48,6 +48,10 @@ const ENUM = {
   CHECK: "check",
   DELETE: "delete",
   INFO: "info",
+  MENU: "menu",
+  SEARCH: "search",
+  BACK: "back",
+  HEADERLOGO: "headerLogo",
 
   // key type
   ENTER: "Enter",
