@@ -66,7 +66,7 @@ const MultipleQnA = () => {
 
 const RandomGuide = styled.section`
   margin-bottom: 24px;
-  padding: 18px ${({ theme: { paddings } }) => paddings.main}px;
+  padding: 18px ${({ theme: { paddings } }) => paddings.main}rem;
   display: flex;
   align-items: center;
   background-color: ${white};
