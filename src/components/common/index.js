@@ -1,5 +1,6 @@
 export { TitleBox, Title } from "./TitleBox";
-export { BtnField, BtnShare } from "./BtnField";
+export { default as BtnField } from "./BtnField";
+export { default as BtnShare } from "./BtnShare";
 export { UploadImg } from "./UploadImg";
 export { Option, AddOptionBtn } from "./Options";
 export { default as Tag } from "./Tag";

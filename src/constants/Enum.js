@@ -22,7 +22,12 @@ const ENUM = {
 
   // boolean type (string)
   TRUE: "true",
-  FALSE: "false"
+  FALSE: "false",
+
+  // sns type
+  KAKAO: "kakao",
+  INSTA: "insta",
+  TWITTER: "twitter",
 };
 
 export default ENUM;
