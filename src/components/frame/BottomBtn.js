@@ -1,14 +1,15 @@
 import React, { memo } from "react";
 import { withRouter } from "react-router-dom";
-import styled from "styled-components";
-import {home, picktest, preview} from "../../constants/urlInfo";
+import styled, { css } from "styled-components";
+
+import { getNextPageURL } from "../../utils/handler";
+import { home, picktest, preview } from "../../constants/urlInfo";
 import ENUM from "../../constants/Enum";
-import {getNextPageURL} from "../../utils/handler"
 
 const { HOME, PICKTEST, PREVIEW, MOVENEXT, SHARE } = ENUM;
+const grayBtns = [HOME, PREVIEW, SHARE];
 
 const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
-  
   const handleOnClick = async (idx, event) => {
     const target = btnArr[idx];
     const type = target.type;
@@ -47,7 +48,11 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   return (
     <BtnContainer>
       {btnArr.map((item, idx) => (
-        <Button key={`btn${idx}`} onClick={handleOnClick.bind(this, idx)}>
+        <Button
+          key={`btn${idx}`}
+          type={item.type}
+          onClick={handleOnClick.bind(this, idx)}
+        >
           {item.name}
         </Button>
       ))}
@@ -62,15 +67,26 @@ const BtnContainer = styled.footer`
   transform: translateX(-50%);
 
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
-  height: 80px;
+  height: ${({ theme: { heights } }) => heights.bottomBtn}px;
   display: flex;
-  /* border: 1px solid black; */
 `;
 
 const Button = styled.button`
   flex: 1;
-  text-align: center;
-  cursor: pointer;
+
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+
+  color: white;
+  ${({ theme: { colors }, type }) => {
+    const { bodyGray, black } = colors;
+    const bgColor = grayBtns.includes(type) ? bodyGray : black;
+    return css`
+      background-color: ${bgColor};
+    `;
+  }}
 `;
 
 // bottomBtn이 있는 page일 경우 최상위 div로 사용
