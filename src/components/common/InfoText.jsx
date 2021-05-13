@@ -10,14 +10,14 @@ import ENUM from "../../constants/Enum";
 const InfoText = ({ text, color = "deepGray" }) => {
   const svgStyle = { fill: theme.colors[color] };
   return (
-    <Wrappr>
+    <Wrapper className="info-text">
       <SVG type={ENUM.INFO} style={svgStyle} />
       <Text color={color}>{text}</Text>
-    </Wrappr>
+    </Wrapper>
   );
 };
 
-const Wrappr = styled.div`
+const Wrapper = styled.div`
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@ const Wrappr = styled.div`
 `;
 
 export const Text = styled.span`
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
   line-height: 21px;
   letter-spacing: -0.3px;
   color: ${({ theme: { colors }, color }) => colors[color]};

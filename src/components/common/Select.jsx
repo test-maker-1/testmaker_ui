@@ -11,7 +11,7 @@ import arrow from "../../resources/arrow.svg";
  */
 const Select = ({ name, value, onChange, children }) => {
   return (
-    <Wrapper>
+    <Wrapper className="select">
       <select name={name} value={value} onChange={onChange}>
         {children}
       </select>
@@ -29,10 +29,10 @@ const Wrapper = styled.div`
   select {
     width: 100%;
     padding: 12px 35px 12px 12px;
-    font-size: 15px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
     letter-spacing: -0.5px;
     line-height: 22px;
-    color: #697382;
+    color: ${({ theme: { colors } }) => colors.bodyGray};
   }
 
   option {
