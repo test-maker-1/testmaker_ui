@@ -5,6 +5,7 @@ import RegisterFrame from "./components/frame/Register";
 import Login from "./view/login/Login";
 
 import MainForm from "./components/frame/MainForm";
+import Testing from "./components/frame/Testing";
 import TestMaking from "./components/frame/TestMaking";
 import Feed from "./view/Feed";
 import PickTest from "./view/testmaking/PickTest";
@@ -26,6 +27,8 @@ const App = () => {
           <Route exact path="/login/:module/:step?" component={LoginFrame} />
           {/* register */}
           <Route exact path="/register/:module" component={RegisterFrame} />
+          {/* Testing */}
+          <Route exact path="/testing/:module" component={Testing} />
           <Route exact component={Error} />
         </Switch>
       </MainForm>
