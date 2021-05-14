@@ -1,10 +1,10 @@
 import { Button, makeStyles } from "@material-ui/core";
 import { SVG } from "../common";
-import ENUM from "../../constants/Enum";
 import theme from "../../styles/theme";
+import ENUM from "../../constants/Enum";
 
 const useStyles = makeStyles(() => ({
-  addBtn: (props) => ({
+  addBtn: () => ({
     padding: "20px 0",
     width: "100%",
     fontFamily: "Noto Sans KR",
@@ -17,7 +17,8 @@ const useStyles = makeStyles(() => ({
   }),
 }));
 
-const BtnAdd = ({ onClick }) => {
+// target: string; ex) 질문 || 결과
+const BtnAdd = ({ onClick, target = "질문" }) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +27,7 @@ const BtnAdd = ({ onClick }) => {
       startIcon={<SVG type={ENUM.ADD} />}
       onClick={onClick}
     >
-      질문 추가하기
+      {target}&nbsp;추가하기
     </Button>
   );
 };

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { TitleBox } from "../../../components/common";
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import { Result } from "../../../components/making";
+import { BtnAdd, Result } from "../../../components/making";
 import { TextBox } from "../../../styles";
 
 import useMaking from "../../../hooks/useMaking";
@@ -39,6 +39,7 @@ const MultipleResult = () => {
         <Result />
       ))}
       <Result />
+      <BtnAdd target="결과" />
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
