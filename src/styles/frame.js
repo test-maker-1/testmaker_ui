@@ -12,7 +12,7 @@ export const TextBox = styled.div`
 
   div {
     flex: 1;
-    font-size: 18px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem;
     line-height: 27px;
     letter-spacing: -0.5px;
     color: ${({ theme: { colors } }) => colors.blue};
