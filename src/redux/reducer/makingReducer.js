@@ -41,16 +41,16 @@ const making = createSlice({
     },
 
     /* add empty data */
-    addQuestion: ({ type, data: { questions, questionsCnt } }) => {
-      questions.push(getQuestion(type));
-      questionsCnt += 1;
+    addQuestion: (state) => {
+      state.data.questions.push(getQuestion(state.type));
+      state.data.questionsCnt += 1;
     },
     addOption: ({ data: { questions } }, { payload }) => {
       questions[payload].options.push("");
     },
-    addResult: ({ type, data: { results, resultsCnt } }) => {
-      results.push(getResult(type));
-      resultsCnt += 1;
+    addResult: (state) => {
+      state.data.results.push(getResult(state.type));
+      state.data.resultsCnt += 1;
     },
 
     /* add data */
@@ -62,9 +62,9 @@ const making = createSlice({
     deleteTag: ({ tags }, { payload }) => {
       tags = tags.filter((tag) => tag !== payload);
     },
-    deleteQuestion: ({ data: { questions, questionsCnt } }, { payload }) => {
-      questions.splice(payload, 1);
-      questionsCnt -= 1;
+    deleteQuestion: (state, { payload }) => {
+      state.data.questions.splice(payload, 1);
+      state.data.questionsCnt -= 1;
     },
     deleteOptionData: (
       { data: { questions } },
