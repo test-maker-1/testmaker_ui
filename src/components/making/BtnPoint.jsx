@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useState, memo } from "react";
 import styled from "styled-components";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import { ButtonGroup } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 import useMaking from "../../hooks/useMaking";
+import useOpen from "../../hooks/useOpen";
 import theme from "../../styles/theme";
 
 const { blue, skyBlue, white, gray } = theme.colors;
@@ -30,7 +31,6 @@ const useStyles = makeStyles(() => ({
     lineHeight: "24px",
     color: color,
     backgroundColor: bgColor,
-
     "&:hover": {
       backgroundColor: bgColor,
     },
@@ -42,55 +42,120 @@ const useStyles = makeStyles(() => ({
  * point: number;
  */
 const BtnPoint = ({ questionIdx, point }) => {
+  const { open: editing, onOpen: onEdit, onClose: onCancel } = useOpen();
   const { updateQuestion } = useMaking();
 
   const onSetPoint = (e) => {
     const { name, value } = e.currentTarget;
     updateQuestion(name, Number(value), questionIdx);
+    onCancel();
   };
 
   return (
     <BtnGroup>
-      <Btn point={point} value={1} onClick={onSetPoint} />
-      <Btn point={point} value={2} onClick={onSetPoint} />
-      {/* <Btn point={point} /> */}
+      <Btn point={point} editing={editing} value={1} onClick={onSetPoint} />
+      <Btn point={point} editing={editing} value={2} onClick={onSetPoint} />
+      <BtnEdit
+        questionIdx={questionIdx}
+        point={point}
+        editing={editing}
+        onEdit={onEdit}
+        onUpdate={updateQuestion}
+        onCancel={onCancel}
+      />
     </BtnGroup>
   );
 };
 
-const Btn = memo(({ point = null, value, editable = false, onClick }) => {
+const Btn = memo(({ point, editing, value, onClick }) => {
   const btnStyle =
-    point && point === Number(value)
+    !editing && point && point === Number(value)
       ? btnColors.selected
       : btnColors.unselected;
 
   const classes = useStyles(btnStyle);
 
-  if (!editable)
-    return (
-      <Button
-        name="point"
-        className={classes.btn}
-        value={value}
-        onClick={onClick}
-      >{`${value}점`}</Button>
-    );
-
   return (
-    <Button name="point" className={classes.btn} value={value}>
-      직접 입력
-    </Button>
+    <Button
+      name="point"
+      className={classes.btn}
+      value={value}
+      onClick={onClick}
+    >{`${value}점`}</Button>
   );
 });
+
+const BtnEdit = memo(
+  ({ questionIdx, point, editing, onEdit, onUpdate, onCancel }) => {
+    const isFreePoint = point && ![1, 2].includes(point);
+    const [value, setValue] = useState(isFreePoint ? point : "");
+
+    const btnStyle =
+      point === value || editing ? btnColors.selected : btnColors.unselected;
+    const classes = useStyles(btnStyle);
+
+    const handleOnChange = (e) => {
+      const { value } = e.target;
+      const regex = /^[0-9\b]{0,13}$/;
+
+      if (!regex.test(value)) return; // prevent string
+      if (value < 1) {
+        setValue("");
+        return;
+      } // prevent value < 0
+
+      setValue(value);
+    };
+
+    const onBlur = (e) => {
+      const { name, value } = e.target;
+
+      if (value === "") {
+        onCancel();
+        onUpdate(name, null, questionIdx);
+        return;
+      }
+
+      onUpdate(name, Number(value), questionIdx);
+    };
+
+    return (
+      <Button
+        component="label"
+        className={classes.btn}
+        disableFocusRipple
+        onClick={onEdit}
+      >
+        <InputPoint
+          name="point"
+          placeholder="직접 입력"
+          value={value}
+          onChange={handleOnChange}
+          onBlur={onBlur}
+        />
+      </Button>
+    );
+  }
+);
 
 const BtnGroup = styled(ButtonGroup)`
   margin-bottom: 16px;
   width: 100%;
   border: none;
 
-  button {
+  button,
+  label {
     flex: 1;
     border: none;
+  }
+`;
+
+const InputPoint = styled.input`
+  all: inherit;
+  text-align: center;
+
+  &::placeholder {
+    all: inherit;
   }
 `;
 
