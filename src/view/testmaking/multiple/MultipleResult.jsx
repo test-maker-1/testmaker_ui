@@ -2,7 +2,8 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 
 import { TitleBox } from "../../../components/common";
-import BottomBtn from "../../../components/frame/BottomBtn";
+import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
+import { Result } from "../../../components/making";
 import { TextBox } from "../../../styles";
 
 import useMaking from "../../../hooks/useMaking";
@@ -15,7 +16,7 @@ const MultipleResult = () => {
     data: { data },
   } = useMaking();
 
-  const { questionsCnt, questions } = data;
+  const { questionsCnt, questions, results } = data;
 
   const sumPoint = useMemo(() => {
     return questions.reduce((prevPoint, { point }) => {
@@ -25,7 +26,7 @@ const MultipleResult = () => {
   }, [questions]);
 
   return (
-    <div>
+    <PageContainer>
       <TitleBox title="구간 별 결과" noline>
         <TextBox>
           {/* summary */}
@@ -33,13 +34,18 @@ const MultipleResult = () => {
           <Summary type="result" value={sumPoint} />
         </TextBox>
       </TitleBox>
+      {/* result */}
+      {results.map((result) => (
+        <Result />
+      ))}
+      <Result />
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
           { name: "다 적었어요", type: MOVENEXT },
         ]}
       />
-    </div>
+    </PageContainer>
   );
 };
 
