@@ -41,14 +41,14 @@ export const BtnIcon = ({ type, onClick }) => {
 
 const Container = styled.div`
   margin-bottom: 16px;
-  padding: 12px ${({ theme: { paddings } }) => paddings.main}px;
+  padding: 12px ${({ theme: { paddings } }) => paddings.main}rem;
   display: flex;
   justify-content: space-between;
   background-color: ${({ theme: { colors } }) => colors.white};
 
   .title {
     color: ${({ theme: { colors } }) => colors.BodyGray};
-    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
     font-weight: bold;
     line-height: 24px;
     letter-spacing: -0.5px;

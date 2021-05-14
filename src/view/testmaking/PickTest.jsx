@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TitleBox, ListCard } from "../../components/common/index.js";
+import { TitleBox } from "../../components/common/index.js";
 import usePage from "../../hooks/usePage.js";
 import useMaking from "../../hooks/useMaking.js";
 
 import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
+import tempImg from "../../resources/temp-img.png";
+
+const breakWidth = 350;
+const [pt, pl] = [20, 23];
 
 const PickTest = () => {
   return (
@@ -20,11 +24,14 @@ const PickTest = () => {
   );
 };
 
-// type: string; ex) "multiple" | "mbti" | "weight"
-const TestCard = ({ type }) => {
-  const { name, desc } = testInfo[type];
+/*
+ * title: string;
+ * thumbnail: img file;
+ */
+const TestCard = ({ type, thumbnail = tempImg }) => {
   const { initStateByType } = useMaking();
   const { goPage } = usePage();
+  const { name, desc } = testInfo[type];
 
   const onSetType = () => {
     initStateByType(type);
@@ -32,19 +39,67 @@ const TestCard = ({ type }) => {
   };
 
   return (
-    <div onClick={onSetType}>
-      <ListCard title={`${name} 테스트`}>
+    <BtnWrap onClick={onSetType}>
+      <Thumbnail>
+        <img src={thumbnail} alt={name} />
+      </Thumbnail>
+      <TextWrap>
+        <Title>{`${name} 테스트`}</Title>
         <TestDesc>{desc}</TestDesc>
-      </ListCard>
-    </div>
+      </TextWrap>
+    </BtnWrap>
   );
 };
 
+const Thumbnail = styled.div`
+  padding-right: ${pl}px;
+  display: flex;
+  align-items: center;
+`;
+
+const BtnWrap = styled.button`
+  width: 100%;
+  margin-bottom: 16px;
+  padding: ${pt}px ${pl}px;
+
+  display: flex;
+  align-items: center;
+
+  border: 2px solid ${({ theme: { colors } }) => colors.white};
+  border-radius: 10px;
+  background: ${({ theme: { colors } }) => colors.white};
+
+  &:active {
+    border: 2px solid ${({ theme: { colors } }) => colors.blue};
+  }
+
+  @media (max-width: ${breakWidth}px) {
+    flex-direction: column;
+    ${Thumbnail} {
+      width: 100%;
+      padding-bottom: ${pt}px;
+    }
+  }
+`;
+
+const TextWrap = styled.div`
+  width: 100%;
+  text-align: left;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 4px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem;
+  font-weight: bold;
+  line-height: 27px;
+  color: ${({ theme: { colors } }) => colors.darkGray};
+`;
+
 const TestDesc = styled.p`
-  font-size: 14px;
-  letter-spacing: -0.3px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
   line-height: 21px;
-  color: #697382;
+  letter-spacing: -0.3px;
+  color: ${({ theme: { colors } }) => colors.bodyGray};
 `;
 
 export default PickTest;
