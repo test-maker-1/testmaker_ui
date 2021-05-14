@@ -58,25 +58,25 @@ const InputCom = styled.input`
   width: 100%;
   border: 0px;
   padding: 0px 5px 0px 12px;
-  line-height: 36px;
+  line-height: 3.6rem;
   outline: none;
   ::placeholder {
-    font-size: 15px;
-    line-height: 24px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem; /*15px*/
+    line-height: 2.4rem;
     letter-spacing: -0.5px;
     color: #B7BDCB;
   }
 `;
 
 const CommentTitle = styled.div`
-  height: 2.25em; /*36px;*/
-  line-height: 2.25em; /*36px;*/
+  height: 3.6rem; /*36px;*/
+  line-height: 3.6rem; /*36px;*/
 `;
 
 const Title = styled.h1`
   display: inline-block;
   float: left;
-  font-size: 1.5em; /*24px*/
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
   letter-spacing: -1px;
   color: #697382;
@@ -85,7 +85,7 @@ const Title = styled.h1`
 const Entire = styled.p`
   display: inline-block;
   float: right;
-  font-size: 1em; /*16px*/
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   text-align: right;
   letter-spacing: -0.5px;
   color: #8A929E;
