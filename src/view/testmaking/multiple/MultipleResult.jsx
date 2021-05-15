@@ -14,6 +14,8 @@ const { PREVIEW, MOVENEXT } = ENUM;
 const MultipleResult = () => {
   const {
     data: { data },
+    dispatch,
+    addResult,
   } = useMaking();
 
   const { questionsCnt, questions, results } = data;
@@ -35,11 +37,11 @@ const MultipleResult = () => {
         </TextBox>
       </TitleBox>
       {/* result */}
-      {results.map((result) => (
-        <Result />
+      {results.map((result, idx) => (
+        <Result key={idx} />
       ))}
       <Result />
-      <BtnAdd target="결과" />
+      <BtnAdd target="결과" onClick={() => dispatch(addResult())} />
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },

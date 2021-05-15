@@ -7,6 +7,7 @@ import {
   addTag,
   addQuestion,
   addOption,
+  addResult,
   deleteTag,
   deleteQuestion,
   deleteOptionData,
@@ -81,6 +82,7 @@ const useMaking = () => {
     addNewTag,
     addQuestion,
     addOption,
+    addResult,
     // delete
     deleteTag,
     deleteQuestion,
