@@ -43,12 +43,12 @@ const MainBox = styled.div`
   margin: 0px auto;
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: 100%;
-  background: #ffffff;
-`;
+  background: transparent;
+`
 
 const Main = styled.main`
   display: flex;
-
+  background: ${({ theme: { colors } }) => colors.snow};
   min-height: ${({ theme: { heights } }) =>
     `calc(100vh - ${heights.header}px)`};
 
