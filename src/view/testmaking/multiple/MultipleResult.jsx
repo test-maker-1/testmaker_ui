@@ -38,10 +38,14 @@ const MultipleResult = () => {
       </TitleBox>
       {/* result */}
       {results.map((result, idx) => (
-        <Result key={idx} />
+        <Result
+          key={`${idx}-${result.title}`}
+          resultIdx={idx}
+          result={result}
+        />
       ))}
-      <Result />
       <BtnAdd target="결과" onClick={() => dispatch(addResult())} />
+
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },

@@ -11,6 +11,7 @@ import {
   deleteTag,
   deleteQuestion,
   deleteOptionData,
+  deleteResult,
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
@@ -87,6 +88,7 @@ const useMaking = () => {
     deleteTag,
     deleteQuestion,
     deleteOption,
+    deleteResult,
   };
 };
 

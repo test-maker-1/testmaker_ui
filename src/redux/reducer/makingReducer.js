@@ -72,7 +72,10 @@ const making = createSlice({
     ) => {
       questions[questionIdx].options.splice(optionIdx, 1);
     },
-    deleteResult: (state, action) => {},
+    deleteResult: (state, { payload }) => {
+      state.data.results.splice(payload, 1);
+      state.data.resultsCnt -= 1;
+    },
   },
 });
 
@@ -91,6 +94,11 @@ export const {
 export const { addTag, addQuestion, addResult, addOption } = making.actions;
 
 /* delete */
-export const { deleteTag, deleteQuestion, deleteOptionData } = making.actions;
+export const {
+  deleteTag,
+  deleteQuestion,
+  deleteOptionData,
+  deleteResult,
+} = making.actions;
 
 export default making;

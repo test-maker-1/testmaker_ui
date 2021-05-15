@@ -5,13 +5,18 @@ import { TitleBox } from "../common";
 import { SubTitle } from ".";
 import { InputTitle, TextArea } from "../../styles";
 
+import useMaking from "../../hooks/useMaking";
 import { md } from "../../constants/Enum";
 
-const Result = () => {
+const Result = ({ resultIdx, result }) => {
+  const { dispatch, deleteResult } = useMaking();
+
+  const onDelete = () => dispatch(deleteResult(resultIdx));
+
   return (
     <li>
       <Container>
-        <SubTitle title="1점 이상 1점 이하"></SubTitle>
+        <SubTitle title="1점 이상 1점 이하" onDelete={onDelete}></SubTitle>
         <TitleBox noline>
           <InputTitle
             name="title"
