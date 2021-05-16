@@ -76,6 +76,7 @@ const useMaking = () => {
     // update
     updateCommon,
     updateCommonByInput,
+    updateTypeData,
     updateTypeDataByInput,
     updateQuestion,
     updateOption,

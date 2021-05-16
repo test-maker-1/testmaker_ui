@@ -20,16 +20,29 @@ const svgStyles = {
 };
 
 const MultipleQnA = () => {
-  const { data, dispatch, addQuestion } = useMaking();
+  const { data, dispatch, addQuestion, updateTypeData } = useMaking();
 
   // redirection step
   if (!data.hasOwnProperty("type") || data.type !== multiple)
     return <Error code={401} />;
 
   const {
-    type,
     data: { questions = [] },
   } = data;
+
+  const calculatePoints = () => {
+    const totalPoints = questions.reduce((prevPoint, { point }) => {
+      const currentPoint = point ? point : 0;
+      return prevPoint + currentPoint;
+    }, 0);
+
+    dispatch(
+      updateTypeData({
+        key: "totalPoints",
+        value: totalPoints,
+      })
+    );
+  };
 
   return (
     <PageContainer>
@@ -57,7 +70,7 @@ const MultipleQnA = () => {
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
-          { name: "다 적었어요", type: MOVENEXT },
+          { name: "다 적었어요", type: MOVENEXT, customClick: calculatePoints },
         ]}
       />
     </PageContainer>

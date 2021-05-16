@@ -25,6 +25,7 @@ const multiple = {
 
   questionsCnt: 6, // 질문 개수
   resultsCnt: 3, // 결과 개수
+  totalPoints: 6,
 
   questions: [],
   results: [],

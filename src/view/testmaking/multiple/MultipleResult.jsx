@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 
 import { TitleBox } from "../../../components/common";
@@ -18,22 +18,15 @@ const MultipleResult = () => {
     addResult,
   } = useMaking();
 
-  const { questionsCnt, questions, results } = data;
-
-  const sumPoint = useMemo(() => {
-    return questions.reduce((prevPoint, { point }) => {
-      const currentPoint = point ? point : 0;
-      return prevPoint + currentPoint;
-    }, 0);
-  }, [questions]);
+  const { questionsCnt, totalPoints, results } = data;
 
   return (
     <PageContainer>
       <TitleBox title="구간 별 결과" noline>
         <TextBox>
           {/* summary */}
-          <Summary type="question" value={questionsCnt} />
-          <Summary type="result" value={sumPoint} />
+          <Summary type="questions" value={questionsCnt} />
+          <Summary type="points" value={totalPoints} />
         </TextBox>
       </TitleBox>
       {/* result */}
@@ -61,7 +54,7 @@ const MultipleResult = () => {
  * value: number;
  */
 const Summary = ({ type, value }) => {
-  const [name, end] = type === "question" ? ["질문", "개"] : ["점수", "점"];
+  const [name, end] = type === "questions" ? ["질문", "개"] : ["점수", "점"];
   return (
     <div>
       <SummaryText>
