@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import { TitleBox, Title, SVG } from "../../../components/common";
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import ResultBound from "./ResultBound";
+import ResultPoint from "./ResultPoint";
 import theme from "../../../styles/theme";
 
 import useMaking from "../../../hooks/useMaking";
@@ -72,7 +73,7 @@ const MultipleResult = () => {
 
       {/* set result by test mode */}
       {isRankMode ? (
-        <div>점수모드</div>
+        <ResultPoint />
       ) : (
         <ResultBound data={data} addResult={addEmptyResult} />
       )}
