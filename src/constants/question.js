@@ -3,7 +3,7 @@ const multiple = {
   img: null, // 썸네일 path
   answer: null, // string (추후 변경 가능)
   point: 1,
-  options: ["", "", ""], // string[],
+  options: new Array(3).fill({ name: "" }), // string[],
 };
 
 const mbti = {};

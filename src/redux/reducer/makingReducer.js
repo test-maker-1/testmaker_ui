@@ -37,7 +37,7 @@ const making = createSlice({
       if (beforeOption === questions[questionIdx].answer) {
         questions[questionIdx].answer = option;
       }
-      questions[questionIdx].options[idx] = option;
+      questions[questionIdx].options[idx].name = option;
     },
 
     /* add empty data */
@@ -46,7 +46,7 @@ const making = createSlice({
       state.data.questionsCnt += 1;
     },
     addOption: ({ data: { questions } }, { payload }) => {
-      questions[payload].options.push("");
+      questions[payload].options.push({ name: "" });
     },
     addResult: (state) => {
       state.data.results.push(getResult(state.type));
