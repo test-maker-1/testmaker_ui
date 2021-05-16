@@ -1,10 +1,12 @@
-import React, { memo } from "react";
-import styled from "styled-components";
+import React, { memo, useState } from "react";
+import styled, { css } from "styled-components";
 
 import { SVG } from "../common/index";
 import useMaking from "../../hooks/useMaking";
 import ENUM from "../../constants/Enum";
+import theme from "../../styles/theme";
 
+const { blue, white, bodyGray } = theme.colors;
 const svgStyles = {
   width: 16,
   height: 16,
@@ -14,19 +16,23 @@ const svgStyles = {
  * tag: string;
  * onDelete: function;
  */
-const Tag = ({ tag, deletable = false }) => {
+const Tag = ({ tag, deletable = false, selected = false, setSelected }) => {
   const { dispatch, deleteTag } = useMaking();
 
-  const onClick = (e) => {
+  const onClickDelete = (e) => {
     if (deletable) dispatch(deleteTag(tag));
+  };
+  const onSelectTag = (e) => {
+    if (!setSelected) return;
+    setSelected(tag);
   };
 
   return (
-    <TagBox className="tag">
+    <TagBox onClick={onSelectTag} selected={selected}>
       <span>{tag}</span>
       {/* delete btn */}
       {deletable && (
-        <button onClick={onClick}>
+        <button onClick={onClickDelete}>
           <SVG type={ENUM.CANCEL} style={svgStyles} />
         </button>
       )}
@@ -35,23 +41,26 @@ const Tag = ({ tag, deletable = false }) => {
 };
 
 const TagBox = styled.span`
-  margin-right: 10px;
-  padding: 6px 10px;
-
+  margin-right: 1rem;
+  padding: 0.6rem 1rem;
+  height: 3.2rem;
   display: inline-flex;
   align-items: center;
 
-  border-radius: 5px;
-  background: #fafafa;
-  color: #8a929e;
+  border-radius: 8px;
 
-  font-size: 13px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
   font-weight: bold;
   line-height: 19px;
   letter-spacing: -0.3px;
+  background: ${(props) => (props.selected ? blue : white)};
 
-  button {
-    margin-left: 4px;
+  border: ${(props) =>
+    props.selected ? `1px solid ${blue}` : "1px solid #e5e8ec"};
+
+  color: ${(props) => (props.selected ? white : bodyGray)};
+  */ button {
+    margin-left: 0.4rem;
     display: flex;
   }
 `;
