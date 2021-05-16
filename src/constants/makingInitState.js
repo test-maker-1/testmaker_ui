@@ -1,7 +1,9 @@
 /* 테스트 메이킹 공통 데이터 */
 const common = {
-  makerUid: null,
-  makerName: null,
+  maker: {
+    name: null,
+    userUid: null,
+  },
 
   testId: null,
   type: null, // ex) "multiple" | "mbti" | "weight"
@@ -15,7 +17,7 @@ const common = {
   optionalURL: "", // 홍보 URL (선택)
   step: null, // 테스트 제작 단계
 
-  theme: null,
+  theme: "basic",
   data: {}, // type에 따라 내용 상이
 };
 
