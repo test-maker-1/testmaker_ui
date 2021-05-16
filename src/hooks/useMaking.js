@@ -4,6 +4,7 @@ import {
   updateTypeData,
   updateQuestionData,
   updateOptionData,
+  updateResultData,
   addTag,
   addQuestion,
   addOption,
@@ -40,6 +41,10 @@ const useMaking = () => {
 
   const updateOption = (questionIdx, idx, beforeOption, option) => {
     dispatch(updateOptionData({ questionIdx, idx, beforeOption, option }));
+  };
+
+  const updateResult = (key, value, idx) => {
+    dispatch(updateResultData({ key, value, idx }));
   };
 
   const initStateByType = (type) => {
@@ -80,6 +85,7 @@ const useMaking = () => {
     updateTypeDataByInput,
     updateQuestion,
     updateOption,
+    updateResult,
     // add
     addNewTag,
     addQuestion,

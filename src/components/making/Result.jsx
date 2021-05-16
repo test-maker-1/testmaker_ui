@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 
 import { TitleBox, UploadImg } from "../common";
@@ -11,17 +11,27 @@ import useOpen from "../../hooks/useOpen";
 import { md } from "../../constants/Enum";
 
 const Result = ({ resultIdx, result }) => {
-  const { dispatch, deleteResult } = useMaking();
+  const {
+    title,
+    description,
+    img,
+    pointBound: { start, end },
+  } = result;
+  const { dispatch, updateResult, deleteResult } = useMaking();
   const { open, onToggle } = useOpen();
 
   const onDelete = () => dispatch(deleteResult(resultIdx));
+  const onUpdate = (e) => {
+    const { name, value } = e.target;
+    updateResult(name, value, resultIdx);
+  };
 
   return (
     <li>
       <Container>
         {/* pointBound */}
         <SubTitle
-          title="1점 이상 1점 이하"
+          title={`${start ? start : ""}점 이상 ${end ? end : ""}점 이하`}
           onUpload={onToggle}
           onDelete={onDelete}
         ></SubTitle>
@@ -31,6 +41,8 @@ const Result = ({ resultIdx, result }) => {
             name="title"
             placeholder="결과명을 적어주세요"
             size={md}
+            defaultValue={title}
+            onBlur={onUpdate}
           />
           {/* img */}
           {open && <UploadImg />}
@@ -39,6 +51,8 @@ const Result = ({ resultIdx, result }) => {
             name="description"
             placeholder="결과를 설명해주세요"
             rows={1}
+            defaultValue={description}
+            onBlur={onUpdate}
           />
         </TitleBox>
       </Container>
@@ -64,4 +78,4 @@ const Container = styled.div`
   }
 `;
 
-export default Result;
+export default memo(Result);

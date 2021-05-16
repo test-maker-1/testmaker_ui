@@ -39,6 +39,9 @@ const making = createSlice({
       }
       questions[questionIdx].options[idx].name = option;
     },
+    updateResultData: ({ data }, { payload: { key, value, idx } }) => {
+      data.results[idx][key] = value;
+    },
 
     /* add empty data */
     addQuestion: (state) => {
@@ -88,6 +91,7 @@ export const {
   updateTypeData,
   updateQuestionData,
   updateOptionData,
+  updateResultData,
 } = making.actions;
 
 /* add */
