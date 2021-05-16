@@ -32,9 +32,7 @@ export const BtnIcon = ({ type, onClick }) => {
 
   return (
     <li className="item-btn">
-      <button onClick={onClick}>
-        <SVG type={type} style={svgStyles} />
-      </button>
+      <SVG type={type} style={svgStyles} onClick={onClick} />
     </li>
   );
 };

@@ -12,6 +12,7 @@ import theme from "../../../styles/theme";
 
 import useMaking from "../../../hooks/useMaking";
 import ENUM from "../../../constants/Enum";
+import useOpen from "../../../hooks/useOpen";
 
 const { PREVIEW, MOVENEXT } = ENUM;
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles(() => ({
     letterSpacing: -0.5,
     lineHeight: "24px",
     color: theme.colors.blue,
-    
+
     "& .MuiButton-startIcon": {
       marginRight: "4px !important",
     },
@@ -45,20 +46,26 @@ const MultipleResult = () => {
     dispatch,
     addResult,
   } = useMaking();
+  const { open: isRankMode, onToggle } = useOpen();
 
   const { questionsCnt, totalPoints, results } = data;
   const classes = useStyles();
+
+  const [currentMode, otherMode] = isRankMode
+    ? ["점수 모드", "구간 별 결과"]
+    : ["구간 별 결과", "점수 모드"];
 
   return (
     <PageContainer>
       <TitleBox noline>
         <TitleWrap>
-          <Title>구간 별 결과</Title>
+          <Title>{currentMode}</Title>
           <Button
             className={classes.btnRank}
             startIcon={<SVG style={svgStyle} type={ENUM.CHANGE} />}
+            onClick={onToggle}
           >
-            점수 모드
+            {otherMode}
           </Button>
         </TitleWrap>
         <TextBox>
