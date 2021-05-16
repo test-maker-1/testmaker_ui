@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 import { InfoText, UploadImg } from "../common";
-import { SubTitle, BtnIcon, Option, BtnAddOption } from ".";
+import { SubTitle, BtnIcon, Option, BtnAddOption, BtnPoint } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
@@ -56,6 +56,7 @@ const Question = ({ data, questionIdx }) => {
           </ul>
           <BtnAddOption questionIdx={questionIdx} />
           {/* point */}
+          <BtnPoint questionIdx={questionIdx} point={point} />
           <InfoText text="정답 항목을 체크해주세요" color="blue" />
         </Wrapper>
       </div>
