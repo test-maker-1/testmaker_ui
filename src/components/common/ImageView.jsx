@@ -1,33 +1,29 @@
-import React, { memo } from "react";
-import PropTypes from "prop-types";
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 import SVG from "./SVG";
 import Enum from "../../constants/Enum";
 
-const EmptyImg = ({ isNull }) => {
-  return isNull ? null : (
-    <EmptyBox>
-      <SVG type={Enum.PICTURE} />
-    </EmptyBox>
-  );
-};
+const EmptyImg = ({isNull}) => {
+  return isNull ? null : (<EmptyBox><SVG type={Enum.PICTURE} /></EmptyBox>);
+}
 
-const ImageView = memo(({ isNull, imageUrl, height }) => {
+
+const ImageView = memo(({isNull, imageUrl}) => {
   return (
-    <ContainerImg height={height} className="flex-box">
-      {imageUrl ? (
+    <ContainerImg>
+      {imageUrl ?
         <ImgArea src={imageUrl} alt={"ImgArea"} />
-      ) : (
-        <EmptyImg isNull={isNull} />
-      )}
+      :
+        <EmptyImg isNull={isNull}/>
+      }
     </ContainerImg>
   );
 });
 
 ImageView.propTypes = {
   isNull: PropTypes.bool,
-  imageUrl: PropTypes.string,
-  height: PropTypes.string,
+  imageUrl: PropTypes.string
 };
 
 const ContainerImg = styled.div`
@@ -35,8 +31,8 @@ const ContainerImg = styled.div`
   width: ${(props) => props.width || "100%"};
   height: 0;
   padding-bottom: ${(props) => props.height || "calc(100% / 1.7)"};
-  display: flex;
 `;
+
 
 /*374px * 212px : 1.7*/
 const EmptyBox = styled.div`
@@ -46,8 +42,8 @@ const EmptyBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fafafa;
-  border: 1px solid #e5e8ec;
+  background: #FAFAFA;
+  border: 1px solid #E5E8EC;
   box-sizing: border-box;
   border-radius: 5px;
   text-align: center;
