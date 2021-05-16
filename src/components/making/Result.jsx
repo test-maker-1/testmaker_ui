@@ -1,28 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TitleBox } from "../common";
+import { TitleBox, UploadImg } from "../common";
 import { SubTitle } from ".";
 import { InputTitle, TextArea } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
+import useOpen from "../../hooks/useOpen";
+
 import { md } from "../../constants/Enum";
 
 const Result = ({ resultIdx, result }) => {
   const { dispatch, deleteResult } = useMaking();
+  const { open, onToggle } = useOpen();
 
   const onDelete = () => dispatch(deleteResult(resultIdx));
 
   return (
     <li>
       <Container>
-        <SubTitle title="1점 이상 1점 이하" onDelete={onDelete}></SubTitle>
+        {/* pointBound */}
+        <SubTitle
+          title="1점 이상 1점 이하"
+          onUpload={onToggle}
+          onDelete={onDelete}
+        ></SubTitle>
         <TitleBox noline>
+          {/* title */}
           <InputTitle
             name="title"
             placeholder="결과명을 적어주세요"
             size={md}
           />
+          {/* img */}
+          {open && <UploadImg />}
+          {/* description */}
           <DescText
             name="description"
             placeholder="결과를 설명해주세요"
