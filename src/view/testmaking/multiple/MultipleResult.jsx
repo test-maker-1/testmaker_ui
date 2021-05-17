@@ -51,7 +51,6 @@ const MultipleResult = () => {
   const [currentMode, otherMode] = isRankMode
     ? ["점수 모드", "구간 별 결과"]
     : ["구간 별 결과", "점수 모드"];
-
   const classes = useStyles();
 
   const addEmptyResult = () => dispatch(addResult());
@@ -70,7 +69,6 @@ const MultipleResult = () => {
           </Button>
         </TitleWrap>
       </TitleBox>
-
       {/* set result by test mode */}
       {isRankMode ? (
         <ResultPoint />

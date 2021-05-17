@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { SVG } from "../common";
 import ENUM from "../../constants/Enum";
@@ -67,4 +67,4 @@ const Btns = styled.ul`
   }
 `;
 
-export default SubTitle;
+export default memo(SubTitle);

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { TitleBox, UploadImg } from "../common";
@@ -10,17 +10,17 @@ import useOpen from "../../hooks/useOpen";
 
 import { md } from "../../constants/Enum";
 
-const Result = ({ resultIdx, result }) => {
+const Result = ({ resultIdx, result, deleteResult }) => {
   const {
     title,
     description,
     img,
     pointBound: { start, end },
   } = result;
-  const { dispatch, updateResult, deleteResult } = useMaking();
+
+  const { updateResult } = useMaking();
   const { open, onToggle } = useOpen();
 
-  const onDelete = () => dispatch(deleteResult(resultIdx));
   const onUpdate = (e) => {
     const { name, value } = e.target;
     updateResult(name, value, resultIdx);
@@ -31,9 +31,10 @@ const Result = ({ resultIdx, result }) => {
       <Container>
         {/* pointBound */}
         <SubTitle
-          title={`${start ? start : ""}점 이상 ${end ? end : ""}점 이하`}
+          title={`${start !== null ? start : ""}점 이상
+                  ${end !== null ? end : ""}점 이하`}
           onUpload={onToggle}
-          onDelete={onDelete}
+          onDelete={() => deleteResult(resultIdx)}
         ></SubTitle>
         <TitleBox noline>
           {/* title */}
@@ -63,7 +64,6 @@ const Result = ({ resultIdx, result }) => {
 const DescText = styled(TextArea)`
   padding: 12px;
   height: unset;
-
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
   line-height: 24px;
 
@@ -78,4 +78,4 @@ const Container = styled.div`
   }
 `;
 
-export default memo(Result);
+export default Result;

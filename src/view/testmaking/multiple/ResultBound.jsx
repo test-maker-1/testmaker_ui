@@ -1,12 +1,36 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import { TitleBox } from "../../../components/common";
 
+import { TitleBox } from "../../../components/common";
 import { BtnAdd, Result } from "../../../components/making";
 import { TextBox } from "../../../styles";
 
+import useMaking from "../../../hooks/useMaking";
+import { getPointBoundList } from "../../../utils/constHandler";
+
 const ResultBound = ({ data, addResult }) => {
-  const { questionsCnt, totalPoints, results } = data;
+  const { questionsCnt, totalPoints, results, resultsCnt } = data;
+  const { dispatch, updateResult, deleteResult } = useMaking();
+
+  const addEmptyResult = () => {
+    const pointBoundList = getPointBoundList(totalPoints, resultsCnt + 1);
+    if (!pointBoundList) {
+      alert("결과 개수가 너무 많아요!"); // 임시 alert
+      return;
+    }
+    addResult();
+    pointBoundList.forEach((bound, idx) => {
+      updateResult("pointBound", bound, idx);
+    });
+  };
+
+  const handleDeleteResult = (idx) => {
+    const pointBoundList = getPointBoundList(totalPoints, resultsCnt - 1);
+    dispatch(deleteResult(idx));
+    pointBoundList.forEach((bound, idx) => {
+      updateResult("pointBound", bound, idx);
+    });
+  };
 
   return (
     <Container>
@@ -23,9 +47,10 @@ const ResultBound = ({ data, addResult }) => {
           key={`${idx}-${result.title}`}
           resultIdx={idx}
           result={result}
+          deleteResult={handleDeleteResult}
         />
       ))}
-      <BtnAdd target="결과" onClick={addResult} />
+      <BtnAdd target="결과" onClick={addEmptyResult} />
     </Container>
   );
 };
@@ -34,7 +59,7 @@ const ResultBound = ({ data, addResult }) => {
  * type: string; ex) question || result;
  * value: number;
  */
-const Summary = ({ type, value }) => {
+const Summary = memo(({ type, value }) => {
   const [name, end] = type === "questions" ? ["질문", "개"] : ["점수", "점"];
   return (
     <div>
@@ -45,7 +70,7 @@ const Summary = ({ type, value }) => {
       </SummaryText>
     </div>
   );
-};
+});
 
 const Container = styled.div`
   .title-box {
@@ -56,11 +81,9 @@ const Container = styled.div`
 
 const SummaryText = styled.div`
   text-align: center;
-
   span {
     margin-right: 8px;
   }
-
   strong {
     font-weight: bold;
   }
