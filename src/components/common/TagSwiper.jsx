@@ -47,7 +47,7 @@ export default TagSwiper;
 
 const Container = styled.div`
   padding: 0 ${({ theme: { paddings } }) => paddings.main}rem;
-  margin: 0.4rem 0 1.2rem 0;
+  margin: 4px 0 12px 0;
   width: 100%;
   position: absolute;
   .swiper-container {

@@ -41,8 +41,8 @@ const Tag = ({ tag, deletable = false, selected = false, setSelected }) => {
 };
 
 const TagBox = styled.span`
-  margin-right: 1rem;
-  padding: 0.6rem 1rem;
+  margin-right: 10px;
+  padding: 6px 10px;
   height: 3.2rem;
   display: inline-flex;
   align-items: center;
@@ -59,10 +59,6 @@ const TagBox = styled.span`
     props.selected ? `1px solid ${blue}` : "1px solid #e5e8ec"};
 
   color: ${(props) => (props.selected ? white : bodyGray)};
-  */ button {
-    margin-left: 0.4rem;
-    display: flex;
-  }
 `;
 
 export default memo(Tag);
