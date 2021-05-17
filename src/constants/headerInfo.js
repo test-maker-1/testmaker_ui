@@ -1,10 +1,13 @@
-export const [BACK, SEARCH, LOGO, MENU, NOTHING, TITLE] = [
+import theme from '../styles/theme';
+
+export const [BACK, SEARCH, LOGO, MENU, NOTHING, TITLE, CUSTOM] = [
   "back",
   "search",
   "logo",
   "menu",
   "nothing",
   "title",
+  "custom"
 ];
 
 export const initHeader = {
@@ -48,6 +51,20 @@ const headerInfo = {
   "/register": {
     leftType: BACK,
     title: { type: TITLE, title: "회원가입" },
+  },
+  "/testing/welcome": {
+    leftType: BACK,
+    title: { type: NOTHING },
+    background: theme.colors.lightblue
+  },
+  "/testing/result": {
+    leftType: BACK,
+    title: { type: NOTHING },
+    background: theme.colors.lightblue
+  },
+  "/testing/exam": {
+    leftType: BACK,
+    title: { type: NOTHING },
   },
 };
 

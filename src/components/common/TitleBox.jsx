@@ -14,7 +14,7 @@ export const TitleBox = ({ title = null, noline = false, children }) => {
 };
 
 export const Box = styled.div`
-  padding: 24px ${({ theme: { paddings } }) => paddings.main}px;
+  padding: 24px ${({ theme: { paddings } }) => paddings.main}rem;
   border-bottom: ${({ noline }) => (noline ? "0px" : "1px solid #EBEDF1")};
 `;
 
