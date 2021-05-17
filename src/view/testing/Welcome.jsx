@@ -41,7 +41,7 @@ const Welcome = () => {
   }, [])
 
   return (
-    <PageContainer background={'lightblue'}>
+    <PageContainer>
       {/* 테스트 상세 정보 */}
       <TestIntro openAlert={openAlert} />
       {/* 댓글 영역 */}

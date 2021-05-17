@@ -17,7 +17,7 @@ const Result = memo(props => {
     console.log(id, e)
   }
   return (
-    <PageContainer background={'lightblue'}>
+    <PageContainer>
       <div style={{ padding: '2.4rem 2rem 3rem' }}>
         <div style={{ paddingBottom: '2.4rem' }}>
           <Title>당신은 나의 찐친입니다.</Title>
