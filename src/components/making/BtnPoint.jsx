@@ -5,9 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ButtonGroup } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
+import { InputNumber } from "../../styles";
+import theme from "../../styles/theme";
+
 import useMaking from "../../hooks/useMaking";
 import useOpen from "../../hooks/useOpen";
-import theme from "../../styles/theme";
 
 const { blue, skyBlue, white, gray } = theme.colors;
 
@@ -126,7 +128,7 @@ const BtnEdit = memo(
         disableFocusRipple
         onClick={onEdit}
       >
-        <InputPoint
+        <InputNumber
           name="point"
           placeholder="직접 입력"
           value={value}
@@ -147,15 +149,6 @@ const BtnGroup = styled(ButtonGroup)`
   label {
     flex: 1;
     border: none;
-  }
-`;
-
-const InputPoint = styled.input`
-  all: inherit;
-  text-align: center;
-
-  &::placeholder {
-    all: inherit;
   }
 `;
 

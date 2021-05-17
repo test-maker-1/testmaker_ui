@@ -30,4 +30,12 @@ export const TextArea = styled.textarea`
   letter-spacing: -0.5px;
 `;
 
+export const InputNumber = styled.input`
+  all: inherit;
+  text-align: center;
+  &::placeholder {
+    all: inherit;
+  }
+`;
+
 export default Input;
