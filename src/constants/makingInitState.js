@@ -24,6 +24,7 @@ const common = {
 /* 객관식 테스트 */
 const multiple = {
   isRankMode: false,
+  top: 5,
   target: null, // 누구에게 공유하실건가요?
 
   questionsCnt: 6, // 질문 개수

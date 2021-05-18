@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { InputNumber, Section } from "../../../styles";
 import theme from "../../../styles/theme";
+import useMaking from "../../../hooks/useMaking";
 
 const useStyles = makeStyles(() => ({
   btn: () => ({
@@ -25,16 +26,32 @@ const useStyles = makeStyles(() => ({
 
 const ResultPoint = () => {
   const classes = useStyles();
+  const {
+    data: { data },
+    dispatch,
+    updateTypeData,
+  } = useMaking();
+
+  const onUpdate = (e) => {
+    const { name, value } = e.target;
+    dispatch(
+      updateTypeData({
+        key: name,
+        value: Number(value),
+      })
+    );
+  };
+
   return (
     <Container>
       <InputSection>
-        <InputWrap className="input-wrap">
+        <Wrapper className="input-wrap">
           <span>점수 높은</span>
           <Button component="label" className={classes.btn} disableFocusRipple>
-            <InputRank name="top" defaultValue={5} />
+            <InputRank name="top" defaultValue={data.top} onBlur={onUpdate} />
           </Button>
           <span>명까지 공개할래요</span>
-        </InputWrap>
+        </Wrapper>
       </InputSection>
     </Container>
   );
@@ -51,7 +68,7 @@ const InputSection = styled(Section)`
   border-bottom: 1px solid #ebedf1;
 `;
 
-const InputWrap = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
 
