@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import making from "./makingReducer";
-import userReducer from "./userReducer";
+import common from "./commonReducer";
+import testing from "./testingReducer";
 
 export const rootReducer = combineReducers({
-  userReducer,
-  making: making.reducer
+  common: common.reducer,
+  making: making.reducer,
+  testing: testing.reducer,
 });
