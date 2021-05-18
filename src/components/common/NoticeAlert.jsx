@@ -1,52 +1,38 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
-import { Button } from "@material-ui/core";
 import { styled as mstyled } from "@material-ui/core/styles";
-// import warning from "./warning.svg";
+import { Button } from "@material-ui/core";
+import SVG from "./SVG";
 
-let that = null;
+let that = null; // 정적 메소드용
+
 class NoticeAlert extends PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
       open: false,
     };
-
-    that = this; //정적 메소드용
+    that = this;
   }
 
   static open() {
-    //open 여부를 소스 내에서 관리
     if (!that.state.open) that.setState({ open: true });
-  }
+  } // open 여부를 소스 내에서 관리
 
-  handleOnClose = () => {
-    this.setState({ open: false });
-  };
-
-  setIcon = () => {
-    //string 으로 받은 icon 타입에 따라 출력
-    const { icon } = this.props;
-
-    if (icon === "warn") return "WARN";
-    else return "WARN";
-  };
+  handleOnClose = () => this.setState({ open: false });
 
   setButtons() {
-    const { btns, handleOnClick } = this.props;
+    const { btns } = this.props;
 
     return btns.map((oneBtn, idx) => {
+      const onClick =
+        oneBtn.hasOwnProperty("callback") && oneBtn.callback !== null
+          ? oneBtn.callback
+          : this.handleOnClose;
+
       return (
-        <NoticeBtn
-          key={`btn${idx}`}
-          onClick={(event) => {
-            this.setState({ open: false }, () =>
-              handleOnClick(oneBtn.id, event)
-            );
-          }}
-        >
-          {oneBtn}
+        <NoticeBtn key={`btn${idx}`} onClick={(e) => onClick(e)}>
+          {oneBtn.name}
         </NoticeBtn>
       );
     });
@@ -54,31 +40,36 @@ class NoticeAlert extends PureComponent {
 
   render() {
     const { open } = this.state;
-    const { content } = this.props;
+    const { icon, content } = this.props;
+
+    if (!open) return null;
 
     return (
-      <>
-        {open ? (
-          <Modal>
-            <ModalCloser onClick={this.handleOnClose} />
-            <Section>
-              <ModalMain>
-                <NoticeContainer>
-                  <Notice>
-                    {/* <img src={warning} alt="warning" /> */}
-                    <div>{this.setIcon()}</div>
-                    <div>{content}</div>
-                  </Notice>
-                </NoticeContainer>
-              </ModalMain>
-              <ModalFooter>{this.setButtons()}</ModalFooter>
-            </Section>
-          </Modal>
-        ) : null}
-      </>
+      <Modal>
+        <ModalCloser onClick={this.handleOnClose} />
+        <Section>
+          {/* content */}
+          <ModalMain>
+            {icon && (
+              <div className="icon">
+                <SVG type={icon} />
+              </div>
+            )}
+            <AlertText>{content}</AlertText>
+          </ModalMain>
+          {/* buttons */}
+          <ModalFooter>{this.setButtons()}</ModalFooter>
+        </Section>
+      </Modal>
     );
   }
 }
+
+NoticeAlert.defaultProps = {
+  icon: null,
+  msg: "",
+  btn: [],
+};
 
 const NoticeBtn = mstyled(Button)({
   flex: 1,
@@ -87,65 +78,62 @@ const NoticeBtn = mstyled(Button)({
   fontSize: "1em",
   border: "1px solid #e5e8ec",
   background: "#e5e8ec",
-});
+}); // gui 입힐 때 수정 필요
 
 const Modal = styled.div`
+  padding: 0 20px;
   position: fixed;
-  display: -webkit-box;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
   top: 0;
   left: 50%;
-  right: 0;
   bottom: 0;
   transform: translateX(-50%);
+
+  display: flex;
+  place-content: center center;
+  flex-wrap: wrap;
+
   max-width: ${({ theme: { widths } }) => widths.main}px;
   width: 100%;
-  z-index: 99;
+
+  z-index: 100;
   background: rgba(138, 146, 158, 0.6);
 `;
 
 const Section = styled.div`
-  position: absolute;
-  min-width: -webkit-fill-available;
-  margin: 0 20px;
-  height: 214px;
-  border-radius: 5px;
-  background-color: #fff;
-  overflow: hidden;
+  position: relative;
+  padding: 16px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: white;
   text-align: center;
 `;
 
 const ModalMain = styled.div`
-  height: 142px;
-  display: table;
-  width: 100%;
-`;
+  height: 134px;
+  display: flex;
+  flex-direction: column;
+  place-content: center center;
 
-const NoticeContainer = styled.div`
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-`;
-
-const Notice = styled.div`
-  display: inline-block;
-  div {
-    font-size: 20px;
-    line-height: 30px;
+  .icon {
+    margin-bottom: 13px;
   }
 `;
 
+const AlertText = styled.p`
+  font-weight: bold;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xl}rem;
+  line-height: 30px;
+  letter-spacing: -0.8px;
+`;
+
 const ModalFooter = styled.div`
-  margin: 8px 16px;
-  height: 40px;
+  height: 48px;
   display: flex;
 `;
 
 const ModalCloser = styled.div`
   position: absolute;
+  left: 0;
   width: 100%;
   height: 100%;
 `;
