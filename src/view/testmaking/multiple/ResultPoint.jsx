@@ -3,9 +3,34 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
+import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
 import theme from "../../../styles/theme";
+
 import useMaking from "../../../hooks/useMaking";
+
+const userRanking = [
+  {
+    name: "닉네임A",
+    point: 8,
+  },
+  {
+    name: "닉네임B",
+    point: 7,
+  },
+  {
+    name: "닉네임C",
+    point: 6,
+  },
+  {
+    name: "닉네임D",
+    point: 5,
+  },
+  {
+    name: "닉네임E",
+    point: 4,
+  },
+];
 
 const useStyles = makeStyles(() => ({
   btn: () => ({
@@ -47,12 +72,18 @@ const ResultPoint = () => {
       <InputSection>
         <Wrapper className="input-wrap">
           <span>점수 높은</span>
+          {/* input top */}
           <Button component="label" className={classes.btn} disableFocusRipple>
             <InputRank name="top" defaultValue={data.top} onBlur={onUpdate} />
           </Button>
           <span>명까지 공개할래요</span>
         </Wrapper>
       </InputSection>
+      {/* ranking */}
+      <RankingList top={5} userRanking={userRanking} noline />
+      <Section>
+        <InfoText text="점수 모드 예시화면이에요" color="blue" />
+      </Section>
     </Container>
   );
 };
@@ -65,7 +96,7 @@ const Container = styled.div`
 
 const InputSection = styled(Section)`
   padding-bottom: 25px;
-  border-bottom: 1px solid #ebedf1;
+  border-bottom: 1px solid ${({ theme: { colors } }) => colors.ghostGray};
 `;
 
 const Wrapper = styled.div`
