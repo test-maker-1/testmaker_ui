@@ -16,7 +16,8 @@ const {
   SEARCH,
   HEADERLOGO,
   SPLIT,
-  MORE
+  MORE,
+  WARNING
 } = Enum
 
 export const svgInfo = {
@@ -248,6 +249,14 @@ export const svgInfo = {
     inContext: [
       <circle cx='12' cy='8.5' r='2' fill='#C4C4C4' />,
       <circle cx='12' cy='15.5' r='2' fill='#C4C4C4' />
+    ]
+  },
+  [WARNING]: {
+    width: '40',
+    height: '40',
+    viewBox: '0 0 40 40',
+    inContext: [
+      <path d="M3.40455 31.9981C2.63262 33.3314 3.59473 35.0002 5.1354 35.0002H34.8643C36.4049 35.0002 37.3671 33.3314 36.5951 31.9981L21.7307 6.32315C20.9604 4.99258 19.0393 4.99258 18.269 6.32315L3.40455 31.9981ZM21.6665 30.0002H18.3332V26.6668H21.6665V30.0002ZM21.6665 23.3335H18.3332V16.6668H21.6665V23.3335Z" fill="#DADEE6"/>
     ]
   }
 }
