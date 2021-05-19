@@ -28,7 +28,7 @@ class NoticeAlert extends PureComponent {
         oneBtn.hasOwnProperty("callback") && oneBtn.callback !== null
           ? oneBtn.callback
           : this.handleOnClose;
-      const color = idx ? "blue" : "skyBlue";
+      const color = btns.length === 1 ? "blue" : idx ? "blue" : "skyBlue";
 
       return (
         <BtnField
