@@ -33,7 +33,7 @@ const post = (path, params = null, type = DEFAULT) => {
     instance
       .post(path, params)
       .then(({ data }) => resolve(reducerUtils.success(data)))
-      .catch((e) => resolve(reducerUtils.error(e.message)));
+      .catch((e) => resolve(reducerUtils.error(e))); // e: { code, message }
   });
 };
 
