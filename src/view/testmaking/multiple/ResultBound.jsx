@@ -1,12 +1,14 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 
-import { TitleBox } from "../../../components/common";
+import { NoticeAlert, TitleBox } from "../../../components/common";
 import { BtnAdd, Result } from "../../../components/making";
 import { TextBox } from "../../../styles";
 
 import useMaking from "../../../hooks/useMaking";
 import { getPointBoundList } from "../../../utils/constHandler";
+
+import ENUM from "../../../constants/Enum";
 
 const ResultBound = ({ data, addResult }) => {
   const { questionsCnt, totalPoints, results, resultsCnt } = data;
@@ -15,7 +17,7 @@ const ResultBound = ({ data, addResult }) => {
   const addEmptyResult = () => {
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt + 1);
     if (!pointBoundList) {
-      alert("결과 개수가 너무 많아요!"); // 임시 alert
+      NoticeAlert.open();
       return;
     }
     addResult();
@@ -26,6 +28,7 @@ const ResultBound = ({ data, addResult }) => {
 
   const handleDeleteResult = (idx) => {
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt - 1);
+
     dispatch(deleteResult(idx));
     pointBoundList.forEach((bound, idx) => {
       updateResult("pointBound", bound, idx);
@@ -34,6 +37,12 @@ const ResultBound = ({ data, addResult }) => {
 
   return (
     <Container>
+      {/* alert sample */}
+      <NoticeAlert
+        icon={ENUM.WARNING}
+        content="결과 개수가 너무 많아요!"
+        btns={[{ name: "돌아가기" }]}
+      />
       <TitleBox>
         <TextBox>
           {/* summary */}

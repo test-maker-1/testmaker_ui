@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import Error from "../../../view/Error";
-import { SVG } from "../../../components/common";
+import { NoticeAlert, SVG } from "../../../components/common";
 import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
 
@@ -53,9 +53,9 @@ const MultipleQnA = () => {
     );
 
     if (totalPoints < resultsCnt - 1) {
-      alert("테스트 총 점수가 너무 적어요!");
+      NoticeAlert.open();
       return;
-    } // 점수 < 결과-1 일 때 예외 임시 alert
+    }
 
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
     pointBoundList.forEach((bound, idx) => {
@@ -66,6 +66,12 @@ const MultipleQnA = () => {
 
   return (
     <PageContainer>
+      {/* alert sample */}
+      <NoticeAlert
+        icon={ENUM.WARNING}
+        content="테스트 총 점수가 너무 적어요!"
+        btns={[{ name: "돌아가기" }]}
+      />
       {/* random guide */}
       <RandomGuide>
         <div>
