@@ -25,14 +25,14 @@ const Result = memo((props) => {
         <ImageView imageUrl={null}/>
         <Inform>총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.</Inform>
         {/* font-size: 19px, line-height: 28px, text-align: center; */}
-        <BtnField name={"테스트 다시하기"} onClick={handleonClick} style={{width: "100%", height: "3.6em", fontSize: "1em", background: "#DADEE6"}}/>
+        <BtnField name={"테스트 다시하기"} onClick={handleonClick} />
       </div>
       <RoundContiner noPadding>
         <TitleBox>
         <Title>가장 많은 유형 TOP 1</Title>
         <SubTitle>당신은 센스로 무장했어요 (58%)</SubTitle>
         <div style={{padding: "1.5em 0px"}}><ImageView imageUrl={null}/></div>
-        <BtnField name={"다른 유형 전체보기"} onClick={handleonClick} style={{width: "100%", height: "3.6em", fontSize: "1em", background: "#DADEE6"}}/>
+        <BtnField name={"다른 유형 전체보기"} color="skyBlue" onClick={handleonClick} />
         </TitleBox>
         <TitleBox title="테스트 메이커에게 한마디">
           <ComInput hintText={"익명으로 메이커만 볼 수 있어요"}/>

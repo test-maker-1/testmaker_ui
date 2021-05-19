@@ -71,6 +71,7 @@ export const BtnExam = ({ name, onClick }) => {
 const useStyles = makeStyles(() => ({
   btn: ({ color, size, isTestBtn = false }) => ({
     ...commonUseStyles,
+    marginBottom: isTestBtn ? 16 : 0,
     padding: btnSizes[size].padding,
     fontWeight: isTestBtn ? "normal" : "bold",
     fontSize: btnSizes[size].fontSize,
