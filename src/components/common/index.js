@@ -1,5 +1,5 @@
 export { TitleBox, Title } from './TitleBox'
-export { default as BtnField } from './BtnField'
+export { BtnField, BtnExam } from './BtnField'
 export { default as BtnShare } from './BtnShare'
 export { UploadImg } from './UploadImg'
 export { default as Tag } from './Tag'
