@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
-import { styled as mstyled } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
-import SVG from "./SVG";
+import { BtnField, SVG } from ".";
+import { md } from "../../constants/Enum";
 
 let that = null; // 정적 메소드용
 
@@ -29,18 +28,23 @@ class NoticeAlert extends PureComponent {
         oneBtn.hasOwnProperty("callback") && oneBtn.callback !== null
           ? oneBtn.callback
           : this.handleOnClose;
+      const color = idx ? "blue" : "skyBlue";
 
       return (
-        <NoticeBtn key={`btn${idx}`} onClick={(e) => onClick(e)}>
-          {oneBtn.name}
-        </NoticeBtn>
+        <BtnField
+          key={`btn${idx}`}
+          size={md}
+          name={oneBtn.name}
+          color={color}
+          onClick={(e) => onClick(e)}
+        />
       );
     });
   }
 
   render() {
     const { open } = this.state;
-    const { icon, content } = this.props;
+    const { icon, content, btns } = this.props;
 
     if (!open) return null;
 
@@ -58,7 +62,7 @@ class NoticeAlert extends PureComponent {
             <AlertText>{content}</AlertText>
           </ModalMain>
           {/* buttons */}
-          <ModalFooter>{this.setButtons()}</ModalFooter>
+          <ModalFooter btnLength={btns.length}>{this.setButtons()}</ModalFooter>
         </Section>
       </Modal>
     );
@@ -70,15 +74,6 @@ NoticeAlert.defaultProps = {
   msg: "",
   btn: [],
 };
-
-const NoticeBtn = mstyled(Button)({
-  flex: 1,
-  margin: "0 8px 0 8px",
-  borderRadius: "5px",
-  fontSize: "1em",
-  border: "1px solid #e5e8ec",
-  background: "#e5e8ec",
-}); // gui 입힐 때 수정 필요
 
 const Modal = styled.div`
   padding: 0 20px;
@@ -129,6 +124,9 @@ const AlertText = styled.p`
 const ModalFooter = styled.div`
   height: 48px;
   display: flex;
+  button:first-child {
+    margin-right: ${({ btnLength }) => (btnLength > 1 ? 12 : 0)}px;
+  }
 `;
 
 const ModalCloser = styled.div`
