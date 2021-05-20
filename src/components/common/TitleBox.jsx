@@ -22,5 +22,5 @@ export const Title = styled.h1`
   padding-bottom: 24px;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem;
   font-weight: bold;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.darkGray};
 `;

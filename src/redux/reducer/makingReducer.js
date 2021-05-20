@@ -13,11 +13,11 @@ const making = createSlice({
     initCommonData: () => {
       return initState.common;
     },
-    initTypeData: (state, { payload: { type, questions, results } }) => {
+    initTypeData: (state, { payload: { type, questions, result } }) => {
       state.type = type;
       state.data = initState[type];
       state.data.questions = [...questions];
-      state.data.results = [...results];
+      state.data.result = [...result];
     },
 
     /* update */
@@ -37,20 +37,23 @@ const making = createSlice({
       if (beforeOption === questions[questionIdx].answer) {
         questions[questionIdx].answer = option;
       }
-      questions[questionIdx].options[idx] = option;
+      questions[questionIdx].options[idx].name = option;
+    },
+    updateResultData: ({ data }, { payload: { key, value, idx } }) => {
+      data.result[idx][key] = value;
     },
 
     /* add empty data */
-    addQuestion: ({ type, data: { questions, questionsCnt } }) => {
-      questions.push(getQuestion(type));
-      questionsCnt += 1;
+    addQuestion: (state) => {
+      state.data.questions.push(getQuestion(state.type));
+      state.data.questionsCnt += 1;
     },
     addOption: ({ data: { questions } }, { payload }) => {
-      questions[payload].options.push("");
+      questions[payload].options.push({ name: "" });
     },
-    addResult: ({ type, data: { results, resultsCnt } }) => {
-      results.push(getResult(type));
-      resultsCnt += 1;
+    addResult: (state) => {
+      state.data.result.push(getResult(state.type));
+      state.data.resultsCnt += 1;
     },
 
     /* add data */
@@ -62,9 +65,9 @@ const making = createSlice({
     deleteTag: ({ tags }, { payload }) => {
       tags = tags.filter((tag) => tag !== payload);
     },
-    deleteQuestion: ({ data: { questions, questionsCnt } }, { payload }) => {
-      questions.splice(payload, 1);
-      questionsCnt -= 1;
+    deleteQuestion: (state, { payload }) => {
+      state.data.questions.splice(payload, 1);
+      state.data.questionsCnt -= 1;
     },
     deleteOptionData: (
       { data: { questions } },
@@ -72,7 +75,10 @@ const making = createSlice({
     ) => {
       questions[questionIdx].options.splice(optionIdx, 1);
     },
-    deleteResult: (state, action) => {},
+    deleteResult: (state, { payload }) => {
+      state.data.result.splice(payload, 1);
+      state.data.resultsCnt -= 1;
+    },
   },
 });
 
@@ -85,12 +91,18 @@ export const {
   updateTypeData,
   updateQuestionData,
   updateOptionData,
+  updateResultData,
 } = making.actions;
 
 /* add */
 export const { addTag, addQuestion, addResult, addOption } = making.actions;
 
 /* delete */
-export const { deleteTag, deleteQuestion, deleteOptionData } = making.actions;
+export const {
+  deleteTag,
+  deleteQuestion,
+  deleteOptionData,
+  deleteResult,
+} = making.actions;
 
 export default making;

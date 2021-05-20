@@ -3,14 +3,16 @@ import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import Error from "../../../view/Error";
-import { SVG } from "../../../components/common";
+import { NoticeAlert, SVG } from "../../../components/common";
 import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
 
 import useMaking from "../../../hooks/useMaking";
+import usePage from "../../../hooks/usePage";
+
+import { getPointBoundList } from "../../../utils/constHandler";
 import ENUM, { multiple } from "../../../constants/Enum";
 
-const { MOVENEXT, PREVIEW, CASINO } = ENUM;
 const { blue, white, bodyGray, darkGray } = theme.colors;
 
 const svgStyles = {
@@ -20,30 +22,62 @@ const svgStyles = {
 };
 
 const MultipleQnA = () => {
-  const { data, dispatch, addQuestion } = useMaking();
+  const {
+    data,
+    dispatch,
+    addQuestion,
+    updateTypeData,
+    updateResult,
+  } = useMaking();
+  const { goPage } = usePage();
 
   // redirection step
   if (!data.hasOwnProperty("type") || data.type !== multiple)
     return <Error code={401} />;
 
   const {
-    type,
-    data: { questions = [] },
+    data: { questions = [], resultsCnt },
   } = data;
+
+  const calculatePoints = () => {
+    const totalPoints = questions.reduce((prevPoint, { point }) => {
+      const currentPoint = point ? point : 0;
+      return prevPoint + currentPoint;
+    }, 0);
+
+    dispatch(
+      updateTypeData({
+        key: "totalPoints",
+        value: totalPoints,
+      })
+    );
+
+    if (totalPoints < resultsCnt - 1) {
+      NoticeAlert.open("테스트 총 점수가 너무 적어요!");
+      return;
+    }
+
+    const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
+    pointBoundList.forEach((bound, idx) => {
+      updateResult("pointBound", bound, idx);
+    });
+    goPage("/test/multiple/result");
+  };
 
   return (
     <PageContainer>
+      {/* alert sample */}
+      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
       {/* random guide */}
       <RandomGuide>
         <div>
-          <SVG type={CASINO} style={svgStyles} />
+          <SVG type={ENUM.CASINO} style={svgStyles} />
         </div>
         <GuideText className="guide">
           <h2>질문 생각하는 게 힘드시다구요?</h2>
           <p>주사위를 누르면 랜덤으로 제공해드려요.</p>
         </GuideText>
       </RandomGuide>
-
       {/* questions */}
       {questions.map((question, idx) => (
         <Question
@@ -56,8 +90,8 @@ const MultipleQnA = () => {
 
       <BottomBtn
         btnArr={[
-          { name: "미리보기", type: PREVIEW },
-          { name: "다 적었어요", type: MOVENEXT },
+          { name: "미리보기", type: ENUM.PREVIEW },
+          { name: "다 적었어요", customClick: calculatePoints },
         ]}
       />
     </PageContainer>

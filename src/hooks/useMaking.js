@@ -4,12 +4,15 @@ import {
   updateTypeData,
   updateQuestionData,
   updateOptionData,
+  updateResultData,
   addTag,
   addQuestion,
   addOption,
+  addResult,
   deleteTag,
   deleteQuestion,
   deleteOptionData,
+  deleteResult,
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
@@ -40,6 +43,10 @@ const useMaking = () => {
     dispatch(updateOptionData({ questionIdx, idx, beforeOption, option }));
   };
 
+  const updateResult = (key, value, idx) => {
+    dispatch(updateResultData({ key, value, idx }));
+  };
+
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
 
@@ -47,9 +54,9 @@ const useMaking = () => {
     const questions = new Array(questionsCnt).fill(emptyQuestion);
 
     const emptyResult = getResult(type);
-    const results = new Array(resultsCnt).fill(emptyResult);
+    const result = new Array(resultsCnt).fill(emptyResult);
 
-    dispatch(initTypeData({ type, questions, results }));
+    dispatch(initTypeData({ type, questions, result }));
   };
 
   // tag: string;
@@ -74,17 +81,21 @@ const useMaking = () => {
     // update
     updateCommon,
     updateCommonByInput,
+    updateTypeData,
     updateTypeDataByInput,
     updateQuestion,
     updateOption,
+    updateResult,
     // add
     addNewTag,
     addQuestion,
     addOption,
+    addResult,
     // delete
     deleteTag,
     deleteQuestion,
     deleteOption,
+    deleteResult,
   };
 };
 

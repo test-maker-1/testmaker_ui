@@ -1,13 +1,10 @@
 const multiple = {
   description: "",
   title: "",
-
-  img: null, // 썸네일
-  imgPath: null, // 썸네일 편집
-
+  img: null, // 썸네일 path
   pointBound: {
-    end: null,
-    start: null,
+    start: null, // ~이상
+    end: null, // ~이하
   }, // 결과 범위
 };
 

@@ -24,10 +24,10 @@ const InputTitle = styled.input`
 
   border: none;
   outline: none;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.darkGray};
 
   &::placeholder {
-    color: #dadee6;
+    color: ${({ theme: { colors } }) => colors.lightGray};
   }
 `;
 

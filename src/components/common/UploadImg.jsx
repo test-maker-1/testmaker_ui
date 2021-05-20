@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { SVG } from "../common/index";
 import ImageView from "./ImageView";
+import theme from "../../styles/theme";
 
 import useOpen from "../../hooks/useOpen";
 import ENUM from "../../constants/Enum";
@@ -12,6 +13,11 @@ const { CANCEL, CHANGE } = ENUM;
 const svgStyles = {
   width: 40,
   height: 40,
+};
+
+const changeStyle = {
+  ...svgStyles,
+  fill: theme.colors.deepGray,
 };
 
 export const UploadImg = () => {
@@ -45,7 +51,7 @@ export const UploadImg = () => {
         {edit && (
           <Dimmed>
             <EditBtn onClick={handleOnCick}>
-              <SVG type={CHANGE} style={svgStyles} />
+              <SVG type={CHANGE} style={changeStyle} />
             </EditBtn>
             <EditBtn onClick={handleDelClick}>
               <SVG type={CANCEL} style={svgStyles} />

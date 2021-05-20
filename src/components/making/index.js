@@ -9,3 +9,4 @@ export { default as Option } from "./Option";
 
 // component
 export { default as Question } from "./Question";
+export { default as Result } from "./Result";

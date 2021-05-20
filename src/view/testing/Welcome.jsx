@@ -57,7 +57,14 @@ const Welcome = () => {
           { name: "시작하기", type: MOVENEXT },
         ]}
       />
+<<<<<<< HEAD
       <NoticeAlert icon={alertInfo.icon} btns={alertInfo.btn} />
+=======
+      <NoticeAlert
+	      icon={alertInfo.icon}
+	      btns={alertInfo.btn}
+	    />
+>>>>>>> f7811caaf188adda91e00057827b44f0b91a8497
     </PageContainer>
   );
 };

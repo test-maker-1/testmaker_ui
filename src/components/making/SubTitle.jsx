@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { SVG } from "../common";
 import ENUM from "../../constants/Enum";
@@ -32,9 +32,7 @@ export const BtnIcon = ({ type, onClick }) => {
 
   return (
     <li className="item-btn">
-      <button onClick={onClick}>
-        <SVG type={type} style={svgStyles} />
-      </button>
+      <SVG type={type} style={svgStyles} onClick={onClick} />
     </li>
   );
 };
@@ -69,4 +67,4 @@ const Btns = styled.ul`
   }
 `;
 
-export default SubTitle;
+export default memo(SubTitle);
