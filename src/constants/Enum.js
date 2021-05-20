@@ -54,6 +54,7 @@ const ENUM = {
   HEADERLOGO: 'headerLogo',
   SPLIT: 'split',
   MORE: 'more',
+  WARNING: 'warning',
 
   // key type
   ENTER: 'Enter',

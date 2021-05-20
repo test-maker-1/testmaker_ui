@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import styled from "styled-components";
-import {ImageView, BtnField} from "../../components/common";
+import {ImageView, BtnExam} from "../../components/common";
 
 const Exam = memo((props) => {
   const handleonClick = (id, e) => {
@@ -13,7 +13,7 @@ const Exam = memo((props) => {
       <div>
         {
           ["보라카이","제주도","스페인"].map((item)=>{
-            return <BtnField name={item} onClick={handleonClick} style={{width: "100%", margin: "8px 0px", height: "3.6em", fontSize: "1em"}}/>
+            return <BtnExam name={item} onClick={handleonClick} />
           })
         }
       </div>

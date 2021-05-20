@@ -15,13 +15,12 @@ const def_alert = {
 };
 
 //Alert 창
-const returnALInfo = (type) => {
+const returnALInfo = (type, callback) => {
   let result = {};
   
   if(type === "report"){
     result = {
-      msg: "이 댓글을 신고할까요?",
-      btn: ["돌아가기", "신고하기"]
+      btn: [{ name: "돌아가기" }, { name: "신고하기", callback }]
     };
   }
 
@@ -31,9 +30,9 @@ const returnALInfo = (type) => {
 const Welcome = () => {
   const [alertInfo, setALInfo] = useState(def_alert);
   const openAlert = (type ) => {    
-    const alert_info = Object.assign({}, def_alert, returnALInfo(type));
+    const alert_info = Object.assign({}, def_alert, returnALInfo(type, handleOnAlertClick));
     setALInfo(alert_info);
-    NoticeAlert.open();
+    NoticeAlert.open("이 댓글을 신고할까요?");
   };
   const handleOnAlertClick = useCallback((id, event) => {
     // 선택한 버튼명 반환
@@ -56,9 +55,7 @@ const Welcome = () => {
       />
       <NoticeAlert
 	      icon={alertInfo.icon}
-	      content={alertInfo.msg}
 	      btns={alertInfo.btn}
-	      handleOnClick={handleOnAlertClick}
 	    />
     </PageContainer>
   );
