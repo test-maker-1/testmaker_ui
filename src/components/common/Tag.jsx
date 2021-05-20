@@ -42,7 +42,7 @@ const Tag = ({ tag, deletable = false, selected = false, setSelected }) => {
 
 const TagBox = styled.span`
   margin-right: 10px;
-  padding: 6px 10px;
+  padding: 0.6rem 1rem;
   height: 3.2rem;
   display: inline-flex;
   align-items: center;
