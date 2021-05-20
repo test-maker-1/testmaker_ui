@@ -1,18 +1,22 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 import styled from "styled-components";
 import Mention from "./Mention";
 import usePage from "../../../hooks/usePage";
-import {testing, comments} from "../../../constants/urlInfo";
+import { testing, comments } from "../../../constants/urlInfo";
 
-export const ComInput = ({hintText}) => {
+export const ComInput = ({ hintText }) => {
   return (
-    <form style={{margin: "16px 0px 24px"}}>
+    <form style={{ width: "100%", margin: "16px 0px 24px" }}>
       <InputContainer>
-      <TEMP><InputCom placeholder={ hintText || "입력해주세요"}/></TEMP>
-      <TEMP2><input type={"submit"} /></TEMP2>
+        <TEMP>
+          <InputCom placeholder={hintText || "입력해주세요"} />
+        </TEMP>
+        <TEMP2>
+          <input type={"submit"} />
+        </TEMP2>
       </InputContainer>
     </form>
-  )
+  );
 };
 
 const Reply = memo(() => {
@@ -21,17 +25,18 @@ const Reply = memo(() => {
   return (
     <>
       <CommentTitle>
-          <Title>댓글</Title>
-          <Entire onClick={()=> goPage(`/${testing}/${comments}`)}>10개 전체보기</Entire>
-        </CommentTitle>
-        <ComInput hintText={"공개 댓글로 의견을 남겨주세요"}/>
-        {[1, 2, 3].map((item, idx)=>{
-          return <Mention key={`c_${idx}`} idx={idx}/>;
-        })}
+        <Title>댓글</Title>
+        <Entire onClick={() => goPage(`/${testing}/${comments}`)}>
+          10개 전체보기
+        </Entire>
+      </CommentTitle>
+      <ComInput hintText={"공개 댓글로 의견을 남겨주세요"} />
+      {[1, 2, 3].map((item, idx) => {
+        return <Mention key={`c_${idx}`} idx={idx} />;
+      })}
     </>
   );
 });
-
 
 const TEMP = styled.div`
   display: inline-block;
@@ -46,10 +51,10 @@ const TEMP2 = styled.div`
 /* 374 * 48 */
 const InputContainer = styled.div`
   position: relative;
-  width: 374px;
+  width: 100%;
   height: 48px;
   line-height: 48px;
-  background: #FAFAFA;
+  background: #fafafa;
   border-radius: 8px;
 `;
 
@@ -64,7 +69,7 @@ const InputCom = styled.input`
     font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem; /*15px*/
     line-height: 2.4rem;
     letter-spacing: -0.5px;
-    color: #B7BDCB;
+    color: #b7bdcb;
   }
 `;
 
@@ -88,7 +93,7 @@ const Entire = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   text-align: right;
   letter-spacing: -0.5px;
-  color: #8A929E;
+  color: #8a929e;
   cursor: pointer;
 `;
 
