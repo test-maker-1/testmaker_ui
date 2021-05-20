@@ -1,48 +1,99 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
-import Mention from "./Mention";
+import { useSelector } from "react-redux";
+import Mention, { EmptyMention } from "./Mention";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 
-export const ComInput = ({ hintText }) => {
+export const ComInput = ({ hintText, onFocus }) => {
+  const [words, setWords] = useState("");
+  const handleOnFocus = (event) => {
+    if (onFocus) onFocus(event);
+  };
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    if (onFocus) onFocus(event);
+    if (words) setWords("");
+  };
   return (
-    <form style={{ width: "100%", margin: "16px 0px 24px" }}>
+    <form
+      style={{ width: "100%", margin: "16px 0px 24px" }}
+      onSubmit={handleOnSubmit}
+    >
       <InputContainer>
-        <TEMP>
-          <InputCom placeholder={hintText || "입력해주세요"} />
-        </TEMP>
-        <TEMP2>
+        <WrapInput>
+          <InputCom
+            value={words}
+            placeholder={hintText || "입력해주세요"}
+            onFocus={handleOnFocus}
+            onChange={(event) => setWords(event.target.value)}
+          />
+        </WrapInput>
+        <WrapBtn>
           <input type={"submit"} />
-        </TEMP2>
+        </WrapBtn>
       </InputContainer>
     </form>
   );
 };
 
 const Reply = memo(() => {
+  const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const { goPage } = usePage();
+  const onMoveComments = () => goPage(`/${testing}/${comments}`);
 
   return (
     <>
       <CommentTitle>
         <Title>댓글</Title>
-        <Entire onClick={() => goPage(`/${testing}/${comments}`)}>
-          10개 전체보기
+        <Entire onClick={onMoveComments}>
+          {testInfo.repliesCnt}개 전체보기
         </Entire>
       </CommentTitle>
-      <ComInput hintText={"공개 댓글로 의견을 남겨주세요"} />
-      {[1, 2, 3].map((item, idx) => {
-        return <Mention key={`c_${idx}`} idx={idx} />;
-      })}
+      <ComInput
+        hintText={"공개 댓글로 의견을 남겨주세요"}
+        onFocus={onMoveComments}
+      />
+      {recent3replies.length > 0 ? (
+        recent3replies.map((item, idx) => {
+          return (
+            <Mention
+              key={item.uid + idx}
+              idx={idx}
+              content={item.content}
+              timestamp={item.writtenAt}
+            />
+          );
+        })
+      ) : (
+        <EmptyMention />
+      )}
     </>
   );
 });
 
-const TEMP = styled.div`
+const EmptyReply = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: ${({ height }) => height} || 245px;
+`;
+
+const FirstReply = styled.h1`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: -1px;
+  color: #e5e8ec;
+`;
+
+const WrapInput = styled.div`
   display: inline-block;
   width: 85%;
 `;
-const TEMP2 = styled.div`
+const WrapBtn = styled.div`
   display: inline-block;
   text-align: center;
   width: 15%;

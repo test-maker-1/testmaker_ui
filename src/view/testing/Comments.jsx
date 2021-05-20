@@ -1,29 +1,39 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Mention from "./SubComponents/Mention";
-import {PageContainer} from "../../components/frame/BottomBtn";
-import {ComInput} from "./SubComponents/Reply";
+import Mention, { EmptyMention } from "./SubComponents/Mention";
+import { PageContainer } from "../../components/frame/BottomBtn";
+import { ComInput } from "./SubComponents/Reply";
 
-const Comments = props => {
+const Comments = (props) => {
+  const replies = useSelector((state) => state.reply);
+
   return (
     <PageContainer>
-    <TEMP>
-      <ul>
-        {[1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3].map((item, idx)=>{
-          return <li key={idx}><Mention /></li>;
-        })}
-      </ul>
-      {[1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3,1, 2, 3].map((item, idx)=>{
-          return <Mention />
-        })}
-      <BtnContainer>
-        <TEMP2>
-          <ComInput />
-        </TEMP2>
-      </BtnContainer>
-    </TEMP>
+      <TEMP>
+        {replies?.length > 0 ? (
+          replies.map((item, idx) => {
+            return (
+              <Mention
+                key={item.uid + idx}
+                idx={idx}
+                writer={item.writer}
+                content={item.content}
+                timestamp={item.writtenAt}
+              />
+            );
+          })
+        ) : (
+          <EmptyMention />
+        )}
+        <BtnContainer>
+          <TEMP2>
+            <ComInput />
+          </TEMP2>
+        </BtnContainer>
+      </TEMP>
     </PageContainer>
-  )
+  );
 };
 
 const TEMP = styled.div`
@@ -43,6 +53,5 @@ export const BtnContainer = styled.footer`
   height: 68px;
   display: flex;
 `;
-
 
 export default Comments;
