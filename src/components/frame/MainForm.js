@@ -44,7 +44,7 @@ const MainBox = styled.div`
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: 100%;
   background: ${({ header: {background = null }, theme: { colors } }) => background || colors.snow};
-  min-width: ${({ theme: { widths } }) => widths.main}px;
+  /*min-width: ${({ theme: { widths } }) => widths.main}px;*/
 `
 
 const Main = styled.main`
