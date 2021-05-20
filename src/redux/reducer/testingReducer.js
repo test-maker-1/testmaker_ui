@@ -6,7 +6,7 @@ const prefix = "testing";
 const testing = createSlice({
   name: prefix,
   initialState: initState.welcome,
-  reducer: {
+  reducers: {
     updateTestInfo: (state, payload) => {},
   },
 });

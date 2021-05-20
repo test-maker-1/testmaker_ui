@@ -6,7 +6,7 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
 
-const { PREVIEW, MOVENEXT } = ENUM;
+const { SHARE, MOVENEXT } = ENUM;
 
 const def_alert = {
   icon: null,
@@ -21,6 +21,11 @@ const returnALInfo = (type, callback) => {
   if (type === "report") {
     result = {
       btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
+    };
+  } else if (type === "share") {
+    result = {
+      msg: "공유할건가요?",
+      btn: ["아니요", "예"],
     };
   }
 
@@ -53,7 +58,11 @@ const Welcome = () => {
       </RoundContiner>
       <BottomBtn
         btnArr={[
-          { name: "공유하기", type: PREVIEW },
+          {
+            name: "공유하기",
+            type: SHARE,
+            customClick: openAlert.bind(this, "share"),
+          },
           { name: "시작하기", type: MOVENEXT },
         ]}
       />

@@ -68,6 +68,59 @@ const welcome = {
 
 const reply = [replyForm, replyForm, replyForm];
 
+const testForm = {
+  question: "string",
+  img: "string",
+  options: [
+    {
+      name: "string",
+    },
+    {
+      name: "string",
+    },
+    {
+      name: "string",
+    },
+  ],
+};
+
+const testing = {
+  testUid: "863dbe75-f6ac-46f4-bb9b-bfcd81407acc",
+  questsCnt: 12,
+  questions: [
+    {
+      question: "string",
+      img: "string",
+      options: [
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+      ],
+    },
+    {
+      question: "string",
+      img: "string",
+      options: [
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+      ],
+    },
+  ],
+};
+
 /* 객관식 테스트 */
 const result = {
   testId: 2323432,
