@@ -53,7 +53,7 @@ const MultipleQnA = () => {
     );
 
     if (totalPoints < resultsCnt - 1) {
-      NoticeAlert.open();
+      NoticeAlert.open("테스트 총 점수가 너무 적어요!");
       return;
     }
 
@@ -67,11 +67,7 @@ const MultipleQnA = () => {
   return (
     <PageContainer>
       {/* alert sample */}
-      <NoticeAlert
-        icon={ENUM.WARNING}
-        content="테스트 총 점수가 너무 적어요!"
-        btns={[{ name: "돌아가기" }]}
-      />
+      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
       {/* random guide */}
       <RandomGuide>
         <div>

@@ -17,7 +17,7 @@ const ResultBound = ({ data, addResult }) => {
   const addEmptyResult = () => {
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt + 1);
     if (!pointBoundList) {
-      NoticeAlert.open();
+      NoticeAlert.open("결과 개수가 너무 많아요!");
       return;
     }
     addResult();
@@ -27,8 +27,11 @@ const ResultBound = ({ data, addResult }) => {
   };
 
   const handleDeleteResult = (idx) => {
+    if (resultsCnt - 1 < 1) {
+      NoticeAlert.open("결과는 1개 이상 있어야 해요!");
+      return;
+    }
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt - 1);
-
     dispatch(deleteResult(idx));
     pointBoundList.forEach((bound, idx) => {
       updateResult("pointBound", bound, idx);
@@ -37,12 +40,8 @@ const ResultBound = ({ data, addResult }) => {
 
   return (
     <Container>
-      {/* alert sample */}
-      <NoticeAlert
-        icon={ENUM.WARNING}
-        content="결과 개수가 너무 많아요!"
-        btns={[{ name: "돌아가기" }]}
-      />
+      {/* alert */}
+      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
       <TitleBox>
         <TextBox>
           {/* summary */}
