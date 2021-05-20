@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { SVG } from "../common";
 import ENUM from "../../constants/Enum";
@@ -12,13 +12,12 @@ import { LOGO, NOTHING, TITLE, CUSTOM } from "../../constants/headerInfo";
  */
 const TitleBtn = ({ type = LOGO, title = null }) => {
   const { goPage } = usePage();
-  const headTitle = useSelector((state) => ({
-    headTitle : state.common.headTitle,
-  }))
-
+  const { headTitle } = useSelector((state) => ({
+    headTitle: state.common.headTitle,
+  }));
   if (type === NOTHING) return null;
   if (type === TITLE) return title;
-  if (type === CUSTOM) return headTitle;
+  if (type === CUSTOM) return <Step>{headTitle}</Step>;
 
   const onClickEvent = () => {
     if (type === LOGO) return goPage("/");
@@ -31,5 +30,13 @@ const titleBtn = {
 };
 
 const Button = styled.button``;
+
+const Step = styled.p`
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: -0.8px;
+  color: #0b70fd;
+`;
 
 export default TitleBtn;

@@ -3,19 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const prefix = "common";
 
 export const commonInitState = {
-  headTitle: '',
+  headTitle: "",
 };
 
 const common = createSlice({
   name: prefix,
   initialState: commonInitState,
-  reducer: {
+  reducers: {
     initCommonData: () => {
       return commonInitState.headTitle;
     },
-  }
+    setHeadTitle: (state, { payload }) => {
+      state.headTitle = payload;
+    },
+  },
 });
 
 export const headTitleSelector = (state) => state.headTitle;
+
+export const { setHeadTitle } = common.actions;
 
 export default common;

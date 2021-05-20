@@ -1,4 +1,4 @@
-import theme from '../styles/theme';
+import theme from "../styles/theme";
 
 export const [BACK, SEARCH, LOGO, MENU, NOTHING, TITLE, CUSTOM] = [
   "back",
@@ -7,7 +7,7 @@ export const [BACK, SEARCH, LOGO, MENU, NOTHING, TITLE, CUSTOM] = [
   "menu",
   "nothing",
   "title",
-  "custom"
+  "custom",
 ];
 
 export const initHeader = {
@@ -55,16 +55,16 @@ const headerInfo = {
   "/testing/welcome": {
     leftType: BACK,
     title: { type: NOTHING },
-    background: theme.colors.lightblue
+    background: theme.colors.lightblue,
   },
   "/testing/result": {
     leftType: BACK,
     title: { type: NOTHING },
-    background: theme.colors.lightblue
+    background: theme.colors.lightblue,
   },
   "/testing/exam": {
     leftType: BACK,
-    title: { type: NOTHING },
+    title: { type: CUSTOM },
   },
 };
 
