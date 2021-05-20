@@ -10,13 +10,16 @@ class NoticeAlert extends PureComponent {
     super(props);
     this.state = {
       open: false,
+      content: "",
     };
     that = this;
   }
 
-  static open() {
-    if (!that.state.open) that.setState({ open: true });
-  } // open 여부를 소스 내에서 관리
+  static open(content) {
+    if (!that.state.open) {
+      that.setState({ content, open: true });
+    }
+  } // open 여부, 내용을 소스 내에서 관리
 
   handleOnClose = () => this.setState({ open: false });
 
@@ -43,8 +46,8 @@ class NoticeAlert extends PureComponent {
   }
 
   render() {
-    const { open } = this.state;
-    const { icon, content, btns } = this.props;
+    const { open, content } = this.state;
+    const { icon, btns } = this.props;
 
     if (!open) return null;
 
