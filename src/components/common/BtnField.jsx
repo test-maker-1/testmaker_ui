@@ -26,6 +26,10 @@ const btnColors = {
     bgColor: white,
     color: bodyGray,
   },
+  kakao: {
+    bgColor: "#FEE233",
+    color: "#3E1E1E",
+  },
 };
 
 const btnSizes = {
@@ -46,10 +50,21 @@ const btnSizes = {
  * color: string; ex) blue || skyBlue || gray
  * size: string; ex) md || lg
  */
-export const BtnField = ({ name, color = "blue", size = lg, onClick }) => {
+export const BtnField = ({
+  name,
+  type = null,
+  color = "blue",
+  size = lg,
+  onClick,
+}) => {
   const classes = useStyles({ color, size });
   return (
-    <Button fullWidth={true} className={classes.btn} onClick={onClick}>
+    <Button
+      fullWidth={true}
+      className={classes.btn}
+      type={type}
+      onClick={onClick}
+    >
       {name}
     </Button>
   );
