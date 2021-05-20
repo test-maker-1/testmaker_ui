@@ -63,7 +63,6 @@ const HeadContainer = styled.header`
   position: sticky;
   top: 0;
   padding: 0 ${({ theme: { paddings } }) => paddings.main}rem;
-  /*min-width: ${({ theme: { widths } }) => widths.main}px;*/
   height: ${({ theme: { heights } }) => heights.header}px;
   z-index: 100;
   background: ${({ background, theme: { colors } }) =>
