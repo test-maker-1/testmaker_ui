@@ -25,7 +25,7 @@ const MainForm = ({ children, history, location, match }) => {
   return (
     <BackGround>
       {openDrawer && <Drawer onClose={onClose} />}
-      <MainBox>
+      <MainBox header={header}>
         <Header header={header} onToggle={onToggle} />
         <Main>{children}</Main>
       </MainBox>
@@ -43,12 +43,12 @@ const MainBox = styled.div`
   margin: 0px auto;
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: 100%;
-  background: #ffffff;
+  background: ${({ header: { background = null }, theme: { colors } }) =>
+    background || colors.snow};
 `;
 
 const Main = styled.main`
   display: flex;
-
   min-height: ${({ theme: { heights } }) =>
     `calc(100vh - ${heights.header}px)`};
 

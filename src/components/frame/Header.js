@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
     height: "100%",
-    background: dynamicHB,
   },
   leftSide: {
     width: `${btnArea}px`,
@@ -34,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
  * onToggle: function;
  */
 const Header = ({ header, onToggle }) => {
-  const { leftType, rightType, title } = header;
+  const { leftType, rightType, title, background = null } = header;
   const classes = useStyles();
 
   return (
-    <HeadContainer>
+    <HeadContainer background={background}>
       <Grid
         container
         className={classes.container}
@@ -63,9 +62,11 @@ const Header = ({ header, onToggle }) => {
 const HeadContainer = styled.header`
   position: sticky;
   top: 0;
-  padding: 0 20px;
+  padding: 0 ${({ theme: { paddings } }) => paddings.main}rem;
   height: ${({ theme: { heights } }) => heights.header}px;
   z-index: 100;
+  background: ${({ background, theme: { colors } }) =>
+    background ? "transparent" : colors.snow};
 `;
 
 export default Header;

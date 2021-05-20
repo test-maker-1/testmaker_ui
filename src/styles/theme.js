@@ -1,4 +1,5 @@
 const colors = {
+  snow: "#FFFFFF",
   // primary
   blue: "#0B70FD",
   skyBlue: "#ECF2FE",
