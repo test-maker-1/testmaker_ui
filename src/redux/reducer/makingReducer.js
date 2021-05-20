@@ -13,11 +13,11 @@ const making = createSlice({
     initCommonData: () => {
       return initState.common;
     },
-    initTypeData: (state, { payload: { type, questions, results } }) => {
+    initTypeData: (state, { payload: { type, questions, result } }) => {
       state.type = type;
       state.data = initState[type];
       state.data.questions = [...questions];
-      state.data.results = [...results];
+      state.data.result = [...result];
     },
 
     /* update */
@@ -40,7 +40,7 @@ const making = createSlice({
       questions[questionIdx].options[idx].name = option;
     },
     updateResultData: ({ data }, { payload: { key, value, idx } }) => {
-      data.results[idx][key] = value;
+      data.result[idx][key] = value;
     },
 
     /* add empty data */
@@ -52,7 +52,7 @@ const making = createSlice({
       questions[payload].options.push({ name: "" });
     },
     addResult: (state) => {
-      state.data.results.push(getResult(state.type));
+      state.data.result.push(getResult(state.type));
       state.data.resultsCnt += 1;
     },
 
@@ -76,7 +76,7 @@ const making = createSlice({
       questions[questionIdx].options.splice(optionIdx, 1);
     },
     deleteResult: (state, { payload }) => {
-      state.data.results.splice(payload, 1);
+      state.data.result.splice(payload, 1);
       state.data.resultsCnt -= 1;
     },
   },
