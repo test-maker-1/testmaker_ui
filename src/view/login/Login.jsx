@@ -3,21 +3,14 @@ import styled from "styled-components";
 import { KAKAO, EMAIL } from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
 import { BtnField, SVG } from "../../components/common";
-import kakaoMd from "../../resources/images/kakaoMd.png";
+import kakaoSm from "../../resources/images/kakaoSm.png";
 
 const Login = (props) => {
   const { goPage } = usePage();
-  const kakao = () => {
-    return (
-      <>
-        <img src={kakaoMd} /> <div>{KAKAO}</div>{" "}
-      </>
-    );
-  };
 
   const onClickKakao = useCallback(
     (e) => {
-      goPage("/login/kakao");
+      goPage("/login/other");
     },
     [goPage]
   );
