@@ -13,6 +13,9 @@ const colors = {
   bodyGray: "#515966",
   darkGray: "#363D4A",
   black: "#1B1C1F",
+
+  // warning
+  alert: "#ff5146",
 };
 
 const fontSizes = {
