@@ -1,4 +1,5 @@
 import React from "react";
+import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 import { BtnField } from "../../components/common";
@@ -29,12 +30,20 @@ const Login = () => {
           {/* <SubTitle>30초 만에 테스트를 만들어보세요</SubTitle> */}
         </LogoWrap>
         <div>
-          <BtnField name="kakao-login" color="kakao" onClick={onClickKakao}>
+          {/* kakao login */}
+          <BtnKakaoLogin
+            // token={KAKAO_JAVASCRIPT_KEY}
+            // onSuccess={oAuthLoginHandler}
+            // onFail={console.error}
+            // onLogout={console.info}
+            getProfile={true}
+          >
             <Icon>
               <img src={kakao} alt="kakao" />
             </Icon>
             {KAKAO}
-          </BtnField>
+          </BtnKakaoLogin>
+          {/* redirect email login */}
           <BtnField color="skyBlue" onClick={onClickEmail}>
             {EMAIL}
           </BtnField>
@@ -57,6 +66,9 @@ export const PageContainer = styled.div`
 
   button {
     margin-bottom: 10px;
+    width: 100% !important;
+    padding: 13.5px !important;
+    border-radius: 8px !important;
   }
 `;
 
@@ -84,6 +96,22 @@ const Title = styled.h1`
 export const Icon = styled.span`
   margin-right: 8px;
   display: flex;
+`;
+
+const BtnKakaoLogin = styled(KaKaoLogin)`
+  width: 100% !important;
+  padding: 13.5px !important;
+  height: unset !important;
+
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem !important;
+  font-weight: bold;
+
+  letter-spacing: -0.6px;
+  line-height: 27px !important;
 `;
 
 export const Summary = styled.p`
