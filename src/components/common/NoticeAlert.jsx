@@ -35,12 +35,13 @@ class NoticeAlert extends PureComponent {
 
       return (
         <BtnField
-          key={`btn${idx}`}
+          key={`btn-${idx}`}
           size={md}
-          name={oneBtn.name}
           color={color}
           onClick={(e) => onClick(e)}
-        />
+        >
+          {oneBtn.name}
+        </BtnField>
       );
     });
   }
