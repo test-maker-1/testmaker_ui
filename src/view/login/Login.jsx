@@ -5,14 +5,17 @@ import styled from "styled-components";
 import { BtnField } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
+import { SUCCESS } from "../../utils/asyncUtils";
 
 import { key } from "../../constants/config";
 import { KAKAO, EMAIL } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
-  const { kakaoLogIn } = useUser();
+  const { status, kakaoLogIn } = useUser();
   const { goPage } = usePage();
+
+  if (status === SUCCESS) goPage("/");
 
   const onSuccessKakao = async (resData) => {
     const {
