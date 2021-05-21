@@ -42,7 +42,8 @@ const widths = {
 
 const heights = {
   header: 56,
-  bottomBtn: 69,
+  bottomBtn: 64,
+  bottomReply: 68,
 };
 
 const zIndex = {
