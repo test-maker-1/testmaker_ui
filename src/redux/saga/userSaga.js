@@ -1,19 +1,10 @@
-import { createAction, createReducer } from '@reduxjs/toolkit'
+import { takeEvery } from "redux-saga/effects";
+import UserAPI from "../../api/userAPI";
+import { kakaoLogIn } from "../reducer/userReducer";
+import { createPromiseSaga } from "../../utils/asyncUtils";
 
-// action
-const WRITE = 'INPUT/WRITE' // prevent to conflict aciton name
+const kakaoLogInSaga = createPromiseSaga(kakaoLogIn.type, UserAPI.kakaoLogIn);
 
-// init state
-const initState = { value: '' }
-
-// action generation function
-export const changeInput = createAction(WRITE) // prevent to conflict aciton name
-
-// reducer
-const writeReducer = createReducer(initState, {
-  [changeInput]: (state, action) => {
-    state.value = action.payload
-  }
-})
-
-export default writeReducer
+export function* userSaga() {
+  yield takeEvery(kakaoLogIn.type, kakaoLogInSaga);
+}

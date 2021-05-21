@@ -4,7 +4,7 @@ export const [INIT, LOADING, SUCCESS, ERROR] = [
   "init",
   "loading",
   "success",
-  "error"
+  "error",
 ];
 
 /* type: string; -> action.type */
@@ -25,12 +25,12 @@ export const createPromiseSaga = (type, promiseCreator) => {
     if (status === SUCCESS) {
       yield put({
         type: success,
-        payload: data
+        payload: data,
       });
     } else {
       yield put({
         type: error,
-        payload: data
+        payload: data,
       });
     }
   };
@@ -39,21 +39,21 @@ export const createPromiseSaga = (type, promiseCreator) => {
 export const reducerUtils = {
   init: () => ({
     data: null,
-    status: INIT
+    status: INIT,
   }),
 
   loading: (prevData = null) => ({
     data: prevData,
-    status: LOADING
+    status: LOADING,
   }),
 
   success: (data = null) => ({
     data: data,
-    status: SUCCESS
+    status: SUCCESS,
   }),
 
   error: (msg) => ({
     data: msg,
-    status: ERROR
-  })
+    status: ERROR,
+  }),
 };

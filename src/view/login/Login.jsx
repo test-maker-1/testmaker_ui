@@ -3,17 +3,32 @@ import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 import { BtnField } from "../../components/common";
+import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
+import { key } from "../../constants/config";
 import { KAKAO, EMAIL } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
-import { key } from "../../constants/config";
 
 const Login = () => {
+  const { kakaoLogIn } = useUser();
   const { goPage } = usePage();
 
-  const onClickKakao = (e) => {
-    // 카카오 로그인 로직
+  const onSuccessKakao = async (resData) => {
+    const {
+      profile: {
+        properties: { nickname, profile_image: profileImg },
+      },
+      response: { access_token: kakaoAccessToken },
+    } = resData;
+
+    const reqData = {
+      kakaoAccessToken,
+      nickname,
+      profileImg,
+    };
+
+    kakaoLogIn(reqData);
   };
 
   const onClickEmail = () => goPage("/login/email");
@@ -34,7 +49,7 @@ const Login = () => {
           {/* kakao login */}
           <BtnKakaoLogin
             token={key.kakao}
-            // onSuccess={oAuthLoginHandler}
+            onSuccess={onSuccessKakao}
             // onFail={console.error}
             // onLogout={console.info}
             getProfile={true}
