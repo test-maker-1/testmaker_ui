@@ -11,7 +11,7 @@ import { getPointBoundList } from "../../../utils/constHandler";
 import ENUM from "../../../constants/Enum";
 
 const ResultBound = ({ data, addResult }) => {
-  const { questionsCnt, totalPoints, result, resultsCnt } = data;
+  const { questionsCnt, totalPoints, results, resultsCnt } = data;
   const { dispatch, updateResult, deleteResult } = useMaking();
 
   const addEmptyResult = () => {
@@ -50,7 +50,7 @@ const ResultBound = ({ data, addResult }) => {
         </TextBox>
       </TitleBox>
       {/* result */}
-      {result.map((result, idx) => (
+      {results.map((result, idx) => (
         <Result
           key={`${idx}-${result.title}`}
           resultIdx={idx}

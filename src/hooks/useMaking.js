@@ -54,9 +54,9 @@ const useMaking = () => {
     const questions = new Array(questionsCnt).fill(emptyQuestion);
 
     const emptyResult = getResult(type);
-    const result = new Array(resultsCnt).fill(emptyResult);
+    const results = new Array(resultsCnt).fill(emptyResult);
 
-    dispatch(initTypeData({ type, questions, result }));
+    dispatch(initTypeData({ type, questions, results }));
   };
 
   // tag: string;

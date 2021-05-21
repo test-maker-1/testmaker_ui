@@ -32,7 +32,7 @@ const multiple = {
   totalPoints: 6,
 
   questions: [],
-  result: [],
+  results: [],
 };
 
 /* 성격 테스트 */
