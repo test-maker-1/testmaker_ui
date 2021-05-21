@@ -7,6 +7,7 @@ import usePage from "../../hooks/usePage";
 
 import { KAKAO, EMAIL } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
+import { key } from "../../constants/config";
 
 const Login = () => {
   const { goPage } = usePage();
@@ -32,7 +33,7 @@ const Login = () => {
         <div>
           {/* kakao login */}
           <BtnKakaoLogin
-            // token={KAKAO_JAVASCRIPT_KEY}
+            token={key.kakao}
             // onSuccess={oAuthLoginHandler}
             // onFail={console.error}
             // onLogout={console.info}

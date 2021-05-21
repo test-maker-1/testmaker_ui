@@ -1,19 +1,17 @@
-import { createAction, createReducer } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+import { reducerUtils } from "../../utils/asyncUtils";
 
-// action
-const WRITE = 'INPUT/WRITE' // prevent to conflict aciton name
+const prefix = "user";
 
-// init state
-const initState = { value: '' }
+const initialState = {
+  user: reducerUtils.init(),
+};
 
-// action generation function
-export const changeInput = createAction(WRITE) // prevent to conflict aciton name
+const user = createSlice({
+  name: prefix,
+  initialState,
 
-// reducer
-const writeReducer = createReducer(initState, {
-  [changeInput]: (state, action) => {
-    state.value = action.payload
-  }
-})
+  reducers: {},
+});
 
-export default writeReducer
+export default user;
