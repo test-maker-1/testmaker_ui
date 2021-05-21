@@ -2,24 +2,13 @@ import axios from "axios";
 import { reducerUtils } from "../utils/asyncUtils";
 import { baseURL } from "../constants/config";
 
-const photoBaseURL = "https://photo.dev"; // 추후 .env에서 가져와서 넣어야 함
+const instance = axios.create({
+  baseURL: baseURL,
+  withCredentials: true,
+});
 
-export const [DEFAULT, PHOTO] = ["default", "photo"];
-
-const instances = {
-  [DEFAULT]: axios.create({
-    baseURL: baseURL,
-    withCredentials: true,
-  }),
-  [PHOTO]: axios.create({
-    baseURL: photoBaseURL,
-    withCredentials: true,
-  }),
-};
-
-const get = (path, type = DEFAULT) => {
-  const instance = instances[type];
-  return new Promise((resolve, reject) => {
+const get = (path) => {
+  return new Promise((resolve) => {
     instance
       .get(path)
       .then(({ data }) => resolve(reducerUtils.success(data)))
@@ -27,9 +16,8 @@ const get = (path, type = DEFAULT) => {
   });
 };
 
-const post = (path, params = null, type = DEFAULT) => {
-  const instance = instances[type];
-  return new Promise((resolve, reject) => {
+const post = (path, params = null) => {
+  return new Promise((resolve) => {
     instance
       .post(path, params)
       .then(({ data }) => resolve(reducerUtils.success(data)))
@@ -37,4 +25,4 @@ const post = (path, params = null, type = DEFAULT) => {
   });
 };
 
-export { photoBaseURL, get, post };
+export { get, post }; // put, delete 등 추가 필요
