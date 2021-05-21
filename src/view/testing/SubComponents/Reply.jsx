@@ -17,10 +17,7 @@ export const ComInput = ({ hintText, onFocus }) => {
     if (words) setWords("");
   };
   return (
-    <form
-      style={{ width: "100%", margin: "16px 0px 24px" }}
-      onSubmit={handleOnSubmit}
-    >
+    <form style={{ width: "100%" }} onSubmit={handleOnSubmit}>
       <InputContainer>
         <WrapInput>
           <InputCom
@@ -51,10 +48,12 @@ const Reply = memo(() => {
           {testInfo.repliesCnt}개 전체보기
         </Entire>
       </CommentTitle>
-      <ComInput
-        hintText={"공개 댓글로 의견을 남겨주세요"}
-        onFocus={onMoveComments}
-      />
+      <InputItem>
+        <ComInput
+          hintText={"공개 댓글로 의견을 남겨주세요"}
+          onFocus={onMoveComments}
+        />
+      </InputItem>
       {recent3replies.length > 0 ? (
         recent3replies.map((item, idx) => {
           return (
@@ -87,6 +86,10 @@ const FirstReply = styled.h1`
   text-align: center;
   letter-spacing: -1px;
   color: #e5e8ec;
+`;
+
+const InputItem = styled.div`
+  margin: 16px 0px 24px;
 `;
 
 const WrapInput = styled.div`

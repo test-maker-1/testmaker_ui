@@ -10,7 +10,7 @@ const Comments = (props) => {
 
   return (
     <PageContainer>
-      <TEMP>
+      <CommentBox>
         {replies?.length > 0 ? (
           replies.map((item, idx) => {
             return (
@@ -27,31 +27,34 @@ const Comments = (props) => {
           <EmptyMention />
         )}
         <BtnContainer>
-          <TEMP2>
+          <FootArea>
             <ComInput />
-          </TEMP2>
+          </FootArea>
         </BtnContainer>
-      </TEMP>
+      </CommentBox>
     </PageContainer>
   );
 };
 
-const TEMP = styled.div`
+const CommentBox = styled.div`
   padding: 0px 1.25em;
 `;
 
-const TEMP2 = styled.div`
+const FootArea = styled.div`
+  width: 100%;
   margin: 0px 1.25em;
 `;
 
 export const BtnContainer = styled.footer`
+  display: flex;
+  align-items: center;
   position: fixed;
   left: 50%;
   bottom: 0px;
-  transform: translateX(-50%);
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
-  height: 68px;
-  display: flex;
+  height: ${({ theme: { heights } }) => heights.bottomReply}px;
+  transform: translateX(-50%);
+  background: ${({ theme: { colors } }) => colors.snow};
 `;
 
 export default Comments;

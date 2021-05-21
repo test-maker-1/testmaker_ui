@@ -7,9 +7,8 @@ import Enum from "../../../constants/Enum";
 const Mention = ({ idx, writer, content, timestamp }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
   console.log("Mention", writer);
-  const handleOnClick = (event) => {
-    console.log("handleON", event, writer);
-    setOpen(!openPop);
+  const handleOnClick = (id, event) => {
+    setOpen(false);
   };
   return (
     <MenContainer>
@@ -20,14 +19,26 @@ const Mention = ({ idx, writer, content, timestamp }) => {
         {/* isMe : 1.본인, 0.아님 */}
         {writer?.isMe === 0 && (
           <RightSide>
-            <SVG type={Enum.MORE} onClick={handleOnClick} />
+            <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
             {openPop && (
               <>
-                <Dimmed onClick={() => onClose()} />
+                <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
                 <Popup>
-                  <TEMP3>
-                    <TEMP2>닫기</TEMP2>
-                  </TEMP3>
+                  <PopContainer>
+                    <PopWrap>
+                      <PopItem onClick={handleOnClick.bind(this, "report")}>
+                        댓글신고
+                      </PopItem>
+                    </PopWrap>
+                    <PopWrap>
+                      <PopItem
+                        close
+                        onClick={handleOnClick.bind(this, "close")}
+                      >
+                        닫기
+                      </PopItem>
+                    </PopWrap>
+                  </PopContainer>
                 </Popup>
               </>
             )}
@@ -72,24 +83,6 @@ const Dimmed = styled.div`
   height: 100%;
 `;
 
-const TEMP2 = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 40px;
-  bottom: 0;
-  background: #fafafa;
-`;
-const TEMP3 = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const RightSide = styled.div`
-  position: relative;
-  float: right;
-`;
-
 const Popup = styled.div`
   position: absolute;
   width: 104px;
@@ -106,6 +99,44 @@ const Popup = styled.div`
   line-height: 19px;
   letter-spacing: -0.3px;
   color: #515966;
+`;
+
+const PopContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const PopWrap = styled.div`
+  display: block;
+  width: 100%;
+  &::after {
+    content: "";
+    display: block;
+    width:100%;
+    border-bottom: 0.5px solid #F1F2F4;
+  }
+  &: last-child::after {
+    border-bottom: 0px;
+  }
+`;
+const PopItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  background: ${({ close, theme: { colors } }) =>
+    close ? colors.white : colors.snow};
+  cursor: pointer;
+  border-radius: ${({ close }) =>
+    close ? "0px 0px 5px 5px" : "5px 5px 0px 0px"};
+`;
+
+const RightSide = styled.div`
+  position: relative;
+  float: right;
 `;
 
 const TEMP = styled.div`
