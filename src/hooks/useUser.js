@@ -1,13 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { kakaoLogIn as kakaoLogInAction } from "../redux/reducer/userReducer";
+import {
+  checkLogIn as checkLogInAction,
+  kakaoLogIn as kakaoLogInAction,
+} from "../redux/reducer/userReducer";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
 
+  const checkLogIn = () => dispatch(checkLogInAction());
   const kakaoLogIn = (payload) => dispatch(kakaoLogInAction(payload));
 
-  return { data, status, kakaoLogIn };
+  return { data, status, checkLogIn, kakaoLogIn };
 };
 
 export default useUser;

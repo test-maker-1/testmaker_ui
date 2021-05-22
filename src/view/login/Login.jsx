@@ -12,10 +12,10 @@ import { KAKAO, EMAIL } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
-  const { status, kakaoLogIn } = useUser();
+  const { data, status, kakaoLogIn } = useUser();
   const { goPage } = usePage();
 
-  if (status === SUCCESS) goPage("/");
+  if (status === SUCCESS && data) goPage("/");
 
   const onSuccessKakao = async (resData) => {
     const {

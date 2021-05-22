@@ -13,6 +13,14 @@ const user = createSlice({
   initialState,
 
   reducers: {
+    initUserInfo: (state, action) => {
+      state.user = reducerUtils.init();
+    },
+    // log in
+    checkLogIn: (state, action) => {
+      const { data } = state;
+      state.user = reducerUtils.loading(data);
+    },
     kakaoLogIn: (state) => {
       const { data } = state;
       state.user = reducerUtils.loading(data);
@@ -25,6 +33,11 @@ const user = createSlice({
   }, // 추후 extraReducer로 중복 코드 제거할 수도
 });
 
-export const { kakaoLogIn } = user.actions;
+export const {
+  initUserInfo,
+  checkLogIn,
+  kakaoLogIn,
+  kakaoLogInSuccess,
+} = user.actions;
 
 export default user;
