@@ -28,7 +28,7 @@ const Exam = memo((props) => {
   const { questsCnt, questions } = useSelector((state) => state.testing);
 
   useEffect(() => {
-    console.log("컴포넌트가 화면에서 들어옴", questsCnt, questions);
+    //헤더 타이틀 변경
     dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
   }, [page]);
 

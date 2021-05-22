@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
-import styled from "styled-components";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import Mention, { EmptyMention } from "./Mention";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";

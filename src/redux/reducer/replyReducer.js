@@ -7,8 +7,13 @@ const reply = createSlice({
   name: prefix,
   initialState: initState.reply,
   reducer: {
-    updateTestInfo: (state, payload) => {},
+    addReplyInfo: (state, payload) => {
+      state.push(payload);
+    },
   },
 });
+
+//actions
+export const { addReplyInfo } = reply.actions;
 
 export default reply;

@@ -3,10 +3,35 @@ import styled from "styled-components";
 import { SVG } from "../../../components/common";
 import useOpen from "../../../hooks/useOpen";
 import Enum from "../../../constants/Enum";
+import { getDateInfo, diffByTime } from "../../../utils/handler";
 
 const Mention = ({ idx, writer, content, timestamp }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
-  console.log("Mention", writer);
+  const calcTimeStamp = (ptimestamp) => {
+    let result = "";
+    const current = new Date().getTime();
+    const { mode, diff } = diffByTime(ptimestamp, current);
+
+    switch (mode) {
+      case "day":
+        result = getDateInfo(timestamp, "년월일"); //yyyy년mm월dd일
+        break;
+      case "hour":
+        result = `${diff}시간전`;
+        break;
+      case "min":
+        result = `${diff}분전`;
+        break;
+      case "sec":
+        result = `${diff}초전`;
+        break;
+    }
+
+    return result;
+  };
+
+  console.log(calcTimeStamp(timestamp));
+
   const handleOnClick = (id, event) => {
     setOpen(false);
   };
