@@ -16,7 +16,7 @@ const TitleBtn = ({ type = LOGO, title = null }) => {
     headTitle: state.common.headTitle,
   }));
   if (type === NOTHING) return null;
-  if (type === TITLE) return title;
+  if (type === TITLE) return <TitleText>{title}</TitleText>;
   if (type === CUSTOM) return <Step>{headTitle}</Step>;
 
   const onClickEvent = () => {
@@ -30,6 +30,15 @@ const titleBtn = {
 };
 
 const Button = styled.button``;
+
+const TitleText = styled.p`
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  color: #515966;
+`;
 
 const Step = styled.p`
   font-size: 20px;
