@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
 import cookie from "react-cookies";
-import { reducerUtils } from "../../utils/asyncUtils";
+import { createSlice } from "@reduxjs/toolkit";
+import { handleAsyncReducer, reducerUtils } from "../../utils/asyncUtils";
 
 const prefix = "user";
 
@@ -13,24 +13,28 @@ const user = createSlice({
   initialState,
 
   reducers: {
-    initUserInfo: (state, action) => {
+    initUserInfo: (state) => {
       state.user = reducerUtils.init();
     },
     // log in
-    checkLogIn: (state, action) => {
-      const { data } = state;
-      state.user = reducerUtils.loading(data);
-    },
-    kakaoLogIn: (state) => {
-      const { data } = state;
-      state.user = reducerUtils.loading(data);
-    },
-    kakaoLogInSuccess: (state, { payload }) => {
-      const { user, token } = payload;
-      cookie.save("token", token);
-      state.user = reducerUtils.success(user);
-    },
-  }, // 추후 extraReducer로 중복 코드 제거할 수도
+    checkLogIn: () => {},
+    kakaoLogIn: () => {},
+  },
+
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      ({ type }) => {
+        return type.includes("LogIn");
+      },
+      (state, action) => {
+        if (action.type.includes("Success")) {
+          cookie.save("token", action.payload.token);
+          action.payload = action.payload.user;
+        }
+        state.user = handleAsyncReducer(action, state.user.data);
+      }
+    );
+  },
 });
 
 export const {

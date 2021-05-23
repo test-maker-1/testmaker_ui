@@ -9,6 +9,6 @@ export default class UserAPI {
   }
   // sns log in
   static kakaoLogIn(params) {
-    return post(`/auth/login/kakao`, params);
+    return post("/auth/login/kakao", params);
   }
 }

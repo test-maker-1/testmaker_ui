@@ -12,6 +12,23 @@ export const createActionString = (type) => {
   return { success: `${type}Success`, error: `${type}Error` };
 };
 
+export const handleAsyncReducer = (action, prevData = null, callback = {}) => {
+  const { type, payload } = action;
+  const { onSuccess = null, onError = null, onLoading = null } = callback;
+
+  if (type.includes("Success")) {
+    if (onSuccess) onSuccess();
+    return reducerUtils.success(payload);
+  }
+  if (type.includes("Error")) {
+    if (onError) onError();
+    return reducerUtils.error(payload);
+  }
+
+  if (onLoading) onLoading();
+  return reducerUtils.loading(prevData);
+};
+
 /*
  * type: string; -> action.type
  * promiseCreato: api function; ex) UserAPI.getMyInfo
