@@ -4,9 +4,12 @@ import {
   kakaoLogIn as kakaoLogInAction,
   logOut as logOutAction,
 } from "../redux/reducer/userReducer";
+import { SUCCESS } from "../utils/asyncUtils";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
+  const loggedIn = data && status === SUCCESS;
+
   const dispatch = useDispatch();
 
   const checkLogIn = () => dispatch(checkLogInAction());
@@ -14,7 +17,7 @@ const useUser = () => {
 
   const logOut = () => dispatch(logOutAction());
 
-  return { data, status, checkLogIn, kakaoLogIn, logOut };
+  return { data, status, loggedIn, checkLogIn, kakaoLogIn, logOut };
 };
 
 export default useUser;

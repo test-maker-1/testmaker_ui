@@ -28,7 +28,7 @@ const user = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       ({ type }) => {
-        return type.includes(prefix);
+        return type.toLowerCase().includes("log");
       },
       (state, action) => {
         if (action.type.includes("LogInSuccess")) {

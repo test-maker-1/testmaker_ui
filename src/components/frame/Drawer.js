@@ -4,33 +4,38 @@ import styled from "styled-components";
 import useUser from "../../hooks/useUser";
 
 const Drawer = ({ onClose }) => {
-  const { logOut } = useUser();
+  const { loggedIn, logOut } = useUser();
 
   return (
     <Dimmed>
       <DrawCloser onClick={onClose}></DrawCloser>
       <DrawContainer>
         <ul>
-          <Item>
-            <Link to="/" className="menu">
-              마이페이지
-            </Link>
-          </Item>
+          {loggedIn && (
+            <Item>
+              <Link to="/" className="menu">
+                마이페이지
+              </Link>
+            </Item>
+          )}
           <Item>
             <Link to="/" className="menu">
               피드로 이동
             </Link>
           </Item>
-          <Item>
-            <button className="menu" onClick={logOut}>
-              로그아웃
-            </button>
-          </Item>
-          <Item>
-            <Link to="/login" className="menu">
-              로그인
-            </Link>
-          </Item>
+          {loggedIn ? (
+            <Item>
+              <button className="menu" onClick={logOut}>
+                로그아웃
+              </button>
+            </Item>
+          ) : (
+            <Item>
+              <Link to="/login" className="menu">
+                로그인
+              </Link>
+            </Item>
+          )}
         </ul>
       </DrawContainer>
     </Dimmed>
@@ -72,7 +77,7 @@ const Item = styled.li`
   text-align: center;
   line-height: 22px;
 
-  menu {
+  .menu {
     text-decoration: none;
     font-size: 15px;
     font-weight: bold;

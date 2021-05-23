@@ -41,6 +41,6 @@ const logOutSaga = createPromiseSaga(logOut.type, UserAPI.logOut);
 
 export function* userSaga() {
   yield takeLeading(checkLogIn.type, checkLogInSaga);
-  yield takeEvery(kakaoLogIn.type, kakaoLogInSaga);
-  yield takeEvery(logOut.type, logOutSaga);
+  yield takeLeading(kakaoLogIn.type, kakaoLogInSaga);
+  yield takeLeading(logOut.type, logOutSaga);
 }
