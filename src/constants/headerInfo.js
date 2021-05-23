@@ -52,19 +52,27 @@ const headerInfo = {
     leftType: BACK,
     title: { type: TITLE, title: "회원가입" },
   },
+
   "/testing/welcome": {
     leftType: BACK,
     title: { type: NOTHING },
     background: theme.colors.lightblue,
   },
+
+  "/testing/comments": {
+    leftType: BACK,
+    title: { type: TITLE, title: "댓글" },
+  },
+
+  "/testing/exam": {
+    leftType: BACK,
+    title: { type: CUSTOM },
+  },
+
   "/testing/result": {
     leftType: BACK,
     title: { type: NOTHING },
     background: theme.colors.lightblue,
-  },
-  "/testing/exam": {
-    leftType: BACK,
-    title: { type: CUSTOM },
   },
 };
 
