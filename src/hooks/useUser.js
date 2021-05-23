@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   checkLogIn as checkLogInAction,
   kakaoLogIn as kakaoLogInAction,
+  logOut as logOutAction,
 } from "../redux/reducer/userReducer";
 
 const useUser = () => {
@@ -11,7 +12,9 @@ const useUser = () => {
   const checkLogIn = () => dispatch(checkLogInAction());
   const kakaoLogIn = (payload) => dispatch(kakaoLogInAction(payload));
 
-  return { data, status, checkLogIn, kakaoLogIn };
+  const logOut = () => dispatch(logOutAction());
+
+  return { data, status, checkLogIn, kakaoLogIn, logOut };
 };
 
 export default useUser;

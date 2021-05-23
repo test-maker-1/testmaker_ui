@@ -11,4 +11,8 @@ export default class UserAPI {
   static kakaoLogIn(params) {
     return post("/auth/login/kakao", params);
   }
+  // log out
+  static logOut() {
+    return get("/auth/logout");
+  }
 }
