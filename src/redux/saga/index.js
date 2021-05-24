@@ -5,6 +5,7 @@ import registerSaga from "./registerSaga";
 
 export function* rootSaga() {
   /* redux-saga의 effects */
+
   /* 
     all : 배열 안의 여러 사가를 동시에 실행
     fork : 비동기 함수 호출
