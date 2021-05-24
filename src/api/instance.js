@@ -14,7 +14,15 @@ const get = (path) => {
     instance
       .get(path)
       .then(({ data }) => resolve(reducerUtils.success(data)))
-      .catch((e) => resolve(reducerUtils.error(e.message)));
+      .catch((e) => {
+        const { status: code, data } = e.response;
+        resolve(
+          reducerUtils.error({
+            code,
+            name: data.name,
+          })
+        );
+      });
   });
 };
 
@@ -24,7 +32,15 @@ const post = (path, params = null) => {
     instance
       .post(path, params)
       .then(({ data }) => resolve(reducerUtils.success(data)))
-      .catch((e) => resolve(reducerUtils.error(e))); // e: { code, message }
+      .catch((e) => {
+        const { status: code, data } = e.response;
+        resolve(
+          reducerUtils.error({
+            code,
+            name: data.name,
+          })
+        );
+      });
   });
 };
 

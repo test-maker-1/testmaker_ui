@@ -1,4 +1,6 @@
+import cookie from "react-cookies";
 import { call, put } from "redux-saga/effects";
+import UserAPI from "../api/userAPI";
 
 export const [INIT, LOADING, SUCCESS, ERROR] = [
   "init",
@@ -53,6 +55,33 @@ export const createPromiseSaga = (type, promiseCreator) => {
   };
 };
 
+export const callWithToken = async (promiseCreator, params = null) => {
+  const { data, status } = await promiseCreator(params);
+
+  if (status === ERROR) {
+    if (data.code === 403) {
+      // aceess token 만료 시 재발급
+      const {
+        data: tokenData,
+        status: tokenStatus,
+      } = await UserAPI.refreshToken();
+
+      if (tokenStatus === SUCCESS) {
+        // 토큰 재발급 후 다시 요청
+        cookie.save("token", tokenData.token);
+        const { data: recallData, recallStatus } = await promiseCreator(params);
+        return { data: recallData, status: recallStatus };
+      }
+      // 토큰 재발급 실패 시 error return
+      return { data: tokenData, status: tokenStatus };
+    }
+    // token 만료 에러 아닐 경우 별도 처리 없이 return
+    return { data, status };
+  }
+  // 요청 성공 status === SUCCESS
+  return { data, status };
+};
+
 export const reducerUtils = {
   init: () => ({
     data: null,
@@ -69,8 +98,11 @@ export const reducerUtils = {
     status: SUCCESS,
   }),
 
-  error: (msg) => ({
-    data: msg,
+  error: (error = null) => ({
+    data: {
+      code: error.code,
+      name: error.name,
+    },
     status: ERROR,
   }),
 };
