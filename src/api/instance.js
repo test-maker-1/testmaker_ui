@@ -1,5 +1,6 @@
 import axios from "axios";
 import { reducerUtils } from "../utils/asyncUtils";
+import { getAxiosHeader } from "../utils/handler";
 import { baseURL } from "../constants/config";
 
 const instance = axios.create({
@@ -8,6 +9,7 @@ const instance = axios.create({
 });
 
 const get = (path) => {
+  instance.defaults.headers.common = getAxiosHeader();
   return new Promise((resolve) => {
     instance
       .get(path)
@@ -17,6 +19,7 @@ const get = (path) => {
 };
 
 const post = (path, params = null) => {
+  instance.defaults.headers.common = getAxiosHeader();
   return new Promise((resolve) => {
     instance
       .post(path, params)
