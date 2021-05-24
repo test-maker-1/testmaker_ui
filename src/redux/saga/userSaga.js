@@ -1,5 +1,5 @@
 import cookie from "react-cookies";
-import { call, put, takeEvery, takeLeading } from "redux-saga/effects";
+import { call, put, fork, all, takeLeading } from "redux-saga/effects";
 
 import UserAPI from "../../api/userAPI";
 import {
@@ -39,8 +39,18 @@ function* checkLogInSaga(action) {
 const kakaoLogInSaga = createPromiseSaga(kakaoLogIn.type, UserAPI.kakaoLogIn);
 const logOutSaga = createPromiseSaga(logOut.type, UserAPI.logOut);
 
-export function* userSaga() {
+function* watchCheckLogin() {
   yield takeLeading(checkLogIn.type, checkLogInSaga);
+}
+
+function* watchKakaoLogIn() {
   yield takeLeading(kakaoLogIn.type, kakaoLogInSaga);
+}
+
+function* watchLogOut() {
   yield takeLeading(logOut.type, logOutSaga);
+}
+
+export default function* userSaga() {
+  yield all([fork(watchCheckLogin), fork(watchKakaoLogIn), fork(watchLogOut)]);
 }
