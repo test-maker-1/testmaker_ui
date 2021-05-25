@@ -43,6 +43,7 @@ const ErrorSection = styled(Section)`
 `;
 
 const ErrorImg = styled.img`
+  margin-bottom: 32px;
   width: 160px;
   height: 160px;
 `;
