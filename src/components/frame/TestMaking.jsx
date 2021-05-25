@@ -1,40 +1,24 @@
-import { useEffect, useReducer } from "react";
 import { withRouter } from "react-router-dom";
-
 import Error from "../../view/Error";
-import { updateCommonData } from "../../redux/reducer/makingReducer";
+import useUser from "../../hooks/useUser";
 import components from "../../constants/testStepComponents";
-import initState from "../../constants/makingInitState";
 
 const TestMaking = ({
   match: {
     params: { module, step },
   },
 }) => {
-  const [state, dispatch] = useReducer(updateCommonData, initState.common);
+  const { loggedIn } = useUser();
 
-  const handleBreak = (event) => {
-    if (state.editFlag) {
-      //수정 중일 경우 브라우저 제어
-      const confirmationMessage = "stop!";
-      event.returnValue = confirmationMessage;
-      return confirmationMessage;
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleBreak); //add event
-    return () => {
-      window.removeEventListener("beforeunload", handleBreak); //remove event
-    };
-  }, []);
+  // require logIn
+  if (!loggedIn) return <Error code={403} />;
 
   // undefined module
   if (!components.hasOwnProperty(module)) {
     return <Error />;
   }
 
-  let makingComponent = components[module];
+  const makingComponent = components[module];
 
   // undefined step
   if (!makingComponent.hasOwnProperty(step)) {

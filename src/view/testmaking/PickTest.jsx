@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import { TitleBox } from "../../components/common/index.js";
+import Error from "../Error.jsx";
+
 import usePage from "../../hooks/usePage.js";
 import useMaking from "../../hooks/useMaking.js";
+import useUser from "../../hooks/useUser.js";
 
 import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
@@ -13,6 +16,10 @@ const breakWidth = 350;
 const [pt, pl] = [20, 23];
 
 const PickTest = () => {
+  const { loggedIn } = useUser();
+
+  if (!loggedIn) return <Error code={403} />;
+
   return (
     <div>
       <TitleBox title="어떤 테스트를 만드시나요?" noline>
