@@ -40,7 +40,7 @@ const MultipleQnA = () => {
   if (!data.testId) return <Error />; // code 나중에 추가
 
   const {
-    data: { questions = [], resultsCnt },
+    data: { questions = [], questionsCnt, resultsCnt },
   } = data;
 
   const calculatePoints = () => {
@@ -87,7 +87,9 @@ const MultipleQnA = () => {
         <Question
           key={`${idx}-${question.question}`}
           questionIdx={idx}
+          questionsCnt={questionsCnt}
           data={question}
+          openAlert={NoticeAlert.open}
         />
       ))}
       <BtnAdd onClick={() => dispatch(addQuestion())} />

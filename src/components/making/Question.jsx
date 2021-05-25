@@ -10,15 +10,36 @@ import useOpen from "../../hooks/useOpen";
 
 import ENUM, { md } from "../../constants/Enum";
 
-const Question = ({ data, questionIdx }) => {
+const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
   const { question, img, answer, point, options } = data;
 
-  const { dispatch, deleteQuestion, updateQuestion } = useMaking();
+  const {
+    dispatch,
+    deleteQuestion,
+    updateQuestion,
+    deleteOption,
+  } = useMaking();
   const { open, onToggle } = useOpen();
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
     if (name === "question") updateQuestion(name, value, questionIdx);
+  };
+
+  const onDeleteQuestion = () => {
+    if (questionsCnt - 1 < 1) {
+      openAlert("질문은 1개 이상 필요해요!");
+      return;
+    }
+    dispatch(deleteQuestion(questionIdx));
+  };
+
+  const onDeleteOption = (qIdx, oIdx) => {
+    if (options.length - 1 < 2) {
+      openAlert("선택지는 2개 이상 필요해요!");
+      return;
+    }
+    deleteOption(qIdx, oIdx);
   };
 
   return (
@@ -27,7 +48,7 @@ const Question = ({ data, questionIdx }) => {
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
           onUpload={onToggle}
-          onDelete={() => dispatch(deleteQuestion(questionIdx))}
+          onDelete={onDeleteQuestion}
         >
           <BtnIcon type={ENUM.CASINO} />
         </SubTitle>
@@ -49,8 +70,8 @@ const Question = ({ data, questionIdx }) => {
                 key={`${idx}-${option.name}`}
                 value={option.name}
                 answer={answer}
-                questionIdx={questionIdx}
-                optionIdx={idx}
+                idxs={{ questionIdx, optionIdx: idx }}
+                deleteOption={onDeleteOption}
               />
             ))}
           </ul>
