@@ -15,7 +15,7 @@ const making = createSlice({
     },
     initTypeData: (state, { payload: { type, questions, results } }) => {
       state.type = type;
-      state.data = initState[type];
+      state.data = { ...initState[type] };
       state.data.questions = [...questions];
       state.data.results = [...results];
     },
@@ -88,7 +88,9 @@ const making = createSlice({
         return type.toLowerCase().includes("log");
       },
       (state, action) => {
-        if (action.type.includes("logOutSuccess")) return initState.common;
+        if (action.type.includes("logOutSuccess")) {
+          return initState.common;
+        }
 
         if (action.type.includes("LogInSuccess")) {
           const { nickname: name, uid: userUid } = action.payload;
