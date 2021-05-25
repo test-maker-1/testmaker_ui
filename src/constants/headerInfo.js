@@ -18,7 +18,8 @@ export const initHeader = {
 
 const headerInfo = {
   "/release": {
-    leftType: LOGO,
+    leftType: BACK,
+    title: { type: TITLE, title: "오늘의 테스트" },
   },
 
   "/test/multiple": {
