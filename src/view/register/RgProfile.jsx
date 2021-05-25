@@ -1,53 +1,69 @@
 import React, { useState, useRef, useCallback } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import ENUM from "../../constants/Enum";
-import { SVG } from "../../components/common";
+import { InfoText, SVG } from "../../components/common";
 
 import { PageContainer } from "../login/Login";
 import usePage from "../../hooks/usePage";
+import theme from "../../styles/theme";
+
+const { blue, skyBlue } = theme.colors;
+
+const btnSizes = {
+  margin: "24px 0",
+  flex: 1,
+  height: "4.8rem",
+  borderRadius: "10px",
+  fontSize: `${theme.fontSizes.lg}rem`,
+  fontWeight: "bold",
+  lineHeight: "28px",
+};
 
 const useStyles = makeStyles((theme, color) => ({
   profileBtn: {
-    width: "88px",
-    height: "88px",
+    width: "8.8rem",
+    height: "8.8rem",
     borderRadius: "50%",
-    background: "#F1F2F4",
+    background: skyBlue,
   },
   checkBtn: {
     margin: "6px 0",
-    width: "89px",
+    padding: "1.35rem",
+    width: "8.9rem",
     borderRadius: "0 10px 10px 0",
     fontSize: 15,
     fontWeight: "bold",
-    background: "#DADEE6",
-    color: "#8A929E",
+    background: skyBlue,
+    color: blue,
     letterSpacing: " -0.5px",
   },
   leftBtn: {
-    margin: "24px 0",
-    flex: 1,
-    height: "54px",
-    borderRadius: "10px 0  0 10px",
-    fontSize: 18,
-    fontWeight: "bold",
-    background: "#F1F2F4",
-    color: "#8A929E",
+    margin: btnSizes.margin,
+    flex: btnSizes.flex,
+    height: btnSizes.height,
+    borderRadius: btnSizes.borderRadius,
+    fontSize: btnSizes.fontSize,
+    fontWeight: btnSizes.fontWeight,
+    background: skyBlue,
+    color: blue,
     letterSpacing: "-0.5px",
-    lineHeight: "27px",
+    lineHeight: btnSizes.lineHeight,
+    marginRight: "4px",
   },
   rightBtn: {
-    margin: "24px 0",
-    flex: 1,
-    height: "54px",
-    borderRadius: "0 10px 10px 0",
-    fontSize: 18,
-    fontWeight: "bold",
-    background: "#E5E8EC",
-    color: "#8A929E",
+    margin: btnSizes.margin,
+    flex: btnSizes.flex,
+    height: btnSizes.height,
+    borderRadius: btnSizes.borderRadius,
+    fontSize: btnSizes.fontSize,
+    fontWeight: btnSizes.fontWeight,
+    background: blue,
+    color: skyBlue,
     letterSpacing: "-0.5px",
-    lineHeight: "27px",
+    lineHeight: btnSizes.lineHeight,
+    marginLeft: "4px",
   },
 }));
 
@@ -60,6 +76,7 @@ const RgProfile = (props) => {
   const [imgURL, setImgURL] = useState("");
   const [isHover, setHover] = useState(false);
   const [nickname, setNickname] = useState("");
+  const [error, setError] = useState("");
 
   const onClick = useCallback((e) => {
     fileInput.current.click();
@@ -120,7 +137,11 @@ const RgProfile = (props) => {
           </Profile>
         )}
         <Div>
-          <SVG type={ENUM.ADDPROFILE} style={{ width: "24", height: "24" }} />
+          <SVG
+            type={ENUM.ADDPROFILE}
+            style={{ width: "24", height: "24", fill: blue }}
+            onClick={onClick}
+          />
         </Div>
         <Title>프로필 사진</Title>
       </ProfileWrapper>
@@ -135,6 +156,9 @@ const RgProfile = (props) => {
           중복 체크
         </Button>
       </form>
+      {error && (
+        <InfoText text="이미 등록된 닉네임이 있습니다!" color="alert" />
+      )}
 
       <div style={{ display: "flex" }}>
         <Button className={classes.leftBtn} onClick={onSkip}>
@@ -170,8 +194,8 @@ const Div = styled.div`
 `;
 
 const Profile = styled.div`
-  width: 88px;
-  height: 88px;
+  width: 8.8rem;
+  height: 8.8rem;
   margin: 0px auto;
   img:hover {
     cursor: pointer;
@@ -189,27 +213,36 @@ const imgStyle = {
 const Title = styled.div`
   position: relative;
   margin: -15px 0 18px 0;
-  font-size: 16px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
   font-weight: 700;
   line-height: 24px;
-  color: #8a929e;
+  color: ${({ theme: { colors } }) => colors.bodyGray};
 `;
 
 const Input = styled.input`
-  width: calc(100% - 89px);
+  width: calc(100% - 8.9rem);
   border: none;
   border-radius: 10px 0 0 10px;
-  background: #fafafa;
+  background: ${({ theme: { colors } }) => colors.white};
   margin: 6px 0;
-  font-size: 15px;
-  color: #697382;
+  font-size: 1.5rem;
+  color: ${({ theme: { colors } }) => colors.darkGray};
   line-height: 22.5px;
-  padding: 12px;
+  padding: 1.35rem;
   &::placeholder {
     color: #b7bdcb;
   }
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 1pt #697382;
+    ${({ error }) => {
+      if (error)
+        return css`
+          box-shadow: 0 0 0 1px #ff5146;
+        `;
+      else
+        return css`
+          box-shadow: 0 0 0 1px #697382;
+        `;
+    }}
   }
 `;

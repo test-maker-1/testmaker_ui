@@ -29,16 +29,7 @@ const Result = memo((props) => {
           정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.
         </Inform>
         {/* font-size: 19px, line-height: 28px, text-align: center; */}
-        <BtnField
-          name={"테스트 다시하기"}
-          onClick={handleonClick}
-          style={{
-            width: "100%",
-            height: "3.6em",
-            fontSize: `${fontSizes.md}rem`,
-            background: "#DADEE6",
-          }}
-        />
+        <BtnField onClick={handleonClick}>테스트 다시하기</BtnField>
       </div>
       <RoundContiner noPadding>
         <TitleBox>
@@ -47,16 +38,9 @@ const Result = memo((props) => {
           <div style={{ padding: "2.4em 0px" }}>
             <ImageView imageUrl={null} />
           </div>
-          <BtnField
-            name={"다른 유형 전체보기"}
-            onClick={handleonClick}
-            style={{
-              width: "100%",
-              height: "3.6em",
-              fontSize: `${fontSizes.md}rem`,
-              background: "#DADEE6",
-            }}
-          />
+          <BtnField color="skyBlue" onClick={handleonClick}>
+            다른 유형 전체보기
+          </BtnField>
         </TitleBox>
         <TitleBox title="테스트 메이커에게 한마디">
           <ComInput hintText={"익명으로 메이커만 볼 수 있어요"} />

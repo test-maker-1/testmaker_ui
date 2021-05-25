@@ -1,19 +1,50 @@
-import { createAction, createReducer } from '@reduxjs/toolkit'
+import cookie from "react-cookies";
+import { createSlice } from "@reduxjs/toolkit";
+import { handleAsyncReducer, reducerUtils } from "../../utils/asyncUtils";
 
-// action
-const WRITE = 'INPUT/WRITE' // prevent to conflict aciton name
+const prefix = "user";
 
-// init state
-const initState = { value: '' }
+const initialState = {
+  user: reducerUtils.init(),
+};
 
-// action generation function
-export const changeInput = createAction(WRITE) // prevent to conflict aciton name
+const user = createSlice({
+  name: prefix,
+  initialState,
 
-// reducer
-const writeReducer = createReducer(initState, {
-  [changeInput]: (state, action) => {
-    state.value = action.payload
-  }
-})
+  reducers: {
+    initUserInfo: (state) => {
+      state.user = reducerUtils.init();
+    },
+    // log in
+    checkLogIn: () => {},
+    kakaoLogIn: () => {},
+    // log out
+    logOut: () => {
+      cookie.remove("token");
+    },
+  },
 
-export default writeReducer
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      ({ type }) => {
+        return type.toLowerCase().includes("log");
+      },
+      (state, action) => {
+        if (action.type.includes("LogInSuccess")) {
+          cookie.save("token", action.payload.token);
+          action.payload = action.payload.user;
+        }
+        if (action.type.includes("logOut")) {
+          action.payload = null;
+        }
+
+        state.user = handleAsyncReducer(action, state.user.data);
+      }
+    );
+  },
+});
+
+export const { initUserInfo, checkLogIn, kakaoLogIn, logOut } = user.actions;
+
+export default user;

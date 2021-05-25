@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginFrame from "./components/frame/Login";
 import RegisterFrame from "./components/frame/Register";
@@ -10,8 +10,13 @@ import TestMaking from "./components/frame/TestMaking";
 import Feed from "./view/Feed";
 import PickTest from "./view/testmaking/PickTest";
 import Error from "./view/Error";
+import useUser from "./hooks/useUser";
 
 const App = () => {
+  const { checkLogIn } = useUser();
+
+  useEffect(() => checkLogIn(), []);
+
   return (
     <BrowserRouter>
       <MainForm>

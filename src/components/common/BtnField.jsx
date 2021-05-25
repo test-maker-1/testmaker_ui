@@ -26,10 +26,6 @@ const btnColors = {
     bgColor: white,
     color: bodyGray,
   },
-  kakao: {
-    bgColor: "#FEE233",
-    color: "#3E1E1E",
-  },
 };
 
 const btnSizes = {
@@ -46,16 +42,18 @@ const btnSizes = {
 };
 
 /* #region 기본 버튼
- * name: string;
- * color: string; ex) blue || skyBlue || gray
- * size: string; ex) md || lg
+ * name, value, type: string; ex) submit
+ * color: ex) blue || skyBlue || gray
+ * size: ex) md || lg
  */
 export const BtnField = ({
-  name,
+  name = null,
+  value = null,
   type = null,
   color = "blue",
   size = lg,
   onClick,
+  children,
 }) => {
   const classes = useStyles({ color, size });
   return (
@@ -63,9 +61,11 @@ export const BtnField = ({
       fullWidth={true}
       className={classes.btn}
       type={type}
+      name={name}
+      value={value}
       onClick={onClick}
     >
-      {name}
+      {children}
     </Button>
   );
 };

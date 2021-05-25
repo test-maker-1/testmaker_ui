@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
-import LoginBtn from "../../components/common/LoginBtn";
 import { NEXT, PWERROR } from "../../constants/Enum";
 
 import { PageContainer } from "../login/Login";
-import { Title, Input, Error } from "../login/Email";
+import { Title, Input, MarginBox } from "../login/Email";
 import usePage from "../../hooks/usePage";
+import { BtnField, InfoText } from "../../components/common";
+import { PwForm } from "../login/findPw/PwSetting";
 
 const RgPwSetting = (props) => {
   const { replace } = usePage();
@@ -28,7 +29,8 @@ const RgPwSetting = (props) => {
   return (
     <PageContainer>
       <Title>거의 다 됐어요!</Title>
-      <form onSubmit={onSubmit}>
+
+      <PwForm onSubmit={onSubmit}>
         <Input
           type="password"
           placeholder="비밀번호는 6자 이상 적어주세요"
@@ -42,9 +44,12 @@ const RgPwSetting = (props) => {
           onChange={(e) => setPasswordCheck(e.target.value)}
           required
         />
-        {error && <Error>{PWERROR}</Error>}
-        <LoginBtn btns={[NEXT]} handleOnClick={null} />
-      </form>
+        {error && <InfoText text={PWERROR} color="alert" />}
+
+        <MarginBox>
+          <BtnField type="submit" name={NEXT} onClick={null} />
+        </MarginBox>
+      </PwForm>
     </PageContainer>
   );
 };

@@ -15,6 +15,8 @@ const colors = {
   darkGray: "#363D4A",
   black: "#1B1C1F",
   lightblue: "#F1F6FF",
+  // warning
+  alert: "#ff5146",
 };
 
 const fontSizes = {

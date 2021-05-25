@@ -1,9 +1,9 @@
+import cookie from "react-cookies";
 import headerInfo, { initHeader } from "../constants/headerInfo";
 import { seqTest } from "../constants/urlInfo";
 import { login, test, testing } from "../constants/urlInfo";
-/*
- * plocation: string; => path
- */
+
+// plocation: string; => path
 export const getConfiguration = (plocation) => {
   const { pathname } = plocation;
 
@@ -24,8 +24,8 @@ export const getConfiguration = (plocation) => {
 };
 
 /*
- *  다음 페이지 URL 반환
- *  pmatch:object => url:string
+ * 다음 페이지 URL 반환
+ * pmatch: object => url: string
  */
 export const getNextPageURL = (pmatch) => {
   const {
@@ -38,18 +38,20 @@ export const getNextPageURL = (pmatch) => {
   let nextUrl = "";
 
   switch (where) {
-    case login: //로그인
+    case login: // 로그인
       break;
-    case test: //테스트메이킹
+    case test: // 테스트메이킹
       const sequence = seqTest[module];
       const nextIDX = sequence.indexOf(step) + 1;
       //ex) test/multiple/preset
       nextUrl = `${where}/${module}/${sequence[nextIDX]}`;
       break;
-    case testing: //테스트
+    case testing: // 테스트
       const seque = seqTest[testing];
       //ex) testing/welcome
       nextUrl = `${where}/${seque[seque.indexOf(module) + 1]}`;
+      break;
+    default:
       break;
   }
 
@@ -101,4 +103,9 @@ export const diffByTime = (dateA, dateB) => {
   else if (diffHour > 0) return { mode: "hour", diff: parseInt(diffHour) };
   else if (diffMinute > 0) return { mode: "min", diff: parseInt(diffMinute) };
   else if (diffSecond > 0) return { mode: "sec", diff: parseInt(diffSecond) };
+};
+
+export const getAxiosHeader = () => {
+  const token = cookie.load("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
 };
