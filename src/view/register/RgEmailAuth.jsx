@@ -1,31 +1,20 @@
 import React, { useState, useCallback } from "react";
 import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import LoginBtn from "../../components/common/LoginBtn";
 import { NEXT } from "../../constants/Enum";
-import { PageContainer, Summary } from "../login/Login";
-import { Title, Input, Error } from "../login/Email";
-import { EmailForm, EmailInput } from "../login/findPw/PwEmailAuth";
+import { PageContainer } from "../login/Login";
+import { Title, Input, MarginBox } from "../login/Email";
+import { EmailInput } from "../login/findPw/PwEmailAuth";
 import usePage from "../../hooks/usePage";
-
-const useStyles = makeStyles((theme, color) => ({
-  useBtn: {
-    margin: "6px 0",
-    width: "calc(100% - 116px)",
-    borderRadius: "0 10px 10px 0",
-    fontSize: 16,
-    fontWeight: "bold",
-    background: "#DADEE6",
-    color: "#8A929E",
-    letterSpacing: " -0.5px",
-  },
-}));
+import { useStyles } from "../../view/login/findPw/PwEmailAuth";
+import { BtnField } from "../../components/common";
+import styled, { css } from "styled-components";
 
 const RgEmailAuth = (props) => {
   const classes = useStyles();
   const { replace } = usePage();
   const [email, setEmail] = useState("");
   const [authNumber, setAuthNumber] = useState("");
+  const [error, setError] = useState("");
 
   const getAuthNumber = useCallback(
     (e) => {
@@ -52,23 +41,66 @@ const RgEmailAuth = (props) => {
           placeholder="이메일을 적어주세요"
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="email-input"
         />
         <Button type="submit" className={classes.useBtn}>
           인증번호 받기
         </Button>
       </EmailForm>
 
-      <form onSubmit={onComplete}>
+      <AuthForm onSubmit={onComplete}>
         <Input
           type="text"
           placeholder="인증번호를 적어주세요"
           onChange={(e) => setAuthNumber(e.target.value)}
           required
+          className="auth-input"
         />
-        <LoginBtn btns={[NEXT]} handleOnClick={null} />
-      </form>
+
+        <MarginBox>
+          <BtnField type="submit" name={NEXT} color="blue" onClick={null} />
+        </MarginBox>
+      </AuthForm>
     </PageContainer>
   );
 };
 
 export default RgEmailAuth;
+
+const EmailForm = styled.form`
+  display: flex;
+
+  .email-input {
+    &:focus {
+      outline: none;
+      ${({ error }) => {
+        if (error)
+          return css`
+            box-shadow: 0 0 0 1px #ff5146;
+          `;
+        else
+          return css`
+            box-shadow: 0 0 0 1px #697382;
+          `;
+      }}
+    }
+  }
+`;
+
+const AuthForm = styled.form`
+  .auth-input {
+    &:focus {
+      outline: none;
+      ${({ error }) => {
+        if (error)
+          return css`
+            box-shadow: 0 0 0 1px #ff5146;
+          `;
+        else
+          return css`
+            box-shadow: 0 0 0 1px #697382;
+          `;
+      }}
+    }
+  }
+`;
