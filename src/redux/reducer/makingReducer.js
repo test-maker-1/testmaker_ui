@@ -80,6 +80,23 @@ const making = createSlice({
       state.data.resultsCnt -= 1;
     },
   },
+
+  extraReducers: (builder) => {
+    // 로그인/로그아웃 시 making state에 유저 정보 저장/삭제
+    builder.addMatcher(
+      ({ type }) => {
+        return type.toLowerCase().includes("log");
+      },
+      (state, action) => {
+        if (action.type.includes("logOutSuccess")) return initState.common;
+
+        if (action.type.includes("LogInSuccess")) {
+          const { nickname: name, uid: userUid } = action.payload;
+          state.maker = { name, userUid };
+        }
+      }
+    );
+  },
 });
 
 /* initialize */
