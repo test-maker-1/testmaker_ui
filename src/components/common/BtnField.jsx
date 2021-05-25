@@ -26,10 +26,6 @@ const btnColors = {
     bgColor: white,
     color: bodyGray,
   },
-  kakao: {
-    bgColor: "#FEE233",
-    color: "#3E1E1E",
-  },
 };
 
 const btnSizes = {
