@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
@@ -14,6 +14,7 @@ import { getPointBoundList } from "../../../utils/constHandler";
 import ENUM, { multiple } from "../../../constants/Enum";
 
 const { blue, white, bodyGray, darkGray } = theme.colors;
+const currentStep = "qna";
 
 const svgStyles = {
   width: 32,
@@ -25,15 +26,18 @@ const MultipleQnA = () => {
   const {
     data,
     dispatch,
+    updateStep,
     addQuestion,
     updateTypeData,
     updateResult,
   } = useMaking();
   const { goPage } = usePage();
 
-  // redirection step
-  if (!data.hasOwnProperty("type") || data.type !== multiple)
-    return <Error code={401} />;
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  if (!data.testId) return <Error />; // code 나중에 추가
 
   const {
     data: { questions = [], resultsCnt },

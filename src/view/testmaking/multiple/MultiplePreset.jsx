@@ -14,7 +14,7 @@ const [FRITEND, FAMILY, currentStep] = ["friend", "family", "preset"];
 
 const MultiplePreset = () => {
   const { value, updateTypeDataByInput, updateTestInfo } = useTestInfo();
-  
+
   return (
     <Container>
       <TitleBox title="누구에게 공유하실건가요?">
@@ -46,6 +46,8 @@ const useTestInfo = () => {
   const typeData = data.data;
 
   const updateTestInfo = async () => {
+    if (data.testId) return;
+
     const { type, maker } = data;
     const params = {
       type,
