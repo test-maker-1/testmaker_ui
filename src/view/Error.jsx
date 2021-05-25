@@ -5,8 +5,9 @@ import { BtnField } from "../components/common";
 import { Section } from "../styles";
 import usePage from "../hooks/usePage";
 
-import errorImg from "../resources/images/error.png";
 import { md } from "../constants/Enum";
+import msg from "../constants/msg";
+import errorImg from "../resources/images/error.png";
 
 // code: number;
 const Error = ({ code = 404 }) => {
@@ -17,10 +18,7 @@ const Error = ({ code = 404 }) => {
     <ErrorSection>
       <ErrorImg src={errorImg} alt="error" />
       <Title>앗, 여긴 어디? 나는 누구죠?</Title>
-      <Message>
-        주소를 잘못 입력하셨거나, 주소가 변경 또는 삭제 됐을 수 있어요. 주소를
-        다시 확인해주세요!
-      </Message>
+      <Message>{msg.errorPage[code]}</Message>
       <Buttons>
         <li>
           <BtnField size={md} color="skyBlue" onClick={() => goPage("/")}>
