@@ -16,14 +16,6 @@ const Card = ({
   sharedCnt,
   participatedCnt,
 }) => {
-  // 천 단위 콤마
-  const sCnt = sharedCnt
-    .toString()
-    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  const pCnt = participatedCnt
-    .toString()
-    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-
   const { goPage } = usePage();
   const [bookMark, setBookMark] = useState(false);
   const onClickBookMark = useCallback(
@@ -36,6 +28,13 @@ const Card = ({
     // goPage(`/test/welcome/${testId}`)
     console.log("테스트 이동");
   }, []);
+
+  const numberFormat = useCallback(
+    (n) => {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    [sharedCnt, participatedCnt]
+  );
 
   return (
     <CardBox>
@@ -92,7 +91,7 @@ const Card = ({
               }}
               className="svg-margin"
             />
-            <Count>{pCnt}</Count>
+            <Count>{numberFormat(participatedCnt)}</Count>
 
             <SVG
               type={ENUM.STAR}
@@ -102,7 +101,7 @@ const Card = ({
               }}
               className="svg-margin"
             />
-            <Count>{sCnt}</Count>
+            <Count>{numberFormat(sharedCnt)}</Count>
           </CountItems>
         </InfoBox>
       </PaddingBox>
