@@ -1,23 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { TitleBox, Select, InfoText } from "../../../components/common";
 
 import useMaking from "../../../hooks/useMaking";
+import MakingAPI from "../../../api/makingAPI";
+import { SUCCESS } from "../../../utils/asyncUtils";
+
 import ENUM from "../../../constants/Enum";
 
-const [FRITEND, FAMILY] = ["friend", "family"];
+const [FRITEND, FAMILY, currentStep] = ["friend", "family", "preset"];
 
 const MultiplePreset = () => {
-  const {
-    data: { data },
-    updateTypeDataByInput,
-  } = useMaking();
-
-  const value =
-    data.hasOwnProperty("target") && data.target ? data.target : FRITEND;
-
+  const { value, updateTypeDataByInput, updateTestInfo } = useTestInfo();
+  
   return (
     <Container>
       <TitleBox title="누구에게 공유하실건가요?">
@@ -31,9 +28,48 @@ const MultiplePreset = () => {
           color="blue"
         />
       </TitleBox>
-      <BottomBtn btnArr={[{ name: "정했어요", type: ENUM.MOVENEXT }]} />
+      <BottomBtn
+        btnArr={[
+          {
+            name: "정했어요",
+            type: ENUM.MOVENEXT,
+            customClick: updateTestInfo,
+          },
+        ]}
+      />
     </Container>
   );
+};
+
+const useTestInfo = () => {
+  const { data, updateCommon, updateStep, updateTypeDataByInput } = useMaking();
+  const typeData = data.data;
+
+  const updateTestInfo = async () => {
+    const { type, maker } = data;
+    const params = {
+      type,
+      userUid: maker.userUid,
+      userName: maker.name,
+    };
+
+    const { data: resData, status } = await MakingAPI.getTestId(params);
+
+    if (status === SUCCESS) {
+      updateCommon("testId", resData.testUid);
+    }
+  };
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  const value =
+    typeData.hasOwnProperty("target") && typeData.target
+      ? typeData.target
+      : FRITEND;
+
+  return { updateTypeDataByInput, updateTestInfo, value };
 };
 
 const Container = styled(PageContainer)`

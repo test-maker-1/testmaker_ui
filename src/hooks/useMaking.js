@@ -25,6 +25,8 @@ const useMaking = () => {
   const updateCommon = (key, value) =>
     dispatch(updateCommonData({ key, value }));
 
+  const updateStep = (step) => updateCommon("step", step);
+
   const updateCommonByInput = (e) => {
     const { name, value } = e.target;
     updateCommon(name, value);
@@ -80,6 +82,7 @@ const useMaking = () => {
     initStateByType,
     // update
     updateCommon,
+    updateStep,
     updateCommonByInput,
     updateTypeData,
     updateTypeDataByInput,

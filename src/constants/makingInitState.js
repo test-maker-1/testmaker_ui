@@ -15,7 +15,7 @@ const common = {
   tags: [], // string[]
   onFeed: true,
   optionalURL: "", // 홍보 URL (선택)
-  step: null, // 테스트 제작 단계
+  step: "preset", // 테스트 제작 단계
 
   theme: "basic",
   data: {}, // type에 따라 내용 상이
