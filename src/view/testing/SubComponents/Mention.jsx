@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { SVG } from "../../../components/common";
 import useOpen from "../../../hooks/useOpen";
@@ -7,7 +7,7 @@ import { getDateInfo, diffByTime } from "../../../utils/handler";
 
 const Mention = ({ idx, writer, content, timestamp }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
-  const calcTimeStamp = (ptimestamp) => {
+  const formatTime = (ptimestamp) => {
     let result = "";
     const current = new Date().getTime();
     const { mode, diff } = diffByTime(ptimestamp, current);
@@ -30,8 +30,6 @@ const Mention = ({ idx, writer, content, timestamp }) => {
     return result;
   };
 
-  console.log(calcTimeStamp(timestamp));
-
   const handleOnClick = (id, event) => {
     setOpen(false);
   };
@@ -40,7 +38,7 @@ const Mention = ({ idx, writer, content, timestamp }) => {
       <TEMP>
         <Avatar />
         <UserName>USERNAME</UserName>
-        <Timer>{timestamp}분전</Timer>
+        <Timer>{formatTime(timestamp)}</Timer>
         {/* isMe : 1.본인, 0.아님 */}
         {writer?.isMe === 0 && (
           <RightSide>

@@ -58,9 +58,21 @@ export const getNextPageURL = (pmatch) => {
   return nextUrl;
 };
 
-export const StringFormat = (format, ...props) => {
-  console.log(format, props);
-  return format;
+// 포멧한 문자열 반환
+export const StringFormat = (format = "", ...props) => {
+  let str = format;
+  const reg = new RegExp("{\\d}", "g");
+  const model = format.match(reg) || [];
+  model.forEach((item, idx) => {
+    str = str.replace(item, props[idx]);
+  });
+
+  return str;
+};
+
+export const getAxiosHeader = () => {
+  const token = cookie.load("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 /*
@@ -100,12 +112,7 @@ export const diffByTime = (dateA, dateB) => {
   const diffHour = Math.abs(calc / 60 / 60);
 
   if (diffHour > 23) return { mode: "day", diff: parseInt(diffHour) };
-  else if (diffHour > 0) return { mode: "hour", diff: parseInt(diffHour) };
-  else if (diffMinute > 0) return { mode: "min", diff: parseInt(diffMinute) };
-  else if (diffSecond > 0) return { mode: "sec", diff: parseInt(diffSecond) };
-};
-
-export const getAxiosHeader = () => {
-  const token = cookie.load("token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  else if (diffHour >= 1) return { mode: "hour", diff: parseInt(diffHour) };
+  else if (diffMinute >= 1) return { mode: "min", diff: parseInt(diffMinute) };
+  else if (diffSecond >= 1) return { mode: "sec", diff: parseInt(diffSecond) };
 };

@@ -84,7 +84,7 @@ const testing = {
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
       content: "테스트 진짜 신박해요~!! ㅋㅋㅋ 우오아아 재밌다",
-      writtenAt: 1619324817995,
+      writtenAt: 1622009843765,
       writer: {
         uid: 34234,
         isMe: 0,
@@ -95,7 +95,7 @@ const testing = {
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
       content: "2줄 테스트 진자 신박해요",
-      writtenAt: 1619324817995,
+      writtenAt: 1622009495898,
       writer: {
         uid: 34234,
         isMe: 0,

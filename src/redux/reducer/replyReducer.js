@@ -6,9 +6,9 @@ const prefix = "reply";
 const reply = createSlice({
   name: prefix,
   initialState: initState.reply,
-  reducer: {
-    addReplyInfo: (state, payload) => {
-      state.push(payload);
+  reducers: {
+    addReplyInfo: (state, { payload }) => {
+      state.push(...payload);
     },
   },
 });

@@ -16,6 +16,7 @@ export const ComInput = ({ hintText, onFocus }) => {
     if (onFocus) onFocus(event);
     if (words) setWords("");
   };
+
   return (
     <form style={{ width: "100%" }} onSubmit={handleOnSubmit}>
       <InputContainer>
@@ -60,6 +61,7 @@ const Reply = memo(() => {
             <Mention
               key={item.uid + idx}
               idx={idx}
+              writer={item.writer}
               content={item.content}
               timestamp={item.writtenAt}
             />
