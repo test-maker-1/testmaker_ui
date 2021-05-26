@@ -19,8 +19,7 @@ const common = createSlice({
   },
 });
 
-export const headTitleSelector = (state) => state.headTitle;
-
+//actions
 export const { setHeadTitle } = common.actions;
 
 export default common;

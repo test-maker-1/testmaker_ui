@@ -1,44 +1,104 @@
-import React, {useState} from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import {SVG} from "../../../components/common";
+import { SVG } from "../../../components/common";
 import useOpen from "../../../hooks/useOpen";
 import Enum from "../../../constants/Enum";
+import { getDateInfo, diffByTime } from "../../../utils/handler";
 
-const Mention = ({key, idx}) => {
-  const { open: openPop, onToggle:setOpen, onClose } = useOpen();
+const Mention = ({ idx, writer, content, timestamp }) => {
+  const { open: openPop, onToggle: setOpen, onClose } = useOpen();
+  const formatTime = (ptimestamp) => {
+    let result = "";
+    const current = new Date().getTime();
+    const { mode, diff } = diffByTime(ptimestamp, current);
 
-  const handleOnClick = (event) => {
-    console.log("handleON",event)
-    setOpen(!openPop)
-  }
+    switch (mode) {
+      case "day":
+        result = getDateInfo(timestamp, "년월일"); //yyyy년mm월dd일
+        break;
+      case "hour":
+        result = `${diff}시간전`;
+        break;
+      case "min":
+        result = `${diff}분전`;
+        break;
+      case "sec":
+        result = `${diff}초전`;
+        break;
+    }
 
-  console.log(key, idx)
+    return result;
+  };
+
+  const handleOnClick = (id, event) => {
+    setOpen(false);
+  };
   return (
     <MenContainer>
       <TEMP>
         <Avatar />
         <UserName>USERNAME</UserName>
-        <Timer>20분전</Timer>
-        <RightSide>
-          <SVG type={Enum.MORE} onClick={handleOnClick}/>
-          {openPop &&
-            <>
-              <TEMP4 onClick={() => onClose()}/>
-              <Popup>
-                <TEMP3>
-                <TEMP2>닫기</TEMP2>
-                </TEMP3>
-              </Popup>
-            </>
-          }          
-        </RightSide>
+        <Timer>{formatTime(timestamp)}</Timer>
+        {/* isMe : 1.본인, 0.아님 */}
+        {writer?.isMe === 0 && (
+          <RightSide>
+            <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
+            {openPop && (
+              <>
+                <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
+                <Popup>
+                  <PopContainer>
+                    <PopWrap>
+                      <PopItem onClick={handleOnClick.bind(this, "report")}>
+                        댓글신고
+                      </PopItem>
+                    </PopWrap>
+                    <PopWrap>
+                      <PopItem
+                        close
+                        onClick={handleOnClick.bind(this, "close")}
+                      >
+                        닫기
+                      </PopItem>
+                    </PopWrap>
+                  </PopContainer>
+                </Popup>
+              </>
+            )}
+          </RightSide>
+        )}
       </TEMP>
-      <Speech>너무 너무 너무나게 재밌게 하구 가요~ 테스트 잘 만드신거 같아요!!!</Speech>
+      <Speech>{content}</Speech>
     </MenContainer>
   );
 };
 
-const TEMP4 = styled.div`
+//댓글이 없을 경우
+export const EmptyMention = ({ height }) => {
+  return (
+    <EmptyReply height={height}>
+      <FirstReply>첫번째 댓글의 주인공이 되어주세요</FirstReply>
+    </EmptyReply>
+  );
+};
+
+const EmptyReply = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: ${({ height }) => height || "245px"};
+`;
+
+const FirstReply = styled.h1`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: -1px;
+  color: #e5e8ec;
+`;
+
+const Dimmed = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -46,31 +106,13 @@ const TEMP4 = styled.div`
   height: 100%;
 `;
 
-const TEMP2 = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 40px;
-  bottom: 0;
-  background: #FAFAFA;
-`;
-const TEMP3 = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const RightSide = styled.div`
-  position: relative;
-  float: right;
-`;
-
 const Popup = styled.div`
   position: absolute;
   width: 104px;
-  height: 120px;
+  /*height: 120px;*/
   right: 0px;
   top: 25px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 4px 4px 10px rgb(0 0 0 / 10%);
   border-radius: 5px;
   z-index: 1;
@@ -80,6 +122,44 @@ const Popup = styled.div`
   line-height: 19px;
   letter-spacing: -0.3px;
   color: #515966;
+`;
+
+const PopContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const PopWrap = styled.div`
+  display: block;
+  width: 100%;
+  &::after {
+    content: "";
+    display: block;
+    width:100%;
+    border-bottom: 0.5px solid #F1F2F4;
+  }
+  &: last-child::after {
+    border-bottom: 0px;
+  }
+`;
+const PopItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  background: ${({ close, theme: { colors } }) =>
+    close ? colors.white : colors.snow};
+  cursor: pointer;
+  border-radius: ${({ close }) =>
+    close ? "0px 0px 5px 5px" : "5px 5px 0px 0px"};
+`;
+
+const RightSide = styled.div`
+  position: relative;
+  float: right;
 `;
 
 const TEMP = styled.div`
@@ -107,7 +187,7 @@ const Avatar = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 12px;
-  background: #DADEE6;
+  background: #dadee6;
 `;
 
 const UserName = styled.p`
@@ -126,14 +206,14 @@ const Timer = styled.p`
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.3px;
-  color: #CFD3DB;
+  color: #cfd3db;
 `;
 
 const Speech = styled.p`
   font-size: 15px;
   line-height: 22px;
   letter-spacing: -0.5px;
-  color: #8A929E;
+  color: #8a929e;
 `;
 
 export default Mention;

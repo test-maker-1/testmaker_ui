@@ -1,3 +1,20 @@
+/* Testing 공통 데이터 */
+const testForm = {
+  question: "string",
+  img: "string",
+  options: [
+    {
+      name: "string",
+    },
+    {
+      name: "string",
+    },
+    {
+      name: "string",
+    },
+  ],
+};
+
 /* 댓글 형식 */
 const replyForm = {
   uid: "nz6eCHZ2GZJeor6BXJDC",
@@ -11,8 +28,8 @@ const replyForm = {
   },
 };
 
-/* Testing 공통 데이터 */
-const welcome = {
+const testing = {
+  testUid: "863dbe75-f6ac-46f4-bb9b-bfcd81407acc",
   testInfo: {
     uid: "nz6eCHZ2GZJeor6BXJDC",
     title: "성격 유형검사 MBTI Test",
@@ -29,11 +46,45 @@ const welcome = {
     testLink: "https://my-app.test/1",
     tags: ["성격테스트", "우정테스트"],
   },
+  questsCnt: 2,
+  questions: [
+    {
+      question:
+        "내가 좋아하는 여행시는 어디일까요?\n2주일 때는 아래로 내려주세요.",
+      img: "string",
+      options: [
+        {
+          name: "보라카이",
+        },
+        {
+          name: "제주도",
+        },
+        {
+          name: "스페인",
+        },
+      ],
+    },
+    {
+      question: "string",
+      img: "string",
+      options: [
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+        {
+          name: "string",
+        },
+      ],
+    },
+  ],
   recent3replies: [
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
       content: "테스트 진짜 신박해요~!! ㅋㅋㅋ 우오아아 재밌다",
-      writtenAt: 1619324817995,
+      writtenAt: 1622009843765,
       writer: {
         uid: 34234,
         isMe: 0,
@@ -44,7 +95,7 @@ const welcome = {
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
       content: "2줄 테스트 진자 신박해요",
-      writtenAt: 1619324817995,
+      writtenAt: 1622009495898,
       writer: {
         uid: 34234,
         isMe: 0,
@@ -66,9 +117,23 @@ const welcome = {
   ],
 };
 
-const reply = [replyForm, replyForm, replyForm];
+const reply = [
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+  replyForm,
+];
 
-/* 객관식 테스트 */
+/* 객관식 테스트 결과*/
 const result = {
   testId: 2323432,
   feedback: {
@@ -79,8 +144,9 @@ const result = {
 };
 
 const initState = {
-  welcome,
+  testing,
   reply,
+  result,
 };
 
 export default initState;

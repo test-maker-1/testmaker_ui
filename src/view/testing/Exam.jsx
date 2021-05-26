@@ -1,35 +1,63 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { ImageView, BtnField } from "../../components/common";
+import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
+import { ImageView, BtnExam } from "../../components/common";
 import theme from "../../styles/theme";
+import { setHeadTitle } from "../../redux/reducer/commonReducer";
 
-const Exam = memo((props) => {
-  const BtnStyle = useMemo(() => {
-    return {
-      width: "100%",
-      margin: "8px 0px",
-      height: "3.6em",
-      fontSize: `${theme.fontSizes.md}rem`,
-    };
-  }, []);
-  const handleonClick = (id, e) => {
-    console.log(id, e);
-  };
+const Page = ({ questions: { img, question, options }, onClick }) => {
   return (
-    <div style={{ padding: "10px 1.25em" }}>
-      <Question>
-        내가 좋아하는 여행시는 어디일까요? <br /> 2주일 때는 아래로 내려주세요.
-      </Question>
+    <>
+      <Question>{question}</Question>
       <Box>
-        <ImageView imageUrl={null} />
+        <ImageView imageUrl={img} />
       </Box>
-      <div>
-        {["보라카이", "제주도", "스페인"].map((item) => {
-          return (
-            <BtnField name={item} onClick={handleonClick} style={BtnStyle} />
-          );
+      <div style={{ marginBottom: "50px" }}>
+        {options.map(({ name }) => {
+          return <BtnExam name={name} onClick={onClick} style={BtnStyle} />;
         })}
       </div>
+    </>
+  );
+};
+
+const Exam = memo((props) => {
+  const [page, movePage] = useState(0);
+  const dispatch = useDispatch();
+  const { questsCnt, questions } = useSelector((state) => state.testing);
+
+  useEffect(() => {
+    //헤더 타이틀 변경
+    dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
+  }, [page]);
+
+  const onClickAnswer = (id, e) => {
+    if (page + 1 < questsCnt) {
+      //next page
+      movePage(page + 1);
+    } else {
+      //post answer & go to result page
+    }
+  };
+
+  const onCustomClick = (id, e) => {
+    if (id === "뒤로가기" && page > 0) {
+      movePage(page - 1);
+    }
+  };
+  return (
+    <div style={{ padding: "10px 2rem" }}>
+      {page > 0 ? (
+        <PageContainer>
+          <Page questions={questions[page]} onClick={onClickAnswer} />
+          <BottomBtn
+            btnArr={[{ name: "뒤로가기", customClick: onCustomClick }]}
+          />
+        </PageContainer>
+      ) : (
+        <Page questions={questions[page]} onClick={onClickAnswer} />
+      )}
     </div>
   );
 });
@@ -48,5 +76,12 @@ const Question = styled.h1`
 const Box = styled.div`
   margin: 16px 0px;
 `;
+
+const BtnStyle = {
+  width: "100%",
+  margin: "8px 0px",
+  height: "3.6em",
+  fontSize: `${theme.fontSizes.md}rem`,
+};
 
 export default Exam;
