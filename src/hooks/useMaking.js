@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
+  initCommonData,
   initResultsInfo,
   updateCommonData,
   updateTypeData,
@@ -84,6 +85,7 @@ const useMaking = () => {
     data,
     dispatch,
     // init
+    initCommonData,
     initStateByType,
     initResult,
     // update

@@ -12,9 +12,9 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { goPage } = usePage();
+  const { goPage, replace } = usePage();
 
-  if (loggedIn) goPage("/");
+  if (loggedIn) replace("/");
 
   const onSuccessKakao = async (resData) => {
     const {
