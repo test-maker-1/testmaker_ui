@@ -4,9 +4,12 @@ import styled from "styled-components";
 import { TitleBox } from "../../components/common/index.js";
 import Error from "../Error.jsx";
 
+import MakingAPI from "../../api/makingAPI.js";
 import usePage from "../../hooks/usePage.js";
 import useMaking from "../../hooks/useMaking.js";
+
 import useUser from "../../hooks/useUser.js";
+import { SUCCESS } from "../../utils/asyncUtils.js";
 
 import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
@@ -36,11 +39,29 @@ const PickTest = () => {
  * thumbnail: img file;
  */
 const TestCard = ({ type, thumbnail = tempImg }) => {
-  const { initStateByType } = useMaking();
+  const { data, initStateByType, updateCommon } = useMaking();
   const { goPage } = usePage();
   const { name, desc } = testInfo[type];
 
-  const onSetType = () => {
+  const initTestInfo = async () => {
+    if (data.testId) return;
+
+    const { type, maker } = data;
+    const params = {
+      type,
+      userUid: maker.userUid,
+      userName: maker.name,
+    };
+
+    const { data: resData, status } = await MakingAPI.getTestId(params);
+
+    if (status === SUCCESS) {
+      updateCommon("testId", resData.testUid);
+    }
+  };
+
+  const onSetType = async () => {
+    await initTestInfo();
     initStateByType(type);
     goPage(`/test/${type}/preset`);
   };

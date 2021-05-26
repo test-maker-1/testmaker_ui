@@ -5,15 +5,12 @@ import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { TitleBox, Select, InfoText } from "../../../components/common";
 
 import useMaking from "../../../hooks/useMaking";
-import MakingAPI from "../../../api/makingAPI";
-import { SUCCESS } from "../../../utils/asyncUtils";
-
 import ENUM from "../../../constants/Enum";
 
 const [FRITEND, FAMILY, currentStep] = ["friend", "family", "preset"];
 
 const MultiplePreset = () => {
-  const { value, updateTypeDataByInput, updateTestInfo } = useTestInfo();
+  const { value, updateTypeDataByInput } = useTestInfo();
 
   return (
     <Container>
@@ -28,39 +25,14 @@ const MultiplePreset = () => {
           color="blue"
         />
       </TitleBox>
-      <BottomBtn
-        btnArr={[
-          {
-            name: "정했어요",
-            type: ENUM.MOVENEXT,
-            customClick: updateTestInfo,
-          },
-        ]}
-      />
+      <BottomBtn btnArr={[{ name: "정했어요", type: ENUM.MOVENEXT }]} />
     </Container>
   );
 };
 
 const useTestInfo = () => {
-  const { data, updateCommon, updateStep, updateTypeDataByInput } = useMaking();
+  const { data, updateStep, updateTypeDataByInput } = useMaking();
   const typeData = data.data;
-
-  const updateTestInfo = async () => {
-    if (data.testId) return;
-
-    const { type, maker } = data;
-    const params = {
-      type,
-      userUid: maker.userUid,
-      userName: maker.name,
-    };
-
-    const { data: resData, status } = await MakingAPI.getTestId(params);
-
-    if (status === SUCCESS) {
-      updateCommon("testId", resData.testUid);
-    }
-  };
 
   useEffect(() => {
     if (data.step !== currentStep) updateStep(currentStep);
@@ -71,7 +43,7 @@ const useTestInfo = () => {
       ? typeData.target
       : FRITEND;
 
-  return { updateTypeDataByInput, updateTestInfo, value };
+  return { updateTypeDataByInput, value };
 };
 
 const Container = styled(PageContainer)`
