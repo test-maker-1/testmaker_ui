@@ -16,8 +16,7 @@ import ENUM from "../../constants/Enum";
  * value: string;
  * answer: string;
  */
-const Option = ({ value, answer = null, deleteOption, idxs }) => {
-  const isAnswer = answer && answer === value;
+const Option = ({ value, isAnswer, deleteOption, idxs }) => {
   const { updateQuestion, updateOption } = useMaking();
   const { questionIdx, optionIdx } = idxs;
 

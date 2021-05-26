@@ -19,6 +19,10 @@ const making = createSlice({
       state.data.questions = [...questions];
       state.data.results = [...results];
     },
+    initResultsInfo: ({ data }, { payload: { totalPoints, results } }) => {
+      data.totalPoints = totalPoints;
+      data.results = [...results];
+    },
 
     /* update */
     updateCommonData: (state, { payload: { key, value } }) => {
@@ -102,7 +106,7 @@ const making = createSlice({
 });
 
 /* initialize */
-export const { initCommonData, initTypeData } = making.actions;
+export const { initCommonData, initTypeData, initResultsInfo } = making.actions;
 
 /* update */
 export const {

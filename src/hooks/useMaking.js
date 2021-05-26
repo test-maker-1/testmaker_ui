@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
+  initResultsInfo,
   updateCommonData,
   updateTypeData,
   updateQuestionData,
@@ -21,6 +22,10 @@ import { getQuestion, getResult, getPreset } from "../utils/constHandler";
 const useMaking = () => {
   const data = useSelector((state) => state.making);
   const dispatch = useDispatch();
+
+  const initResult = (totalPoints, results) => {
+    dispatch(initResultsInfo({ totalPoints, results }));
+  };
 
   const updateCommon = (key, value) =>
     dispatch(updateCommonData({ key, value }));
@@ -80,6 +85,7 @@ const useMaking = () => {
     dispatch,
     // init
     initStateByType,
+    initResult,
     // update
     updateCommon,
     updateStep,

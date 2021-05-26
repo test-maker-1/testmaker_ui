@@ -12,7 +12,6 @@ import ENUM, { md } from "../../constants/Enum";
 
 const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
   const { question, img, answer, point, options } = data;
-
   const {
     dispatch,
     deleteQuestion,
@@ -23,7 +22,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
-    if (name === "question") updateQuestion(name, value, questionIdx);
+    updateQuestion(name, value, questionIdx);
   };
 
   const onDeleteQuestion = () => {
@@ -69,7 +68,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
               <Option
                 key={`${idx}-${option.name}`}
                 value={option.name}
-                answer={answer}
+                isAnswer={answer && option.name === answer}
                 idxs={{ questionIdx, optionIdx: idx }}
                 deleteOption={onDeleteOption}
               />
