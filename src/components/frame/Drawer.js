@@ -1,33 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import useUser from "../../hooks/useUser";
 
 const Drawer = ({ onClose }) => {
+  const { loggedIn, logOut } = useUser();
+
   return (
-    <>
-      <Dimmed>
-        <DrawCloser onClick={onClose}></DrawCloser>
-        <DrawContainer>
-          <ul>
+    <Dimmed>
+      <DrawCloser onClick={onClose}></DrawCloser>
+      <DrawContainer>
+        <ul>
+          {loggedIn && (
             <Item>
-              <Link to="/">마이페이지</Link>
+              <Link to="/" className="menu">
+                마이페이지
+              </Link>
             </Item>
+          )}
+          <Item>
+            <Link to="/" className="menu">
+              피드로 이동
+            </Link>
+          </Item>
+          {loggedIn ? (
             <Item>
-              <Link to="/">문의하기</Link>
+              <button className="menu" onClick={logOut}>
+                로그아웃
+              </button>
             </Item>
+          ) : (
             <Item>
-              <Link to="/">피드로 가기</Link>
+              <Link to="/login" className="menu">
+                로그인
+              </Link>
             </Item>
-            <Item>
-              <Link to="/">로그아웃</Link>
-            </Item>
-            <Item>
-              <Link to="/login">로그인</Link>
-            </Item>
-          </ul>
-        </DrawContainer>
-      </Dimmed>
-    </>
+          )}
+        </ul>
+      </DrawContainer>
+    </Dimmed>
   );
 };
 
@@ -66,7 +77,7 @@ const Item = styled.li`
   text-align: center;
   line-height: 22px;
 
-  a {
+  .menu {
     text-decoration: none;
     font-size: 15px;
     font-weight: bold;

@@ -1,7 +1,18 @@
-import { get } from "./instance";
+import { get, post } from "./instance";
 
 export default class UserAPI {
-  static getMyInfo(userUID) {
-    return get(`/get/me/${userUID}`);
+  static refreshToken() {
+    return post("/auth/refresh");
+  }
+  static getMyInfo() {
+    return get("/me");
+  }
+  // sns log in
+  static kakaoLogIn(params) {
+    return post("/auth/login/kakao", params);
+  }
+  // log out
+  static logOut() {
+    return get("/auth/logout");
   }
 }
