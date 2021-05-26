@@ -8,9 +8,8 @@ import { useSelector } from "react-redux";
 export default function CarouselComponent() {
   const { top5Tests } = useSelector((state) => state.feed);
 
-  const [topTest, setTopTest] = useState({});
   const initTitle = top5Tests && top5Tests[0].title;
-  const isInit = Object.keys(topTest).length == 0;
+  const [topTest, setTopTest] = useState({ idx: 0, title: initTitle });
 
   useEffect(() => {});
 
@@ -26,8 +25,8 @@ export default function CarouselComponent() {
   return (
     <Ranking>
       <TitleBox>
-        <Top> TOP {isInit ? "1" : topTest.idx + 1}</Top>
-        <Title>{isInit ? initTitle : topTest.title}</Title>
+        <Top> TOP {topTest.idx + 1}</Top>
+        <Title>{topTest.title}</Title>
       </TitleBox>
 
       <CarouselBox>

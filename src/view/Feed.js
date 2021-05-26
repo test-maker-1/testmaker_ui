@@ -30,33 +30,39 @@ const Feed = (props) => {
   console.log(tags);
   return (
     <Container>
-      <CarouselComponent />
-      <>
-        <TagContainer>
-          <TagSwiper
-            tags={tags}
-            selectedTag={selected}
-            setSelected={setSelected}
-          />
-        </TagContainer>
-
-        {testsByTag && (
-          <CardContainer>
-            {testsByTag.map((test) => (
-              <Card
-                key={`test ${test.uid}`}
-                title={test.title}
-                coverImg={null}
-                makerName={test.maker.name}
-                makerImg={null}
-                sharedCnt={test.sharedCnt}
-                participatedCnt={test.participantsCnt}
+      {feedLoading ? null : (
+        <>
+          <CarouselComponent />
+          <>
+            <TagContainer>
+              <TagSwiper
+                tags={tags}
+                selectedTag={selected}
+                setSelected={setSelected}
               />
-            ))}
-          </CardContainer>
-        )}
-      </>
-      <BottomBtn btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]} />
+            </TagContainer>
+
+            {testsByTag && (
+              <CardContainer>
+                {testsByTag.map((test) => (
+                  <Card
+                    key={`test ${test.uid}`}
+                    title={test.title}
+                    coverImg={null}
+                    makerName={test.maker.name}
+                    makerImg={null}
+                    sharedCnt={test.sharedCnt}
+                    participatedCnt={test.participantsCnt}
+                  />
+                ))}
+              </CardContainer>
+            )}
+          </>
+          <BottomBtn
+            btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]}
+          />
+        </>
+      )}
     </Container>
   );
 };
