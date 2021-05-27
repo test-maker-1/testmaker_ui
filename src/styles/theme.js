@@ -46,8 +46,13 @@ const heights = {
 };
 
 const zIndex = {
-  layer_1: 1,
-  layer_99: 99,
+  header: 100,
+  drawer: 100,
+  feed: 0,
+  alert: 150,
+  tag: 90,
+  upImg: 2,
+  mention: 1,
 };
 
 const theme = { colors, fontSizes, widths, heights, paddings, zIndex };

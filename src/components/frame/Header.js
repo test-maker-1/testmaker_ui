@@ -64,7 +64,7 @@ const HeadContainer = styled.header`
   top: 0;
   padding: 0 ${({ theme: { paddings } }) => paddings.main}rem;
   height: ${({ theme: { heights } }) => heights.header}px;
-  z-index: 100;
+  z-index: ${({ theme: { zIndex } }) => zIndex.header};
   background: ${({ background, theme: { colors } }) =>
     background ? "transparent" : colors.snow};
 `;

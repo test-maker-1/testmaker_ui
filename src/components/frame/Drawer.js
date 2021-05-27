@@ -53,7 +53,7 @@ const Dimmed = styled.div`
   max-width: ${({ theme: { widths } }) => widths.main}px;
   width: 100%;
 
-  z-index: 1;
+  z-index: ${({ theme: { zIndex } }) => zIndex.drawer};
   background: rgba(138, 146, 158, 0.6);
 `;
 
