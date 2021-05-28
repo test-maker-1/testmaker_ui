@@ -39,15 +39,14 @@ const TestMaking = ({
   );
 
   const interval = useCallback(() => {
-    testState.current = { ...data };
+    const { testId } = testState.current;
 
-    if (!intervalLoading.current && data.testId) {
+    if (!intervalLoading.current && testId) {
       intervalLoading.current = true;
 
       saveTimer.current = setTimeout(async () => {
-        if (testState.current.testId !== null) {
+        if (testId !== null) {
           const status = await saveTest(testState.current);
-
           if (status === ERROR) {
             onError();
             return;
@@ -57,12 +56,15 @@ const TestMaking = ({
         interval();
       }, SAVE_INTAERVAL);
     }
-  }, [data, onError]);
+  }, [onError]);
 
   useEffect(() => {
+    testState.current = { ...data };
+
     if (!loggedIn || error) initTimer(error);
-    if (!intervalLoading.current && loggedIn) interval(); // run timer
-  }, [error, initTimer, interval, loggedIn]);
+    if (!intervalLoading.current && loggedIn) interval();
+    // run timer
+  }, [data, error, initTimer, interval, loggedIn]);
 
   useEffect(() => {
     return () => {
@@ -80,7 +82,7 @@ const TestMaking = ({
   // invalied step
   if (!data.testId) return <Error code={406} />;
   // require logIn
-  if (!loggedIn && status !== LOADING) return <Error code={403} />;
+  if (!loggedIn) return <Error code={403} />;
   // server error
   if (error) return <Error code={500} />;
 
