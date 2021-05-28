@@ -10,7 +10,7 @@ import useOpen from "../../hooks/useOpen";
 import { ERROR, LOADING } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
-const SAVE_INTAERVAL = 1000 * 5; // 임시저장 간격 30초
+const SAVE_INTAERVAL = 1000 * 30; // 임시저장 간격 30초
 
 const TestMaking = ({
   match: {
@@ -41,22 +41,18 @@ const TestMaking = ({
   const interval = useCallback(() => {
     testState.current = { ...data };
 
-    console.log("interval 실행");
     if (!intervalLoading.current && data.testId) {
       intervalLoading.current = true;
 
       saveTimer.current = setTimeout(async () => {
-        console.log("timer 실행");
         if (testState.current.testId !== null) {
           const status = await saveTest(testState.current);
 
           if (status === ERROR) {
-            console.log(status);
             onError();
             return;
           }
         }
-        console.log("임시저장 성공");
         intervalLoading.current = false;
         interval();
       }, SAVE_INTAERVAL);
@@ -64,12 +60,8 @@ const TestMaking = ({
   }, [data, onError]);
 
   useEffect(() => {
-    if (!loggedIn || error) {
-      console.log("로그아웃, 에러 시 clear timer");
-      initTimer(error);
-    }
-
-    if (!intervalLoading.current && loggedIn) interval();
+    if (!loggedIn || error) initTimer(error);
+    if (!intervalLoading.current && loggedIn) interval(); // run timer
   }, [error, initTimer, interval, loggedIn]);
 
   useEffect(() => {
@@ -83,9 +75,7 @@ const TestMaking = ({
   if (!components.hasOwnProperty(module)) return <Error />;
   // undefined step
   const makingComponent = components[module];
-  if (!makingComponent.hasOwnProperty(step)) {
-    return <Error />;
-  }
+  if (!makingComponent.hasOwnProperty(step)) return <Error />;
 
   // invalied step
   if (!data.testId) return <Error code={406} />;
@@ -102,7 +92,7 @@ const TestMaking = ({
         makingComponent[step]
       )}
     </>
-  );
+  ); // 로딩 필요한 지?
 };
 
 const saveTest = async (params) => {
