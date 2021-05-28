@@ -7,7 +7,7 @@ import useUser from "../../hooks/useUser";
 import useMaking from "../../hooks/useMaking";
 import useOpen from "../../hooks/useOpen";
 
-import { ERROR, LOADING } from "../../utils/asyncUtils";
+import { ERROR } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
 const SAVE_INTAERVAL = 1000 * 30; // 임시저장 간격 30초
@@ -18,7 +18,7 @@ const TestMaking = ({
   },
 }) => {
   // state hooks
-  const { loggedIn, status } = useUser();
+  const { loggedIn } = useUser();
   const { data, dispatch, initCommonData } = useMaking();
   const { open: error, onOpen: onError } = useOpen();
 
@@ -70,7 +70,6 @@ const TestMaking = ({
     return () => {
       if (intervalLoading.current) initTimer(true);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // undefined module
@@ -86,15 +85,7 @@ const TestMaking = ({
   // server error
   if (error) return <Error code={500} />;
 
-  return (
-    <>
-      {status === LOADING ? (
-        <p>로딩 중 (로그인 판별 중) ...</p>
-      ) : (
-        makingComponent[step]
-      )}
-    </>
-  ); // 로딩 필요한 지?
+  return makingComponent[step];
 };
 
 const saveTest = async (params) => {
