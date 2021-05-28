@@ -1,9 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+
 import theme from "../../styles/theme";
 
-const { blue, deepGray, ghostGray } = theme.colors;
+const { blue, skyBlue } = theme.colors;
 
 const btnColors = {
   selected: {
@@ -11,21 +12,21 @@ const btnColors = {
     color: "white",
   },
   unselected: {
-    bgColor: "white",
-    color: deepGray,
+    bgColor: skyBlue,
+    color: blue,
   },
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   feedBtn: ({ bgColor, color }) => ({
     flex: 1,
     padding: "13px 0",
-    fontSize: 18,
+    fontSize: `${theme.fontSizes.lg}rem`,
     fontWeight: "bold",
     letterSpacing: -0.5,
     lineHeight: "27px",
     color: color,
-    border: `1px solid ${ghostGray}`,
+    border: "none",
     backgroundColor: bgColor,
     "&:hover": {
       backgroundColor: bgColor,
