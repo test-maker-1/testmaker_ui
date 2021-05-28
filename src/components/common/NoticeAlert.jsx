@@ -94,7 +94,7 @@ const Modal = styled.div`
   max-width: ${({ theme: { widths } }) => widths.main}px;
   width: 100%;
 
-  z-index: 100;
+  z-index: ${({ theme: { zIndex } }) => zIndex.alert};
   background: rgba(138, 146, 158, 0.6);
 `;
 

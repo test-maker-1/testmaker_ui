@@ -5,9 +5,9 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import { Tag } from ".";
 
-const TagSwiper = ({ tags, selectedTag, setSelected }) => {
+const TagSwiper = ({ tags, selectedTag, setSelected, noPadding }) => {
   return (
-    <Container>
+    <Container noPadding={noPadding}>
       {selectedTag && setSelected ? (
         <Swiper slidesPerView={"auto"} spaceBetween={0} className="mySwiper">
           {tags.map((tag) => {
@@ -46,7 +46,9 @@ const TagSwiper = ({ tags, selectedTag, setSelected }) => {
 export default TagSwiper;
 
 const Container = styled.div`
-  padding: 0 ${({ theme: { paddings } }) => paddings.main}rem;
+  padding: 0
+    ${({ noPadding, theme: { paddings } }) =>
+      noPadding ? 0 : paddings.main}rem;
   margin: 4px 0 12px 0;
   width: 100%;
   position: absolute;

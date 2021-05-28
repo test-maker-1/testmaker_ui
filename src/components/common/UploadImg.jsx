@@ -89,7 +89,7 @@ const Dimmed = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 2;
+  z-index: ${({ theme: { zIndex } }) => zIndex.upImg};
   transition: all 0.2s ease-in-out;
 `;
 

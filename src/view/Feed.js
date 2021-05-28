@@ -20,5 +20,5 @@ Feed.propTypes = {};
 export default Feed;
 
 const Container = styled(PageContainer)`
-  z-index: 0;
+  z-index: ${({ theme: { zIndex } }) => zIndex.feed};
 `;
