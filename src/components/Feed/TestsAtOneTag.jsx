@@ -94,7 +94,7 @@ export default TestsAtOneTag;
 const TagContainer = styled.div`
   position: sticky;
   top: 5.6rem;
-  z-index: 100;
+  z-index: ${({ theme: { zIndex } }) => zIndex.tag};
 `;
 
 const CardContainer = styled.div`

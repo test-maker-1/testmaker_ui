@@ -115,7 +115,7 @@ const Popup = styled.div`
   background: #ffffff;
   box-shadow: 4px 4px 10px rgb(0 0 0 / 10%);
   border-radius: 5px;
-  z-index: 1;
+  z-index: ${({ theme: { zIndex } }) => zIndex.mention};
 
   text-align: center;
   font-size: 13px;
