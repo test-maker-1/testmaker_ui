@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { TitleBox, Tag, UploadImg } from "../../components/common/index";
@@ -9,9 +9,10 @@ import useMaking from "../../hooks/useMaking";
 import ENUM, { lg } from "../../constants/Enum";
 
 const { PREVIEW, MOVENEXT, ENTER } = ENUM;
+const currentStep = "detail";
 
 const TestDetail = () => {
-  const { data, updateCommonByInput, addNewTag } = useMaking();
+  const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
   const { title, description, optionalURL } = data;
 
   const onEnterPress = (e) => {
@@ -25,6 +26,10 @@ const TestDetail = () => {
       e.target.value = "";
     }
   };
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
 
   return (
     <PageContainer>
