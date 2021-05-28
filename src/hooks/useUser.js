@@ -4,11 +4,11 @@ import {
   kakaoLogIn as kakaoLogInAction,
   logOut as logOutAction,
 } from "../redux/reducer/userReducer";
-import { SUCCESS } from "../utils/asyncUtils";
+import { ERROR, LOADING } from "../utils/asyncUtils";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
-  const loggedIn = data && status === SUCCESS;
+  const loggedIn = !status.includes[(LOADING, ERROR)] && data !== null;
 
   const dispatch = useDispatch();
 

@@ -1,36 +1,67 @@
-import React, { useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
+import Error from "../../view/Error";
+import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import useMaking from "../../hooks/useMaking";
+import usePage from "../../hooks/usePage";
+import useOpen from "../../hooks/useOpen";
 
-import Error from "../../view/Error";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
-const SAVE_INTAERVAL = 5000; // 임시로 5초
+const SAVE_INTAERVAL = 5000; // 임시저장 간격 30초
 
 const TestMaking = ({
   match: {
     params: { module, step },
   },
 }) => {
-  const { loggedIn } = useUser();
+  // state hooks
+  const { loggedIn, status, data: userData } = useUser();
   const { data, dispatch, initCommonData } = useMaking();
+  const { open: error, onOpen: onError } = useOpen();
+  // const { replace } = usePage();
 
+  // timer utils
   const saveInterval = useRef({});
   const intervalLoading = useRef(false);
   const testState = useRef(data);
 
+  const initTimer = useCallback(() => {
+    if (data.testId) dispatch(initCommonData());
+    if (intervalLoading.current) intervalLoading.current = false;
+
+    testState.current = {};
+    clearTimeout(saveInterval.current);
+  }, [data.testId, dispatch, initCommonData]);
+
   useEffect(() => {
     testState.current = { ...data };
 
+    if (!loggedIn) {
+      console.log("로그아웃 시 clear timer");
+      initTimer();
+    }
+
     const interval = () => {
-      if (!intervalLoading.current) {
+      console.log("interval 실행");
+      if (!intervalLoading.current && data.testId) {
         intervalLoading.current = true;
 
-        saveInterval.current = setTimeout(() => {
-          // _saveTest(testState.current);
-          console.log(testState.current);
+        saveInterval.current = setTimeout(async () => {
+          if (testState.current.testId !== null) {
+            const status = await saveTest(testState.current);
+
+            if (status === ERROR) {
+              console.log(status);
+              onError();
+              return;
+            }
+          }
+
+          console.log("임시저장 성공");
           intervalLoading.current = false;
           interval();
         }, SAVE_INTAERVAL);
@@ -38,34 +69,44 @@ const TestMaking = ({
     };
 
     if (!intervalLoading.current) interval();
-  }, [data]);
+  }, [data, initTimer, loggedIn, onError]);
 
   useEffect(() => {
     return () => {
-      if (intervalLoading.current) {
-        testState.current = {};
-        dispatch(initCommonData());
-        clearTimeout(saveInterval.current);
-      }
+      if (intervalLoading.current) initTimer();
     };
-  }, [dispatch, initCommonData]);
-
-  // require logIn
-  if (!loggedIn) return <Error code={403} />;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // undefined module
-  if (!components.hasOwnProperty(module)) {
-    return <Error />;
-  }
-
-  const makingComponent = components[module];
-
+  if (!components.hasOwnProperty(module)) return <Error />;
   // undefined step
+  const makingComponent = components[module];
   if (!makingComponent.hasOwnProperty(step)) {
     return <Error />;
   }
 
-  return makingComponent[step];
+  // invalied step
+  if (!data.testId) return <Error code={406} />;
+  // require logIn
+  if (!loggedIn && status !== LOADING) return <Error code={403} />;
+  // error
+  // if (error) replace("/error&errorCode=500");
+
+  return (
+    <>
+      {status === LOADING ? (
+        <p>로딩 중 (로그인 판별 중) ...</p>
+      ) : (
+        makingComponent[step]
+      )}
+    </>
+  );
+};
+
+const saveTest = async (params) => {
+  const { status } = await MakingAPI.saveTest(params);
+  return status;
 };
 
 export default withRouter(TestMaking);

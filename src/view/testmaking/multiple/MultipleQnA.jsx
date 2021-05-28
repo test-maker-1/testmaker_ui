@@ -23,7 +23,12 @@ const svgStyles = {
 };
 
 const MultipleQnA = () => {
-  const { questions, questionsCnt, addEmptyQuestion, onSetResult } = useQnA();
+  const {
+    questions = [],
+    questionsCnt,
+    addEmptyQuestion,
+    onSetResult,
+  } = useQnA();
 
   return (
     <PageContainer>
