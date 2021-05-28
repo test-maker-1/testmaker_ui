@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   checkLogIn as checkLogInAction,
   kakaoLogIn as kakaoLogInAction,
@@ -8,7 +10,10 @@ import { ERROR, LOADING } from "../utils/asyncUtils";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
-  const loggedIn = ![LOADING, ERROR].includes(status) && data !== null;
+  const loggedIn = useMemo(
+    () => ![LOADING, ERROR].includes(status) && data !== null,
+    [data, status]
+  ); // 로그인 상태
   const dispatch = useDispatch();
 
   const checkLogIn = () => dispatch(checkLogInAction());

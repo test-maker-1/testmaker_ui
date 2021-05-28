@@ -10,7 +10,7 @@ import useOpen from "../../hooks/useOpen";
 import { ERROR, LOADING } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
-const SAVE_INTAERVAL = 5000; // 임시저장 간격 30초
+const SAVE_INTAERVAL = 1000 * 5; // 임시저장 간격 30초
 
 const TestMaking = ({
   match: {
@@ -23,7 +23,7 @@ const TestMaking = ({
   const { open: error, onOpen: onError } = useOpen();
 
   // timer utils
-  const saveInterval = useRef({});
+  const saveTimer = useRef({});
   const intervalLoading = useRef(false);
   const testState = useRef(data);
 
@@ -33,45 +33,44 @@ const TestMaking = ({
       if (intervalLoading.current) intervalLoading.current = false;
 
       testState.current = {};
-      clearTimeout(saveInterval.current);
+      clearTimeout(saveTimer.current);
     },
     [data.testId, dispatch, initCommonData]
   );
 
-  useEffect(() => {
+  const interval = useCallback(() => {
     testState.current = { ...data };
 
+    console.log("interval 실행");
+    if (!intervalLoading.current && data.testId) {
+      intervalLoading.current = true;
+
+      saveTimer.current = setTimeout(async () => {
+        console.log("timer 실행");
+        if (testState.current.testId !== null) {
+          const status = await saveTest(testState.current);
+
+          if (status === ERROR) {
+            console.log(status);
+            onError();
+            return;
+          }
+        }
+        console.log("임시저장 성공");
+        intervalLoading.current = false;
+        interval();
+      }, SAVE_INTAERVAL);
+    }
+  }, [data, onError]);
+
+  useEffect(() => {
     if (!loggedIn || error) {
       console.log("로그아웃, 에러 시 clear timer");
       initTimer(error);
     }
 
-    const interval = () => {
-      console.log("interval 실행");
-      if (!intervalLoading.current && data.testId) {
-        intervalLoading.current = true;
-
-        saveInterval.current = setTimeout(async () => {
-          console.log("timer 실행");
-          if (testState.current.testId !== null) {
-            const status = await saveTest(testState.current);
-
-            if (status === ERROR) {
-              console.log(status);
-              onError();
-              return;
-            }
-          }
-
-          console.log("임시저장 성공");
-          intervalLoading.current = false;
-          interval();
-        }, SAVE_INTAERVAL);
-      }
-    };
-
-    if (!intervalLoading.current) interval();
-  }, [data, error, initTimer, loggedIn, onError]);
+    if (!intervalLoading.current && loggedIn) interval();
+  }, [error, initTimer, interval, loggedIn]);
 
   useEffect(() => {
     return () => {
