@@ -4,10 +4,15 @@ import { call, put, fork, all, takeLeading } from "redux-saga/effects";
 import UserAPI from "../../api/userAPI";
 import { checkLogIn, kakaoLogIn, logOut } from "../reducer/userReducer";
 
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
+import {
+  createPromiseSaga,
+  createActionString,
+  SUCCESS,
+} from "../../utils/asyncUtils";
 
 function* checkLogInSaga(action) {
   const { data, status } = yield call(UserAPI.refreshToken);
+  const { success, error } = createActionString(action.type);
 
   if (status === SUCCESS) {
     const token = data.token;
@@ -15,7 +20,7 @@ function* checkLogInSaga(action) {
 
     if (userStatus === SUCCESS) {
       yield put({
-        type: `${action.type}Success`,
+        type: success,
         payload: {
           user,
           token,
@@ -23,11 +28,11 @@ function* checkLogInSaga(action) {
       });
     } else {
       cookie.remove("token");
-      yield put({ type: `${action.type}Error`, payload: user });
+      yield put({ type: error, payload: user });
     }
   } else {
     cookie.remove("token");
-    yield put({ type: `${action.type}Error`, payload: data });
+    yield put({ type: error, payload: data });
   }
 }
 
