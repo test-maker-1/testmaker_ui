@@ -1,38 +1,35 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag, UploadImg } from "../../components/common/index";
+import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
-import { Input, InputTitle, TextArea } from "../../styles/index";
+import { Input, InputTitle, TextArea } from "../../styles";
 
+import usePage from "../../hooks/usePage";
 import useMaking from "../../hooks/useMaking";
 import ENUM, { lg } from "../../constants/Enum";
 
-const { PREVIEW, MOVENEXT, ENTER } = ENUM;
+const { PREVIEW, ENTER } = ENUM;
 const currentStep = "detail";
 
 const TestDetail = () => {
-  const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
-  const { title, description, optionalURL } = data;
-
-  const onEnterPress = (e) => {
-    const {
-      key,
-      target: { value: newTag },
-    } = e;
-
-    if (key === ENTER) {
-      addNewTag(newTag);
-      e.target.value = "";
-    }
-  };
-
-  useEffect(() => {
-    if (data.step !== currentStep) updateStep(currentStep);
-  }, [data.step, updateStep]);
+  const { data, updateCommonByInput, onEnterPress } = useDetail();
+  const { type, title, description, optionalURL } = data;
+  const { goPage } = usePage();
 
   return (
     <PageContainer>
+      {/* alert */}
+      <NoticeAlert
+        icon={ENUM.WARNING}
+        btns={[
+          { name: "다시보기" },
+          {
+            name: "테스트 만들기",
+            callback: () => goPage(`/test/${type}/release`),
+          },
+        ]}
+      />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -82,11 +79,37 @@ const TestDetail = () => {
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
-          { name: "테스트 만들기", type: MOVENEXT },
+          {
+            name: "테스트 만들기",
+            customClick: () =>
+              NoticeAlert.open("만들고 나면 수정할 수 없어요!"),
+          },
         ]}
       />
     </PageContainer>
   );
+};
+
+const useDetail = () => {
+  const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
+
+  const onEnterPress = (e) => {
+    const {
+      key,
+      target: { value: newTag },
+    } = e;
+
+    if (key === ENTER) {
+      addNewTag(newTag);
+      e.target.value = "";
+    }
+  };
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  return { data, updateCommonByInput, onEnterPress };
 };
 
 const TagInput = styled(Input)`
