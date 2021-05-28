@@ -5,7 +5,6 @@ import Error from "../../view/Error";
 import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import useMaking from "../../hooks/useMaking";
-import usePage from "../../hooks/usePage";
 import useOpen from "../../hooks/useOpen";
 
 import { ERROR, LOADING } from "../../utils/asyncUtils";
@@ -19,10 +18,9 @@ const TestMaking = ({
   },
 }) => {
   // state hooks
-  const { loggedIn, status, data: userData } = useUser();
+  const { loggedIn, status } = useUser();
   const { data, dispatch, initCommonData } = useMaking();
   const { open: error, onOpen: onError } = useOpen();
-  // const { replace } = usePage();
 
   // timer utils
   const saveInterval = useRef({});
@@ -40,8 +38,8 @@ const TestMaking = ({
   useEffect(() => {
     testState.current = { ...data };
 
-    if (!loggedIn) {
-      console.log("로그아웃 시 clear timer");
+    if (!loggedIn || error) {
+      console.log("로그아웃, 에러 시 clear timer");
       initTimer();
     }
 
@@ -51,6 +49,7 @@ const TestMaking = ({
         intervalLoading.current = true;
 
         saveInterval.current = setTimeout(async () => {
+          console.log("timer 실행");
           if (testState.current.testId !== null) {
             const status = await saveTest(testState.current);
 
@@ -69,7 +68,7 @@ const TestMaking = ({
     };
 
     if (!intervalLoading.current) interval();
-  }, [data, initTimer, loggedIn, onError]);
+  }, [data, error, initTimer, loggedIn, onError]);
 
   useEffect(() => {
     return () => {
@@ -90,8 +89,8 @@ const TestMaking = ({
   if (!data.testId) return <Error code={406} />;
   // require logIn
   if (!loggedIn && status !== LOADING) return <Error code={403} />;
-  // error
-  // if (error) replace("/error&errorCode=500");
+  // server error
+  if (error) return <Error code={500} />;
 
   return (
     <>
