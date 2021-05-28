@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import Error from "../../../view/Error";
 import { NoticeAlert, SVG } from "../../../components/common";
 import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
@@ -73,8 +72,6 @@ const useQnA = () => {
   useEffect(() => {
     if (data.step !== currentStep) updateStep(currentStep);
   }, [data.step, updateStep]);
-
-  if (!data.testId) return <Error />; // code 나중에 추가
 
   const {
     data: { questions = [], questionsCnt, resultsCnt },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -15,6 +15,7 @@ import useOpen from "../../../hooks/useOpen";
 import ENUM from "../../../constants/Enum";
 
 const { PREVIEW, MOVENEXT } = ENUM;
+const currentStep = "result";
 
 const useStyles = makeStyles(() => ({
   btnRank: () => ({
@@ -41,19 +42,17 @@ const svgStyle = {
 };
 
 const MultipleResult = () => {
-  const {
-    data: { data },
-    dispatch,
-    addResult,
-  } = useMaking();
   const { open: isRankMode, onToggle } = useOpen();
+  const [currentMode, otherMode] = useMemo(
+    () =>
+      isRankMode
+        ? ["점수 모드", "구간 별 결과"]
+        : ["구간 별 결과", "점수 모드"],
+    [isRankMode]
+  );
+  const { data, addEmptyResult } = useResult();
 
-  const [currentMode, otherMode] = isRankMode
-    ? ["점수 모드", "구간 별 결과"]
-    : ["구간 별 결과", "점수 모드"];
   const classes = useStyles();
-
-  const addEmptyResult = () => dispatch(addResult());
 
   return (
     <Container>
@@ -73,7 +72,7 @@ const MultipleResult = () => {
       {isRankMode ? (
         <ResultPoint />
       ) : (
-        <ResultBound data={data} addResult={addEmptyResult} />
+        <ResultBound data={data.data} addResult={addEmptyResult} />
       )}
 
       <BottomBtn
@@ -84,6 +83,18 @@ const MultipleResult = () => {
       />
     </Container>
   );
+};
+
+const useResult = () => {
+  const { data, dispatch, updateStep, addResult } = useMaking();
+
+  const addEmptyResult = () => dispatch(addResult());
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  return { data, addEmptyResult };
 };
 
 const Container = styled(PageContainer)`
