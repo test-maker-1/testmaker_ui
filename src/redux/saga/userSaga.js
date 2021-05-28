@@ -2,12 +2,7 @@ import cookie from "react-cookies";
 import { call, put, fork, all, takeLeading } from "redux-saga/effects";
 
 import UserAPI from "../../api/userAPI";
-import {
-  initUserInfo,
-  checkLogIn,
-  kakaoLogIn,
-  logOut,
-} from "../reducer/userReducer";
+import { checkLogIn, kakaoLogIn, logOut } from "../reducer/userReducer";
 
 import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
 
@@ -28,11 +23,11 @@ function* checkLogInSaga(action) {
       });
     } else {
       cookie.remove("token");
-      yield put({ type: initUserInfo.type });
+      yield put({ type: `${action.type}Error`, payload: user });
     }
   } else {
     cookie.remove("token");
-    yield put({ type: initUserInfo.type });
+    yield put({ type: `${action.type}Error`, payload: data });
   }
 }
 

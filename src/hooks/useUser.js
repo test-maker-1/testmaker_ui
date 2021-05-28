@@ -8,8 +8,7 @@ import { ERROR, LOADING } from "../utils/asyncUtils";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
-  const loggedIn = !status.includes[(LOADING, ERROR)] && data !== null;
-
+  const loggedIn = ![LOADING, ERROR].includes(status) && data !== null;
   const dispatch = useDispatch();
 
   const checkLogIn = () => dispatch(checkLogInAction());

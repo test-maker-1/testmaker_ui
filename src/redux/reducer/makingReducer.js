@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getQuestion, getResult } from "../../utils/constHandler";
 import initState from "../../constants/makingInitState";
 
+const logOutActions = ["logOutSuccess", "logOutError", "logInError"];
+
 const prefix = "making";
 
 const making = createSlice({
@@ -10,8 +12,10 @@ const making = createSlice({
 
   reducers: {
     /* initialize */
-    initCommonData: () => {
-      return initState.common;
+    initCommonData: (state, { payload = false }) => {
+      return payload
+        ? { ...initState.common, maker: { ...state.maker } }
+        : initState.common;
     },
     initTypeData: (state, { payload: { type, questions, results } }) => {
       state.type = type;
@@ -92,7 +96,7 @@ const making = createSlice({
         return type.toLowerCase().includes("log");
       },
       (state, action) => {
-        if (action.type.includes("logOutSuccess")) {
+        if (action.type.includes(logOutActions)) {
           return initState.common;
         }
 

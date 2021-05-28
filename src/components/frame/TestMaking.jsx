@@ -27,20 +27,23 @@ const TestMaking = ({
   const intervalLoading = useRef(false);
   const testState = useRef(data);
 
-  const initTimer = useCallback(() => {
-    if (data.testId) dispatch(initCommonData());
-    if (intervalLoading.current) intervalLoading.current = false;
+  const initTimer = useCallback(
+    (initMaker = false) => {
+      if (data.testId) dispatch(initCommonData(initMaker));
+      if (intervalLoading.current) intervalLoading.current = false;
 
-    testState.current = {};
-    clearTimeout(saveInterval.current);
-  }, [data.testId, dispatch, initCommonData]);
+      testState.current = {};
+      clearTimeout(saveInterval.current);
+    },
+    [data.testId, dispatch, initCommonData]
+  );
 
   useEffect(() => {
     testState.current = { ...data };
 
     if (!loggedIn || error) {
       console.log("로그아웃, 에러 시 clear timer");
-      initTimer();
+      initTimer(error);
     }
 
     const interval = () => {
@@ -72,7 +75,7 @@ const TestMaking = ({
 
   useEffect(() => {
     return () => {
-      if (intervalLoading.current) initTimer();
+      if (intervalLoading.current) initTimer(true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
