@@ -10,7 +10,7 @@ import useOpen from "../../hooks/useOpen";
 import { ERROR } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
-const SAVE_INTAERVAL = 1000 * 30; // 임시저장 간격 30초
+const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
 const TestMaking = ({
   match: {
@@ -18,7 +18,7 @@ const TestMaking = ({
   },
 }) => {
   // state hooks
-  const { loggedIn } = useUser();
+  const { logInLoading, loggedIn } = useUser();
   const { data, dispatch, initCommonData } = useMaking();
   const { open: error, onOpen: onError } = useOpen();
 
@@ -78,10 +78,11 @@ const TestMaking = ({
   const makingComponent = components[module];
   if (!makingComponent.hasOwnProperty(step)) return <Error />;
 
+  // logIn loading or require logIn
+  if (logInLoading) return null;
+  if (!loggedIn) return <Error code={403} />;
   // invalied step
   if (!data.testId) return <Error code={406} />;
-  // require logIn
-  if (!loggedIn) return <Error code={403} />;
   // server error
   if (error) return <Error code={500} />;
 

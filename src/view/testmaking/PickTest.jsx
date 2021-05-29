@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TitleBox } from "../../components/common/index.js";
+import { Loading, TitleBox } from "../../components/common/index.js";
 import Error from "../Error.jsx";
 
 import MakingAPI from "../../api/makingAPI.js";
@@ -20,13 +20,20 @@ const [pt, pl] = [20, 23];
 
 const PickTest = () => {
   const { status, loggedIn } = useUser();
-  const { open: error, onOpen: onError } = useOpen();
   const { testId, getTestId, setTestType } = usePick();
+
+  const { open: loading, onOpen: onLoading } = useOpen();
+  const { open: error, onOpen: onError } = useOpen();
+
+  if (status === LOADING) return null;
+  if (!loggedIn) return <Error code={403} />; // logOut
 
   if (testId) return <Error code={406} />; // invalied step
   if (error) return <Error code={500} />; // server error
-
+  
   const onInitTest = async (type) => {
+    onLoading();
+
     const successGetId = await getTestId(type);
     if (successGetId) {
       setTestType(type);
@@ -35,11 +42,9 @@ const PickTest = () => {
     onError();
   };
 
-  if (status === LOADING) return null; // 로딩 중 -> 추후 스피너로 대체
-  if (!loggedIn) return <Error code={403} />; // logOut
-
   return (
     <div>
+      <Loading loading={loading} />
       <TitleBox title="어떤 테스트를 만드시나요?" noline>
         <TestCard type={multiple} onClick={onInitTest} />
         <TestCard type={mbti} onClick={onInitTest} />
