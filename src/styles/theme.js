@@ -50,6 +50,7 @@ const zIndex = {
   drawer: 100,
   feed: 0,
   alert: 150,
+  loading: 200,
   tag: 90,
   upImg: 2,
   mention: 1,

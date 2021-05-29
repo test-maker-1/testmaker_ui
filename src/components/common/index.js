@@ -3,6 +3,7 @@ export { BtnField, BtnExam } from './BtnField'
 export { default as BtnShare } from './BtnShare'
 export { UploadImg } from './UploadImg'
 export { RankingList, RankingRow } from './PointRanking'
+export { Loading } from './Loading';
 export { default as Tag } from './Tag'
 export { default as NoticeAlert } from './NoticeAlert'
 export { default as SVG } from './SVG'
