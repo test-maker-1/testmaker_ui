@@ -39,7 +39,8 @@ export const ComInput = ({ hintText, onFocus }) => {
 const Reply = memo(() => {
   const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const { goPage } = usePage();
-  const onMoveComments = () => goPage(`/${testing}/${comments}`);
+  const onMoveComments = () =>
+    goPage(`/${testing}/${comments}`, document.location.search);
 
   return (
     <>

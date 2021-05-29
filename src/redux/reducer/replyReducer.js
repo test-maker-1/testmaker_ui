@@ -7,13 +7,17 @@ const reply = createSlice({
   name: prefix,
   initialState: initState.reply,
   reducers: {
+    getReplyInfo: (state, { payload }) => {
+      //recent3replies
+      state.testUid = payload;
+    },
     addReplyInfo: (state, { payload }) => {
-      state.push(...payload);
+      state.replies.push(...payload);
     },
   },
 });
 
 //actions
-export const { addReplyInfo } = reply.actions;
+export const { getReplyInfo, addReplyInfo } = reply.actions;
 
 export default reply;

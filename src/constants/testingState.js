@@ -29,7 +29,7 @@ const replyForm = {
 };
 
 const testing = {
-  testUid: "863dbe75-f6ac-46f4-bb9b-bfcd81407acc",
+  current_testID: "",
   testInfo: {
     uid: "nz6eCHZ2GZJeor6BXJDC",
     title: "성격 유형검사 MBTI Test",
@@ -80,6 +80,8 @@ const testing = {
       ],
     },
   ],
+  /* 정답 형식 */
+  answers: { type: "multi", values: [] },
   recent3replies: [
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
@@ -117,21 +119,24 @@ const testing = {
   ],
 };
 
-const reply = [
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-];
+const reply = {
+  testUid: "",
+  replies: [
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+    replyForm,
+  ],
+};
 
 /* 객관식 테스트 결과*/
 const result = {

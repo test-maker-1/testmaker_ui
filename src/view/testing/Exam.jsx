@@ -5,6 +5,10 @@ import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { ImageView, BtnExam } from "../../components/common";
 import theme from "../../styles/theme";
 import { setHeadTitle } from "../../redux/reducer/commonReducer";
+import {
+  saveAnwerByStep,
+  submitAnswer,
+} from "../../redux/reducer/testingReducer";
 
 const Page = ({ questions: { img, question, options }, onClick }) => {
   return (
@@ -14,8 +18,14 @@ const Page = ({ questions: { img, question, options }, onClick }) => {
         <ImageView imageUrl={img} />
       </Box>
       <div style={{ marginBottom: "50px" }}>
-        {options.map(({ name }) => {
-          return <BtnExam name={name} onClick={onClick} style={BtnStyle} />;
+        {options.map(({ name }, idx) => {
+          return (
+            <BtnExam
+              name={name}
+              onClick={onClick.bind(this, idx, name)}
+              style={BtnStyle}
+            />
+          );
         })}
       </div>
     </>
@@ -25,20 +35,26 @@ const Page = ({ questions: { img, question, options }, onClick }) => {
 const Exam = memo((props) => {
   const [page, movePage] = useState(0);
   const dispatch = useDispatch();
-  const { questsCnt, questions } = useSelector((state) => state.testing);
-
+  const { questsCnt, questions, answers } = useSelector(
+    (state) => state.testing
+  );
+  console.log("answers", answers);
   useEffect(() => {
     //헤더 타이틀 변경
     dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
   }, [page]);
 
-  const onClickAnswer = (id, e) => {
-    if (page + 1 < questsCnt) {
-      //next page
+  const onClickAnswer = (idx, value, event) => {
+    event.stopPropagation();
+    const isIng = page + 1 < questsCnt;
+
+    //answer.length
+    if (isIng) {
+      //next exam
       movePage(page + 1);
-    } else {
-      //post answer & go to result page
     }
+    //post answer & go to result page
+    dispatch(saveAnwerByStep({ page, isIng, value }));
   };
 
   const onCustomClick = (id, e) => {

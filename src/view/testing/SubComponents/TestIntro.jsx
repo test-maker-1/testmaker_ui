@@ -5,24 +5,27 @@ import Avatar from "@material-ui/core/Avatar";
 import { styled as mstyled } from "@material-ui/core/styles";
 import { SVG, Tag, ImageView } from "../../../components/common";
 import Enum from "../../../constants/Enum";
+import TagSwiper from "../../../components/common/TagSwiper";
+import { colors } from "@material-ui/core";
 
 const TestIntro = memo((props) => {
-  const { title, participantsCnt, coverImg, tags, description } = useSelector(
-    (state) => state.testing.testInfo
-  );
+  const {
+    title,
+    maker: { name },
+    participantsCnt,
+    coverImg,
+    tags,
+    description,
+  } = useSelector((state) => state.testing.testInfo);
 
   const handleOnClick = useCallback((e) => {
     props.openAlert("report");
   }, []);
 
-  const handleOnDelete = () => {
-    console.log("handleOnDelete");
-  };
-
   return (
     <InfoContainer>
       <InfoTitle>
-        <Title>{title}</Title>
+        <Title title={title}>{title || "테스트 제목이 없어요"}</Title>
         <More>
           <SVG type={Enum.MORE} onClick={handleOnClick} />
         </More>
@@ -31,20 +34,34 @@ const TestIntro = memo((props) => {
         <InfoAva>
           <AvatarIcon alt="user" src="/static/images/avatar/1.jpg" />
         </InfoAva>
-        <Partition>메이커짱짱</Partition>
+        <Partition>{name}</Partition>
         <SVG type={Enum.SPLIT} style={{ width: "12px", height: "12px" }} />
         <Partition>참여인원 {participantsCnt}명</Partition>
       </InfoUser>
       <InfoImg>
-        <ImageView imageUrl={null} />
+        <ImageView imageUrl={coverImg} />
       </InfoImg>
-      {tags.map((tag, idx) => {
-        return <Tag key={idx} tag={`# ${tag}`} onDelete={handleOnDelete} />;
-      })}
-      <Inform>{description}</Inform>
+      {tags && tags.length > 0 && (
+        <TagContainer>
+          <TagSwiper
+            tags={tags.map((tag, idx) => {
+              return { tag: `# ${tag}` };
+            })}
+            noPadding
+          />
+        </TagContainer>
+      )}
+      <Inform>
+        <p>{description}</p>
+      </Inform>
     </InfoContainer>
   );
 });
+
+const TagContainer = styled.div`
+  position: relative;
+  height: 40px;
+`;
 
 const InfoContainer = styled.div`
   padding: 12px 2rem; /*20px*/
@@ -61,7 +78,8 @@ const Title = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
   letter-spacing: -1px;
-  color: #697382;
+  color: ${({ title, theme: { colors } }) =>
+    title ? colors.titleGray : colors.lightGray};
 `;
 
 const InfoAva = styled.div`
@@ -98,6 +116,8 @@ const Partition = styled.p`
 `;
 
 const Inform = styled.div`
+  max-height: 150px;
+  min-height: 150px;
   padding: 15px 0px;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   line-height: 2.5rem; /*25px*/
