@@ -25,7 +25,7 @@ const common = {
 const multiple = {
   isRankMode: false,
   top: 5,
-  target: null, // 누구에게 공유하실건가요?
+  target: "friends", // 누구에게 공유하실건가요?
 
   questionsCnt: 6, // 질문 개수
   resultsCnt: 3, // 결과 개수

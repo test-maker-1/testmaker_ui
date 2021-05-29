@@ -7,7 +7,7 @@ import { TitleBox, Select, InfoText } from "../../../components/common";
 import useMaking from "../../../hooks/useMaking";
 import ENUM from "../../../constants/Enum";
 
-const [FRITEND, FAMILY, currentStep] = ["friend", "family", "preset"];
+const [FRITEND, FAMILY, currentStep] = ["friends", "family", "preset"];
 
 const MultiplePreset = () => {
   const { value, updateTypeDataByInput } = useTestInfo();

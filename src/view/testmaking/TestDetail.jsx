@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
@@ -7,29 +7,27 @@ import { Input, InputTitle, TextArea } from "../../styles";
 
 import usePage from "../../hooks/usePage";
 import useMaking from "../../hooks/useMaking";
+import { checkMakingData } from "../../utils/handler";
+
 import ENUM, { lg } from "../../constants/Enum";
 
 const { PREVIEW, ENTER } = ENUM;
 const currentStep = "detail";
 
 const TestDetail = () => {
-  const { data, updateCommonByInput, onEnterPress } = useDetail();
-  const { type, title, description, optionalURL } = data;
-  const { goPage } = usePage();
+  const {
+    data,
+    btns,
+    updateCommonByInput,
+    onEnterPress,
+    handleSubmit,
+  } = useDetail();
+  const { title, description, optionalURL } = data;
 
   return (
     <PageContainer>
       {/* alert */}
-      <NoticeAlert
-        icon={ENUM.WARNING}
-        btns={[
-          { name: "다시보기" },
-          {
-            name: "테스트 만들기",
-            callback: () => goPage(`/test/${type}/release`),
-          },
-        ]}
-      />
+      <NoticeAlert icon={ENUM.WARNING} btns={btns} />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -49,7 +47,6 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
-
       <TitleBox>
         {/* tags */}
         <TagInput
@@ -64,7 +61,6 @@ const TestDetail = () => {
           ))}
         </Tags>
       </TitleBox>
-
       <TitleBox title="나를 더 홍보할래요!" noline>
         {/* optionalURL */}
         <Input
@@ -75,14 +71,12 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
-
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
           {
             name: "테스트 만들기",
-            customClick: () =>
-              NoticeAlert.open("만들고 나면 수정할 수 없어요!"),
+            customClick: handleSubmit,
           },
         ]}
       />
@@ -92,24 +86,39 @@ const TestDetail = () => {
 
 const useDetail = () => {
   const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
+  const [btns, setBtns] = useState();
+  const { goPage } = usePage();
 
   const onEnterPress = (e) => {
-    const {
-      key,
-      target: { value: newTag },
-    } = e;
+    const { value } = e.target;
 
-    if (key === ENTER) {
-      addNewTag(newTag);
+    if (e.key === ENTER) {
+      addNewTag(value);
       e.target.value = "";
     }
+  };
+
+  const handleSubmit = () => {
+    const { releasable, msg = "" } = checkMakingData(data);
+
+    if (releasable) {
+      setBtns([
+        { name: "다시보기" },
+        {
+          name: "테스트 만들기",
+          callback: () => goPage(`/test/${data.type}/release`),
+        },
+      ]);
+    } else setBtns([{ name: "다시보기" }]);
+
+    NoticeAlert.open(msg);
   };
 
   useEffect(() => {
     if (data.step !== currentStep) updateStep(currentStep);
   }, [data.step, updateStep]);
 
-  return { data, updateCommonByInput, onEnterPress };
+  return { data, btns, updateCommonByInput, onEnterPress, handleSubmit };
 };
 
 const TagInput = styled(Input)`
