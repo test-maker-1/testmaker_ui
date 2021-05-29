@@ -7,11 +7,13 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply, { ComInput } from "./SubComponents/Reply";
 import theme from "../../styles/theme";
 import ENUM from "../../constants/Enum";
+import usePage from "../../hooks/usePage";
 
 const { fontSizes } = theme;
 const { PREVIEW, MOVENEXT } = ENUM;
 
 const Result = memo((props) => {
+  const { goPage } = usePage();
   console.log(props);
   const handleonClick = (id, e) => {
     console.log(id, e);
@@ -38,7 +40,10 @@ const Result = memo((props) => {
           <div style={{ padding: "2.4em 0px" }}>
             <ImageView imageUrl={null} />
           </div>
-          <BtnField color="skyBlue" onClick={handleonClick}>
+          <BtnField
+            color="skyBlue"
+            onClick={() => goPage("/testing/otherType")}
+          >
             다른 유형 전체보기
           </BtnField>
         </TitleBox>
@@ -81,7 +86,7 @@ const Entire = styled.p`
   color: #8a929e;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   text-align: center;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
@@ -90,7 +95,7 @@ const Title = styled.h1`
   color: #515966;
 `;
 
-const SubTitle = styled.p`
+export const SubTitle = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   line-height: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   text-align: center;
