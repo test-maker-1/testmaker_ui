@@ -7,66 +7,66 @@ import { getDateInfo, diffByTime } from "../../../utils/handler";
 
 const Mention = ({ idx, writer, content, timestamp }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
-  const formatTime = (ptimestamp) => {
-    let result = "";
-    const current = new Date().getTime();
-    const { mode, diff } = diffByTime(ptimestamp, current);
 
-    switch (mode) {
-      case "day":
-        result = getDateInfo(timestamp, "년월일"); //yyyy년mm월dd일
-        break;
-      case "hour":
-        result = `${diff}시간전`;
-        break;
-      case "min":
-        result = `${diff}분전`;
-        break;
-      case "sec":
-        result = `${diff}초전`;
-        break;
-    }
+  const formatTime = useCallback(
+    (ptimestamp) => {
+      let result = "";
+      const current = new Date().getTime();
+      const { mode, diff } = diffByTime(ptimestamp, current);
 
-    return result;
-  };
+      switch (mode) {
+        case "day":
+          result = getDateInfo(ptimestamp, "년월일"); //yyyy년mm월dd일
+          break;
+        case "hour":
+          result = `${diff}시간전`;
+          break;
+        case "min":
+          result = `${diff}분전`;
+          break;
+        case "sec":
+          result = `${diff}초전`;
+          break;
+      }
+
+      return result;
+    },
+    [timestamp]
+  );
 
   const handleOnClick = (id, event) => {
     setOpen(false);
   };
+
   return (
     <MenContainer>
       <TEMP>
-        <Avatar />
-        <UserName>USERNAME</UserName>
+        <Avatar img={writer.profileImg} />
+        <UserName>{writer.nickname}</UserName>
         <Timer>{formatTime(timestamp)}</Timer>
         {/* isMe : 1.본인, 0.아님 */}
-        {writer?.isMe === 0 && (
-          <RightSide>
-            <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
-            {openPop && (
-              <>
-                <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
-                <Popup>
-                  <PopContainer>
-                    <PopWrap>
-                      <PopItem onClick={handleOnClick.bind(this, "report")}>
-                        댓글신고
-                      </PopItem>
-                    </PopWrap>
-                    <PopWrap>
-                      <PopItem
-                        close
-                        onClick={handleOnClick.bind(this, "close")}
-                      >
-                        닫기
-                      </PopItem>
-                    </PopWrap>
-                  </PopContainer>
-                </Popup>
-              </>
-            )}
-          </RightSide>
-        )}
+        <RightSide>
+          <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
+          {writer?.isMe === 0 && openPop && (
+            <>
+              <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
+              <Popup>
+                <PopContainer>
+                  <PopWrap>
+                    <PopItem onClick={handleOnClick.bind(this, "report")}>
+                      댓글신고
+                    </PopItem>
+                  </PopWrap>
+                  <PopWrap>
+                    <PopItem close onClick={handleOnClick.bind(this, "close")}>
+                      닫기
+                    </PopItem>
+                  </PopWrap>
+                </PopContainer>
+              </Popup>
+            </>
+          )}
+        </RightSide>
       </TEMP>
       <Speech>{content}</Speech>
     </MenContainer>

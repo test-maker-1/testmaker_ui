@@ -8,7 +8,6 @@ const testing = createSlice({
   initialState: initState.testing,
   reducers: {
     setTestID: (state, { payload }) => {
-      console.log("setTestID!!!!!", state.testInfo, payload);
       state.current_testID = payload;
     },
     updateTestInfo: (state, { payload: { testInfo, recent3replies } }) => {

@@ -41,7 +41,7 @@ const TestIntro = memo((props) => {
       <InfoImg>
         <ImageView imageUrl={coverImg} />
       </InfoImg>
-      {tags && tags.length > 0 && (
+      {tags?.length > 0 && (
         <TagContainer>
           <TagSwiper
             tags={tags.map((tag, idx) => {

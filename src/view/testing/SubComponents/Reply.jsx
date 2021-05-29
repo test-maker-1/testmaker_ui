@@ -5,7 +5,7 @@ import Mention, { EmptyMention } from "./Mention";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 
-export const ComInput = ({ hintText, onFocus }) => {
+export const ComInput = ({ hintText, onFocus, onSubmit }) => {
   const [words, setWords] = useState("");
   const handleOnFocus = (event) => {
     if (onFocus) onFocus(event);
@@ -14,6 +14,7 @@ export const ComInput = ({ hintText, onFocus }) => {
     event.preventDefault();
 
     if (onFocus) onFocus(event);
+    if (onSubmit) onSubmit(words);
     if (words) setWords("");
   };
 

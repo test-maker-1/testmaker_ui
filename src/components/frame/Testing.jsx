@@ -12,17 +12,13 @@ import { welcome, comments, exam, result } from "../../constants/urlInfo";
 import { setTestID, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
 
-const Testing = (props) => {
-  console.log(props);
-
-  const {
-    match: {
-      params: { module, step },
-    },
-    location,
-  } = props;
-
-  const { testid } = queryString.parse(props.location.search);
+const Testing = ({
+  match: {
+    params: { module, step },
+  },
+  location,
+}) => {
+  const { testid } = queryString.parse(location.search);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +33,7 @@ const Testing = (props) => {
           dispatch(getTestExam({ testID: testid }));
         // getTesting;
         case result: // 테스트결과 (module)
-
+          break;
         default:
           break;
       }

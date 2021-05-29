@@ -5,7 +5,6 @@ import {
   fork,
   all,
   takeLatest,
-  take,
   takeLeading,
 } from "redux-saga/effects";
 import {
@@ -44,7 +43,7 @@ function* getTestExamInform(action) {
   console.log("getTestExamInform3", data, status);
   if (status === SUCCESS) {
     const { questsCnt, questions } = data;
-    if (questions && questions.length > 0) {
+    if (questions?.length > 0) {
       yield put({
         type: updateTestExam.type,
         payload: {

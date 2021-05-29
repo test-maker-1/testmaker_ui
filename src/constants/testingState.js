@@ -16,16 +16,20 @@ const testForm = {
 };
 
 /* 댓글 형식 */
-const replyForm = {
-  uid: "nz6eCHZ2GZJeor6BXJDC",
+export const replyForm = {
+  testUid: "fe59e1a6-b4bb-4d15-8c65-547a37e82758",
+  uid: "2ac255a5-4759-4e7a-9640-20877b54e020",
   content: "테스트 진짜 신박해요~!! ㅋㅋㅋ 우오아아 재밌다",
   writtenAt: 1619324817995,
+  //writer: {nickname: "JAEN", profileImg: "", uid: "2aad0c77-6216-4915-817c-ca2f9fd871de"}
   writer: {
     uid: 34234,
     isMe: 0,
     profileImg: "https://~~",
     nickname: "jennny",
   },
+  reports: [],
+  reportsCnt: 0,
 };
 
 const testing = {

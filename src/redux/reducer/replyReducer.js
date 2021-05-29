@@ -14,10 +14,16 @@ const reply = createSlice({
     addReplyInfo: (state, { payload }) => {
       state.replies.push(...payload);
     },
+    submitOneComment: (state, { payload }) => {},
+    addOneComment: (state, { payload }) => {
+      //상단에 새 댓글 추가
+      state.replies.unshift(payload);
+    },
   },
 });
 
 //actions
-export const { getReplyInfo, addReplyInfo } = reply.actions;
+export const { getReplyInfo, addReplyInfo, submitOneComment, addOneComment } =
+  reply.actions;
 
 export default reply;

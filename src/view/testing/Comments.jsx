@@ -1,17 +1,31 @@
 import React, { useCallback, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import Mention, { EmptyMention } from "./SubComponents/Mention";
 import { PageContainer } from "../../components/frame/BottomBtn";
-import { ComInput } from "./SubComponents/Reply";
-import { addReplyInfo } from "../../redux/reducer/replyReducer";
 import InfinScroll from "../../components/common/InfinScorll";
+import Mention, { EmptyMention } from "./SubComponents/Mention";
+import { ComInput } from "./SubComponents/Reply";
+import {
+  addReplyInfo,
+  submitOneComment,
+} from "../../redux/reducer/replyReducer";
 
 const Comments = (props) => {
   const replies = useSelector((state) => state.reply.replies);
   const [isStop, setStop] = useState(false);
   const dispatch = useDispatch();
   const bool = replies.length < 30;
+
+  const handleOnSubmit = (value) => {
+    dispatch(submitOneComment(value));
+
+    const current_scroll = document.documentElement.scrollTop;
+
+    if (current_scroll > 0) {
+      //최상단 스크롤로 이동
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const fetchMoreData = useCallback(() => {
     setTimeout(() => {
@@ -25,7 +39,7 @@ const Comments = (props) => {
   // (a, b, c) => {
   //   console.log("handleScroll", a, b, c, ref);
   // };
-
+  console.log(">>>>replies", replies);
   return (
     <PageContainer>
       <CommentBox>
@@ -37,6 +51,7 @@ const Comments = (props) => {
             onScroll={handleScroll}
           >
             {replies.map((item, idx) => {
+              console.log("mention >>>>", item, item.content);
               return (
                 <Mention
                   key={item.uid + idx}
@@ -53,7 +68,7 @@ const Comments = (props) => {
         )}
         <BtnContainer>
           <FootArea>
-            <ComInput />
+            <ComInput onSubmit={handleOnSubmit} />
           </FootArea>
         </BtnContainer>
       </CommentBox>
