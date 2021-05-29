@@ -36,7 +36,7 @@ const paddings = {
 };
 
 const widths = {
-  main: 414,
+  main: 500,
 };
 
 const heights = {
