@@ -5,7 +5,14 @@ import Comments from "../../view/testing/Comments";
 import Exam from "../../view/testing/Exam";
 import Result from "../../view/testing/Result";
 import Error from "../../view/Error";
-import { welcome, comments, exam, result } from "../../constants/urlInfo";
+import {
+  welcome,
+  comments,
+  exam,
+  result,
+  otherType,
+} from "../../constants/urlInfo";
+import OtherType from "../../view/testing/OtherType";
 
 const Testing = (props) => {
   console.log(props);
@@ -25,6 +32,8 @@ const Testing = (props) => {
       return <Exam />;
     case result: // 테스트결과 (module)
       return <Result type={step} />;
+    case otherType: // 다른유형 전체보기
+      return <OtherType />;
     default:
       console.warn("where are you?", module, step);
       break;
