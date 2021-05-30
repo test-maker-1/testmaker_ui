@@ -13,7 +13,6 @@ import { LOADING, SUCCESS } from "../../utils/asyncUtils.js";
 
 import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
-import tempImg from "../../resources/temp-img.png";
 
 const breakWidth = 350;
 const [pt, pl] = [20, 23];
@@ -54,12 +53,9 @@ const PickTest = () => {
   );
 };
 
-/*
- * title: string;
- * thumbnail: img file;
- */
-const TestCard = ({ type, thumbnail = tempImg, onClick }) => {
-  const { name, desc } = testInfo[type];
+// title: string;
+const TestCard = ({ type, onClick }) => {
+  const { name, desc, thumbnail } = testInfo[type];
   return (
     <BtnWrap onClick={() => onClick(type)}>
       <Thumbnail>

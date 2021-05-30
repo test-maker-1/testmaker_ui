@@ -1,6 +1,10 @@
+import multipleImg from "../resources/images/multiple.png";
+import mbtiImg from "../resources/images/mbti.png";
+import weightImg from "../resources/images/weight.png";
+
 const multiple = {
   name: "객관식",
-  // thumbnail
+  thumbnail: multipleImg,
   desc: (
     <>
       사람이나 특정 대상에 해서
@@ -12,7 +16,7 @@ const multiple = {
 
 const mbti = {
   name: "성격",
-  // thumbnail
+  thumbnail: mbtiImg,
   desc: (
     <>
       8가지 성향을 조합해서 16가지
@@ -24,7 +28,7 @@ const mbti = {
 
 const weight = {
   name: "성향",
-  // thumbnail
+  thumbnail: weightImg,
   desc: (
     <>
       미리 성향을 만들어두고 어떤 성향에
