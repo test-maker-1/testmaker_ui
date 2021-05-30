@@ -27,6 +27,9 @@ const multiple = {
   top: 5,
   target: "friends", // 누구에게 공유하실건가요?
 
+  nextQuestionId: 6,
+  nextResultId: 3,
+
   questionsCnt: 6, // 질문 개수
   resultsCnt: 3, // 결과 개수
   totalPoints: 6,

@@ -66,7 +66,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
           <ul>
             {options.map((option, idx) => (
               <Option
-                key={`${idx}-${option.name}`}
+                key={`${idx}`}
                 value={option.name}
                 isAnswer={answer && option.name === answer}
                 idxs={{ questionIdx, optionIdx: idx }}

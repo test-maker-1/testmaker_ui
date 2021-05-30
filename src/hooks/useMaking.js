@@ -58,9 +58,7 @@ const useMaking = () => {
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
 
-    const emptyQuestion = getQuestion(type);
-    const questions = new Array(questionsCnt).fill(emptyQuestion);
-
+    const questions = getQuestion(type, questionsCnt);
     const emptyResult = getResult(type);
     const results = new Array(resultsCnt).fill(emptyResult);
 

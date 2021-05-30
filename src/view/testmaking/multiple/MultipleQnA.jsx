@@ -46,7 +46,7 @@ const MultipleQnA = () => {
       {/* questions */}
       {questions.map((question, idx) => (
         <Question
-          key={`${idx}-${question.question}`}
+          key={question.questionId}
           questionIdx={idx}
           questionsCnt={questionsCnt}
           data={question}

@@ -8,8 +8,14 @@ const initPointBound = {
 };
 
 // type: string; ex) multiple || mbti || weight
-export const getQuestion = (type) => {
-  return question[type];
+export const getQuestion = (type, cnt) => {
+  const questions = [];
+
+  for (let i = 0; i < cnt; i++) {
+    questions.push(question[type](i));
+  }
+
+  return questions;
 };
 export const getResult = (type) => {
   return result[type];
