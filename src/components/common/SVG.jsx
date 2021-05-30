@@ -10,10 +10,12 @@ const SVG = ({ type, onClick, style = {} }) => {
     inContext,
     fill,
     infill = null,
+    stroke,
   } = useMemo(() => svgInfo[type], [type]);
   const _width = useMemo(() => style.width || width, [style.width]);
   const _height = useMemo(() => style.height || height, [style.height]);
   const _fill = useMemo(() => style.fill || fill, [style.fill]);
+  const _stroke = useMemo(() => style.stroke || stroke, [style.stroke]);
   const handleOnClick = useCallback(
     (event) => {
       if (onClick) onClick(type, event);
@@ -27,7 +29,7 @@ const SVG = ({ type, onClick, style = {} }) => {
       height={_height}
       fill={_fill}
       infill={infill}
-      stroke={style.stroke}
+      stroke={_stroke}
       x={0}
       y={0}
       viewBox={viewBox}
