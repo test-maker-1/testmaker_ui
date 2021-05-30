@@ -9,12 +9,14 @@ export const initState = {
   top5Tests: null,
 
   // top 10 tags
-  top10Tags: null,
+  top10Tags: [],
 
   // tests By Tag
   testsByTagLoading: false,
   testsByTagError: false,
-  testsByTag: null,
+  testsByTag: [],
+
+  lastTestUid: 0,
 };
 
 const feed = createSlice({
@@ -27,9 +29,10 @@ const feed = createSlice({
     },
     initFeedSuccess: (state, { payload: { top10Tags, top20Tests } }) => {
       state.feedLoading = false;
-      state.top5Tests = top20Tests.slice(0, 6);
+      state.top5Tests = top20Tests.slice(0, 5);
       state.top10Tags = top10Tags;
       state.testsByTag = top20Tests;
+      state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
     initFeedError: (state, action) => {
       state.feedLoading = false;
@@ -41,9 +44,9 @@ const feed = createSlice({
       state.testsByTagLoading = true;
     },
     changeTestsSuccess: (state, { payload }) => {
-      console.log(payload);
       state.testsByTagLoading = false;
       state.testsByTag = payload;
+      state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
     changeTestsError: (state, { payload }) => {
       state.testsByTagLoading = false;
@@ -56,7 +59,8 @@ const feed = createSlice({
     },
     updateTestsSuccess: (state, { payload }) => {
       state.testsByTagLoading = false;
-      state.testsByTag = [state.testsByTag, ...payload];
+      state.testsByTag.push(...payload);
+      state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
     updateTestsError: (state, { payload }) => {
       state.testsByTagLoading = false;
