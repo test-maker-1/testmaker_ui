@@ -1,6 +1,7 @@
 const multiple = {
   questionsCnt: 6,
   resultsCnt: 3,
+  optionsCnt: 3,
 };
 
 const mbti = {};

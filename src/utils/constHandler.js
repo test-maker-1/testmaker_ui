@@ -9,32 +9,23 @@ const initPointBound = {
 };
 
 // type: string; ex) multiple || mbti || weight
-export const getQuestion = (type, cnt) => {
+export const getQuestions = (type, cnt) => {
   const questions = [];
-
-  for (let i = 0; i < cnt; i++) {
-    questions.push(question[type](i));
-  }
+  for (let i = 0; i < cnt; i++) questions.push(question[type](i));
 
   return questions;
 };
 
 export const getOptions = (cnt) => {
   const options = [];
-
-  for (let i = 0; i < cnt; i++) {
-    options.push(option(i));
-  }
+  for (let i = 0; i < cnt; i++) options.push(option(i));
 
   return options;
 };
 
 export const getResults = (type, cnt) => {
   const results = [];
-
-  for (let i = 0; i < cnt; i++) {
-    results.push(result[type](i));
-  }
+  for (let i = 0; i < cnt; i++) results.push(result[type](i));
 
   return results;
 };

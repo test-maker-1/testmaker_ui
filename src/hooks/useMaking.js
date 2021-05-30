@@ -18,7 +18,7 @@ import {
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
-import { getQuestion, getPreset, getResults } from "../utils/constHandler";
+import { getQuestions, getPreset, getResults } from "../utils/constHandler";
 
 const useMaking = () => {
   const data = useSelector((state) => state.making);
@@ -57,7 +57,7 @@ const useMaking = () => {
 
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
-    const questions = getQuestion(type, questionsCnt);
+    const questions = getQuestions(type, questionsCnt);
     const results = getResults(type, resultsCnt);
 
     dispatch(initTypeData({ type, questions, results }));
