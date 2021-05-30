@@ -1,4 +1,5 @@
 import question from "../constants/question";
+import option from "../constants/option";
 import result from "../constants/result";
 import preset from "../constants/preset";
 
@@ -17,6 +18,17 @@ export const getQuestion = (type, cnt) => {
 
   return questions;
 };
+
+export const getOptions = (cnt) => {
+  const options = [];
+
+  for (let i = 0; i < cnt; i++) {
+    options.push(option(i));
+  }
+
+  return options;
+};
+
 export const getResult = (type) => {
   return result[type];
 };

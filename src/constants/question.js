@@ -1,10 +1,15 @@
+import { getOptions } from "../utils/constHandler";
+
+const nextOptionId = 3;
+
 const multiple = (questionId) => ({
   questionId,
   question: "",
   img: null, // 썸네일 path
-  answer: null, // string (추후 변경 가능)
+  answer: null, // string
   point: 1,
-  options: new Array(3).fill({ name: "" }), // string[],
+  nextOptionId,
+  options: getOptions(nextOptionId),
 });
 
 const mbti = {};
