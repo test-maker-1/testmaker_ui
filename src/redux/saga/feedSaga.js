@@ -14,7 +14,6 @@ const updateTestsRequest = createPromiseSaga(
 );
 
 function* watchInitFeed() {
-  console.log("tkrk");
   yield takeLatest(initFeed.type, initFeedRequest);
 }
 
