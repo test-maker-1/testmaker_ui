@@ -29,9 +29,16 @@ export const getOptions = (cnt) => {
   return options;
 };
 
-export const getResult = (type) => {
-  return result[type];
+export const getResults = (type, cnt) => {
+  const results = [];
+
+  for (let i = 0; i < cnt; i++) {
+    results.push(result[type](i));
+  }
+
+  return results;
 };
+
 export const getPreset = (type) => {
   return preset[type];
 };

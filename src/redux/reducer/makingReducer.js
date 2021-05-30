@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getQuestion, getResult } from "../../utils/constHandler";
 import initState from "../../constants/makingInitState";
 import question from "../../constants/question";
 import option from "../../constants/option";
+import result from "../../constants/result";
 
 const logOutActions = ["logOutSuccess", "logOutError", "logInError"];
 
@@ -72,7 +72,13 @@ const making = createSlice({
       state.data.questions[payload].nextOptionId += 1;
     },
     addResult: (state) => {
-      state.data.results.push(getResult(state.type));
+      const {
+        type,
+        data: { nextResultId },
+      } = state;
+
+      state.data.results.push(result[type](nextResultId));
+      state.data.nextResultId += 1;
       state.data.resultsCnt += 1;
     },
 

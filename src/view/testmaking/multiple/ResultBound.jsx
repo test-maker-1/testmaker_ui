@@ -52,7 +52,7 @@ const ResultBound = ({ data, addResult }) => {
       {/* result */}
       {results.map((result, idx) => (
         <Result
-          key={`${idx}-${result.title}`}
+          key={result.resultId}
           resultIdx={idx}
           result={result}
           deleteResult={handleDeleteResult}
