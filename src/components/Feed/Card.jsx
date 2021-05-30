@@ -15,6 +15,7 @@ const Card = ({
   makerImg,
   sharedCnt,
   participatedCnt,
+  testLink,
 }) => {
   const { goPage } = usePage();
   const [bookMark, setBookMark] = useState(false);
@@ -24,10 +25,12 @@ const Card = ({
     },
     [bookMark, setBookMark]
   );
-  const onClickTest = useCallback((e) => {
-    // goPage(`/test/welcome/${testId}`)
-    console.log("테스트 이동");
-  }, []);
+  const onClickTest = useCallback(
+    (e) => {
+      goPage(`/${testLink}`);
+    },
+    [goPage, testLink]
+  );
 
   const numberFormat = useCallback(
     (n) => {
@@ -41,7 +44,7 @@ const Card = ({
       <PaddingBox>
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
-          <div>
+          {/* <div>
             {bookMark ? (
               <SVG
                 type={ENUM.AFTER_BOOKMARK}
@@ -65,7 +68,7 @@ const Card = ({
                 onClick={onClickBookMark}
               />
             )}
-          </div>
+          </div> */}
         </TitleBox>
 
         <ImageBox onClick={onClickTest}>
