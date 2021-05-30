@@ -4,20 +4,14 @@ import styled from "styled-components";
 import CarouselComponent from "../components/Feed/Carousel";
 import BottomBtn, { PageContainer } from "../components/frame/BottomBtn";
 import ENUM, { ALL } from "../constants/Enum";
-import TestsAtOneTag from "../components/Feed/TestsAtOneTag";
-import { initFeed, changeTests } from "../redux/reducer/feedReducer";
+import { initFeed, updateTests } from "../redux/reducer/feedReducer";
 import TagSwiper from "../components/common/TagSwiper";
 import Card from "../components/Feed/Card";
-import axios from "axios";
+import InfinScorll from "../components/common/InfinScorll";
 
 const { PICKTEST } = ENUM;
 const Feed = (props) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(initFeed());
-  }, []);
-  const initArr = [ALL];
-  const [selected, setSelected] = useState(ALL);
   const {
     feedLoading,
     feedError,
@@ -25,9 +19,27 @@ const Feed = (props) => {
     testsByTagLoading,
     testsByTagError,
     testsByTag,
+    lastTestUid,
   } = useSelector((state) => state.feed);
+
+  useEffect(() => {
+    dispatch(initFeed());
+  }, [dispatch]);
+
+  const initArr = [ALL];
+  const [selected, setSelected] = useState(ALL);
+  const [isStop, setStop] = useState(false);
   const tags = initArr.concat(top10Tags);
-  console.log(tags);
+
+  const getMoreDatas = () => {
+    dispatch(updateTests({ tagName: selected, lastTestUid: lastTestUid }));
+  };
+
+  useEffect(() => {
+    // 태그 바뀔 때 스크롤 상단으로
+    window.scrollTo(0, 0);
+  }, [selected]);
+
   return (
     <Container>
       {feedLoading ? null : (
@@ -42,21 +54,26 @@ const Feed = (props) => {
               />
             </TagContainer>
 
-            {testsByTag && (
-              <CardContainer>
+            <CardContainer>
+              <InfinScorll
+                datas={testsByTag}
+                isStop={isStop}
+                getMoreDatas={getMoreDatas}
+              >
                 {testsByTag.map((test) => (
                   <Card
                     key={`test ${test.uid}`}
                     title={test.title}
-                    coverImg={null}
+                    coverImg={test.coverImg}
                     makerName={test.maker.name}
-                    makerImg={null}
+                    makerImg={test.makerImg}
                     sharedCnt={test.sharedCnt}
                     participatedCnt={test.participantsCnt}
+                    testLink={test.testLink}
                   />
                 ))}
-              </CardContainer>
-            )}
+              </InfinScorll>
+            </CardContainer>
           </>
           <BottomBtn
             btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]}
