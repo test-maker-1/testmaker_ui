@@ -28,7 +28,7 @@ const Testing = ({
         case welcome: // 웰컴
           dispatch(setTestID(testid));
         case comments: // 댓글
-          dispatch(getReplyInfo(testid));
+          dispatch(getReplyInfo({ testid, timestamp: 0 }));
         case exam: // 테스트
           dispatch(getTestExam({ testID: testid }));
         // getTesting;

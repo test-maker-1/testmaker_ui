@@ -11,7 +11,7 @@ const testing = createSlice({
       state.current_testID = payload;
     },
     updateTestInfo: (state, { payload: { testInfo, recent3replies } }) => {
-      state.testInfo.questions = testInfo;
+      state.testInfo = testInfo;
       state.recent3replies = recent3replies;
     },
     getTestExam: (state, { payload: { testID, testType } }) => {
@@ -22,16 +22,23 @@ const testing = createSlice({
       state.answers.type = "multi"; //testType
     },
     updateTestExam: (state, { payload: { questions } }) => {
-      state.testInfo.questions = questions;
-      state.testInfo.questsCnt = questions.length;
+      state.questions = questions;
+      state.questsCnt = questions.length;
     },
     saveAnwerByStep: (state, { payload: { page, value } }) => {
       if (state.answers.values.length > page)
         state.answers.values[page] = value;
       else state.answers.values.push(value);
     },
-    submitAnswer: (state, { paylaod }) => {
-      state.answers.values = []; //init
+    saveResult: (state, { paylaod }) => {
+      console.log(paylaod);
+      // state.result = {
+      //   isRankMode,
+      //   responseUid,
+      //   userTestResult,
+      //   repliesCnt,
+      //   recent3Replies,
+      // }; //init
     },
   },
 });
@@ -42,7 +49,7 @@ export const {
   getTestExam,
   updateTestExam,
   saveAnwerByStep,
-  submitAnswer,
+  saveResult,
 } = testing.actions;
 
 export default testing;

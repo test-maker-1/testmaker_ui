@@ -1,5 +1,4 @@
 import React, { memo, useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Mention, { EmptyMention } from "./Mention";
 import usePage from "../../../hooks/usePage";
@@ -37,8 +36,7 @@ export const ComInput = ({ hintText, onFocus, onSubmit }) => {
   );
 };
 
-const Reply = memo(() => {
-  const { testInfo, recent3replies } = useSelector((state) => state.testing);
+const Reply = memo(({ repliesCnt, recent3replies }) => {
   const { goPage } = usePage();
   const onMoveComments = () =>
     goPage(`/${testing}/${comments}`, document.location.search);
@@ -47,9 +45,7 @@ const Reply = memo(() => {
     <>
       <CommentTitle>
         <Title>댓글</Title>
-        <Entire onClick={onMoveComments}>
-          {testInfo.repliesCnt}개 전체보기
-        </Entire>
+        <Entire onClick={onMoveComments}>{repliesCnt}개 전체보기</Entire>
       </CommentTitle>
       <InputItem>
         <ComInput

@@ -7,9 +7,9 @@ const reply = createSlice({
   name: prefix,
   initialState: initState.reply,
   reducers: {
-    getReplyInfo: (state, { payload }) => {
+    getReplyInfo: (state, { payload: { testid } }) => {
       //recent3replies
-      state.testUid = payload;
+      state.testUid = testid;
     },
     addReplyInfo: (state, { payload }) => {
       state.replies.push(...payload);

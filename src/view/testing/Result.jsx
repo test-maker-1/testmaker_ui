@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { TitleBox } from "../../components/common/TitleBox";
 import { ImageView, BtnField } from "../../components/common";
@@ -12,20 +13,26 @@ const { fontSizes } = theme;
 const { PREVIEW, MOVENEXT } = ENUM;
 
 const Result = memo((props) => {
-  console.log(props);
   const handleonClick = (id, e) => {
     console.log(id, e);
   };
+  const {
+    isRankMode,
+    responseUid,
+    userTestResult,
+    repliesCnt,
+    recent3Replies,
+  } = useSelector((state) => state.result);
   return (
     <PageContainer>
       <div style={{ padding: "2.4rem 2rem 3rem" }}>
         <div style={{ paddingBottom: "2.4rem" }}>
-          <Title>당신은 나의 찐친입니다.</Title>
-          <SubTitle>27%의 참여자와 같은 유형이에요!</SubTitle>
+          <Title>{userTestResult}</Title>
+          <SubTitle># 27%의 참여자와 같은 유형이에요!</SubTitle>
         </div>
         <ImageView imageUrl={null} />
         <Inform>
-          총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도
+          # 총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도
           정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.
         </Inform>
         {/* font-size: 19px, line-height: 28px, text-align: center; */}
@@ -46,7 +53,7 @@ const Result = memo((props) => {
           <ComInput hintText={"익명으로 메이커만 볼 수 있어요"} />
         </TitleBox>
         <TitleBox>
-          <Reply />
+          <Reply repliesCnt={repliesCnt} recent3replies={recent3Replies} />
         </TitleBox>
         <TitleBox title="더 많은 테스트가 있어요!" noline>
           <h1>WOW UNBELIEVE!</h1>

@@ -5,12 +5,21 @@ import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { ImageView, BtnExam } from "../../components/common";
 import theme from "../../styles/theme";
 import { setHeadTitle } from "../../redux/reducer/commonReducer";
-import {
-  saveAnwerByStep,
-  submitAnswer,
-} from "../../redux/reducer/testingReducer";
+import { saveAnwerByStep } from "../../redux/reducer/testingReducer";
 
-const Page = ({ questions: { img, question, options }, onClick }) => {
+/**
+ * anwser: "옵션1"
+ * img: "img 패스"
+ * options: [{cnt: 0, name: "옵션1"}, {cnt: 0, name: "옵션2"}]
+ * point: 5
+ * question: "질문 1"
+ */
+
+const Page = ({
+  answers: { values },
+  questions: { img, question, options },
+  onClick,
+}) => {
   return (
     <>
       <Question>{question}</Question>
@@ -22,6 +31,7 @@ const Page = ({ questions: { img, question, options }, onClick }) => {
           return (
             <BtnExam
               name={name}
+              clicked={values.includes(name)}
               onClick={onClick.bind(this, idx, name)}
               style={BtnStyle}
             />
@@ -38,7 +48,7 @@ const Exam = memo((props) => {
   const { questsCnt, questions, answers } = useSelector(
     (state) => state.testing
   );
-  console.log("answers", answers);
+
   useEffect(() => {
     //헤더 타이틀 변경
     dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
@@ -62,17 +72,26 @@ const Exam = memo((props) => {
       movePage(page - 1);
     }
   };
+
+  const PageComponent = () => (
+    <Page
+      answers={answers}
+      questions={questions[page]}
+      onClick={onClickAnswer}
+    />
+  );
+
   return (
     <div style={{ padding: "10px 2rem" }}>
       {page > 0 ? (
         <PageContainer>
-          <Page questions={questions[page]} onClick={onClickAnswer} />
+          {PageComponent()}
           <BottomBtn
             btnArr={[{ name: "뒤로가기", customClick: onCustomClick }]}
           />
         </PageContainer>
       ) : (
-        <Page questions={questions[page]} onClick={onClickAnswer} />
+        PageComponent()
       )}
     </div>
   );

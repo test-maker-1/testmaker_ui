@@ -18,14 +18,18 @@ import { SUCCESS } from "../../utils/asyncUtils";
 
 function* getComments(action) {
   const param = action.payload;
-  const { data, status } = yield call(testingAPI.getReplyInfo, param);
+  const { data, status } = yield call(
+    testingAPI.getReplyInfo,
+    param.testid,
+    param.timestamp
+  );
 
   console.log("getComments", data, status);
   if (status === SUCCESS) {
-    // yield put({
-    //   type: addReplyInfo.type,
-    //   payload: {},
-    // });
+    yield put({
+      type: addReplyInfo.type,
+      payload: data,
+    });
   }
 }
 
@@ -42,7 +46,7 @@ function* setComments(action) {
   if (status === SUCCESS) {
     yield put({
       type: addOneComment.type,
-      payload: data,
+      payload: data[0],
     });
   }
 }
