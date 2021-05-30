@@ -10,8 +10,10 @@ import useMaking from "../../hooks/useMaking";
 import { checkMakingData } from "../../utils/handler";
 
 import ENUM, { lg } from "../../constants/Enum";
+import { saveTest, SUCCESS } from "../../utils/asyncUtils";
+import msg from "../../constants/msg";
 
-const { PREVIEW, ENTER } = ENUM;
+const { PREVIEW, ENTER, WARNING } = ENUM;
 const currentStep = "detail";
 
 const TestDetail = () => {
@@ -27,7 +29,7 @@ const TestDetail = () => {
   return (
     <PageContainer>
       {/* alert */}
-      <NoticeAlert icon={ENUM.WARNING} btns={btns} />
+      <NoticeAlert icon={WARNING} btns={btns} />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -106,21 +108,27 @@ const useDetail = () => {
         { name: "다시보기" },
         {
           name: "테스트 만들기",
-          callback: () => {
-            sessionStorage.setItem(
-              "savedTest",
-              JSON.stringify({
-                testId: data.testId,
-                onFeed: data.onFeed,
-              })
-            );
-            goPage("/test/release");
-          },
+          callback: saveFinalTest,
         },
       ]);
     } else setBtns([{ name: "다시보기" }]);
 
     NoticeAlert.open(msg);
+  };
+
+  const saveFinalTest = async () => {
+    const status = await saveTest(data);
+
+    if (status === SUCCESS) {
+      sessionStorage.setItem(
+        "savedTest",
+        JSON.stringify({
+          testId: data.testId,
+          onFeed: data.onFeed,
+        })
+      );
+      goPage("/test/release");
+    } else NoticeAlert.open(msg.errorPage[500]);
   };
 
   useEffect(() => {

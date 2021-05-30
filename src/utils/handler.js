@@ -146,7 +146,6 @@ export const checkMakingData = (state) => {
     questions.length < 1 ||
     results.length < 1
   ) {
-    console.log(questionsCnt, resultsCnt, questions.length, results.length);
     return { releasable: false, msg: errorMaking.empty };
   }
 

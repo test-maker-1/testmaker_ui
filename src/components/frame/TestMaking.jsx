@@ -2,12 +2,11 @@ import React, { useCallback, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
 import Error from "../../view/Error";
-import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import useMaking from "../../hooks/useMaking";
 import useOpen from "../../hooks/useOpen";
 
-import { ERROR } from "../../utils/asyncUtils";
+import { ERROR, saveTest } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
@@ -87,11 +86,6 @@ const TestMaking = ({
   if (error) return <Error code={500} />;
 
   return makingComponent[step];
-};
-
-const saveTest = async (params) => {
-  const { status } = await MakingAPI.saveTest(params);
-  return status;
 };
 
 export default withRouter(TestMaking);
