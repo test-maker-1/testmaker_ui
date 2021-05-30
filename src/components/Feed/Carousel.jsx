@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import styled from "styled-components";
 import ImageView from "../common/ImageView";
 import { useSelector } from "react-redux";
+import usePage from "../../hooks/usePage";
 
 export default function CarouselComponent() {
+  const { goPage } = usePage();
   const { top5Tests } = useSelector((state) => state.feed);
-
   const initTitle = top5Tests && top5Tests[0].title;
   const [topTest, setTopTest] = useState({ idx: 0, title: initTitle });
 
@@ -15,18 +16,25 @@ export default function CarouselComponent() {
 
   // const [topTest, setTopTest] = useState({});
   const onClickItem = (idx, item) => {
-    console.log(idx, item);
+    onClickTest();
   };
 
   const onChange = (idx, item) => {
     setTopTest({ idx, title: item.props.title });
   };
 
+  const onClickTest = useCallback(
+    (e) => {
+      goPage(`/${top5Tests && top5Tests[topTest.idx].testLink}`);
+    },
+    [goPage, top5Tests, topTest]
+  );
+
   return (
     <Ranking>
       <TitleBox>
         <Top> TOP {topTest.idx + 1}</Top>
-        <Title>{topTest.title}</Title>
+        <Title onClick={onClickTest}>{topTest.title}</Title>
       </TitleBox>
 
       <CarouselBox>
@@ -50,7 +58,7 @@ export default function CarouselComponent() {
             {top5Tests.map((test) => (
               <ImageView
                 key={test.uid}
-                // imageUrl={test.coverImg}
+                imageUrl={test.coverImg}
                 title={test.title}
                 height="calc(100% / 1.76)"
                 border={false}
