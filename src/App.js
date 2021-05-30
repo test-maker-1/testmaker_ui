@@ -1,24 +1,29 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 import LoginFrame from "./components/frame/Login";
 import RegisterFrame from "./components/frame/Register";
-import Login from "./view/login/Login";
-
 import MainForm from "./components/frame/MainForm";
 import Testing from "./components/frame/Testing";
 import TestMaking from "./components/frame/TestMaking";
+import { Loading } from "./components/common";
+
+import Login from "./view/login/Login";
+import Error from "./view/Error";
 import Feed from "./view/Feed";
 import PickTest from "./view/testmaking/PickTest";
-import Error from "./view/Error";
+
 import useUser from "./hooks/useUser";
+import { LOADING } from "./utils/asyncUtils";
 
 const App = () => {
-  const { checkLogIn } = useUser();
+  const { checkLogIn, status } = useUser();
 
   useEffect(() => checkLogIn(), []);
 
   return (
     <BrowserRouter>
+      <Loading loading={status === LOADING} />
       <MainForm>
         <Switch>
           <Route exact path="/" component={Feed} />

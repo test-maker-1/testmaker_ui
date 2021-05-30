@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { BtnField, SVG } from ".";
+import { modalStyles } from "../../styles";
 import { md } from "../../constants/Enum";
 
 let that = null; // 정적 메소드용
@@ -80,20 +81,7 @@ NoticeAlert.defaultProps = {
 };
 
 const Modal = styled.div`
-  padding: 0 20px;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-
-  display: flex;
-  place-content: center center;
-  flex-wrap: wrap;
-
-  max-width: ${({ theme: { widths } }) => widths.main}px;
-  width: 100%;
-
+  ${modalStyles}
   z-index: ${({ theme: { zIndex } }) => zIndex.alert};
   background: rgba(138, 146, 158, 0.6);
 `;
