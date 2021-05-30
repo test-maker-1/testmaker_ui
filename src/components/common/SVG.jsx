@@ -27,6 +27,7 @@ const SVG = ({ type, onClick, style = {} }) => {
       height={_height}
       fill={_fill}
       infill={infill}
+      stroke={style.stroke}
       x={0}
       y={0}
       viewBox={viewBox}
@@ -46,6 +47,7 @@ const SvgItem = styled.svg`
   cursor: ${(props) => (props.onClick ? "pointer" : "default")};
   path {
     fill: ${({ fill, infill }) => infill || fill};
+    ${({ stroke }) => stroke && `stroke: ${stroke}`};
   }
 `;
 

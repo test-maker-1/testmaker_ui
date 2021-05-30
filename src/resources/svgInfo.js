@@ -42,9 +42,10 @@ export const svgInfo = {
     height: "24",
     viewBox: "0 0 25 24",
     fill: "none",
+    stroke: "#CFD3DB",
     inContext: [
-      <path d="M5 19.5L19.5 5" stroke="#CFD3DB" strokeWidth="3" />,
-      <path d="M19.5 19.5L5 5" stroke="#CFD3DB" strokeWidth="3" />,
+      <path d="M5 19.5L19.5 5" strokeWidth="3" />,
+      <path d="M19.5 19.5L5 5" strokeWidth="3" />,
     ],
   },
   [PICTURE]: {
@@ -126,7 +127,6 @@ export const svgInfo = {
     width: "24",
     height: "24",
     viewBox: "0 0 24 24",
-    fill: "none",
     inContext: [
       <path
         d="M7.5 4.8V3H16.5V4.8H21V6.6H19.2V20.1C19.2 20.3387 19.1052 20.5676 18.9364 20.7364C18.7676 20.9052 18.5387 21 18.3 21H5.7C5.46131 21 5.23239 20.9052 5.0636 20.7364C4.89482 20.5676 4.8 20.3387 4.8 20.1V6.6H3V4.8H7.5ZM6.6 6.6V19.2H17.4V6.6H6.6ZM9.3 9.3H11.1V16.5H9.3V9.3ZM12.9 9.3H14.7V16.5H12.9V9.3Z"
