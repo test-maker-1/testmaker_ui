@@ -26,6 +26,7 @@ const Error = ({ location: { search }, code = 404 }) => {
     if (!errorPage.hasOwnProperty(queryCode)) return code;
 
     return queryCode;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   return (
