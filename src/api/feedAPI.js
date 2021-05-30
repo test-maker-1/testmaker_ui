@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { get } from "./instance";
 
 export default class FeedAPI {
   static initFeed() {
@@ -6,6 +6,6 @@ export default class FeedAPI {
   }
 
   static testsByTag({ tagName, lastTestUid }) {
-    return get(`/home?tag=${tagName}&last=${lastTestUid}`);
+    return get(encodeURI(`/home?tag=${tagName}&last=${lastTestUid}`));
   }
 }
