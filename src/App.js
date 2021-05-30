@@ -12,6 +12,7 @@ import Login from "./view/login/Login";
 import Error from "./view/Error";
 import Feed from "./view/Feed";
 import PickTest from "./view/testmaking/PickTest";
+import TestRelease from "./view/testmaking/TestRelease";
 
 import useUser from "./hooks/useUser";
 import { LOADING } from "./utils/asyncUtils";
@@ -29,6 +30,7 @@ const App = () => {
           <Route exact path="/" component={Feed} />
           {/* test making */}
           <Route exact path="/test/pick-test" component={PickTest} />
+          <Route exact path="/test/release" component={TestRelease} />
           {/* module: multiple, mbti, weight */}
           <Route exact path="/test/:module/:step" component={TestMaking} />
           {/* login */}

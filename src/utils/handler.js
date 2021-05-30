@@ -166,7 +166,8 @@ export const checkMakingData = (state) => {
   const checkQuestion = questions.some((item) => {
     const { question, point, options, answer } = item;
     if (question.length < 1 || !answer) return false;
-    if (options.length < 2 || !point || point < -1 || point > 10) return false;
+    if (options.length < 2 || point === null || point < -1 || point > 10)
+      return false;
 
     const checkOption = options.some((option) => option.name.length < 1);
     if (checkOption) return false;
@@ -179,7 +180,7 @@ export const checkMakingData = (state) => {
   const checkResult = results.some((item) => {
     const { title, description, pointBound } = item;
     if (title.length < 1 || description.length < 1) return false;
-    if (!pointBound.start || !pointBound.end) return false;
+    if (pointBound.start === null || pointBound.end === null) return false;
 
     return true;
   });

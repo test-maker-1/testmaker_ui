@@ -106,7 +106,16 @@ const useDetail = () => {
         { name: "다시보기" },
         {
           name: "테스트 만들기",
-          callback: () => goPage(`/test/${data.type}/release`),
+          callback: () => {
+            sessionStorage.setItem(
+              "savedTest",
+              JSON.stringify({
+                testId: data.testId,
+                onFeed: data.onFeed,
+              })
+            );
+            goPage("/test/release");
+          },
         },
       ]);
     } else setBtns([{ name: "다시보기" }]);

@@ -30,7 +30,7 @@ const PickTest = () => {
 
   if (testId) return <Error code={406} />; // invalied step
   if (error) return <Error code={500} />; // server error
-  
+
   const onInitTest = async (type) => {
     onLoading();
 
