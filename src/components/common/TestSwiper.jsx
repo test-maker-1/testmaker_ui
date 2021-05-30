@@ -41,8 +41,7 @@ export default TestSwiper;
 
 const Container = styled.div`
   padding: 0 2rem;
-  max-width: 50rem;
-  height: auto;
+  width: 50rem;
   .swiper-container {
     width: 100%;
   }
