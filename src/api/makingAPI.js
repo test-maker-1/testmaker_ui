@@ -19,7 +19,7 @@ export default class MakingAPI {
   static saveTest(params) {
     return post(`/makingTest/${params.testId}`, params);
   }
-  static releaseTest(testId) {
+  static submitTest(testId) {
     return post(`/makingTest/submit/${testId}`);
   }
 }

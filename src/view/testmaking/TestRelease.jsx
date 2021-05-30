@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
@@ -7,24 +7,32 @@ import BottomBtn from "../../components/frame/BottomBtn";
 import { FeedBtn } from "../../components/making";
 import Error from "../Error";
 
+import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
-import useMaking from "../../hooks/useMaking";
-import { LOADING } from "../../utils/asyncUtils";
+import usePage from "../../hooks/usePage";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import tempImg from "../../resources/temp-img.png";
-
-const { TRUE, HOME, FALSE } = ENUM;
+import useOpen from "../../hooks/useOpen";
 
 const TestRelease = () => {
   const { status, loggedIn } = useUser();
-  const {
-    data: { onFeed },
-    updateCommon,
-  } = useMaking();
+  const { goPage } = usePage();
+
   const savedTest = JSON.parse(sessionStorage.getItem("savedTest"));
+  const { open: feed, onOpen } = useOpen();
+
+  const submitTest = async () => {
+    const { status } = await MakingAPI.submitTest(savedTest.testId);
+    if (status === ERROR) {
+      sessionStorage.removeItem("savedTest");
+      goPage("/error", "?errorCode=500");
+    }
+  };
 
   useEffect(() => {
+    if (savedTest) submitTest();
     return () => sessionStorage.removeItem("savedTest");
   }, []);
 
@@ -32,14 +40,9 @@ const TestRelease = () => {
   if (!loggedIn) return <Error code={403} />; // logOut
 
   if (!savedTest) return <Error code={406} />; // invalied step
-  // 에러 처리 필요
 
-  const onBoolClick = (e) => {
-    const { testId, onFeed } = savedTest;
-    const { name, value } = e.currentTarget;
-
-    if (value === TRUE) updateCommon(name, true);
-    else updateCommon(name, false);
+  const onSetFeed = (e) => {
+    console.log(e.currentTarget.value);
   };
 
   return (
@@ -55,10 +58,10 @@ const TestRelease = () => {
       <TitleBox title="홈 피드에 공개할까요?">
         {/* setting onFeed */}
         <ButtonGroup fullWidth={true}>
-          <FeedBtn onFeed={onFeed} value={FALSE} onClick={onBoolClick}>
+          <FeedBtn onFeed={feed} value={false} onClick={onSetFeed}>
             안 할래요
           </FeedBtn>
-          <FeedBtn onFeed={onFeed} value={TRUE} onClick={onBoolClick}>
+          <FeedBtn onFeed={feed} value={true} onClick={onSetFeed}>
             공개할래요
           </FeedBtn>
         </ButtonGroup>
@@ -66,7 +69,7 @@ const TestRelease = () => {
       <TitleBox title="친구에게 공유할래요!" noline>
         <BtnShare />
       </TitleBox>
-      <BottomBtn btnArr={[{ name: "홈으로", type: HOME }]} />
+      <BottomBtn btnArr={[{ name: "홈으로", type: ENUM.HOME }]} />
     </div>
   );
 };

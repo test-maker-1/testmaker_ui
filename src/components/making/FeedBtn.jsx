@@ -40,17 +40,13 @@ const useStyles = makeStyles(() => ({
  * onClick: function;
  */
 const FeedBtn = ({ onFeed, value, onClick, children }) => {
+  const [boolOnFeed, boolValue] = [JSON.parse(onFeed), JSON.parse(value)];
   const btnStyles =
-    String(onFeed) === value ? btnColors.selected : btnColors.unselected;
+    boolOnFeed === boolValue ? btnColors.selected : btnColors.unselected;
   const classes = useStyles(btnStyles);
 
   return (
-    <Button
-      className={classes.feedBtn}
-      name="onFeed"
-      value={value}
-      onClick={onClick}
-    >
+    <Button className={classes.feedBtn} value={value} onClick={onClick}>
       {children}
     </Button>
   );

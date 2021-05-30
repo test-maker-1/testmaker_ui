@@ -125,6 +125,7 @@ const useDetail = () => {
         JSON.stringify({
           testId: data.testId,
           onFeed: data.onFeed,
+          link: `testing/welcome?testid=${data.testId}`,
         })
       );
       goPage("/test/release");

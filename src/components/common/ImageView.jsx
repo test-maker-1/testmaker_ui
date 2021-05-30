@@ -57,6 +57,7 @@ const ImgArea = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: ${({ border }) => (border ? "10px" : "0px")};
   background-repeat: no-repeat; /*background-image가 컨테이너를 가득 채우지 못할 경우에도 반복하지 않는다.*/
   background-size: cover; /*사이즈가 container에 맞지 않아도 꽉 차도록 채운다.*/

@@ -13,7 +13,7 @@ const common = {
   coverImgPath: null, // 썸네일 편집
 
   tags: [], // string[]
-  onFeed: true,
+  onFeed: false,
   optionalURL: "", // 홍보 URL (선택)
   step: "preset", // 테스트 제작 단계
 
