@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { withRouter } from "react-router-dom";
 import styled from "styled-components";
+import qs from "query-string";
 
 import { BtnField } from "../components/common";
 import { Section } from "../styles";
@@ -9,16 +11,29 @@ import { md } from "../constants/Enum";
 import msg from "../constants/msg";
 import errorImg from "../resources/images/error.png";
 
-// code: number;
-const Error = ({ code = 404 }) => {
-  const { goBack, goPage } = usePage();
+const { errorPage } = msg;
 
-  // 추후 code에 따라 다른 내용 렌더링 필요
+/*
+ * search: query string; ex) ?errorCode=500
+ * code: number;
+ */
+const Error = ({ location: { search }, code = 404 }) => {
+  const { goBack, goPage } = usePage();
+  const errorCode = useMemo(() => {
+    if (search.length < 1) return code;
+
+    const queryCode = qs.parse(search).errorCode;
+    if (!errorPage.hasOwnProperty(queryCode)) return code;
+
+    return queryCode;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
   return (
     <ErrorSection>
       <ErrorImg src={errorImg} alt="error" />
       <Title>앗, 여긴 어디? 나는 누구죠?</Title>
-      <Message>{msg.errorPage[code]}</Message>
+      <Message>{errorPage[errorCode]}</Message>
       <Buttons>
         <li>
           <BtnField size={md} color="skyBlue" onClick={() => goPage("/")}>
@@ -37,6 +52,7 @@ const Error = ({ code = 404 }) => {
 
 const ErrorSection = styled(Section)`
   margin: auto;
+  width: 100%;
   text-align: center;
 `;
 
@@ -74,4 +90,4 @@ const Buttons = styled.ul`
   }
 `;
 
-export default Error;
+export default withRouter(Error);
