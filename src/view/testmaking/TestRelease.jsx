@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
-import { TitleBox, Title, BtnShare } from "../../components/common";
+import {
+  TitleBox,
+  Title,
+  BtnShare,
+  NoticeAlert,
+} from "../../components/common";
 import BottomBtn from "../../components/frame/BottomBtn";
 import { FeedBtn } from "../../components/making";
 import Error from "../Error";
@@ -10,18 +15,19 @@ import Error from "../Error";
 import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
-import { ERROR, LOADING } from "../../utils/asyncUtils";
+import useOpen from "../../hooks/useOpen";
+import { ERROR, LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
+import msg from "../../constants/msg";
 import tempImg from "../../resources/temp-img.png";
-import useOpen from "../../hooks/useOpen";
 
 const TestRelease = () => {
   const { status, loggedIn } = useUser();
   const { goPage } = usePage();
 
   const savedTest = JSON.parse(sessionStorage.getItem("savedTest"));
-  const { open: feed, onOpen } = useOpen();
+  const { open: feed, onOpen, onClose } = useOpen();
 
   const submitTest = async () => {
     const { status } = await MakingAPI.submitTest(savedTest.testId);
@@ -41,12 +47,28 @@ const TestRelease = () => {
 
   if (!savedTest) return <Error code={406} />; // invalied step
 
-  const onSetFeed = (e) => {
-    console.log(e.currentTarget.value);
+  const onSetFeed = async (e) => {
+    const openTest = JSON.parse(e.currentTarget.value);
+    if (openTest === feed) return;
+
+    const params = {
+      testId: savedTest.testId,
+      onFeed: openTest,
+    };
+    const { status } = await MakingAPI.updateOnFeed(params);
+
+    if (status === SUCCESS) {
+      if (openTest) onOpen();
+      else onClose();
+    } else NoticeAlert.open(msg.errorPage[500]);
   };
 
   return (
     <div>
+      <NoticeAlert
+        icon={ENUM.WARNING}
+        btns={[{ name: "홈으로", callback: () => goPage("/") }]}
+      />
       <TitleBox noline>
         {/* success */}
         <ImgWrap>
