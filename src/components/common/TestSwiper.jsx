@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import styled from "styled-components";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import ImageView from "./ImageView";
+import usePage from "../../hooks/usePage";
 
 const TestSwiper = (props) => {
+  const { goPage } = usePage();
   const moreTests = [
     {
       title: "성격 유형검사 MBTI Test",
@@ -20,15 +22,20 @@ const TestSwiper = (props) => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAvyY5aXFgVw1sq-goEHhKFcQfqIR_Et1UZw&usqp=CAU",
     },
   ];
-
+  const onClick = useCallback((e) => {
+    // goPage(`/${testLink}`)
+    console.log("출력");
+  });
   return (
     <Container>
       <Swiper slidesPerView={"auto"} spaceBetween={16} className="mySwiper">
         {moreTests.map((test) => (
           <SwiperSlide>
             <TestCard>
-              <ImageView imageUrl={test.img} height="23.2rem" />
-              <Title>{test.title}</Title>
+              <ImgBox onClick={onClick}>
+                <ImageView imageUrl={test.img} height="23.2rem" />
+              </ImgBox>
+              <Title onClick={onClick}>{test.title}</Title>
             </TestCard>
           </SwiperSlide>
         ))}
@@ -81,11 +88,13 @@ const TestCard = styled.div`
 const Title = styled.div`
   padding-top: 0.8rem;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem;
+  font-weight: bold;
   line-height: 27px;
   letter-spacing: -0.6px;
   color: ${({ theme: { colors } }) => colors.bodyGray};
+  cursor: pointer;
 `;
 
-const ImageBox = styled.div`
+const ImgBox = styled.div`
   cursor: pointer;
 `;
