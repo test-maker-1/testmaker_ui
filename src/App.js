@@ -16,6 +16,9 @@ import PickTest from "./view/testmaking/PickTest";
 import useUser from "./hooks/useUser";
 import { LOADING } from "./utils/asyncUtils";
 
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css";
+
 const App = () => {
   const { checkLogIn, status } = useUser();
 
