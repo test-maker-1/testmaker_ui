@@ -22,4 +22,8 @@ export default class MakingAPI {
   static submitTest(testId) {
     return post(`/makingTest/submit/${testId}`);
   }
+  // image
+  static uploadImg(form) {
+    return post("/img", form);
+  }
 }

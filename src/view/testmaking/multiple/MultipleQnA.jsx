@@ -100,7 +100,12 @@ const useQnA = () => {
     goPage("/test/multiple/result");
   };
 
-  return { questions, questionsCnt, addEmptyQuestion, onSetResult };
+  return {
+    questions,
+    questionsCnt,
+    addEmptyQuestion,
+    onSetResult,
+  };
 };
 
 const RandomGuide = styled.section`
