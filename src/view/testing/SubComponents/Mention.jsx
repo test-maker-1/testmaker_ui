@@ -50,7 +50,7 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
         {/* isMe : -1.로그인안한상태 0.로그인 했지만, 당사자가 아닌 유저, 1.로그인한 당사자 유저  */}
         <RightSide>
           <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
-          {writer?.isMe === 1 && openPop && (
+          {writer?.isMe === 0 && openPop && (
             <>
               <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
               <Popup>
