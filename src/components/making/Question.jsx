@@ -11,7 +11,6 @@ import ENUM, { md } from "../../constants/Enum";
 const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
   const { question, img, openImg, answer, point, options } = data;
   const {
-    data: { testId },
     dispatch,
     deleteQuestion,
     updateQuestion,
@@ -61,11 +60,9 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
           {/* coverImg */}
           {openImg && (
             <UploadImg
-              testId={testId}
-              parentIdx={questionIdx}
               img={img}
+              parentIdx={questionIdx}
               openAlert={openAlert}
-              updateParent={updateQuestion}
             />
           )}
           {/* options */}

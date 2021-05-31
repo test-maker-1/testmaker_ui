@@ -5,13 +5,12 @@ import { SVG, ImageView, Loading } from "../common/index";
 import theme from "../../styles/theme";
 
 import useOpen from "../../hooks/useOpen";
-import { uploadImg } from "../../utils/asyncMakingUtils";
-import { SUCCESS } from "../../utils/asyncUtils";
+import useImage from "../../hooks/useImage";
 
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
 
-const { CHANGE, DELETE, CANCEL } = ENUM;
+const { CHANGE, DELETE, CANCEL, QUESTION } = ENUM;
 
 const svgStyles = {
   width: 40,
@@ -24,71 +23,63 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = memo(
-  ({ testId, img, parentIdx, updateParent, openAlert }) => {
-    const { open: loading, onOpen, onClose } = useOpen();
-    const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
+export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
+  const { uploadImg } = useImage(QUESTION, parentIdx, () =>
+    openAlert(msg.errorPage[500])
+  );
 
-    const fileInput = useRef();
+  const { open: loading, onOpen, onClose } = useOpen();
+  const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
-    // upload and delete image
-    const handleOnCick = () => fileInput.current.click();
-    // const handleDelClick = () => setImgURL(null);
+  const fileInput = useRef();
 
-    const handleOnUpload = async (e) => {
-      const files = e.target.files;
-      const file = {
-        img: files[0],
-        path: `test/${testId}`,
-      };
-      onOpen();
+  // upload and delete image
+  const handleOnCick = () => fileInput.current.click();
+  // const handleDelClick = () => setImgURL(null);
 
-      const { data, status } = await uploadImg(file);
-      if (status === SUCCESS) {
-        updateParent("img", data.url, parentIdx);
-      } else {
-        openAlert(msg.errorPage[500]);
-      }
+  const onUpload = async (e) => {
+    const files = e.target.files;
 
-      // init
-      fileInput.current.value = null;
-      onClose();
-    };
+    onOpen();
+    await uploadImg(files[0]);
+    // init
+    fileInput.current.value = null;
+    onClose();
+  };
 
-    return (
-      <>
-        {loading && <Loading />}
-        <Wrapper>
-          <OpenDiv onClick={onEdit} />
-          <ImageView imageUrl={img} />
-          {/* edit */}
-          {edit && (
-            <Dimmed>
-              <EditIcon>
-                <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
-              </EditIcon>
-              <EditIcon>
-                <SVG type={DELETE} style={svgStyles} />
-              </EditIcon>
-              <EditIcon>
-                <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
-              </EditIcon>
-            </Dimmed>
-          )}
-        </Wrapper>
-        {/* required multiple */}
-        <input
-          type="file"
-          id="uploadImage"
-          ref={fileInput}
-          accept="img/*"
-          onChange={handleOnUpload}
-          style={{ width: 0, display: "none" }}
-        />
-      </>
-    );
-  }
-);
+  return (
+    <>
+      {loading && <Loading />}
+      <Wrapper>
+        <OpenDiv onClick={onEdit} />
+        <ImageView imageUrl={img} />
+        {/* edit */}
+        {edit && (
+          <Dimmed>
+            <EditIcon>
+              <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={DELETE} style={svgStyles} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
+            </EditIcon>
+          </Dimmed>
+        )}
+      </Wrapper>
+      {/* required multiple */}
+      <input
+        type="file"
+        id="uploadImage"
+        ref={fileInput}
+        accept="img/*"
+        onChange={onUpload}
+        style={{ width: 0, display: "none" }}
+      />
+    </>
+  );
+});
 
 const Wrapper = styled.div`
   position: relative;

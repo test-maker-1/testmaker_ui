@@ -73,6 +73,10 @@ const ENUM = {
   KAKAO: "kakao",
   INSTA: "insta",
   TWITTER: "twitter",
+
+  // multiple enum
+  QUESTION: "question",
+  RESULT: "result",
 };
 
 export default ENUM;
