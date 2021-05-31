@@ -8,22 +8,23 @@ import theme from "../../styles/theme";
 import useOpen from "../../hooks/useOpen";
 import ENUM from "../../constants/Enum";
 
-const { CANCEL, CHANGE } = ENUM;
+const { CHANGE, DELETE, CANCEL } = ENUM;
 
 const svgStyles = {
   width: 40,
   height: 40,
+  fill: theme.colors.deepGray,
 };
 
-const changeStyle = {
+const cancelStyles = {
   ...svgStyles,
-  fill: theme.colors.deepGray,
+  stroke: theme.colors.deepGray,
 };
 
 export const UploadImg = () => {
   const fileInput = useRef();
   const [imgURL, setImgURL] = useState(null);
-  const { open: edit, onToggle } = useOpen();
+  const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
   // upload and delete image
   const handleOnCick = () => fileInput.current.click();
@@ -45,17 +46,21 @@ export const UploadImg = () => {
 
   return (
     <>
-      <Wrapper onClick={onToggle}>
+      <Wrapper>
+        <OpenDiv onClick={onEdit} />
         <ImageView imageUrl={imgURL} />
         {/* edit */}
         {edit && (
           <Dimmed>
-            <EditBtn onClick={handleOnCick}>
-              <SVG type={CHANGE} style={changeStyle} />
-            </EditBtn>
-            <EditBtn onClick={handleDelClick}>
-              <SVG type={CANCEL} style={svgStyles} />
-            </EditBtn>
+            <EditIcon>
+              <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={DELETE} style={svgStyles} onClick={handleDelClick} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
+            </EditIcon>
           </Dimmed>
         )}
       </Wrapper>
@@ -77,6 +82,14 @@ const Wrapper = styled.div`
   margin-bottom: 16px;
 `;
 
+const OpenDiv = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+`;
+
 const Dimmed = styled.div`
   margin-bottom: 16px;
   position: absolute;
@@ -93,11 +106,15 @@ const Dimmed = styled.div`
   transition: all 0.2s ease-in-out;
 `;
 
-const EditBtn = styled.button`
+const EditIcon = styled.div`
   margin: 0 4px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #ebedf1;
+  background-color: ${({ theme: { colors } }) => colors.ghostGray};
   opacity: 0.8;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
