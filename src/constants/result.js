@@ -1,4 +1,5 @@
-const multiple = {
+const multiple = (resultId) => ({
+  resultId,
   description: "",
   title: "",
   img: null, // 썸네일 path
@@ -6,7 +7,7 @@ const multiple = {
     start: null, // ~이상
     end: null, // ~이하
   }, // 결과 범위
-};
+});
 
 const mbti = {};
 

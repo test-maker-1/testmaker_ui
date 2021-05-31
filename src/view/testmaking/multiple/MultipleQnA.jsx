@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import Error from "../../../view/Error";
 import { NoticeAlert, SVG } from "../../../components/common";
 import { Question, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
@@ -11,9 +10,10 @@ import useMaking from "../../../hooks/useMaking";
 import usePage from "../../../hooks/usePage";
 
 import { getPointBoundList } from "../../../utils/constHandler";
-import ENUM, { multiple } from "../../../constants/Enum";
+import ENUM from "../../../constants/Enum";
 
 const { blue, white, bodyGray, darkGray } = theme.colors;
+const currentStep = "qna";
 
 const svgStyles = {
   width: 32,
@@ -23,46 +23,11 @@ const svgStyles = {
 
 const MultipleQnA = () => {
   const {
-    data,
-    dispatch,
-    addQuestion,
-    updateTypeData,
-    updateResult,
-  } = useMaking();
-  const { goPage } = usePage();
-
-  // redirection step
-  if (!data.hasOwnProperty("type") || data.type !== multiple)
-    return <Error code={401} />;
-
-  const {
-    data: { questions = [], resultsCnt },
-  } = data;
-
-  const calculatePoints = () => {
-    const totalPoints = questions.reduce((prevPoint, { point }) => {
-      const currentPoint = point ? point : 0;
-      return prevPoint + currentPoint;
-    }, 0);
-
-    dispatch(
-      updateTypeData({
-        key: "totalPoints",
-        value: totalPoints,
-      })
-    );
-
-    if (totalPoints < resultsCnt - 1) {
-      NoticeAlert.open("테스트 총 점수가 너무 적어요!");
-      return;
-    }
-
-    const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
-    pointBoundList.forEach((bound, idx) => {
-      updateResult("pointBound", bound, idx);
-    });
-    goPage("/test/multiple/result");
-  };
+    questions = [],
+    questionsCnt,
+    addEmptyQuestion,
+    onSetResult,
+  } = useQnA();
 
   return (
     <PageContainer>
@@ -81,21 +46,66 @@ const MultipleQnA = () => {
       {/* questions */}
       {questions.map((question, idx) => (
         <Question
-          key={`${idx}-${question.question}`}
+          key={question.questionId}
           questionIdx={idx}
+          questionsCnt={questionsCnt}
           data={question}
+          openAlert={NoticeAlert.open}
         />
       ))}
-      <BtnAdd onClick={() => dispatch(addQuestion())} />
+      <BtnAdd onClick={addEmptyQuestion} />
 
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: ENUM.PREVIEW },
-          { name: "다 적었어요", customClick: calculatePoints },
+          { name: "다 적었어요", customClick: onSetResult },
         ]}
       />
     </PageContainer>
   );
+};
+
+const useQnA = () => {
+  const { data, dispatch, initResult, updateStep, addQuestion } = useMaking();
+  const { goPage } = usePage();
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  const {
+    data: { questions = [], questionsCnt, resultsCnt },
+  } = data;
+
+  const addEmptyQuestion = () => dispatch(addQuestion());
+
+  const onSetResult = () => {
+    const totalPoints = questions.reduce((prevPoint, { point }) => {
+      const currentPoint = point ? point : 0;
+      return prevPoint + currentPoint;
+    }, 0);
+
+    if (totalPoints < resultsCnt - 1) {
+      NoticeAlert.open("테스트 총 점수가 너무 적어요!");
+      return;
+    }
+
+    const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
+    const baseResults = [...data.data.results];
+    const updateResults = baseResults.map((result, idx) => {
+      return { ...result, pointBound: { ...pointBoundList[idx] } };
+    });
+    initResult(totalPoints, updateResults);
+
+    goPage("/test/multiple/result");
+  };
+
+  return {
+    questions,
+    questionsCnt,
+    addEmptyQuestion,
+    onSetResult,
+  };
 };
 
 const RandomGuide = styled.section`
@@ -111,14 +121,14 @@ const GuideText = styled.div`
 
   h2 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.xxl}rem;
     line-height: 30px;
     letter-spacing: -1px;
     color: ${darkGray};
   }
 
   p {
-    font-size: 15px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
     line-height: 24px;
     letter-spacing: -0.5px;
     color: ${bodyGray};

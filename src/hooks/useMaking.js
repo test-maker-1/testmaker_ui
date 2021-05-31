@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
+  initCommonData,
+  initResultsInfo,
   updateCommonData,
   updateTypeData,
   updateQuestionData,
@@ -16,14 +18,20 @@ import {
   initTypeData,
 } from "../redux/reducer/makingReducer";
 
-import { getQuestion, getResult, getPreset } from "../utils/constHandler";
+import { getQuestions, getPreset, getResults } from "../utils/constHandler";
 
 const useMaking = () => {
   const data = useSelector((state) => state.making);
   const dispatch = useDispatch();
 
+  const initResult = (totalPoints, results) => {
+    dispatch(initResultsInfo({ totalPoints, results }));
+  };
+
   const updateCommon = (key, value) =>
     dispatch(updateCommonData({ key, value }));
+
+  const updateStep = (step) => updateCommon("step", step);
 
   const updateCommonByInput = (e) => {
     const { name, value } = e.target;
@@ -49,14 +57,10 @@ const useMaking = () => {
 
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
+    const questions = getQuestions(type, questionsCnt);
+    const results = getResults(type, resultsCnt);
 
-    const emptyQuestion = getQuestion(type);
-    const questions = new Array(questionsCnt).fill(emptyQuestion);
-
-    const emptyResult = getResult(type);
-    const result = new Array(resultsCnt).fill(emptyResult);
-
-    dispatch(initTypeData({ type, questions, result }));
+    dispatch(initTypeData({ type, questions, results }));
   };
 
   // tag: string;
@@ -77,9 +81,12 @@ const useMaking = () => {
     data,
     dispatch,
     // init
+    initCommonData,
     initStateByType,
+    initResult,
     // update
     updateCommon,
+    updateStep,
     updateCommonByInput,
     updateTypeData,
     updateTypeDataByInput,

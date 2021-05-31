@@ -1,14 +1,22 @@
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   checkLogIn as checkLogInAction,
   kakaoLogIn as kakaoLogInAction,
   logOut as logOutAction,
 } from "../redux/reducer/userReducer";
-import { SUCCESS } from "../utils/asyncUtils";
+import { INIT, LOADING, SUCCESS } from "../utils/asyncUtils";
 
 const useUser = () => {
   const { data, status } = useSelector((state) => state.user.user);
-  const loggedIn = data && status === SUCCESS;
+  const logInLoading = useMemo(() => [LOADING, INIT].includes(status), [
+    status,
+  ]); // 로그인 요청 중
+  const loggedIn = useMemo(() => status === SUCCESS && data !== null, [
+    data,
+    status,
+  ]); // 로그인 상태
 
   const dispatch = useDispatch();
 
@@ -17,7 +25,15 @@ const useUser = () => {
 
   const logOut = () => dispatch(logOutAction());
 
-  return { data, status, loggedIn, checkLogIn, kakaoLogIn, logOut };
+  return {
+    data,
+    status,
+    loggedIn,
+    logInLoading,
+    checkLogIn,
+    kakaoLogIn,
+    logOut,
+  };
 };
 
 export default useUser;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
@@ -7,16 +7,10 @@ import { TitleBox, Select, InfoText } from "../../../components/common";
 import useMaking from "../../../hooks/useMaking";
 import ENUM from "../../../constants/Enum";
 
-const [FRITEND, FAMILY] = ["friend", "family"];
+const [FRITEND, FAMILY, currentStep] = ["friends", "family", "preset"];
 
 const MultiplePreset = () => {
-  const {
-    data: { data },
-    updateTypeDataByInput,
-  } = useMaking();
-
-  const value =
-    data.hasOwnProperty("target") && data.target ? data.target : FRITEND;
+  const { value, updateTypeDataByInput } = useTestInfo();
 
   return (
     <Container>
@@ -34,6 +28,22 @@ const MultiplePreset = () => {
       <BottomBtn btnArr={[{ name: "정했어요", type: ENUM.MOVENEXT }]} />
     </Container>
   );
+};
+
+const useTestInfo = () => {
+  const { data, updateStep, updateTypeDataByInput } = useMaking();
+  const typeData = data.data;
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  const value =
+    typeData.hasOwnProperty("target") && typeData.target
+      ? typeData.target
+      : FRITEND;
+
+  return { updateTypeDataByInput, value };
 };
 
 const Container = styled(PageContainer)`

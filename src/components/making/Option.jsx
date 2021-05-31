@@ -15,11 +15,10 @@ import ENUM from "../../constants/Enum";
 /*
  * value: string;
  * answer: string;
- * onCheck: function;
  */
-const Option = ({ value, answer = null, questionIdx, optionIdx }) => {
-  const isAnswer = answer && answer === value;
-  const { updateQuestion, updateOption, deleteOption } = useMaking();
+const Option = ({ value, isAnswer, deleteOption, idxs }) => {
+  const { updateQuestion, updateOption } = useMaking();
+  const { questionIdx, optionIdx } = idxs;
 
   const onUpdate = (e) => {
     const { value: newOption } = e.target;

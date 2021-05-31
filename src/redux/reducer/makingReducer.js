@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getQuestion, getResult } from "../../utils/constHandler";
 import initState from "../../constants/makingInitState";
+import question from "../../constants/question";
+import option from "../../constants/option";
+import result from "../../constants/result";
+
+const logOutActions = ["logOutSuccess", "logOutError", "logInError"];
 
 const prefix = "making";
 
@@ -10,14 +14,20 @@ const making = createSlice({
 
   reducers: {
     /* initialize */
-    initCommonData: () => {
-      return initState.common;
+    initCommonData: (state, { payload = false }) => {
+      return payload
+        ? { ...initState.common, maker: { ...state.maker } }
+        : initState.common;
     },
-    initTypeData: (state, { payload: { type, questions, result } }) => {
+    initTypeData: (state, { payload: { type, questions, results } }) => {
       state.type = type;
-      state.data = initState[type];
+      state.data = { ...initState[type] };
       state.data.questions = [...questions];
-      state.data.result = [...result];
+      state.data.results = [...results];
+    },
+    initResultsInfo: ({ data }, { payload: { totalPoints, results } }) => {
+      data.totalPoints = totalPoints;
+      data.results = [...results];
     },
 
     /* update */
@@ -40,19 +50,35 @@ const making = createSlice({
       questions[questionIdx].options[idx].name = option;
     },
     updateResultData: ({ data }, { payload: { key, value, idx } }) => {
-      data.result[idx][key] = value;
+      data.results[idx][key] = value;
     },
 
     /* add empty data */
     addQuestion: (state) => {
-      state.data.questions.push(getQuestion(state.type));
+      const {
+        type,
+        data: { nextQuestionId },
+      } = state;
+
+      state.data.questions.push(question[type](nextQuestionId));
+      state.data.nextQuestionId += 1;
       state.data.questionsCnt += 1;
     },
-    addOption: ({ data: { questions } }, { payload }) => {
-      questions[payload].options.push({ name: "" });
+    addOption: (state, { payload }) => {
+      const { questions } = state.data;
+      const emptyOption = option(questions[payload].nextOptionId);
+
+      state.data.questions[payload].options.push(emptyOption);
+      state.data.questions[payload].nextOptionId += 1;
     },
     addResult: (state) => {
-      state.data.result.push(getResult(state.type));
+      const {
+        type,
+        data: { nextResultId },
+      } = state;
+
+      state.data.results.push(result[type](nextResultId));
+      state.data.nextResultId += 1;
       state.data.resultsCnt += 1;
     },
 
@@ -76,14 +102,33 @@ const making = createSlice({
       questions[questionIdx].options.splice(optionIdx, 1);
     },
     deleteResult: (state, { payload }) => {
-      state.data.result.splice(payload, 1);
+      state.data.results.splice(payload, 1);
       state.data.resultsCnt -= 1;
     },
+  },
+
+  extraReducers: (builder) => {
+    // 로그인/로그아웃 시 making state에 유저 정보 저장/삭제
+    builder.addMatcher(
+      ({ type }) => {
+        return type.toLowerCase().includes("log");
+      },
+      (state, action) => {
+        if (action.type.includes(logOutActions)) {
+          return initState.common;
+        }
+
+        if (action.type.includes("LogInSuccess")) {
+          const { nickname: name, uid: userUid } = action.payload;
+          state.maker = { name, userUid };
+        }
+      }
+    );
   },
 });
 
 /* initialize */
-export const { initCommonData, initTypeData } = making.actions;
+export const { initCommonData, initTypeData, initResultsInfo } = making.actions;
 
 /* update */
 export const {

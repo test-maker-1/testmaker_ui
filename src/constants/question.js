@@ -1,10 +1,20 @@
-const multiple = {
+import { getOptions } from "../utils/constHandler";
+import preset from "./preset";
+
+const { multiple: multiplePreset } = preset;
+
+const multiple = (questionId) => ({
+  questionId,
   question: "",
+  answer: null, // string
+
   img: null, // 썸네일 path
-  answer: null, // string (추후 변경 가능)
+  openImg: false, // 썸네일 오픈 여부 -> 프론트에서만 사용
   point: 1,
-  options: new Array(3).fill({ name: "" }), // string[],
-};
+
+  nextOptionId: multiplePreset.optionsCnt, // 다음 옵션 Id -> 식별 위해 프론트에서만 사용
+  options: getOptions(multiplePreset.optionsCnt),
+});
 
 const mbti = {};
 

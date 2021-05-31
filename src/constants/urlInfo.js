@@ -60,9 +60,9 @@ export const [
 
 // https://www.notion.so/depromeet/Routing-URL-9a3efbefa3d84b679a23ea4a798a299f
 export const seqTest = {
-  [multiple]: [preset, qna, result, detail, replay, release],
-  [mbti]: [preset, qna, detail, replay, release],
-  [weight]: [preset, result, qna, detail, replay, release],
+  [multiple]: [preset, qna, result, detail],
+  [mbti]: [preset, qna, detail],
+  [weight]: [preset, result, qna, detail],
   [testing]: [welcome, exam, result],
 };
 

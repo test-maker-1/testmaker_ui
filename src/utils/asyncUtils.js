@@ -1,6 +1,7 @@
 import cookie from "react-cookies";
 import { call, put } from "redux-saga/effects";
 import UserAPI from "../api/userAPI";
+import MakingAPI from "../api/makingAPI";
 
 export const [INIT, LOADING, SUCCESS, ERROR] = [
   "init",
@@ -105,4 +106,9 @@ export const reducerUtils = {
     },
     status: ERROR,
   }),
+};
+
+export const saveTest = async (params) => {
+  const { status } = await MakingAPI.saveTest(params);
+  return status;
 };

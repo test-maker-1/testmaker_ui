@@ -24,7 +24,7 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
       switch (type) {
         case HOME: // 홈(메인)
         case PICKTEST: // 난이도선택
-          const page = type === PICKTEST ? picktest : home;
+          const page = type === PICKTEST ? `test/${picktest}` : home;
           history.push(`/${page}`);
           break;
 

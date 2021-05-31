@@ -6,19 +6,37 @@ import { SubTitle, BtnIcon, Option, BtnAddOption, BtnPoint } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
-import useOpen from "../../hooks/useOpen";
-
 import ENUM, { md } from "../../constants/Enum";
 
-const Question = ({ data, questionIdx }) => {
-  const { question, img, answer, point, options } = data;
-
-  const { dispatch, deleteQuestion, updateQuestion } = useMaking();
-  const { open, onToggle } = useOpen();
+const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
+  const { question, img, openImg, answer, point, options } = data;
+  const {
+    data: { testId },
+    dispatch,
+    deleteQuestion,
+    updateQuestion,
+    deleteOption,
+  } = useMaking();
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
-    if (name === "question") updateQuestion(name, value, questionIdx);
+    updateQuestion(name, value, questionIdx);
+  };
+
+  const onDeleteQuestion = () => {
+    if (questionsCnt - 1 < 1) {
+      openAlert("질문은 1개 이상 필요해요!");
+      return;
+    }
+    dispatch(deleteQuestion(questionIdx));
+  };
+
+  const onDeleteOption = (qIdx, oIdx) => {
+    if (options.length - 1 < 2) {
+      openAlert("선택지는 2개 이상 필요해요!");
+      return;
+    }
+    deleteOption(qIdx, oIdx);
   };
 
   return (
@@ -26,8 +44,8 @@ const Question = ({ data, questionIdx }) => {
       <div>
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
-          onUpload={onToggle}
-          onDelete={() => dispatch(deleteQuestion(questionIdx))}
+          onUpload={() => updateQuestion("openImg", !openImg, questionIdx)}
+          onDelete={onDeleteQuestion}
         >
           <BtnIcon type={ENUM.CASINO} />
         </SubTitle>
@@ -41,16 +59,24 @@ const Question = ({ data, questionIdx }) => {
             onBlur={handleUpdate}
           />
           {/* coverImg */}
-          {open && <UploadImg />}
+          {openImg && (
+            <UploadImg
+              testId={testId}
+              parentIdx={questionIdx}
+              img={img}
+              openAlert={openAlert}
+              updateParent={updateQuestion}
+            />
+          )}
           {/* options */}
           <ul>
             {options.map((option, idx) => (
               <Option
-                key={`${idx}-${option.name}`}
+                key={option.optionId}
                 value={option.name}
-                answer={answer}
-                questionIdx={questionIdx}
-                optionIdx={idx}
+                isAnswer={answer && option.name === answer}
+                idxs={{ questionIdx, optionIdx: idx }}
+                deleteOption={onDeleteOption}
               />
             ))}
           </ul>

@@ -1,33 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag, UploadImg } from "../../components/common/index";
+import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
-import { Input, InputTitle, TextArea } from "../../styles/index";
+import { Input, InputTitle, TextArea } from "../../styles";
 
+import usePage from "../../hooks/usePage";
 import useMaking from "../../hooks/useMaking";
-import ENUM, { lg } from "../../constants/Enum";
+import { checkMakingData } from "../../utils/handler";
 
-const { PREVIEW, MOVENEXT, ENTER } = ENUM;
+import ENUM, { lg } from "../../constants/Enum";
+import { saveTest, SUCCESS } from "../../utils/asyncUtils";
+import msg from "../../constants/msg";
+
+const { PREVIEW, ENTER, WARNING } = ENUM;
+const currentStep = "detail";
 
 const TestDetail = () => {
-  const { data, updateCommonByInput, addNewTag } = useMaking();
+  const {
+    data,
+    btns,
+    updateCommonByInput,
+    onEnterPress,
+    handleSubmit,
+  } = useDetail();
   const { title, description, optionalURL } = data;
-
-  const onEnterPress = (e) => {
-    const {
-      key,
-      target: { value: newTag },
-    } = e;
-
-    if (key === ENTER) {
-      addNewTag(newTag);
-      e.target.value = "";
-    }
-  };
 
   return (
     <PageContainer>
+      {/* alert */}
+      <NoticeAlert icon={WARNING} btns={btns} />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -47,7 +49,6 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
-
       <TitleBox>
         {/* tags */}
         <TagInput
@@ -62,7 +63,6 @@ const TestDetail = () => {
           ))}
         </Tags>
       </TitleBox>
-
       <TitleBox title="나를 더 홍보할래요!" noline>
         {/* optionalURL */}
         <Input
@@ -73,15 +73,70 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
       </TitleBox>
-
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
-          { name: "테스트 만들기", type: MOVENEXT },
+          {
+            name: "테스트 만들기",
+            customClick: handleSubmit,
+          },
         ]}
       />
     </PageContainer>
   );
+};
+
+const useDetail = () => {
+  const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
+  const [btns, setBtns] = useState();
+  const { goPage } = usePage();
+
+  const onEnterPress = (e) => {
+    const { value } = e.target;
+
+    if (e.key === ENTER) {
+      addNewTag(value);
+      e.target.value = "";
+    }
+  };
+
+  const handleSubmit = () => {
+    const { releasable, msg = "" } = checkMakingData(data);
+
+    if (releasable) {
+      setBtns([
+        { name: "다시보기" },
+        {
+          name: "테스트 만들기",
+          callback: saveFinalTest,
+        },
+      ]);
+    } else setBtns([{ name: "다시보기" }]);
+
+    NoticeAlert.open(msg);
+  };
+
+  const saveFinalTest = async () => {
+    const status = await saveTest(data);
+
+    if (status === SUCCESS) {
+      sessionStorage.setItem(
+        "savedTest",
+        JSON.stringify({
+          testId: data.testId,
+          onFeed: data.onFeed,
+          link: `testing/welcome?testid=${data.testId}`,
+        })
+      );
+      goPage("/test/release");
+    } else NoticeAlert.open(msg.errorPage[500]);
+  };
+
+  useEffect(() => {
+    if (data.step !== currentStep) updateStep(currentStep);
+  }, [data.step, updateStep]);
+
+  return { data, btns, updateCommonByInput, onEnterPress, handleSubmit };
 };
 
 const TagInput = styled(Input)`
