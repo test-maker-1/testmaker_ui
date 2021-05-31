@@ -7,6 +7,7 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply, { ComInput } from "./SubComponents/Reply";
 import theme from "../../styles/theme";
 import ENUM from "../../constants/Enum";
+import TestSwiper from "../../components/common/TestSwiper";
 
 const { fontSizes } = theme;
 const { PREVIEW, MOVENEXT } = ENUM;
@@ -49,7 +50,7 @@ const Result = memo((props) => {
           <Reply />
         </TitleBox>
         <TitleBox title="더 많은 테스트가 있어요!" noline>
-          <h1>WOW UNBELIEVE!</h1>
+          <TestSwiper />
         </TitleBox>
       </RoundContiner>
       <BottomBtn
