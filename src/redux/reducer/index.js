@@ -5,6 +5,7 @@ import testing from "./testingReducer";
 import reply from "./replyReducer";
 import user from "./userReducer";
 import register from "./registerReducer";
+import feed from "./feedReducer";
 
 export const rootReducer = combineReducers({
   user: user.reducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   making: making.reducer,
   testing: testing.reducer,
   reply: reply.reducer,
+  feed: feed.reducer,
 });

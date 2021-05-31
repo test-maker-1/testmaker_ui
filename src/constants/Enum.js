@@ -31,6 +31,9 @@ export const [
   "테스트만들기",
 ];
 
+// feed
+export const [ALL] = ["전체"];
+
 const ENUM = {
   HOME: "home",
   PICKTEST: "picktest",

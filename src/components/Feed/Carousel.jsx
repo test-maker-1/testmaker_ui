@@ -1,70 +1,71 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import styled from "styled-components";
 import ImageView from "../common/ImageView";
+import { useSelector } from "react-redux";
+import usePage from "../../hooks/usePage";
 
 export default function CarouselComponent() {
-  const imgUrl = [
-    {
-      id: 0,
-      title: "이도현 여자친구 테스트",
-      src: "https://post-phinf.pstatic.net/MjAyMDA5MzBfNDMg/MDAxNjAxNDU5NzQyNjUx._Dcf8eWn2FkYyOdj2F8kuyUj4SxXsk79gK7ZeflWWfUg.v4HYhPXDHQ_ro_sUfxuz4CzurEZEEggScmpiS212k-og.JPEG/OOOH3516_%EC%9D%B4%EB%8F%84%ED%98%84_%EC%88%98%EC%A0%95.jpg?type=w1200",
-    },
-    {
-      id: 1,
-      title: "정현정 테스트",
-      src: "http://img.sportsworldi.com/content/image/2020/11/17/20201117516497.jpg",
-    },
-    {
-      id: 2,
-      title: "MBTI",
-      src: "https://blog.kakaocdn.net/dn/beE4XC/btqKv7OxTSa/vAeCkYVVUHOH1FfUZoVkn1/img.jpg",
-    },
-  ];
-  const [topTest, setTopTest] = useState({ idx: 0, title: imgUrl[0].title });
+  const { goPage } = usePage();
+  const { top5Tests } = useSelector((state) => state.feed);
+  const initTitle = top5Tests && top5Tests[0].title;
+  const [topTest, setTopTest] = useState({ idx: 0, title: initTitle });
+
+  useEffect(() => {});
+
+  // const [topTest, setTopTest] = useState({});
   const onClickItem = (idx, item) => {
-    console.log(idx, item);
+    onClickTest();
   };
 
   const onChange = (idx, item) => {
     setTopTest({ idx, title: item.props.title });
   };
 
+  const onClickTest = useCallback(
+    (e) => {
+      goPage(`/${top5Tests && top5Tests[topTest.idx].testLink}`);
+    },
+    [goPage, top5Tests, topTest]
+  );
+
   return (
     <Ranking>
       <TitleBox>
-        <Top>TOP {topTest.idx + 1}</Top>
-        <Title>{topTest.title}</Title>
+        <Top> TOP {topTest.idx + 1}</Top>
+        <Title onClick={onClickTest}>{topTest.title}</Title>
       </TitleBox>
 
       <CarouselBox>
-        <Carousel
-          showArrows
-          showIndicators
-          infiniteLoop
-          useKeyboardArrows
-          autoPlay
-          stopOnHover
-          swipeable
-          emulateTouch
-          showStatus={false}
-          showThumbs={false}
-          interval={5000}
-          onClickItem={onClickItem}
-          onChange={onChange}
-          selectedItem={0}
-        >
-          {imgUrl.map((test, idx) => (
-            <ImageView
-              key={idx}
-              imageUrl={test.src}
-              title={test.title}
-              height="calc(100% / 1.76)"
-              border={false}
-            />
-          ))}
-        </Carousel>
+        {top5Tests && (
+          <Carousel
+            showArrows
+            showIndicators
+            infiniteLoop
+            useKeyboardArrows
+            autoPlay
+            stopOnHover
+            swipeable
+            emulateTouch
+            showStatus={false}
+            showThumbs={false}
+            interval={5000}
+            onClickItem={onClickItem}
+            onChange={onChange}
+            selectedItem={0}
+          >
+            {top5Tests.map((test) => (
+              <ImageView
+                key={test.uid}
+                imageUrl={test.coverImg}
+                title={test.title}
+                height="calc(100% / 1.76)"
+                border={false}
+              />
+            ))}
+          </Carousel>
+        )}
       </CarouselBox>
     </Ranking>
   );
@@ -103,6 +104,7 @@ export const Title = styled.div`
   text-align: left;
   letter-spacing: -0.8px;
   color: ${({ theme: { colors } }) => colors.darkGray};
+  cursor: pointer;
 `;
 
 const CarouselBox = styled.div`

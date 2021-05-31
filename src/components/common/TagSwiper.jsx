@@ -11,12 +11,12 @@ const TagSwiper = ({ tags, selectedTag, setSelected, noPadding }) => {
       {selectedTag && setSelected ? (
         <Swiper slidesPerView={"auto"} spaceBetween={0} className="mySwiper">
           {tags.map((tag) => {
-            if (selectedTag === tag.tag) {
+            if (selectedTag === tag) {
               return (
                 <SwiperSlide>
                   <Tag
-                    key={tag.id}
-                    tag={tag.tag}
+                    key={`tag${tag}`}
+                    tag={tag}
                     selected={true}
                     setSelected={setSelected}
                   />
@@ -25,7 +25,7 @@ const TagSwiper = ({ tags, selectedTag, setSelected, noPadding }) => {
             } else
               return (
                 <SwiperSlide>
-                  <Tag key={tag.id} tag={tag.tag} setSelected={setSelected} />
+                  <Tag key={`tag${tag}`} tag={tag} setSelected={setSelected} />
                 </SwiperSlide>
               );
           })}
@@ -34,7 +34,7 @@ const TagSwiper = ({ tags, selectedTag, setSelected, noPadding }) => {
         <Swiper slidesPerView={"auto"} spaceBetween={0} className="mySwiper">
           {tags.map((tag) => (
             <SwiperSlide>
-              <Tag key={tag.id} tag={tag.tag} selected={true} />
+              <Tag key={`tag${tag}`} tag={tag} selected={true} />
             </SwiperSlide>
           ))}
         </Swiper>

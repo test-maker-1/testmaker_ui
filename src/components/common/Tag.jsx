@@ -3,8 +3,9 @@ import styled, { css } from "styled-components";
 
 import { SVG } from "../common/index";
 import useMaking from "../../hooks/useMaking";
-import ENUM from "../../constants/Enum";
+import ENUM, { ALL } from "../../constants/Enum";
 import theme from "../../styles/theme";
+import { changeTests } from "../../redux/reducer/feedReducer";
 
 const { blue, white, bodyGray } = theme.colors;
 const svgStyles = {
@@ -24,12 +25,15 @@ const Tag = ({ tag, deletable = false, selected = false, setSelected }) => {
   };
   const onSelectTag = (e) => {
     if (!setSelected) return;
+    console.log(tag);
     setSelected(tag);
+    dispatch(changeTests({ tagName: tag, lastTestUid: 0 }));
   };
+  console.log(tag);
 
   return (
     <TagBox onClick={onSelectTag} selected={selected}>
-      <span>{tag}</span>
+      <span>{tag === ALL ? tag : "# " + tag}</span>
       {/* delete btn */}
       {deletable && (
         <button onClick={onClickDelete}>
