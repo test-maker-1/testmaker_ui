@@ -6,19 +6,16 @@ import { SubTitle, BtnIcon, Option, BtnAddOption, BtnPoint } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
-import useOpen from "../../hooks/useOpen";
-
 import ENUM, { md } from "../../constants/Enum";
 
 const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
-  const { question, img, answer, point, options } = data;
+  const { question, img, openImg, answer, point, options } = data;
   const {
     dispatch,
     deleteQuestion,
     updateQuestion,
     deleteOption,
   } = useMaking();
-  const { open, onToggle } = useOpen();
 
   const handleUpdate = (e) => {
     const { name, value } = e.target;
@@ -46,7 +43,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
       <div>
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
-          onUpload={onToggle}
+          onUpload={() => updateQuestion("openImg", !openImg, questionIdx)}
           onDelete={onDeleteQuestion}
         >
           <BtnIcon type={ENUM.CASINO} />
@@ -61,7 +58,13 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
             onBlur={handleUpdate}
           />
           {/* coverImg */}
-          {open && <UploadImg />}
+          {openImg && (
+            <UploadImg
+              parentIdx={questionIdx}
+              img={img}
+              updateParent={updateQuestion}
+            />
+          )}
           {/* options */}
           <ul>
             {options.map((option, idx) => (

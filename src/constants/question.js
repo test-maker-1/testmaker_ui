@@ -9,6 +9,7 @@ const multiple = (questionId) => ({
   answer: null, // string
 
   img: null, // 썸네일 path
+  openImg: false, // 썸네일 오픈 여부 -> 프론트에서만 사용
   point: 1,
 
   nextOptionId: multiplePreset.optionsCnt, // 다음 옵션 Id -> 식별 위해 프론트에서만 사용

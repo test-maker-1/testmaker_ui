@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, memo } from "react";
 import styled from "styled-components";
 
 import { SVG } from "../common/index";
@@ -21,9 +21,9 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = () => {
+export const UploadImg = memo(({ parentIdx, img, updateParent }) => {
   const fileInput = useRef();
-  const [imgURL, setImgURL] = useState(null);
+  const [imgURL, setImgURL] = useState(img);
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
   // upload and delete image
@@ -75,7 +75,7 @@ export const UploadImg = () => {
       />
     </>
   );
-};
+});
 
 const Wrapper = styled.div`
   position: relative;
