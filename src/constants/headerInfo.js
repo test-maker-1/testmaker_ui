@@ -74,6 +74,12 @@ const headerInfo = {
     title: { type: NOTHING },
     background: theme.colors.lightblue,
   },
+
+  "testing/otherType": {
+    leftType: BACK,
+    title: { type: NOTHING },
+    background: "#fff",
+  },
 };
 
 export default headerInfo;
