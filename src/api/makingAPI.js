@@ -14,7 +14,7 @@ export default class MakingAPI {
     const feedParams = {
       onFeed,
     };
-    return post(`/makingTest/feed/${testId}`, feedParams);
+    return post(`/makingTest/onFeed/${testId}`, feedParams);
   }
   static saveTest(params) {
     return post(`/makingTest/${params.testId}`, params);

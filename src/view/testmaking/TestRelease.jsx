@@ -51,16 +51,16 @@ const TestRelease = () => {
     const openTest = JSON.parse(e.currentTarget.value);
     if (openTest === feed) return;
 
+    if (openTest) onOpen();
+    else onClose();
+
     const params = {
       testId: savedTest.testId,
       onFeed: openTest,
     };
     const { status } = await MakingAPI.updateOnFeed(params);
 
-    if (status === SUCCESS) {
-      if (openTest) onOpen();
-      else onClose();
-    } else NoticeAlert.open(msg.errorPage[500]);
+    if (status === ERROR) NoticeAlert.open(msg.errorPage[500]);
   };
 
   return (
