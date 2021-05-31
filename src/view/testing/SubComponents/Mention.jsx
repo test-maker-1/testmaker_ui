@@ -5,7 +5,7 @@ import useOpen from "../../../hooks/useOpen";
 import Enum from "../../../constants/Enum";
 import { getDateInfo, diffByTime } from "../../../utils/handler";
 
-const Mention = ({ idx, writer, content, timestamp }) => {
+const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
 
   const formatTime = useCallback(
@@ -36,6 +36,9 @@ const Mention = ({ idx, writer, content, timestamp }) => {
 
   const handleOnClick = (id, event) => {
     setOpen(false);
+    if (id === "report" && popupClick) {
+      popupClick(id, uid);
+    }
   };
 
   return (
@@ -44,10 +47,10 @@ const Mention = ({ idx, writer, content, timestamp }) => {
         <Avatar img={writer.profileImg} />
         <UserName>{writer.nickname}</UserName>
         <Timer>{formatTime(timestamp)}</Timer>
-        {/* isMe : 1.본인, 0.아님 */}
+        {/* isMe : -1.로그인안한상태 0.로그인 했지만, 당사자가 아닌 유저, 1.로그인한 당사자 유저  */}
         <RightSide>
           <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
-          {writer?.isMe === 0 && openPop && (
+          {writer?.isMe === 1 && openPop && (
             <>
               <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
               <Popup>

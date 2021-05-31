@@ -1,22 +1,72 @@
 import React, { useCallback, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { NoticeAlert } from "../../components/common";
 import { PageContainer } from "../../components/frame/BottomBtn";
-import InfinScroll from "../../components/common/InfinScorll";
+import InfinScroll from "../../components/common/InfinScroll";
 import Mention, { EmptyMention } from "./SubComponents/Mention";
 import { ComInput } from "./SubComponents/Reply";
 import {
   addReplyInfo,
   submitOneComment,
+  reportComment,
 } from "../../redux/reducer/replyReducer";
+
+let comment_id = null;
+
+const def_alert = {
+  icon: null,
+  msg: "",
+  btn: [],
+};
+
+//Alert 창
+const returnALInfo = (type, callback) => {
+  let result = {};
+  console.log(comment_id);
+  if (type === "report") {
+    result = {
+      btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
+    };
+  } else if (type === "share") {
+    result = {
+      msg: "공유할건가요?",
+      btn: ["아니요", "예"],
+    };
+  }
+
+  return result;
+};
 
 const Comments = (props) => {
   const replies = useSelector((state) => state.reply.replies);
   const [isStop, setStop] = useState(false);
   const dispatch = useDispatch();
   const bool = replies.length < 30;
+  const [alertInfo, setALInfo] = useState(def_alert);
+
+  const handleOnAlertClick = useCallback((event) => {
+    // 선택한 버튼명 반환
+    console.log(comment_id, event, event.target.textContent, "클릭되었습니다!");
+    dispatch(reportComment(comment_id));
+  }, []);
+
+  const openAlert = (type, uid) => {
+    comment_id = uid;
+
+    const alert_info = Object.assign(
+      {},
+      def_alert,
+      returnALInfo(type, handleOnAlertClick)
+    );
+    if (type === "report") {
+      setALInfo(alert_info);
+      NoticeAlert.open("이 댓글을 신고할까요?");
+    }
+  };
 
   const handleOnSubmit = (value) => {
+    //댓글 작성
     dispatch(submitOneComment(value));
 
     const current_scroll = document.documentElement.scrollTop;
@@ -51,14 +101,14 @@ const Comments = (props) => {
             onScroll={handleScroll}
           >
             {replies.map((item, idx) => {
-              console.log("mention >>>>", item, item.content);
               return (
                 <Mention
                   key={item.uid + idx}
-                  idx={idx}
+                  uid={item.uid}
                   writer={item.writer}
                   content={item.content}
                   timestamp={item.writtenAt}
+                  popupClick={openAlert}
                 />
               );
             })}
@@ -72,6 +122,7 @@ const Comments = (props) => {
           </FootArea>
         </BtnContainer>
       </CommentBox>
+      <NoticeAlert icon={alertInfo.icon} btns={alertInfo.btn} />
     </PageContainer>
   );
 };

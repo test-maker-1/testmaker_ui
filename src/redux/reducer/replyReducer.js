@@ -19,11 +19,17 @@ const reply = createSlice({
       //상단에 새 댓글 추가
       state.replies.unshift(payload);
     },
+    reportComment: (state, { payload }) => {},
   },
 });
 
 //actions
-export const { getReplyInfo, addReplyInfo, submitOneComment, addOneComment } =
-  reply.actions;
+export const {
+  getReplyInfo,
+  addReplyInfo,
+  submitOneComment,
+  addOneComment,
+  reportComment,
+} = reply.actions;
 
 export default reply;

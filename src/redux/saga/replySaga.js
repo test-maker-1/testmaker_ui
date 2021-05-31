@@ -12,6 +12,7 @@ import {
   addReplyInfo,
   submitOneComment,
   addOneComment,
+  reportComment,
 } from "../reducer/replyReducer";
 import testingAPI from "../../api/testingAPI";
 import { SUCCESS } from "../../utils/asyncUtils";
@@ -51,9 +52,25 @@ function* setComments(action) {
   }
 }
 
+function* reportToComment(action) {
+  const state = yield select();
+  const param = action.payload;
+
+  const { data, status } = yield call(
+    testingAPI.reportComment,
+    state.reply.testUid, //state.testing.current_testID,
+    param
+  );
+
+  if (status === SUCCESS) {
+    //data update for reportsCnt
+  }
+}
+
 function* replyInformation() {
   yield takeLeading(getReplyInfo.type, getComments);
   yield takeLatest(submitOneComment.type, setComments);
+  yield takeLeading(reportComment.type, reportToComment);
 }
 
 export default function* replySaga() {

@@ -125,31 +125,39 @@ const testing = {
 
 const reply = {
   testUid: "",
-  replies: [
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-    replyForm,
-  ],
+  replies: [],
+};
+
+const resultForm = {
+  cnt: 4,
+  description: "결과 설명",
+  img: "결과 이미지 path2",
+  percent: 100,
+  pointBound: { start: 5, end: 7 },
+  title: "결과 타이틀2",
 };
 
 /* 객관식 테스트 결과*/
 const result = {
-  testId: 2323432,
+  isRankMode: false,
+  responseUid: "faf8747c-b07b-4541-93e3-d094d0d014d0",
+  userTestResult: "결과 타이틀2",
+  testResults: [
+    resultForm,
+    {
+      img: "결과 이미지 path",
+      description: "결과 설명",
+      title: "결과 타이틀",
+      pointBound: { end: 4, start: 0 },
+      cnt: 0,
+      percent: 0,
+    },
+  ],
+  recent3Replies: [],
   feedback: {
     emoji: "happy",
     msg: "오 너님 좀 잘 만드신듯 ㅋㅋ",
   },
-  userAnswers: [0, 2, 4, 5, 2],
 };
 
 const initState = {

@@ -1,3 +1,4 @@
+import { generatePath, history } from "react-router";
 import {
   select,
   call,
@@ -13,18 +14,18 @@ import {
   getTestExam,
   updateTestExam,
   saveAnwerByStep,
+  saveResult,
 } from "../reducer/testingReducer";
 import testingAPI from "../../api/testingAPI";
 import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
+import { testing, result } from "../../constants/urlInfo";
 
 const getTestInform = createPromiseSaga(setTestID, testingAPI.getTestInfo);
 
 function* getOneTestInform(action) {
   const param = action.payload;
-  console.log("getOneTestInform1");
   const { data, status } = yield call(testingAPI.getTestInfo, param);
 
-  console.log("getOneTestInform2", data, status);
   if (status === SUCCESS) {
     yield put({
       type: updateTestInfo.type,
@@ -69,24 +70,38 @@ function* insertExam(action) {
 
     console.log("getTestExamInform3", data, status);
     if (status === SUCCESS) {
-      const { questsCnt, questions } = data;
-      if (questions && questions.length > 0) {
-        yield put({
-          type: saveAnwerByStep.type,
-          payload: {
-            questsCnt,
-            questions,
-          },
-        });
-      }
+      const {
+        isRankMode,
+        responseUid,
+        userTestResult,
+        repliesCnt,
+        recent3Replies,
+      } = data;
+
+      yield put({
+        type: saveResult.type,
+        payload: data,
+      });
     }
   }
+}
+
+function* moveResultPage() {
+  const result2 = generatePath(
+    `/${testing}/${result}`,
+    document.location.search
+  );
+  window.history.push(`/${testing}/${result}`, document.location.search);
+  // document.location.href =
+  //   "http://localhost:3000/testing/result?testid=7b947dc7-d2f0-4e6d-8e55-a6259014c227";
+  console.log(result2);
 }
 
 function* getTestInformation() {
   yield takeLeading(setTestID.type, getOneTestInform);
   yield takeLatest(getTestExam.type, getTestExamInform);
   yield takeLatest(saveAnwerByStep.type, insertExam);
+  yield takeLatest(saveResult.type, moveResultPage);
 }
 
 export default function* testingsaga() {

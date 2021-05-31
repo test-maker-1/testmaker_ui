@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { get, post, put } from "./instance";
 
 export default class TestingAPI {
   /** TEST 정보 */
@@ -19,5 +19,9 @@ export default class TestingAPI {
   }
   static postComment(uID, value) {
     return post(`/testing/${uID}/reply`, { reply: value });
+  }
+  static reportComment(uID, cID) {
+    // PUT /testing/:testUid/reply/:replyID/report
+    return put(`/testing/${uID}/reply/${cID}/report`);
   }
 }
