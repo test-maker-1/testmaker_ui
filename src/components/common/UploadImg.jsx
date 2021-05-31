@@ -24,7 +24,7 @@ const cancelStyles = {
 };
 
 export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
-  const { uploadImg } = useImage(QUESTION, parentIdx, () =>
+  const { uploadImg, deleteImg } = useImage(QUESTION, parentIdx, () =>
     openAlert(msg.errorPage[500])
   );
 
@@ -35,7 +35,6 @@ export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
 
   // upload and delete image
   const handleOnCick = () => fileInput.current.click();
-  // const handleDelClick = () => setImgURL(null);
 
   const onUpload = async (e) => {
     const files = e.target.files;
@@ -44,6 +43,12 @@ export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
     await uploadImg(files[0]);
     // init
     fileInput.current.value = null;
+    onClose();
+  };
+
+  const onDelete = async (e) => {
+    onOpen();
+    await deleteImg(img);
     onClose();
   };
 
@@ -60,7 +65,7 @@ export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
               <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
             </EditIcon>
             <EditIcon>
-              <SVG type={DELETE} style={svgStyles} />
+              <SVG type={DELETE} style={svgStyles} onClick={onDelete} />
             </EditIcon>
             <EditIcon>
               <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />

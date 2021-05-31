@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { get, post, remove } from "./instance";
 
 export default class MakingAPI {
   // get
@@ -27,6 +27,6 @@ export default class MakingAPI {
     return post("/img", form);
   }
   static deleteImg(img) {
-    return post(`/img/single?path=${img}`);
+    return remove(`/img/single?path=${img}`);
   }
 }

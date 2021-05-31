@@ -25,7 +25,17 @@ const useImage = (type, parentIdx, errorCallback) => {
     }
   };
 
-  return { uploadImg };
+  const deleteImg = async (img) => {
+    const { status } = await MakingAPI.deleteImg(img);
+    if (status === SUCCESS) {
+      if (type === ENUM.QUESTION) updateQuestion("img", null, parentIdx);
+      if (type === ENUM.RESULT) updateResult("img", null, parentIdx);
+    } else {
+      errorCallback();
+    }
+  };
+
+  return { uploadImg, deleteImg };
 };
 
 export default useImage;
