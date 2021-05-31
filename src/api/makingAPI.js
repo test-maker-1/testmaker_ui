@@ -26,4 +26,7 @@ export default class MakingAPI {
   static uploadImg(form) {
     return post("/img", form);
   }
+  static deleteImg(img) {
+    return post(`/img/single?path=${img}`);
+  }
 }
