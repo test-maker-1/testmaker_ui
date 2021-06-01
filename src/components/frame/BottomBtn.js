@@ -1,13 +1,12 @@
 import React, { memo } from "react";
 import { withRouter } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { getNextPageURL } from "../../utils/handler";
 import { home, picktest, preview } from "../../constants/urlInfo";
 import ENUM from "../../constants/Enum";
 
 const { HOME, PICKTEST, PREVIEW, MOVENEXT, SHARE } = ENUM;
-const grayBtns = [HOME, PREVIEW, SHARE];
 
 const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   const handleOnClick = async (idx, event) => {
@@ -33,7 +32,7 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
           break;
 
         case MOVENEXT: // 다음 페이지 이동
-          const next_url = getNextPageURL(match);
+          const next_url = getNextPageURL(match, location);
           history.push(`/${next_url}`);
           break;
 
@@ -80,13 +79,17 @@ const Button = styled.button`
   letter-spacing: -0.8px;
 
   color: white;
-  ${({ theme: { colors }, type }) => {
-    const { bodyGray, black } = colors;
-    const bgColor = grayBtns.includes(type) ? bodyGray : black;
-    return css`
-      background-color: ${bgColor};
-    `;
-  }}
+  /*자식이 1개일 경우*/
+  &:first-child:nth-last-child(1) {
+    background-color: ${({ theme: { colors } }) => colors.black};
+  }
+  /*자식이 2개 이상일 경우 홀짝 구분*/
+  &:nth-child(2n-1) {
+    background-color: ${({ theme: { colors } }) => colors.bodyGray};
+  }
+  &:nth-child(2n) {
+    background-color: ${({ theme: { colors } }) => colors.black};
+  }
 `;
 
 // bottomBtn이 있는 page일 경우 최상위 div로 사용

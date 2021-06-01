@@ -28,7 +28,7 @@ export const getConfiguration = (plocation) => {
  * 다음 페이지 URL 반환
  * pmatch: object => url: string
  */
-export const getNextPageURL = (pmatch) => {
+export const getNextPageURL = (pmatch, plocation) => {
   const {
     params: { module, step },
     path,
@@ -50,7 +50,9 @@ export const getNextPageURL = (pmatch) => {
     case testing: // 테스트
       const seque = seqTest[testing];
       //ex) testing/welcome
-      nextUrl = `${where}/${seque[seque.indexOf(module) + 1]}`;
+      nextUrl = `${where}/${seque[seque.indexOf(module) + 1]}${
+        plocation.search
+      }`;
       break;
     default:
       break;
@@ -112,10 +114,26 @@ export const diffByTime = (dateA, dateB) => {
   const diffMinute = Math.abs(calc / 60);
   const diffHour = Math.abs(calc / 60 / 60);
 
-  if (diffHour > 23) return { mode: "day", diff: parseInt(diffHour) };
-  else if (diffHour >= 1) return { mode: "hour", diff: parseInt(diffHour) };
-  else if (diffMinute >= 1) return { mode: "min", diff: parseInt(diffMinute) };
-  else if (diffSecond >= 1) return { mode: "sec", diff: parseInt(diffSecond) };
+  let mode = "",
+    diff = "";
+
+  if (diffHour > 23) {
+    mode = "day";
+    diff = parseInt(diffHour);
+  } else if (diffHour >= 1) {
+    mode = "hour";
+    diff = parseInt(diffHour);
+  } else if (diffMinute >= 1) {
+    mode = "min";
+    diff = parseInt(diffMinute);
+  } else if (diffSecond > 0) {
+    mode = "sec";
+    diff = diffSecond < 1 ? 1 : parseInt(diffSecond);
+  } else {
+    console.log(diffHour, diffMinute, diffSecond, "///", dateA, dateB);
+  }
+
+  return { mode, diff };
 };
 
 /*
