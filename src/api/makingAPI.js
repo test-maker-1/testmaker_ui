@@ -8,6 +8,10 @@ export default class MakingAPI {
   static getTest(testId) {
     return get(`/makingTest/${testId}`);
   }
+  static getQuestionPreset(params) {
+    const { target, questCnt } = params;
+    return get(`/makingTest/preset?target=${target}&questCnt=${questCnt}`);
+  }
   // update or save
   static updateOnFeed(params) {
     const { testId, onFeed } = params;
@@ -21,6 +25,10 @@ export default class MakingAPI {
   }
   static submitTest(testId) {
     return post(`/makingTest/submit/${testId}`);
+  }
+  // add
+  static addQuestionPreset(params) {
+    return post("/makingTest/addPreset", params);
   }
   // image
   static uploadImg(form) {
