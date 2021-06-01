@@ -56,6 +56,7 @@ const ResultBound = ({ data, addResult }) => {
           resultIdx={idx}
           result={result}
           deleteResult={handleDeleteResult}
+          openAlert={NoticeAlert.open}
         />
       ))}
       <BtnAdd target="결과" onClick={addEmptyResult} />

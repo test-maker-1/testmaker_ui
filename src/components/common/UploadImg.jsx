@@ -10,7 +10,7 @@ import useImage from "../../hooks/useImage";
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
 
-const { CHANGE, DELETE, CANCEL, QUESTION } = ENUM;
+const { CHANGE, DELETE, CANCEL } = ENUM;
 
 const svgStyles = {
   width: 40,
@@ -23,8 +23,8 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = memo(({ img, parentIdx, openAlert }) => {
-  const { uploadImg, deleteImg } = useImage(QUESTION, parentIdx, () =>
+export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
+  const { uploadImg, deleteImg } = useImage(type, parentIdx, () =>
     openAlert(msg.errorPage[500])
   );
 

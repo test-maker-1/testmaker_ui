@@ -60,6 +60,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
           {/* coverImg */}
           {openImg && (
             <UploadImg
+              type={ENUM.QUESTION}
               img={img}
               parentIdx={questionIdx}
               openAlert={openAlert}

@@ -6,20 +6,18 @@ import { SubTitle } from ".";
 import { InputTitle, TextArea } from "../../styles";
 
 import useMaking from "../../hooks/useMaking";
-import useOpen from "../../hooks/useOpen";
+import ENUM, { md } from "../../constants/Enum";
 
-import { md } from "../../constants/Enum";
-
-const Result = ({ resultIdx, result, deleteResult }) => {
+const Result = ({ resultIdx, result, deleteResult, openAlert }) => {
   const {
     title,
     description,
     img,
+    openImg,
     pointBound: { start, end },
   } = result;
 
   const { updateResult } = useMaking();
-  const { open, onToggle } = useOpen();
 
   const onUpdate = (e) => {
     const { name, value } = e.target;
@@ -33,7 +31,7 @@ const Result = ({ resultIdx, result, deleteResult }) => {
         <SubTitle
           title={`${start !== null ? start : ""}점 이상
                   ${end !== null ? end : ""}점 이하`}
-          onUpload={onToggle}
+          onUpload={() => updateResult("openImg", !openImg, resultIdx)}
           onDelete={() => deleteResult(resultIdx)}
         ></SubTitle>
         <TitleBox noline>
@@ -46,7 +44,14 @@ const Result = ({ resultIdx, result, deleteResult }) => {
             onBlur={onUpdate}
           />
           {/* img */}
-          {open && <UploadImg />}
+          {openImg && (
+            <UploadImg
+              type={ENUM.RESULT}
+              img={img}
+              parentIdx={resultIdx}
+              openAlert={openAlert}
+            />
+          )}
           {/* description */}
           <DescText
             name="description"
