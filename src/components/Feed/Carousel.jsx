@@ -87,8 +87,9 @@ const CarouselBox = styled.div`
     width: 100%;
     cursor: pointer;
   }
-  .swiper-button-next,
-  .swiper-button-prev {
+  .swiper-button-next.swiper-button-disabled,
+  .swiper-button-prev.swiper-button-disabled {
+    pointer-events: auto;
   }
 `;
 const Ranking = styled.div`
