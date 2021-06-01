@@ -17,7 +17,6 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-kakao-login": "^2.1.0",
     "react-redux": "^7.2.3",
-    "react-responsive-carousel": "^3.2.18",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
