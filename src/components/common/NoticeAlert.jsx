@@ -22,6 +22,11 @@ class NoticeAlert extends PureComponent {
     }
   } // open 여부, 내용을 소스 내에서 관리
 
+  closeCallBack = (callback, event) => {
+    if (callback) callback(event);
+    this.handleOnClose();
+  };
+
   handleOnClose = () => this.setState({ open: false });
 
   setButtons() {
@@ -30,7 +35,7 @@ class NoticeAlert extends PureComponent {
     return btns.map((oneBtn, idx) => {
       const onClick =
         oneBtn.hasOwnProperty("callback") && oneBtn.callback !== null
-          ? oneBtn.callback
+          ? this.closeCallBack.bind(this, oneBtn.callback)
           : this.handleOnClose;
       const color = btns.length === 1 ? "blue" : idx ? "blue" : "skyBlue";
 
