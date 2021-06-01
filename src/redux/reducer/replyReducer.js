@@ -7,13 +7,29 @@ const reply = createSlice({
   name: prefix,
   initialState: initState.reply,
   reducers: {
-    addReplyInfo: (state, { payload }) => {
-      state.push(...payload);
+    getReplyInfo: (state, { payload: { testid } }) => {
+      //recent3replies
+      state.testUid = testid;
     },
+    addReplyInfo: (state, { payload }) => {
+      state.replies.push(...payload);
+    },
+    submitOneComment: (state, { payload }) => {},
+    addOneComment: (state, { payload }) => {
+      //상단에 새 댓글 추가
+      state.replies.unshift(payload);
+    },
+    reportComment: (state, { payload }) => {},
   },
 });
 
 //actions
-export const { addReplyInfo } = reply.actions;
+export const {
+  getReplyInfo,
+  addReplyInfo,
+  submitOneComment,
+  addOneComment,
+  reportComment,
+} = reply.actions;
 
 export default reply;

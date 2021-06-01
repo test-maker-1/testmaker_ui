@@ -72,9 +72,10 @@ export const BtnField = ({
 //#endregion
 
 //#region 테스트 버튼
-export const BtnExam = ({ name, onClick }) => {
+export const BtnExam = ({ name, clicked, onClick }) => {
   // 이미 선택한 답변일 경우 색 변경 로직 필요
-  const classes = useStyles({ color: "gray", size: lg, isTestBtn: true });
+  const color = clicked ? "skyBlue" : "gray";
+  const classes = useStyles({ color: color, size: lg, isTestBtn: true });
   return (
     <Button fullWidth={true} className={classes.btn} onClick={onClick}>
       {name}
@@ -94,7 +95,10 @@ const useStyles = makeStyles(() => ({
     color: btnColors[color].color,
 
     "&:hover": {
-      background: btnColors[color].bgColor,
+      background: isTestBtn
+        ? btnColors["blue"].bgColor
+        : btnColors[color].bgColor,
+      color: isTestBtn ? "white" : btnColors[color].color,
     },
     "&:active": {
       // isTestBtn = true일 때 스타일 변경 로직 필요

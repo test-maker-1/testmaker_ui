@@ -33,7 +33,7 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
           break;
 
         case MOVENEXT: // 다음 페이지 이동
-          const next_url = getNextPageURL(match);
+          const next_url = getNextPageURL(match, location);
           history.push(`/${next_url}`);
           break;
 

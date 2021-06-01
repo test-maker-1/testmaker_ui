@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
@@ -33,6 +34,7 @@ const returnALInfo = (type, callback) => {
 };
 
 const Welcome = () => {
+  const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const [alertInfo, setALInfo] = useState(def_alert);
   const openAlert = (type) => {
     const alert_info = Object.assign(
@@ -54,7 +56,10 @@ const Welcome = () => {
       <TestIntro openAlert={openAlert} />
       {/* 댓글 영역 */}
       <RoundContiner>
-        <Reply />
+        <Reply
+          repliesCnt={testInfo.repliesCnt}
+          recent3replies={recent3replies}
+        />
       </RoundContiner>
       <BottomBtn
         btnArr={[

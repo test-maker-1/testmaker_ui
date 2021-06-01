@@ -1,11 +1,10 @@
 import React, { memo, useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Mention, { EmptyMention } from "./Mention";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 
-export const ComInput = ({ hintText, onFocus }) => {
+export const ComInput = ({ hintText, onFocus, onSubmit }) => {
   const [words, setWords] = useState("");
   const handleOnFocus = (event) => {
     if (onFocus) onFocus(event);
@@ -14,6 +13,7 @@ export const ComInput = ({ hintText, onFocus }) => {
     event.preventDefault();
 
     if (onFocus) onFocus(event);
+    if (onSubmit) onSubmit(words);
     if (words) setWords("");
   };
 
@@ -36,18 +36,16 @@ export const ComInput = ({ hintText, onFocus }) => {
   );
 };
 
-const Reply = memo(() => {
-  const { testInfo, recent3replies } = useSelector((state) => state.testing);
+const Reply = memo(({ repliesCnt, recent3replies }) => {
   const { goPage } = usePage();
-  const onMoveComments = () => goPage(`/${testing}/${comments}`);
+  const onMoveComments = () =>
+    goPage(`/${testing}/${comments}`, document.location.search);
 
   return (
     <>
       <CommentTitle>
         <Title>댓글</Title>
-        <Entire onClick={onMoveComments}>
-          {testInfo.repliesCnt}개 전체보기
-        </Entire>
+        <Entire onClick={onMoveComments}>{repliesCnt}개 전체보기</Entire>
       </CommentTitle>
       <InputItem>
         <ComInput

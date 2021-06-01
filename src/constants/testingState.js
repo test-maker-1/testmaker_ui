@@ -16,20 +16,24 @@ const testForm = {
 };
 
 /* 댓글 형식 */
-const replyForm = {
-  uid: "nz6eCHZ2GZJeor6BXJDC",
+export const replyForm = {
+  testUid: "fe59e1a6-b4bb-4d15-8c65-547a37e82758",
+  uid: "2ac255a5-4759-4e7a-9640-20877b54e020",
   content: "테스트 진짜 신박해요~!! ㅋㅋㅋ 우오아아 재밌다",
   writtenAt: 1619324817995,
+  //writer: {nickname: "JAEN", profileImg: "", uid: "2aad0c77-6216-4915-817c-ca2f9fd871de"}
   writer: {
     uid: 34234,
     isMe: 0,
     profileImg: "https://~~",
     nickname: "jennny",
   },
+  reports: [],
+  reportsCnt: 0,
 };
 
 const testing = {
-  testUid: "863dbe75-f6ac-46f4-bb9b-bfcd81407acc",
+  current_testID: "",
   testInfo: {
     uid: "nz6eCHZ2GZJeor6BXJDC",
     title: "성격 유형검사 MBTI Test",
@@ -80,6 +84,8 @@ const testing = {
       ],
     },
   ],
+  /* 정답 형식 */
+  answers: { type: "multi", values: [] },
   recent3replies: [
     {
       uid: "nz6eCHZ2GZJeor6BXJDC",
@@ -117,30 +123,41 @@ const testing = {
   ],
 };
 
-const reply = [
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-  replyForm,
-];
+const reply = {
+  testUid: "",
+  replies: [],
+};
+
+const resultForm = {
+  cnt: 4,
+  description: "결과 설명",
+  img: "결과 이미지 path2",
+  percent: 100,
+  pointBound: { start: 5, end: 7 },
+  title: "결과 타이틀2",
+};
 
 /* 객관식 테스트 결과*/
 const result = {
-  testId: 2323432,
+  isRankMode: false,
+  responseUid: "faf8747c-b07b-4541-93e3-d094d0d014d0",
+  userTestResult: "결과 타이틀2",
+  testResults: [
+    resultForm,
+    {
+      img: "결과 이미지 path",
+      description: "결과 설명",
+      title: "결과 타이틀",
+      pointBound: { end: 4, start: 0 },
+      cnt: 0,
+      percent: 0,
+    },
+  ],
+  recent3Replies: [],
   feedback: {
     emoji: "happy",
     msg: "오 너님 좀 잘 만드신듯 ㅋㅋ",
   },
-  userAnswers: [0, 2, 4, 5, 2],
 };
 
 const initState = {
