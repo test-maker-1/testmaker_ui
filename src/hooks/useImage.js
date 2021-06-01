@@ -3,9 +3,12 @@ import MakingAPI from "../api/makingAPI";
 import { SUCCESS } from "../utils/asyncUtils";
 import ENUM from "../constants/Enum";
 
+const others = { coverImg: "coverImg" };
+
 const useImage = (type, parentIdx, errorCallback) => {
   const {
     data: { testId },
+    updateCommon,
     updateQuestion,
     updateResult,
   } = useMaking();
@@ -20,6 +23,7 @@ const useImage = (type, parentIdx, errorCallback) => {
     if (status === SUCCESS) {
       if (type === ENUM.QUESTION) updateQuestion("img", data.url, parentIdx);
       if (type === ENUM.RESULT) updateResult("img", data.url, parentIdx);
+      if (type === others.coverImg) updateCommon("coverImg", data.url);
     } else {
       errorCallback();
     }
@@ -30,6 +34,7 @@ const useImage = (type, parentIdx, errorCallback) => {
     if (status === SUCCESS) {
       if (type === ENUM.QUESTION) updateQuestion("img", null, parentIdx);
       if (type === ENUM.RESULT) updateResult("img", null, parentIdx);
+      if (type === others.coverImg) updateCommon("coverImg", null);
     } else {
       errorCallback();
     }

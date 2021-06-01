@@ -14,7 +14,6 @@ const common = {
   title: "",
   description: "",
   coverImg: null, // 썸네일
-  coverImgPath: null, // 썸네일 편집
 
   tags: [], // string[]
   onFeed: false,

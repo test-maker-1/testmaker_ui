@@ -24,7 +24,7 @@ const TestDetail = () => {
     onEnterPress,
     handleSubmit,
   } = useDetail();
-  const { title, description, optionalURL } = data;
+  const { title, description, coverImg, optionalURL } = data;
 
   return (
     <PageContainer>
@@ -40,7 +40,11 @@ const TestDetail = () => {
           onBlur={updateCommonByInput}
         />
         {/* coverImg */}
-        <UploadImg />
+        <UploadImg
+          type="coverImg"
+          img={coverImg}
+          openAlert={NoticeAlert.open}
+        />
         {/* description */}
         <TextArea
           name="description"
