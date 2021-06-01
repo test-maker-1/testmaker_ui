@@ -8,8 +8,8 @@ export default class MakingAPI {
   static getTest(testId) {
     return get(`/makingTest/${testId}`);
   }
-  static getQuestionPreset(params) {
-    const { target, questCnt } = params;
+  static getQuestionPreset(target) {
+    const questCnt = 1;
     return get(`/makingTest/preset?target=${target}&questCnt=${questCnt}`);
   }
   // update or save
