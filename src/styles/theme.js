@@ -47,7 +47,7 @@ const heights = {
 
 const zIndex = {
   header: 100,
-  drawer: 100,
+  drawer: 130,
   feed: 0,
   alert: 150,
   loading: 200,
