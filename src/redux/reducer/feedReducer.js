@@ -17,6 +17,7 @@ export const initState = {
   testsByTag: [],
 
   lastTestUid: 0,
+  selectedTag: "",
 };
 
 const feed = createSlice({
@@ -24,7 +25,7 @@ const feed = createSlice({
   initialState: initState,
   reducers: {
     // feed 첫 로딩
-    initFeed: (state, action) => {
+    initFeed: (state) => {
       state.feedLoading = true;
     },
     initFeedSuccess: (state, { payload: { top10Tags, top20Tests } }) => {
@@ -34,13 +35,16 @@ const feed = createSlice({
       state.testsByTag = top20Tests;
       state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
-    initFeedError: (state, action) => {
+    initFeedError: (state) => {
       state.feedLoading = false;
       state.feedError = true;
     },
 
     // 태그가 바뀌는 순간 요청 (기존 테스트들을 비워줘야함)
-    changeTests: (state, { payload }) => {
+    setSelecteTag: (state, { payload }) => {
+      state.selectedTag = payload;
+    },
+    changeTests: (state) => {
       state.testsByTagLoading = true;
     },
     changeTestsSuccess: (state, { payload }) => {
@@ -54,7 +58,7 @@ const feed = createSlice({
     },
 
     // 하나의 태그의 테스트 추가 요청 (무한 스크롤)
-    updateTests: (state, { payload }) => {
+    updateTests: (state) => {
       state.testsByTagLoading = true;
     },
     updateTestsSuccess: (state, { payload }) => {
@@ -62,7 +66,7 @@ const feed = createSlice({
       state.testsByTag.push(...payload);
       state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
-    updateTestsError: (state, { payload }) => {
+    updateTestsError: (state) => {
       state.testsByTagLoading = false;
       state.testsByTagError = true;
     },
@@ -78,6 +82,7 @@ export const {
   initFeedError,
   changeTests,
   updateTests,
+  setSelecteTag,
 } = actions;
 
 export default feed;

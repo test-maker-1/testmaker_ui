@@ -23,7 +23,9 @@ import "swiper/components/pagination/pagination.min.css";
 const App = () => {
   const { checkLogIn, status } = useUser();
 
-  useEffect(() => checkLogIn(), []);
+  useEffect(() => {
+    checkLogIn();
+  }, []);
 
   return (
     <BrowserRouter>

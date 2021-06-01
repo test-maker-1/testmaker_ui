@@ -1,17 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import CarouselComponent from "../components/Feed/Carousel";
-import BottomBtn, { PageContainer } from "../components/frame/BottomBtn";
-import ENUM, { ALL } from "../constants/Enum";
-import { initFeed, updateTests } from "../redux/reducer/feedReducer";
-import TagSwiper from "../components/common/TagSwiper";
-import Card from "../components/Feed/Card";
-import InfinScroll from "../components/common/InfinScroll";
 
-const { PICKTEST } = ENUM;
-const Feed = (props) => {
-  const dispatch = useDispatch();
+import TagSwiper from "../components/common/TagSwiper";
+import InfinScroll from "../components/common/InfinScroll";
+import CarouselComponent from "../components/Feed/Carousel";
+import Card from "../components/Feed/Card";
+import BottomBtn, { PageContainer } from "../components/frame/BottomBtn";
+
+import {
+  updateTests,
+  setSelecteTag,
+  initFeed,
+} from "../redux/reducer/feedReducer";
+import ENUM, { ALL } from "../constants/Enum";
+
+const initArr = [ALL];
+
+const Feed = () => {
   const {
     feedLoading,
     feedError,
@@ -20,25 +26,22 @@ const Feed = (props) => {
     testsByTagError,
     testsByTag,
     lastTestUid,
+    selectedTag,
   } = useSelector((state) => state.feed);
 
-  useEffect(() => {
-    dispatch(initFeed());
-  }, [dispatch]);
-
-  const initArr = [ALL];
-  const [selected, setSelected] = useState(ALL);
-  const [isStop, setStop] = useState(false);
   const tags = initArr.concat(top10Tags);
+  const [isStop, setStop] = useState(false);
+  const dispatch = useDispatch();
 
   const getMoreDatas = () => {
-    dispatch(updateTests({ tagName: selected, lastTestUid: lastTestUid }));
+    dispatch(updateTests({ tagName: selectedTag, lastTestUid: lastTestUid }));
   };
 
   useEffect(() => {
     // 태그 바뀔 때 스크롤 상단으로
     window.scrollTo(0, 0);
-  }, [selected]);
+    if (selectedTag === "") dispatch(initFeed());
+  }, [dispatch, selectedTag]);
 
   return (
     <Container>
@@ -47,11 +50,7 @@ const Feed = (props) => {
           <CarouselComponent />
           <>
             <TagContainer>
-              <TagSwiper
-                tags={tags}
-                selectedTag={selected}
-                setSelected={setSelected}
-              />
+              <TagSwiper tags={tags} selectedTag={selectedTag} selectable />
             </TagContainer>
 
             <CardContainer>
@@ -76,17 +75,13 @@ const Feed = (props) => {
             </CardContainer>
           </>
           <BottomBtn
-            btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]}
+            btnArr={[{ name: "테스트 만들기 도전!", type: ENUM.PICKTEST }]}
           />
         </>
       )}
     </Container>
   );
 };
-
-Feed.propTypes = {};
-
-export default Feed;
 
 const Container = styled(PageContainer)`
   z-index: ${({ theme: { zIndex } }) => zIndex.feed};
@@ -95,9 +90,11 @@ const Container = styled(PageContainer)`
 const TagContainer = styled.div`
   position: sticky;
   top: 5.6rem;
-  z-index: 100;
+  z-index: ${({ theme: { zIndex } }) => zIndex.header};
 `;
 
 const CardContainer = styled.div`
   margin-top: 2.8rem;
 `;
+
+export default Feed;
