@@ -41,7 +41,6 @@ const CarouselComponent = React.memo(() => {
 
       <CarouselBox>
         <Swiper
-          key="carousel-swiper"
           slidesPerView={"auto"}
           centeredSlides={true}
           navigation={true}
@@ -57,7 +56,7 @@ const CarouselComponent = React.memo(() => {
         >
           {top5Tests &&
             top5Tests.map((test) => (
-              <SwiperSlide onClick={onClickTest}>
+              <SwiperSlide onClick={onClickTest} key={`slideKey_${test.uid}`}>
                 <ImageView
                   key={`key_${test.uid}`}
                   imageUrl={test.coverImg}
