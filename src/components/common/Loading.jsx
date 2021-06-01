@@ -22,6 +22,6 @@ const Container = styled.div`
   display: ${({ display }) => display};
 `;
 
-const StyledSpinner = styled(Spinner)`
+export const StyledSpinner = styled(Spinner)`
   color: ${({ theme: { colors } }) => colors.blue} !important;
 `;
