@@ -1,31 +1,33 @@
-import React, { useCallback, useEffect, useState } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import ImageView from "../common/ImageView";
 import { useSelector } from "react-redux";
 import usePage from "../../hooks/usePage";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper/core";
 
-export default function CarouselComponent() {
+SwiperCore.use([Autoplay, Pagination, Navigation, Swiper]);
+
+const CarouselComponent = React.memo(() => {
   const { goPage } = usePage();
   const { top5Tests } = useSelector((state) => state.feed);
   const initTitle = top5Tests && top5Tests[0].title;
   const [topTest, setTopTest] = useState({ idx: 0, title: initTitle });
 
-  useEffect(() => {});
-
-  // const [topTest, setTopTest] = useState({});
-  const onClickItem = (idx, item) => {
-    onClickTest();
-  };
-
-  const onChange = (idx, item) => {
-    setTopTest({ idx, title: item.props.title });
-  };
+  const onSlideChange = useCallback(
+    (swiper) => {
+      let currentIndex = swiper.realIndex;
+      setTopTest({
+        idx: currentIndex,
+        title: top5Tests && top5Tests[currentIndex].title,
+      });
+    },
+    [setTopTest, top5Tests]
+  );
 
   const onClickTest = useCallback(
     (e) => {
-      goPage(`/${top5Tests && top5Tests[topTest.idx].testLink}`);
+      goPage(`/${top5Tests[topTest.idx].testLink}`);
     },
     [goPage, top5Tests, topTest]
   );
@@ -38,39 +40,57 @@ export default function CarouselComponent() {
       </TitleBox>
 
       <CarouselBox>
-        {top5Tests && (
-          <Carousel
-            showArrows
-            showIndicators
-            infiniteLoop
-            useKeyboardArrows
-            autoPlay
-            stopOnHover
-            swipeable
-            emulateTouch
-            showStatus={false}
-            showThumbs={false}
-            interval={5000}
-            onClickItem={onClickItem}
-            onChange={onChange}
-            selectedItem={0}
-          >
-            {top5Tests.map((test) => (
-              <ImageView
-                key={test.uid}
-                imageUrl={test.coverImg}
-                title={test.title}
-                height="calc(100% / 1.76)"
-                border={false}
-              />
+        <Swiper
+          key="carousel-swiper"
+          slidesPerView={"auto"}
+          centeredSlides={true}
+          navigation={true}
+          onSlideChange={onSlideChange}
+          autoplay={{
+            delay: "5000",
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          className="mySwiper"
+        >
+          {top5Tests &&
+            top5Tests.map((test) => (
+              <SwiperSlide onClick={onClickTest}>
+                <ImageView
+                  key={`key_${test.uid}`}
+                  imageUrl={test.coverImg}
+                  title={test.title}
+                  height="calc(100% / 1.76)"
+                  border={false}
+                />
+              </SwiperSlide>
             ))}
-          </Carousel>
-        )}
+        </Swiper>
       </CarouselBox>
     </Ranking>
   );
-}
+});
 
+export default CarouselComponent;
+
+const CarouselBox = styled.div`
+  .swiper-container {
+    z-index: ${({ theme: { zIndex } }) => zIndex.feed};
+  }
+  .swiper-container,
+  .swiper-wrapper {
+    transition-duration: 600ms !important;
+  }
+  .swiper-slide {
+    width: 100%;
+    cursor: pointer;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+  }
+`;
 const Ranking = styled.div`
   width: 100%;
   padding: 0 0 2rem 0;
@@ -105,13 +125,4 @@ export const Title = styled.div`
   letter-spacing: -0.8px;
   color: ${({ theme: { colors } }) => colors.darkGray};
   cursor: pointer;
-`;
-
-const CarouselBox = styled.div`
-  .flex-box {
-    display: flex;
-  }
-  .slider {
-    cursor: pointer;
-  }
 `;
