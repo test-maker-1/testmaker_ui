@@ -2,12 +2,12 @@ import React from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { BtnField } from "../../components/common";
+import { BtnField, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
 import { key } from "../../constants/config";
-import { KAKAO, EMAIL } from "../../constants/Enum";
+import ENUM, { KAKAO, EMAIL } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
@@ -40,19 +40,15 @@ const Login = () => {
       {/* title */}
       <TitleWrap>
         <LogoWrap>
-          {/* <Logo>
-            <SVG type={ENUM.MAINLOGO} style={{ width: "200", height: "54" }} />
-          </Logo>
-          */}
-          <Title>세컨드 모먼트</Title>
-          {/* <SubTitle>30초 만에 테스트를 만들어보세요</SubTitle> */}
+          <SVG type={ENUM.HEADERLOGO} />
+          <Title>오늘의 테스트</Title>
         </LogoWrap>
         <div>
           {/* kakao login */}
           <BtnKakaoLogin
             token={key.kakao}
             onSuccess={onSuccessKakao}
-            // onFail={console.error}
+            // onFail={console.error} 카카오 에러 처리
             // onLogout={console.info}
             getProfile={true}
           >
@@ -106,7 +102,8 @@ export const Logo = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
+  margin-top: 17px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem;
   line-height: 35px;
   color: ${({ theme: { colors } }) => colors.black};
 `;
