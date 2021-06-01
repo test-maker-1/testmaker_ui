@@ -1,9 +1,12 @@
-import React from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import queryString from "query-string";
 import Welcome from "../../view/testing/Welcome";
 import Comments from "../../view/testing/Comments";
 import Exam from "../../view/testing/Exam";
 import Result from "../../view/testing/Result";
+import OtherType from "../../view/testing/OtherType";
 import Error from "../../view/Error";
 import {
   welcome,
@@ -12,16 +15,36 @@ import {
   result,
   otherType,
 } from "../../constants/urlInfo";
-import OtherType from "../../view/testing/OtherType";
+import { setTestID, getTestExam } from "../../redux/reducer/testingReducer";
+import { getReplyInfo } from "../../redux/reducer/replyReducer";
 
-const Testing = (props) => {
-  console.log(props);
+const Testing = ({
+  match: {
+    params: { module, step },
+  },
+  location,
+}) => {
+  const { testid } = queryString.parse(location.search);
+  const dispatch = useDispatch();
 
-  const {
-    match: {
-      params: { module, step },
-    },
-  } = props;
+  useEffect(() => {
+    //call api at didmount
+    if (testid) {
+      switch (module) {
+        case welcome: // 웰컴
+          dispatch(setTestID(testid));
+        case comments: // 댓글
+          dispatch(getReplyInfo({ testid, timestamp: 0 }));
+        case exam: // 테스트
+          dispatch(getTestExam({ testID: testid }));
+        // getTesting;
+        case result: // 테스트결과 (module)
+          break;
+        default:
+          break;
+      }
+    }
+  }, []);
 
   switch (module) {
     case welcome: // 웰컴
@@ -38,6 +61,7 @@ const Testing = (props) => {
       console.warn("where are you?", module, step);
       break;
   }
+
   return <Error />;
 };
 

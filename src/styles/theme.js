@@ -9,6 +9,7 @@ const colors = {
   ivory: "#F1F2F4",
   ghostGray: "#EBEDF1",
   lightGray: "#CFD3DB",
+  titleGray: "#697382",
   gray: "#B7BDCB",
   deepGray: "#8A929E",
   bodyGray: "#515966",
