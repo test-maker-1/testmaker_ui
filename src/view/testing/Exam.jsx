@@ -30,6 +30,7 @@ const Page = ({
         {options.map(({ name }, idx) => {
           return (
             <BtnExam
+              key={`btnExam_${idx}`}
               name={name}
               clicked={values.includes(name)}
               onClick={onClick.bind(this, idx, name)}
