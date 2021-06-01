@@ -2,7 +2,7 @@ import React from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { BtnField, SVG } from "../../components/common";
+import { BtnField, NoticeAlert, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
@@ -12,7 +12,7 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { goPage, replace } = usePage();
+  const { replace } = usePage();
 
   if (loggedIn) replace("/");
 
@@ -33,10 +33,14 @@ const Login = () => {
     kakaoLogIn(reqData);
   };
 
-  const onClickEmail = () => goPage("/login/email");
+  const onClickEmail = () => {
+    NoticeAlert.open("곧 업데이트 예정이에요!");
+    // goPage("/login/email"); 1차 MVP 제외
+  };
 
   return (
     <PageContainer>
+      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
       {/* title */}
       <TitleWrap>
         <LogoWrap>
