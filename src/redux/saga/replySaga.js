@@ -13,24 +13,35 @@ import {
   submitOneComment,
   addOneComment,
   reportComment,
+  moreReplyInfo,
+  stopCallComments,
 } from "../reducer/replyReducer";
 import testingAPI from "../../api/testingAPI";
 import { SUCCESS } from "../../utils/asyncUtils";
 
 function* getComments(action) {
+  const state = yield select();
   const param = action.payload;
+  const testID = param.testid ? param.testid : state.reply.testUid;
   const { data, status } = yield call(
     testingAPI.getReplyInfo,
-    param.testid,
+    testID,
     param.timestamp
   );
 
   console.log("getComments", data, status);
   if (status === SUCCESS) {
-    yield put({
-      type: addReplyInfo.type,
-      payload: data,
-    });
+    if (data?.length > 0) {
+      yield put({
+        type: addReplyInfo.type,
+        payload: data,
+      });
+    } else {
+      yield put({
+        type: stopCallComments.type,
+        payload: true,
+      });
+    }
   }
 }
 
@@ -71,6 +82,7 @@ function* replyInformation() {
   yield takeLeading(getReplyInfo.type, getComments);
   yield takeLatest(submitOneComment.type, setComments);
   yield takeLeading(reportComment.type, reportToComment);
+  yield takeLeading(moreReplyInfo.type, getComments);
 }
 
 export default function* replySaga() {

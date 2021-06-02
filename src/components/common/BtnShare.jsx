@@ -8,6 +8,8 @@ import insta from "../../resources/images/insta.png";
 import twitter from "../../resources/images/twitter.png";
 import url from "../../resources/images/url.png";
 
+import { copyLinkToClipBoard } from "../../utils/handler";
+
 const { KAKAO, INSTA, TWITTER } = ENUM;
 const platforms = [
   {
@@ -27,6 +29,9 @@ const platforms = [
 
 const BtnShare = ({ onClick }) => {
   const handleOnClick = (id, event) => {
+    if (id === "url") {
+      copyLinkToClipBoard();
+    }
     if (onClick) onClick(event, id);
   };
 
@@ -53,7 +58,7 @@ const Container = styled.div`
 
 const StyledBtn = styled(Button)`
   padding: 0;
-  margin-right: 16;
+  margin-right: 3px;
   border-radius: 25;
 `;
 

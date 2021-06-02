@@ -16,6 +16,7 @@ import { saveAnwerByStep } from "../../redux/reducer/testingReducer";
  */
 
 const Page = ({
+  page,
   answers: { values },
   questions: { img, question, options },
   onClick,
@@ -32,7 +33,7 @@ const Page = ({
             <BtnExam
               key={`btnExam_${idx}`}
               name={name}
-              clicked={values.includes(name)}
+              clicked={values[page] === name}
               onClick={onClick.bind(this, idx, name)}
               style={BtnStyle}
             />
@@ -76,6 +77,7 @@ const Exam = memo((props) => {
 
   const PageComponent = () => (
     <Page
+      page={page}
       answers={answers}
       questions={questions[page]}
       onClick={onClickAnswer}
