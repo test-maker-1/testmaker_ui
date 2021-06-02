@@ -88,8 +88,8 @@ const making = createSlice({
     },
 
     /* delete */
-    deleteTag: ({ tags }, { payload }) => {
-      tags = tags.filter((tag) => tag !== payload);
+    deleteTag: (state, { payload }) => {
+      state.tags = state.tags.filter((tag) => tag !== payload);
     },
     deleteQuestion: (state, { payload }) => {
       state.data.questions.splice(payload, 1);

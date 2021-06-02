@@ -36,9 +36,7 @@ const Tag = ({ tag, deletable, selected, selectable }) => {
       <span>{tag === ALL ? tag : `#${tag}`}</span>
       {/* delete btn */}
       {deletable && (
-        <button onClick={onClickDelete}>
-          <SVG type={ENUM.CANCEL} style={svgStyles} />
-        </button>
+        <SVG type={ENUM.CANCEL} style={svgStyles} onClick={onClickDelete} />
       )}
     </TagBox>
   );
