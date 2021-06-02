@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Confetti from "react-confetti";
+import Confetti from "react-dom-confetti";
 
 import {
   TitleBox,
@@ -23,12 +23,22 @@ import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
 import jellies from "../../resources/images/jellies.png";
 
+const confettieConfig = {
+  angle: 90,
+  spread: 200,
+  startVelocity: 13,
+  dragFriction: 0.12,
+  width: "10px",
+  height: "12px",
+};
+
 const TestRelease = () => {
   const { status, loggedIn } = useUser();
   const { goPage } = usePage();
 
   const savedTest = JSON.parse(sessionStorage.getItem("savedTest"));
   const { open: feed, onOpen, onClose } = useOpen();
+  const { open: fire, onOpen: onFire } = useOpen();
 
   const submitTest = async () => {
     const { status } = await MakingAPI.submitTest(savedTest.testId);
@@ -39,7 +49,10 @@ const TestRelease = () => {
   };
 
   useEffect(() => {
-    if (savedTest) submitTest();
+    if (savedTest) {
+      onFire();
+      submitTest();
+    }
     return () => sessionStorage.removeItem("savedTest");
   }, []);
 
@@ -73,15 +86,19 @@ const TestRelease = () => {
 
       <TitleBox noline>
         <ImgWrap>
-          <Confetti width={234} height={156} numberOfPieces={70} />
+          <Confetti
+            className="release-confetti"
+            active={fire}
+            config={confettieConfig}
+          />
           <img src={jellies} alt="success thumanil" />
           <SuccessTitle>테스트 만들기 성공!</SuccessTitle>
           <Guide>테스트 관리는 마이페이지에서 할 수 있어요!</Guide>
         </ImgWrap>
       </TitleBox>
 
+      {/* setting onFeed */}
       <TitleBox title="홈 피드에 공개할까요?">
-        {/* setting onFeed */}
         <ButtonGroup fullWidth={true}>
           <FeedBtn onFeed={feed} value={false} onClick={onSetFeed}>
             안 할래요
@@ -108,11 +125,10 @@ const ImgWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 
-  canvas {
-    position: relative !important;
-    top: 40px !important;
+  .release-confetti {
+    position: relative;
+    height: 100px;
   }
 `;
 
