@@ -22,7 +22,7 @@ export const initState = {
   updateTestsLoading: false,
 
   lastTestUid: 0,
-  selectedTag: "",
+  selectedTag: "전체",
 };
 
 const feed = createSlice({

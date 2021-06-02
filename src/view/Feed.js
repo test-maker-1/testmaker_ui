@@ -10,7 +10,7 @@ import CarouselComponent from "../components/Feed/Carousel";
 import Card from "../components/Feed/Card";
 import BottomBtn, { PageContainer } from "../components/frame/BottomBtn";
 
-import { updateTests, initFeed } from "../redux/reducer/feedReducer";
+import { updateTests } from "../redux/reducer/feedReducer";
 import ENUM, { ALL } from "../constants/Enum";
 
 const initArr = [ALL];
@@ -39,8 +39,7 @@ const Feed = () => {
   useEffect(() => {
     // 태그 바뀔 때 스크롤 상단으로
     window.scrollTo(0, 0);
-    if (selectedTag === "") dispatch(initFeed());
-  }, [dispatch, selectedTag]);
+  }, [selectedTag]);
 
   if (feedLoading) return <Loading loading={feedLoading} />;
 

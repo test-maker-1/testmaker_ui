@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import LoginFrame from "./components/frame/Login";
+// import LoginFrame from "./components/frame/Login";
 import RegisterFrame from "./components/frame/Register";
 import MainForm from "./components/frame/MainForm";
 import Testing from "./components/frame/Testing";
@@ -14,6 +15,7 @@ import Feed from "./view/Feed";
 import PickTest from "./view/testmaking/PickTest";
 import TestRelease from "./view/testmaking/TestRelease";
 
+import { initFeed } from "./redux/reducer/feedReducer";
 import useUser from "./hooks/useUser";
 import { LOADING } from "./utils/asyncUtils";
 
@@ -23,9 +25,11 @@ import "swiper/components/navigation/navigation.min.css";
 
 const App = () => {
   const { checkLogIn, status } = useUser();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     checkLogIn();
+    dispatch(initFeed());
   }, []);
 
   return (
