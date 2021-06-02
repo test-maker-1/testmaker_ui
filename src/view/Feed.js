@@ -43,55 +43,46 @@ const Feed = (props) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [selected]);
 
+  if (feedLoading) return <Loading loading={feedLoading} />;
   return (
     <Container>
-      {feedLoading ? (
-        <Loading loading={feedLoading} />
-      ) : (
-        <>
-          <CarouselComponent />
-          <>
-            <TagContainer>
-              <TagSwiper
-                tags={tags}
-                selectedTag={selected}
-                setSelected={setSelected}
-              />
-            </TagContainer>
+      <CarouselComponent />
+      <TagContainer>
+        <TagSwiper
+          tags={tags}
+          selectedTag={selected}
+          setSelected={setSelected}
+        />
+      </TagContainer>
 
-            <CardContainer>
-              {/* <Nothing /> */}
-              {changeTestsLoading ? (
-                <SpinnerContainer>
-                  <StyledSpinner />
-                </SpinnerContainer>
-              ) : (
-                <InfinScroll
-                  datas={testsByTag}
-                  isStop={isStop}
-                  getMoreDatas={getMoreDatas}
-                >
-                  {testsByTag.map((test) => (
-                    <Card
-                      key={`test ${test.uid}`}
-                      title={test.title}
-                      coverImg={test.coverImg}
-                      makerName={test.maker.name}
-                      makerImg={test.makerImg}
-                      sharedCnt={test.sharedCnt}
-                      participatedCnt={test.participantsCnt}
-                      testLink={test.testLink}
-                    />
-                  ))}
-                </InfinScroll>
-              )}
-            </CardContainer>
-          </>
-          <BottomBtn
-            btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]}
-          />
-        </>
-      )}
+      <CardContainer>
+        {/* <Nothing /> */}
+        {changeTestsLoading ? (
+          <SpinnerContainer>
+            <StyledSpinner />
+          </SpinnerContainer>
+        ) : (
+          <InfinScroll
+            datas={testsByTag}
+            isStop={isStop}
+            getMoreDatas={getMoreDatas}
+          >
+            {testsByTag.map((test) => (
+              <Card
+                key={`test ${test.uid}`}
+                title={test.title}
+                coverImg={test.coverImg}
+                makerName={test.maker.name}
+                makerImg={test.makerImg}
+                sharedCnt={test.sharedCnt}
+                participatedCnt={test.participantsCnt}
+                testLink={test.testLink}
+              />
+            ))}
+          </InfinScroll>
+        )}
+      </CardContainer>
+      <BottomBtn btnArr={[{ name: "테스트 만들기 도전!", type: PICKTEST }]} />
     </Container>
   );
 };
