@@ -17,7 +17,7 @@ const svgStyles = {
 };
 
 // tag: string;
-const Tag = ({ tag, deletable, selected, selectable }) => {
+const Tag = ({ tag, selected, selectable, deletable }) => {
   const { dispatch, deleteTag } = useMaking();
 
   const onClickDelete = () => {
@@ -32,7 +32,7 @@ const Tag = ({ tag, deletable, selected, selectable }) => {
   };
 
   return (
-    <TagBox onClick={onSelectTag} selected={selected}>
+    <TagBox onClick={onSelectTag} selected={selected} deletable={deletable}>
       <span>{tag === ALL ? tag : `#${tag}`}</span>
       {/* delete btn */}
       {deletable && (
@@ -62,7 +62,11 @@ const TagBox = styled.span`
   letter-spacing: -0.3px;
   border-radius: 8px;
 
-  ${({ selected }) => {
+  svg {
+    margin-left: 5px;
+  }
+
+  ${({ selected, deletable }) => {
     if (selected) {
       return css`
         background: ${blue};
@@ -70,7 +74,8 @@ const TagBox = styled.span`
       `;
     } else {
       return css`
-        border: 1px solid #e5e8ec;
+        margin-top: ${deletable ? 16 : 0}px;
+        border: ${deletable ? 0 : "1px solid #e5e8ec"};
         background: ${white};
         color: ${bodyGray};
       `;
