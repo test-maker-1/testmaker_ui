@@ -26,9 +26,10 @@ const TestIntro = memo((props) => {
     <InfoContainer>
       <InfoTitle>
         <Title title={title}>{title || "테스트 제목이 없어요"}</Title>
-        <More>
+        {/* TODO: 2차개발사항 */}
+        {/* <More>
           <SVG type={Enum.MORE} onClick={handleOnClick} />
-        </More>
+        </More> */}
       </InfoTitle>
       <InfoUser>
         <InfoAva>

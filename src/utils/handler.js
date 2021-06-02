@@ -205,3 +205,13 @@ export const checkMakingData = (state) => {
 
   return { releasable: true, msg: "만들고 나면 수정할 수 없어요!" };
 };
+
+export const copyLinkToClipBoard = () => {
+  //현재 주소 링크 클립보드에 복사
+  let temp = document.createElement("input");
+  document.body.appendChild(temp);
+  temp.value = document.location.href;
+  temp.select(); //전체선택
+  document.execCommand("copy"); //복사
+  document.body.removeChild(temp);
+};

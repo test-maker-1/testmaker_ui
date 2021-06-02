@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { BtnField, SVG } from ".";
 import { modalStyles } from "../../styles";
 import { md } from "../../constants/Enum";
+import ENUM from "../../constants/Enum";
+import BtnShare from "./BtnShare";
 
+const { SHARE } = ENUM;
 let that = null; // 정적 메소드용
 
 class NoticeAlert extends PureComponent {
@@ -12,18 +15,24 @@ class NoticeAlert extends PureComponent {
     this.state = {
       open: false,
       content: "",
+      mode: null,
     };
     that = this;
   }
 
-  static open(content) {
+  static open(content, mode = null) {
     if (!that.state.open) {
-      that.setState({ content, open: true });
+      that.setState({ content, open: true, mode });
     }
   } // open 여부, 내용을 소스 내에서 관리
 
   closeCallBack = (callback, event) => {
     if (callback) callback(event);
+    this.handleOnClose();
+  };
+
+  handleShareClick = (event, id) => {
+    if (this.props.onShareClick) this.props.onShareClick(id, event);
     this.handleOnClose();
   };
 
@@ -53,8 +62,8 @@ class NoticeAlert extends PureComponent {
   }
 
   render() {
-    const { open, content } = this.state;
-    const { icon, btns } = this.props;
+    const { open, content, mode } = this.state;
+    const { icon, btns, msg, component } = this.props;
 
     if (!open) return null;
 
@@ -64,15 +73,32 @@ class NoticeAlert extends PureComponent {
         <Section>
           {/* content */}
           <ModalMain>
-            {icon && (
-              <div className="icon">
-                <SVG type={icon} />
-              </div>
+            {mode === SHARE ? (
+              <>
+                <AlertText>친구한테 공유할래요!</AlertText>
+                <BtnShare onClick={this.handleShareClick} />
+              </>
+            ) : (
+              <>
+                {icon && (
+                  <div className="icon">
+                    <SVG type={icon} />
+                  </div>
+                )}
+                <AlertText>{content}</AlertText>
+              </>
             )}
-            <AlertText>{content}</AlertText>
           </ModalMain>
           {/* buttons */}
-          <ModalFooter btnLength={btns.length}>{this.setButtons()}</ModalFooter>
+          {mode === SHARE ? (
+            <LaterText onClick={this.handleOnClose}>
+              <u>나중에 다시 할래요</u>
+            </LaterText>
+          ) : (
+            <ModalFooter btnLength={btns.length}>
+              {this.setButtons()}
+            </ModalFooter>
+          )}
         </Section>
       </Modal>
     );
@@ -83,6 +109,7 @@ NoticeAlert.defaultProps = {
   icon: null,
   msg: "",
   btn: [],
+  component: null,
 };
 
 const Modal = styled.div`
@@ -131,6 +158,17 @@ const ModalCloser = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+`;
+
+const LaterText = styled.p`
+  display: inline-block;
+  text-align: center;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.5px;
+  color: #697382;
+  cursor: pointer;
 `;
 
 export default NoticeAlert;

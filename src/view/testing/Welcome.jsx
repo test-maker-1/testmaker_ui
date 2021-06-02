@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { NoticeAlert } from "../../components/common";
+import { BtnShare, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
 import RoundContiner from "./SubComponents/RoundContainer";
@@ -23,10 +23,11 @@ const returnALInfo = (type, callback) => {
     result = {
       btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
     };
-  } else if (type === "share") {
+  } else if (type === SHARE) {
     result = {
-      msg: "공유할건가요?",
-      btn: ["아니요", "예"],
+      msg: "친구한테 공유할래요!",
+      component: <BtnShare />,
+      btn: [{ name: SHARE, callback }],
     };
   }
 
@@ -37,18 +38,25 @@ const Welcome = () => {
   const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const [alertInfo, setALInfo] = useState(def_alert);
   const openAlert = (type) => {
+    const msg =
+      type === SHARE ? "친구한테 공유할래요!" : "이 댓글을 신고할까요?";
     const alert_info = Object.assign(
       {},
       def_alert,
       returnALInfo(type, handleOnAlertClick)
     );
     setALInfo(alert_info);
-    NoticeAlert.open("이 댓글을 신고할까요?");
+    NoticeAlert.open(msg, SHARE);
   };
   const handleOnAlertClick = useCallback((id, event) => {
     // 선택한 버튼명 반환
     console.log(id, "클릭되었습니다!");
   }, []);
+
+  const handleShareClick = (id, event) => {
+    // 선택한 버튼명 반환
+    if (id === "kakao") console.log(id, "클릭되었습니다!");
+  };
 
   return (
     <PageContainer>
@@ -71,7 +79,11 @@ const Welcome = () => {
           { name: "시작하기", type: MOVENEXT },
         ]}
       />
-      <NoticeAlert icon={alertInfo.icon} btns={alertInfo.btn} />
+      <NoticeAlert
+        icon={alertInfo.icon}
+        btns={alertInfo.btn}
+        onShareClick={handleShareClick}
+      />
     </PageContainer>
   );
 };
