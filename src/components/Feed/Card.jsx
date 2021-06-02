@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { Title } from "./Carousel";
 import SVG from "../common/SVG";
 import ENUM from "../../constants/Enum";
-import theme from "../../styles/theme";
+// import theme from "../../styles/theme";
 import usePage from "../../hooks/usePage";
 
-const { blue, deepGray } = theme.colors;
+// const { blue, deepGray } = theme.colors;
 const Card = ({
   title,
   coverImg,
@@ -18,13 +18,13 @@ const Card = ({
   testLink,
 }) => {
   const { goPage } = usePage();
-  const [bookMark, setBookMark] = useState(false);
-  const onClickBookMark = useCallback(
-    (e) => {
-      setBookMark(!bookMark);
-    },
-    [bookMark, setBookMark]
-  );
+  // const [bookMark, setBookMark] = useState(false);
+  // const onClickBookMark = useCallback(
+  //   (e) => {
+  //     setBookMark(!bookMark);
+  //   },
+  //   [bookMark, setBookMark]
+  // );
   const onClickTest = useCallback(
     (e) => {
       goPage(`/${testLink}`);
@@ -32,12 +32,9 @@ const Card = ({
     [goPage, testLink]
   );
 
-  const numberFormat = useCallback(
-    (n) => {
-      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-    [sharedCnt, participatedCnt]
-  );
+  const numberFormat = useCallback((n) => {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }, []);
 
   return (
     <CardBox>
