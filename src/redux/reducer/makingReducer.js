@@ -37,8 +37,18 @@ const making = createSlice({
     updateTypeData: ({ data }, { payload: { key, value } }) => {
       data[key] = value;
     },
-    updateQuestionData: ({ data }, { payload: { key, value, idx } }) => {
-      data.questions[idx][key] = value;
+    updateQuestionData: (state, { payload: { key, value, idx } }) => {
+      const {
+        data: { questions },
+      } = state;
+
+      if (key === "point") {
+        const deletedPoint = questions[idx].point;
+        const updatePoint = deletedPoint ? deletedPoint * -1 + value : value;
+        state.data.totalPoints += updatePoint;
+      }
+
+      state.data.questions[idx][key] = value;
     },
     updateOptionData: (
       { data: { questions } },
@@ -61,6 +71,7 @@ const making = createSlice({
       } = state;
 
       state.data.questions.push(question[type](nextQuestionId));
+      state.data.totalPoints += 1;
       state.data.nextQuestionId += 1;
       state.data.questionsCnt += 1;
     },
@@ -88,10 +99,13 @@ const making = createSlice({
     },
 
     /* delete */
-    deleteTag: (state, { payload }) => {
-      state.tags = state.tags.filter((tag) => tag !== payload);
+    deleteTag: ({ tags }, { payload }) => {
+      tags = tags.filter((tag) => tag !== payload);
     },
     deleteQuestion: (state, { payload }) => {
+      const { totalPoints, questions } = state.data;
+      if (totalPoints > 0) state.data.totalPoints -= questions[payload].point;
+
       state.data.questions.splice(payload, 1);
       state.data.questionsCnt -= 1;
     },

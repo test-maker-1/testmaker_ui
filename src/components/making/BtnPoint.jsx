@@ -100,7 +100,7 @@ const BtnEdit = memo(
       const regex = /^[0-9\b]{0,13}$/;
 
       if (!regex.test(value)) return; // prevent string
-      if (value < 1) {
+      if (value < 1 || value > 10) {
         setValue("");
         return;
       } // prevent value < 0

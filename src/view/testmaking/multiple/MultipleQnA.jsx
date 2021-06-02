@@ -31,9 +31,8 @@ const MultipleQnA = () => {
 
   return (
     <PageContainer>
-      {/* alert sample */}
       <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
-      {/* random guide */}
+
       <RandomGuide>
         <div>
           <SVG type={ENUM.CASINO} style={svgStyles} />
@@ -43,7 +42,7 @@ const MultipleQnA = () => {
           <p>주사위를 누르면 랜덤으로 제공해드려요.</p>
         </GuideText>
       </RandomGuide>
-      {/* questions */}
+
       {questions.map((question, idx) => (
         <Question
           key={question.questionId}
@@ -66,7 +65,13 @@ const MultipleQnA = () => {
 };
 
 const useQnA = () => {
-  const { data, dispatch, initResult, updateStep, addQuestion } = useMaking();
+  const {
+    data,
+    dispatch,
+    updateTypeData,
+    updateStep,
+    addQuestion,
+  } = useMaking();
   const { goPage } = usePage();
 
   useEffect(() => {
@@ -74,28 +79,29 @@ const useQnA = () => {
   }, [data.step, updateStep]);
 
   const {
-    data: { questions = [], questionsCnt, resultsCnt },
+    data: {
+      totalPoints,
+      questions = [],
+      results = [],
+      questionsCnt,
+      resultsCnt,
+    },
   } = data;
 
   const addEmptyQuestion = () => dispatch(addQuestion());
 
   const onSetResult = () => {
-    const totalPoints = questions.reduce((prevPoint, { point }) => {
-      const currentPoint = point ? point : 0;
-      return prevPoint + currentPoint;
-    }, 0);
-
     if (totalPoints < resultsCnt - 1) {
       NoticeAlert.open("테스트 총 점수가 너무 적어요!");
       return;
     }
 
     const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
-    const baseResults = [...data.data.results];
+    const baseResults = [...results];
     const updateResults = baseResults.map((result, idx) => {
       return { ...result, pointBound: { ...pointBoundList[idx] } };
     });
-    initResult(totalPoints, updateResults);
+    dispatch(updateTypeData({ key: "results", value: updateResults }));
 
     goPage("/test/multiple/result");
   };

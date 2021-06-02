@@ -59,12 +59,7 @@ const ResultPoint = () => {
 
   const onUpdate = (e) => {
     const { name, value } = e.target;
-    dispatch(
-      updateTypeData({
-        key: name,
-        value: Number(value),
-      })
-    );
+    dispatch(updateTypeData({ key: name, value: Number(value) }));
   };
 
   return (
