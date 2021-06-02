@@ -25,7 +25,7 @@ const Tag = ({ tag, selected, selectable, deletable }) => {
   };
 
   const onSelectTag = () => {
-    if (!selectable) return;
+    if (!selectable || selected) return;
 
     dispatch(setSelecteTag(tag));
     dispatch(changeTests({ tagName: tag, lastTestUid: 0 }));
