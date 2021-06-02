@@ -27,7 +27,8 @@ const Card = ({
   // );
   const onClickTest = useCallback(
     (e) => {
-      goPage(`/${testLink}`);
+      const testid = testLink.split("?")[1];
+      goPage(`/testing/welcome`, testid);
     },
     [goPage, testLink]
   );
