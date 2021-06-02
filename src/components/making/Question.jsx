@@ -5,13 +5,19 @@ import { InfoText, UploadImg } from "../common";
 import { SubTitle, BtnIcon, Option, BtnAddOption, BtnPoint } from ".";
 import { InputTitle, Section } from "../../styles";
 
+import MakingAPI from "../../api/makingAPI";
 import useMaking from "../../hooks/useMaking";
+import { SUCCESS } from "../../utils/asyncUtils";
+
 import ENUM, { md } from "../../constants/Enum";
+import msg from "../../constants/msg";
 
 const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
   const { question, img, openImg, answer, point, options } = data;
   const {
-    data: { testId },
+    data: {
+      data: { target },
+    },
     dispatch,
     deleteQuestion,
     updateQuestion,
@@ -39,6 +45,15 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
     deleteOption(qIdx, oIdx);
   };
 
+  const getPreset = async () => {
+    const { data, status } = await MakingAPI.getQuestionPreset(target);
+    if (status === SUCCESS) {
+      updateQuestion("question", data.questions[0], questionIdx);
+    } else {
+      openAlert(msg.errorPage[500]);
+    }
+  };
+
   return (
     <li>
       <div>
@@ -47,7 +62,7 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
           onUpload={() => updateQuestion("openImg", !openImg, questionIdx)}
           onDelete={onDeleteQuestion}
         >
-          <BtnIcon type={ENUM.CASINO} />
+          <BtnIcon type={ENUM.CASINO} onClick={getPreset} />
         </SubTitle>
         <Wrapper>
           {/* question */}
@@ -61,11 +76,10 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
           {/* coverImg */}
           {openImg && (
             <UploadImg
-              testId={testId}
-              parentIdx={questionIdx}
+              type={ENUM.QUESTION}
               img={img}
+              parentIdx={questionIdx}
               openAlert={openAlert}
-              updateParent={updateQuestion}
             />
           )}
           {/* options */}

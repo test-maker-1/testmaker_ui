@@ -5,8 +5,7 @@ import { SVG, ImageView, Loading } from "../common/index";
 import theme from "../../styles/theme";
 
 import useOpen from "../../hooks/useOpen";
-import { uploadImg } from "../../utils/asyncMakingUtils";
-import { SUCCESS } from "../../utils/asyncUtils";
+import useImage from "../../hooks/useImage";
 
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
@@ -24,71 +23,66 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = memo(
-  ({ testId, img, parentIdx, updateParent, openAlert }) => {
-    const { open: loading, onOpen, onClose } = useOpen();
-    const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
+export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
+  const { uploadImg, deleteImg } = useImage(type, parentIdx, () =>
+    openAlert(msg.errorPage[500])
+  );
+  const { open: loading, onOpen, onClose } = useOpen();
+  const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
-    const fileInput = useRef();
+  const fileInput = useRef();
 
-    // upload and delete image
-    const handleOnCick = () => fileInput.current.click();
-    // const handleDelClick = () => setImgURL(null);
+  const handleOnCick = () => fileInput.current.click();
+  const onUpload = async (e) => {
+    const files = e.target.files;
 
-    const handleOnUpload = async (e) => {
-      const files = e.target.files;
-      const file = {
-        img: files[0],
-        path: `test/${testId}`,
-      };
-      onOpen();
+    onOpen();
+    await uploadImg(files[0]);
+    // init
+    fileInput.current.value = null;
+    onClose();
+  };
 
-      const { data, status } = await uploadImg(file);
-      if (status === SUCCESS) {
-        updateParent("img", data.url, parentIdx);
-      } else {
-        openAlert(msg.errorPage[500]);
-      }
+  const onDelete = async () => {
+    if (!img) return;
 
-      // init
-      fileInput.current.value = null;
-      onClose();
-    };
+    onOpen();
+    await deleteImg(img);
+    onClose();
+  };
 
-    return (
-      <>
-        {loading && <Loading />}
-        <Wrapper>
-          <OpenDiv onClick={onEdit} />
-          <ImageView imageUrl={img} />
-          {/* edit */}
-          {edit && (
-            <Dimmed>
-              <EditIcon>
-                <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
-              </EditIcon>
-              <EditIcon>
-                <SVG type={DELETE} style={svgStyles} />
-              </EditIcon>
-              <EditIcon>
-                <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
-              </EditIcon>
-            </Dimmed>
-          )}
-        </Wrapper>
-        {/* required multiple */}
-        <input
-          type="file"
-          id="uploadImage"
-          ref={fileInput}
-          accept="img/*"
-          onChange={handleOnUpload}
-          style={{ width: 0, display: "none" }}
-        />
-      </>
-    );
-  }
-);
+  return (
+    <>
+      {loading && <Loading />}
+      <Wrapper>
+        <OpenDiv onClick={onEdit} />
+        <ImageView imageUrl={img} />
+        {/* edit */}
+        {edit && (
+          <Dimmed>
+            <EditIcon>
+              <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={DELETE} style={svgStyles} onClick={onDelete} />
+            </EditIcon>
+            <EditIcon>
+              <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
+            </EditIcon>
+          </Dimmed>
+        )}
+      </Wrapper>
+      {/* required multiple */}
+      <input
+        type="file"
+        accept="image/*;capture=camera"
+        ref={fileInput}
+        onChange={onUpload}
+        style={{ width: 0, display: "none" }}
+      />
+    </>
+  );
+});
 
 const Wrapper = styled.div`
   position: relative;

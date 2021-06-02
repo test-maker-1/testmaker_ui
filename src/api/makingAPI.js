@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { get, post, remove } from "./instance";
 
 export default class MakingAPI {
   // get
@@ -7,6 +7,10 @@ export default class MakingAPI {
   }
   static getTest(testId) {
     return get(`/makingTest/${testId}`);
+  }
+  static getQuestionPreset(target) {
+    const questCnt = 1;
+    return get(`/makingTest/preset?target=${target}&questCnt=${questCnt}`);
   }
   // update or save
   static updateOnFeed(params) {
@@ -22,8 +26,15 @@ export default class MakingAPI {
   static submitTest(testId) {
     return post(`/makingTest/submit/${testId}`);
   }
+  // add
+  static addQuestionPreset(params) {
+    return post("/makingTest/addPreset", params);
+  }
   // image
   static uploadImg(form) {
     return post("/img", form);
+  }
+  static deleteImg(img) {
+    return remove(`/img/single?path=${img}`);
   }
 }

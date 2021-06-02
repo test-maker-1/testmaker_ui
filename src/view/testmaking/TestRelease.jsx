@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Confetti from "react-dom-confetti";
 
 import {
   TitleBox,
@@ -16,11 +17,20 @@ import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import useOpen from "../../hooks/useOpen";
-import { ERROR, LOADING, SUCCESS } from "../../utils/asyncUtils";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
-import tempImg from "../../resources/temp-img.png";
+import jellies from "../../resources/images/jellies.png";
+
+const confettieConfig = {
+  angle: 90,
+  spread: 200,
+  startVelocity: 13,
+  dragFriction: 0.12,
+  width: "10px",
+  height: "12px",
+};
 
 const TestRelease = () => {
   const { status, loggedIn } = useUser();
@@ -28,6 +38,7 @@ const TestRelease = () => {
 
   const savedTest = JSON.parse(sessionStorage.getItem("savedTest"));
   const { open: feed, onOpen, onClose } = useOpen();
+  const { open: fire, onOpen: onFire } = useOpen();
 
   const submitTest = async () => {
     const { status } = await MakingAPI.submitTest(savedTest.testId);
@@ -38,13 +49,15 @@ const TestRelease = () => {
   };
 
   useEffect(() => {
-    if (savedTest) submitTest();
+    if (savedTest) {
+      onFire();
+      submitTest();
+    }
     return () => sessionStorage.removeItem("savedTest");
   }, []);
 
   if (status === LOADING) return null;
   if (!loggedIn) return <Error code={403} />; // logOut
-
   if (!savedTest) return <Error code={406} />; // invalied step
 
   const onSetFeed = async (e) => {
@@ -65,20 +78,27 @@ const TestRelease = () => {
 
   return (
     <div>
+      {/* modal */}
       <NoticeAlert
         icon={ENUM.WARNING}
         btns={[{ name: "홈으로", callback: () => goPage("/") }]}
       />
+
       <TitleBox noline>
-        {/* success */}
         <ImgWrap>
-          <img src={tempImg} alt="success thumbnail" />
+          <Confetti
+            className="release-confetti"
+            active={fire}
+            config={confettieConfig}
+          />
+          <img src={jellies} alt="success thumanil" />
+          <SuccessTitle>테스트 만들기 성공!</SuccessTitle>
+          <Guide>테스트 관리는 마이페이지에서 할 수 있어요!</Guide>
         </ImgWrap>
-        <SuccessTitle>테스트 만들기 성공!</SuccessTitle>
-        <Guide>테스트 관리는 마이페이지에서 할 수 있어요!</Guide>
       </TitleBox>
+
+      {/* setting onFeed */}
       <TitleBox title="홈 피드에 공개할까요?">
-        {/* setting onFeed */}
         <ButtonGroup fullWidth={true}>
           <FeedBtn onFeed={feed} value={false} onClick={onSetFeed}>
             안 할래요
@@ -88,6 +108,7 @@ const TestRelease = () => {
           </FeedBtn>
         </ButtonGroup>
       </TitleBox>
+
       <TitleBox title="친구에게 공유할래요!" noline>
         <BtnShare />
       </TitleBox>
@@ -97,23 +118,27 @@ const TestRelease = () => {
 };
 
 const ImgWrap = styled.div`
-  margin: 73px auto;
-  text-align: center;
+  margin: 37px auto;
+  width: 100%;
 
-  img {
-    width: 160px;
-    height: 155px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .release-confetti {
+    position: relative;
+    height: 100px;
   }
 `;
 
 const SuccessTitle = styled(Title)`
+  margin-top: 11.8px;
   padding-bottom: 8px;
-  text-align: center;
   color: ${({ theme: { colors } }) => colors.darkGray};
 `;
 
 const Guide = styled.p`
-  text-align: center;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
   line-height: 29px;
   letter-spacing: -0.5px;

@@ -43,6 +43,7 @@ const post = (path, params = null) => {
       });
   });
 };
+
 const put = (path, params = null) => {
   instance.defaults.headers.common = getAxiosHeader();
   return new Promise((resolve) => {
@@ -61,4 +62,22 @@ const put = (path, params = null) => {
   });
 };
 
-export { get, post, put }; // put, delete 등 추가 필요
+const remove = (path) => {
+  instance.defaults.headers.common = getAxiosHeader();
+  return new Promise((resolve) => {
+    instance
+      .delete(path)
+      .then(({ data }) => resolve(reducerUtils.success(data)))
+      .catch((e) => {
+        const { status: code, data } = e.response;
+        resolve(
+          reducerUtils.error({
+            code,
+            name: data.name,
+          })
+        );
+      });
+  });
+};
+
+export { get, post, put, remove };
