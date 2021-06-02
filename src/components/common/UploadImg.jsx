@@ -27,15 +27,12 @@ export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
   const { uploadImg, deleteImg } = useImage(type, parentIdx, () =>
     openAlert(msg.errorPage[500])
   );
-
   const { open: loading, onOpen, onClose } = useOpen();
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
   const fileInput = useRef();
 
-  // upload and delete image
   const handleOnCick = () => fileInput.current.click();
-
   const onUpload = async (e) => {
     const files = e.target.files;
 
@@ -48,7 +45,7 @@ export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
 
   const onDelete = async () => {
     if (!img) return;
-    
+
     onOpen();
     await deleteImg(img);
     onClose();
@@ -78,9 +75,8 @@ export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
       {/* required multiple */}
       <input
         type="file"
-        id="uploadImage"
+        accept="image/*;capture=camera"
         ref={fileInput}
-        accept="img/*"
         onChange={onUpload}
         style={{ width: 0, display: "none" }}
       />
