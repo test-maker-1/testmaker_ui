@@ -1,50 +1,47 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { ImageView, TitleBox } from "../../components/common";
+import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
+import ENUM from "../../constants/Enum";
 import { SubTitle, Title } from "./Result";
 
-const OtherType = ({ otherType }) => {
+const { HOME } = ENUM;
+
+const TestInform = ({ rank, title, percent, img, description }) => {
   return (
-    <div>
-      {/* props로 혹은 redux의 state로 다른 유형의 정보를 가져와 map으로 뿌려줘야함 */}
-      {/* {otherType && otherType.map((type)=>(
-            <TitleBox>
-            <Title>TOP 1</Title>
-            <SubTitle>당신은 센스로 무장했어요 (58%)</SubTitle>
-            <div style={{ padding: "2.4em 0px" }}>
-              <ImageView imageUrl={null} />
-            </div>
-            <Description>
-              총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않 더라도
-              정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.
-            </Description>
-          </TitleBox>
-        ))} */}
+    <TitleBox>
+      <Title>TOP {rank}</Title>
+      <SubTitle>
+        {title} ({percent}%)
+      </SubTitle>
+      <div style={{ padding: "2.4em 0px" }}>
+        <ImageView imageUrl={img} />
+      </div>
+      <Description>{description}</Description>
+    </TitleBox>
+  );
+};
 
-      <TitleBox>
-        <Title>TOP 1</Title>
-        <SubTitle>당신은 센스로 무장했어요 (58%)</SubTitle>
-        <div style={{ padding: "2.4em 0px" }}>
-          <ImageView imageUrl={null} />
-        </div>
-        <Description>
-          총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않 더라도
-          정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.
-        </Description>
-      </TitleBox>
-
-      <TitleBox>
-        <Title>TOP 2</Title>
-        <SubTitle>당신은 센스로 무장했어요 (58%)</SubTitle>
-        <div style={{ padding: "2.4em 0px" }}>
-          <ImageView imageUrl={null} />
-        </div>
-        <Description>
-          총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않 더라도
-          정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오.
-        </Description>
-      </TitleBox>
-    </div>
+const OtherType = ({ otherType }) => {
+  const { testResults = [] } = useSelector((state) => state.result);
+  return (
+    <PageContainer>
+      <div>
+        {testResults?.map(({ title, percent, img, description }, idx) => {
+          return (
+            <TestInform
+              rank={idx + 1}
+              title={title}
+              percent={percent}
+              img={img}
+              description={description}
+            />
+          );
+        })}
+      </div>
+      <BottomBtn btnArr={[{ name: "홈으로", type: HOME }]} />
+    </PageContainer>
   );
 };
 export default OtherType;
