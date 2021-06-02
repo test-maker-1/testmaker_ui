@@ -46,7 +46,9 @@ export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
     onClose();
   };
 
-  const onDelete = async (e) => {
+  const onDelete = async () => {
+    if (!img) return;
+    
     onOpen();
     await deleteImg(img);
     onClose();
