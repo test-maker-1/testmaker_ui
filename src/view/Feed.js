@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -18,22 +18,20 @@ const initArr = [ALL];
 const Feed = () => {
   const {
     feedLoading,
-    feedError,
     top10Tags,
-    testsByTagLoading,
-    testsByTagError,
     testsByTag,
     lastTestUid,
     selectedTag,
     changeTestsLoading,
+    isStop,
   } = useSelector((state) => state.feed);
 
   const tags = initArr.concat(top10Tags);
-  const [isStop, setStop] = useState(false);
   const dispatch = useDispatch();
 
   const getMoreDatas = () => {
-    dispatch(updateTests({ tagName: selectedTag, lastTestUid: lastTestUid }));
+    if (isStop === false)
+      dispatch(updateTests({ tagName: selectedTag, lastTestUid: lastTestUid }));
   };
 
   useEffect(() => {
