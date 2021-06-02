@@ -27,7 +27,8 @@ const CarouselComponent = React.memo(() => {
 
   const onClickTest = useCallback(
     (e) => {
-      goPage(`/${top5Tests[topTest.idx].testLink}`);
+      const testid = top5Tests[topTest.idx].testLink.split("?")[1];
+      goPage(`/testing/welcome`, testid);
     },
     [goPage, top5Tests, topTest]
   );
