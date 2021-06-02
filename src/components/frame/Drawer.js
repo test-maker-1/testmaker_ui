@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import useUser from "../../hooks/useUser";
+import { SVG } from "../common";
+import theme from "../../styles/theme";
+
+import ENUM from "../../constants/Enum";
+
+const { white, deepGray, darkGray } = theme.colors;
+
+const logoSvgStyle = {
+  width: 115,
+  height: 35,
+};
 
 const Drawer = ({ onClose }) => {
   const { loggedIn, logOut } = useUser();
@@ -9,8 +21,14 @@ const Drawer = ({ onClose }) => {
   return (
     <Dimmed>
       <DrawCloser onClick={onClose}></DrawCloser>
+
       <DrawContainer>
-        <ul>
+        <SVG
+          type={ENUM.CANCEL}
+          style={{ stroke: deepGray }}
+          onClick={onClose}
+        />
+        <ul className="menus">
           {loggedIn && (
             <Item>
               <Link to="/" className="menu">
@@ -37,14 +55,30 @@ const Drawer = ({ onClose }) => {
             </Item>
           )}
         </ul>
+
+        <Logo>
+          <SVG type={ENUM.HEADERLOGO} style={logoSvgStyle} />
+          <h1>오늘의 테스트</h1>
+        </Logo>
       </DrawContainer>
     </Dimmed>
   );
 };
 
+const Logo = styled.div`
+  text-align: center;
+
+  h1 {
+    font-family: "yg-jalnan";
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem;
+    line-height: 35px;
+    color: ${({ theme: { colors } }) => colors.black};
+  }
+`;
+
 const Dimmed = styled.div`
   position: fixed;
-  top: ${({ theme: { heights } }) => heights.header}px;
+  top: 0;
   left: 50%;
   right: 0;
   bottom: 0;
@@ -65,23 +99,34 @@ const DrawCloser = styled.div`
 
 const DrawContainer = styled.nav`
   position: absolute;
-  width: min(66%, 100%); /*274px*/
-  height: 100%;
   right: 0;
-  background: #fafafa;
+  width: min(66%, 100%); /* 274px */
+  height: 100%;
+  padding: 28px;
+
+  display: flex;
+  flex-direction: column;
+  background: ${white};
+
+  svg {
+    margin: 0 0 11px auto;
+  }
+
+  .menus {
+    flex: 1;
+  }
 `;
 
 const Item = styled.li`
-  padding: 14px 0;
-  border-bottom: 1px solid #ebedf1;
-  text-align: center;
-  line-height: 22px;
+  margin-bottom: 21px;
+  line-height: 30px;
 
   .menu {
     text-decoration: none;
-    font-size: 15px;
+    letter-spacing: -0.8px;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.xl}rem;
     font-weight: bold;
-    color: #8a929e;
+    color: ${darkGray};
   }
 `;
 

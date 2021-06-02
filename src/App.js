@@ -42,7 +42,7 @@ const App = () => {
           {/* login */}
           <Route exact path="/login" component={Login} />
           {/* module: kakao, other, naver, google, email */}
-          <Route exact path="/login/:module/:step?" component={LoginFrame} />
+          {/* <Route exact path="/login/:module/:step?" component={LoginFrame} /> */}
           {/* register */}
           <Route exact path="/register/:module" component={RegisterFrame} />
           {/* Testing */}
