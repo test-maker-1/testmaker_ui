@@ -49,7 +49,10 @@ const BtnPoint = ({ questionIdx, point }) => {
 
   const onSetPoint = (e) => {
     const { name, value } = e.currentTarget;
-    updateQuestion(name, Number(value), questionIdx);
+    const pointValue = Number(value);
+
+    if (point === pointValue) return;
+    updateQuestion(name, pointValue, questionIdx);
     onCancel();
   };
 
