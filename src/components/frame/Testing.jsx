@@ -33,18 +33,20 @@ const Testing = ({
       switch (module) {
         case welcome: // 웰컴
           dispatch(setTestID(testid));
+          break;
         case comments: // 댓글
           dispatch(getReplyInfo({ testid, timestamp: 0 }));
+          break;
         case exam: // 테스트
           dispatch(getTestExam({ testID: testid }));
-        // getTesting;
+          break;
         case result: // 테스트결과 (module)
           break;
         default:
           break;
       }
     }
-  }, []);
+  }, [module]);
 
   switch (module) {
     case welcome: // 웰컴

@@ -7,9 +7,9 @@ import InfinScroll from "../../components/common/InfinScroll";
 import Mention, { EmptyMention } from "./SubComponents/Mention";
 import { ComInput } from "./SubComponents/Reply";
 import {
-  addReplyInfo,
   submitOneComment,
   reportComment,
+  moreReplyInfo,
 } from "../../redux/reducer/replyReducer";
 
 let comment_id = null;
@@ -39,17 +39,17 @@ const returnALInfo = (type, callback) => {
 };
 
 const Comments = (props) => {
-  const replies = useSelector((state) => state.reply.replies);
-  const [isStop, setStop] = useState(false);
+  const { replies, isStop } = useSelector((state) => state.reply);
   const dispatch = useDispatch();
-  const bool = replies.length < 30;
   const [alertInfo, setALInfo] = useState(def_alert);
 
-  const handleOnAlertClick = useCallback((event) => {
-    // 선택한 버튼명 반환
-    console.log(comment_id, event, event.target.textContent, "클릭되었습니다!");
-    dispatch(reportComment(comment_id));
-  }, []);
+  const handleOnAlertClick = useCallback(
+    (event) => {
+      //댓글 신고
+      dispatch(reportComment(comment_id));
+    },
+    [comment_id]
+  );
 
   const openAlert = (type, uid) => {
     comment_id = uid;
@@ -79,9 +79,9 @@ const Comments = (props) => {
 
   const fetchMoreData = useCallback(() => {
     setTimeout(() => {
-      console.log(bool, replies);
-      if (bool) dispatch(addReplyInfo(replies));
-      else setStop(true);
+      console.log(replies, "!!!!");
+      dispatch(moreReplyInfo({ timestamp: replies[replies.length - 1].uid }));
+      // else setStop(true);
     }, 1500);
   }, [replies]);
 

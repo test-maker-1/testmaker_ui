@@ -11,6 +11,7 @@ const reply = createSlice({
       //recent3replies
       state.testUid = testid;
     },
+    moreReplyInfo: (state, { payload: { testid } }) => {},
     addReplyInfo: (state, { payload }) => {
       state.replies.push(...payload);
     },
@@ -20,6 +21,9 @@ const reply = createSlice({
       state.replies.unshift(payload);
     },
     reportComment: (state, { payload }) => {},
+    stopCallComments: (state, { payload }) => {
+      state.isStop = true;
+    },
   },
 });
 
@@ -30,6 +34,8 @@ export const {
   submitOneComment,
   addOneComment,
   reportComment,
+  moreReplyInfo,
+  stopCallComments,
 } = reply.actions;
 
 export default reply;

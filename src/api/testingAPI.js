@@ -13,8 +13,6 @@ export default class TestingAPI {
   }
   /** Reply 정보 */
   static getReplyInfo(uID, timestamp) {
-    // let url = `/testing/${uID}/replies`;
-    // if (timestamp !== undefined) url += `?last=${timestamp}`;
     return get(`/testing/${uID}/replies?last=${timestamp}`);
   }
   static postComment(uID, value) {
