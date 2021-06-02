@@ -92,10 +92,6 @@ const BtnEdit = memo(
     const isFreePoint = point && ![1, 2].includes(point);
     const [value, setValue] = useState(isFreePoint ? point : "");
 
-    const btnStyle =
-      point === value || editing ? btnColors.selected : btnColors.unselected;
-    const classes = useStyles(btnStyle);
-
     const handleOnChange = (e) => {
       const { value } = e.target;
       const regex = /^[0-9\b]{0,13}$/;
@@ -122,26 +118,20 @@ const BtnEdit = memo(
     };
 
     return (
-      <Button
-        component="label"
-        className={classes.btn}
-        disableFocusRipple
+      <InputPoint
+        name="point"
+        placeholder="직접 입력"
+        value={value}
+        active={point === value || editing}
         onClick={onEdit}
-      >
-        <InputNumber
-          name="point"
-          placeholder="직접 입력"
-          value={value}
-          onChange={handleOnChange}
-          onBlur={onBlur}
-        />
-      </Button>
+        onChange={handleOnChange}
+        onBlur={onBlur}
+      />
     );
   }
 );
 
 const BtnGroup = styled(ButtonGroup)`
-  margin-bottom: 16px;
   width: 100%;
   border: none;
 
@@ -150,6 +140,20 @@ const BtnGroup = styled(ButtonGroup)`
     flex: 1;
     border: none;
   }
+`;
+
+const InputPoint = styled(InputNumber)`
+  margin-bottom: 0;
+  padding: 6px 0;
+  flex: 1;
+
+  background: ${({ active }) => (active ? skyBlue : white)};
+  color: ${({ active }) => (active ? blue : gray)};
+
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  line-height: 24px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
 `;
 
 export default memo(BtnPoint);
