@@ -66,7 +66,7 @@ const Feed = () => {
                 title={test.title}
                 coverImg={test.coverImg}
                 makerName={test.maker.name}
-                makerImg={test.makerImg}
+                makerProfile={test.maker.profileImg}
                 sharedCnt={test.sharedCnt}
                 participatedCnt={test.participantsCnt}
                 testLink={test.testLink}
