@@ -16,6 +16,11 @@ export const initState = {
   testsByTagError: false,
   testsByTag: [],
 
+  // 태그 바뀔 때 loading
+  changeTestsLoading: false,
+  // 무한 스크롤 loading
+  updateTestsLoading: false,
+
   lastTestUid: 0,
   selectedTag: "",
 };
@@ -46,29 +51,39 @@ const feed = createSlice({
     },
     changeTests: (state) => {
       state.testsByTagLoading = true;
+      state.changeTestsLoading = true;
     },
     changeTestsSuccess: (state, { payload }) => {
       state.testsByTagLoading = false;
+      state.changeTestsLoading = false;
+
       state.testsByTag = payload;
       state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
     changeTestsError: (state, { payload }) => {
       state.testsByTagLoading = false;
       state.testsByTagError = true;
+
+      state.changeTestsLoading = false;
     },
 
     // 하나의 태그의 테스트 추가 요청 (무한 스크롤)
     updateTests: (state) => {
       state.testsByTagLoading = true;
+      state.updateTestsLoading = true;
     },
     updateTestsSuccess: (state, { payload }) => {
       state.testsByTagLoading = false;
+      state.updateTestsLoading = false;
+
       state.testsByTag.push(...payload);
       state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },
     updateTestsError: (state) => {
       state.testsByTagLoading = false;
       state.testsByTagError = true;
+
+      state.updateTestsLoading = false;
     },
   },
 });

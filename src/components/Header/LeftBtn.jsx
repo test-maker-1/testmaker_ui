@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { SVG } from "../common";
+import { NoticeAlert, SVG } from "../common";
 import usePage from "../../hooks/usePage";
 
-import { BACK, NOTHING } from "../../constants/headerInfo";
-
+import { BACK, NOTHING, SEARCH } from "../../constants/headerInfo";
+import ENUM from "../../constants/Enum";
 /*
  * type: string;
  */
@@ -14,6 +14,8 @@ const LeftBtn = ({ type = BACK }) => {
     switch (type) {
       case BACK:
         return goBack();
+      case SEARCH:
+        return NoticeAlert.open("곧 업데이트 예정이에요!");
       default:
         return null;
     }
@@ -22,11 +24,14 @@ const LeftBtn = ({ type = BACK }) => {
   if (type === NOTHING) return null;
 
   return (
-    <SVG
-      type={type}
-      onClick={onClickEvent}
-      style={{ width: "24", height: "24" }}
-    />
+    <>
+      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
+      <SVG
+        type={type}
+        onClick={onClickEvent}
+        style={{ width: "24", height: "24" }}
+      />
+    </>
   );
 };
 
