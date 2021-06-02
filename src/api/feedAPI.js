@@ -6,6 +6,10 @@ export default class FeedAPI {
   }
 
   static testsByTag({ tagName, lastTestUid }) {
-    return get(encodeURI(`/home?tag=${tagName}&last=${lastTestUid}`));
+    const [TAGNAME, LASTTESTUID] = [
+      encodeURIComponent(tagName),
+      encodeURIComponent(lastTestUid),
+    ];
+    return get(`/home?tag=${TAGNAME}&last=${LASTTESTUID}`);
   }
 }
