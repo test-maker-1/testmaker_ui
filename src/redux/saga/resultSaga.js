@@ -1,28 +1,13 @@
-import { generatePath } from "react-router";
-import {
-  select,
-  call,
-  put,
-  fork,
-  all,
-  takeLeading,
-  takeLatest,
-} from "redux-saga/effects";
-import {
-  setTestResultID,
-  updateTestResult,
-  getTestResult,
-} from "../reducer/resultReducer";
+import { call, put, fork, all, takeLeading } from "redux-saga/effects";
+import { setTestResultID, updateTestResult } from "../reducer/resultReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
-import { testing, result } from "../../constants/urlInfo";
+import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
 function* getResultInform(action) {
   const param = action.payload;
   const { data, status } = yield call(testingAPI.getResultInfo, param);
 
   if (status === SUCCESS) {
-    console.log("getTestResult", data); //
     const {
       isRankMode,
       recent3Replies,

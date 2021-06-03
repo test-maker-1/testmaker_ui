@@ -1,4 +1,3 @@
-import { generatePath, history } from "react-router";
 import {
   select,
   call,
@@ -17,10 +16,7 @@ import {
   saveResult,
 } from "../reducer/testingReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
-import { testing, result } from "../../constants/urlInfo";
-
-const getTestInform = createPromiseSaga(setTestID, testingAPI.getTestInfo);
+import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
 function* getOneTestInform(action) {
   const param = action.payload;
@@ -70,14 +66,6 @@ function* insertExam(action) {
 
     console.log("getTestExamInform3", data, status);
     if (status === SUCCESS) {
-      const {
-        isRankMode,
-        responseUid,
-        userTestResult,
-        repliesCnt,
-        recent3Replies,
-      } = data;
-
       yield put({
         type: saveResult.type,
         payload: data,
@@ -87,12 +75,11 @@ function* insertExam(action) {
 }
 
 function* moveResultPage(action) {
-  const state = yield select();
   const {
     payload: { responseUid },
   } = action;
 
-  window.location.href = `${window.location.origin}/testing/result?resultid=${responseUid}`;
+  yield (window.location.href = `${window.location.origin}/testing/result?resultid=${responseUid}`);
 }
 
 function* getTestInformation() {

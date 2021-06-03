@@ -73,22 +73,6 @@ const Reply = memo(({ repliesCnt, recent3replies }) => {
   );
 });
 
-const EmptyReply = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: ${({ height }) => height} || 245px;
-`;
-
-const FirstReply = styled.h1`
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
-  line-height: 36px;
-  text-align: center;
-  letter-spacing: -1px;
-  color: #e5e8ec;
-`;
-
 const InputItem = styled.div`
   margin: 16px 0px 24px;
 `;

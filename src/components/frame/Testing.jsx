@@ -48,7 +48,7 @@ const Testing = ({
           break;
       }
     }
-  }, [module]);
+  }, [dispatch, module, testid, resultid]);
 
   switch (module) {
     case welcome: // 웰컴

@@ -29,6 +29,8 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
         case "sec":
           result = `${diff}초전`;
           break;
+        default:
+          break;
       }
 
       return result;
