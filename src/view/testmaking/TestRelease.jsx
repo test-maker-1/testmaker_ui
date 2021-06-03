@@ -110,7 +110,7 @@ const TestRelease = () => {
       </TitleBox>
 
       <TitleBox title="친구에게 공유할래요!" noline>
-        <BtnShare />
+        <BtnShare shareInfo={{ ...savedTest, imageUrl: savedTest.coverImg }} />
       </TitleBox>
       <BottomBtn btnArr={[{ name: "홈으로", type: ENUM.HOME }]} />
     </div>
