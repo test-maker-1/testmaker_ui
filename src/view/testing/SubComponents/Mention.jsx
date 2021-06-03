@@ -10,33 +10,30 @@ import { getDateInfo, diffByTime } from "../../../utils/handler";
 const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
 
-  const formatTime = useCallback(
-    (ptimestamp) => {
-      let result = "";
-      const current = new Date().getTime();
-      const { mode, diff } = diffByTime(ptimestamp, current);
+  const formatTime = useCallback((ptimestamp) => {
+    let result = "";
+    const current = new Date().getTime();
+    const { mode, diff } = diffByTime(ptimestamp, current);
 
-      switch (mode) {
-        case "day":
-          result = getDateInfo(ptimestamp, "년월일"); //yyyy년mm월dd일
-          break;
-        case "hour":
-          result = `${diff}시간전`;
-          break;
-        case "min":
-          result = `${diff}분전`;
-          break;
-        case "sec":
-          result = `${diff}초전`;
-          break;
-        default:
-          break;
-      }
+    switch (mode) {
+      case "day":
+        result = getDateInfo(ptimestamp, "년월일"); //yyyy년mm월dd일
+        break;
+      case "hour":
+        result = `${diff}시간전`;
+        break;
+      case "min":
+        result = `${diff}분전`;
+        break;
+      case "sec":
+        result = `${diff}초전`;
+        break;
+      default:
+        break;
+    }
 
-      return result;
-    },
-    [timestamp]
-  );
+    return result;
+  }, []);
 
   const handleOnClick = (id, event) => {
     setOpen(false);

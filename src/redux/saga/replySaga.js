@@ -29,7 +29,6 @@ function* getComments(action) {
     param.timestamp
   );
 
-  console.log("getComments", data, status);
   if (status === SUCCESS) {
     if (data?.length > 0) {
       yield put({
