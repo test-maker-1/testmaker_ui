@@ -34,8 +34,8 @@ const TestSwiper = (props) => {
   return (
     <Container>
       <Swiper slidesPerView={"auto"} spaceBetween={16} className="mySwiper">
-        {moreTests.map((test) => (
-          <SwiperSlide>
+        {moreTests.map((test, idx) => (
+          <SwiperSlide key={idx}>
             <div>
               <div onClick={onClick}>
                 <ImageView imageUrl={test.img} height={"60%"} />
