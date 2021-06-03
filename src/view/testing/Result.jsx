@@ -51,6 +51,7 @@ const settingRank = (isRank, pRanks) => {
 };
 
 const Result = memo((props) => {
+  const { current_testID } = useSelector((state) => state.testing);
   const {
     isRankMode,
     userTestResult,
@@ -91,7 +92,9 @@ const Result = memo((props) => {
             </>
           )}
         </div>
-        <BtnField onClick={handleonClick}>테스트 다시하기</BtnField>
+        {current_testID && (
+          <BtnField onClick={handleonClick}>테스트 다시하기</BtnField>
+        )}
       </div>
       <RoundContiner noPadding>
         {isRankMode ? (

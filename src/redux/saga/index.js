@@ -4,6 +4,7 @@ import registerSaga from "./registerSaga";
 import feedSaga from "./feedSaga";
 import testingsaga from "./testingSaga";
 import replySaga from "./replySaga";
+import resultSaga from "./resultSaga";
 
 export function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export function* rootSaga() {
     fork(feedSaga),
     fork(testingsaga),
     fork(replySaga),
+    fork(resultSaga),
   ]);
 }

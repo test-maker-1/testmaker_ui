@@ -86,15 +86,13 @@ function* insertExam(action) {
   }
 }
 
-function* moveResultPage() {
-  const result2 = generatePath(
-    `/${testing}/${result}`,
-    document.location.search
-  );
-  window.history.push(`/${testing}/${result}`, document.location.search);
-  // document.location.href =
-  //   "http://localhost:3000/testing/result?testid=7b947dc7-d2f0-4e6d-8e55-a6259014c227";
-  console.log(result2);
+function* moveResultPage(action) {
+  const state = yield select();
+  const {
+    payload: { responseUid },
+  } = action;
+
+  window.location.href = `${window.location.origin}/testing/result?resultid=${responseUid}`;
 }
 
 function* getTestInformation() {
