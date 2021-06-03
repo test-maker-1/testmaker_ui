@@ -31,16 +31,16 @@ const InfinScroll = ({ children, datas, getMoreDatas, isStop, ...other }) => {
         next={getMoreDatas}
         hasMore={hasMore}
         style={{ overflow: "none" }}
-        loader={
-          <h3 style={{ paddingTop: "15px", textAlign: "center" }}>
-            loading...
-          </h3>
-        }
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>FIN</b>
-          </p>
-        }
+        // loader={
+        //   <h3 style={{ paddingTop: "15px", textAlign: "center" }}>
+        //     loading...
+        //   </h3>
+        // }
+        // endMessage={
+        //   <p style={{ textAlign: "center" }}>
+        //     <b>FIN</b>
+        //   </p>
+        // }
         {...other}
       >
         {children}
