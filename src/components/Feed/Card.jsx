@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import ImageView from "../common/ImageView";
 import styled from "styled-components";
 import { Title } from "./Carousel";

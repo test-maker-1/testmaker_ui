@@ -6,18 +6,17 @@ import { PageContainer, Summary } from "./Login";
 import usePage from "../../hooks/usePage";
 import { BtnField, InfoText } from "../../components/common";
 
-const Email = ({}) => {
-  const { replace, goPage } = usePage();
+const Email = () => {
+  const { replace } = usePage();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
       // 이메일 검증
-      const regExp =
-        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       if (email.match(regExp) == null) {
         setErrors({
           ...errors,
@@ -31,7 +30,7 @@ const Email = ({}) => {
       console.log("맞음");
       return replace("/");
     },
-    [email, password, errors, replace]
+    [email, errors, replace]
   );
 
   return (
@@ -49,7 +48,7 @@ const Email = ({}) => {
         <Input
           type="search"
           placeholder="비밀번호는 6자 이상이에요"
-          onChange={(e) => setPassword(e.target.value)}
+          // onChange={(e) => setPassword(e.target.value)}
           required
           className="password-input"
         />

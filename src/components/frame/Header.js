@@ -6,7 +6,6 @@ import LeftBtn from "../Header/LeftBtn";
 import RightBtn from "../Header/RightBtn";
 import TitleBtn from "../Header/titleBtn";
 
-const dynamicHB = "#ffffff"; //white or opacity
 const btnArea = 50;
 
 const useStyles = makeStyles((theme) => ({

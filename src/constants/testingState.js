@@ -1,19 +1,19 @@
 /* Testing 공통 데이터 */
-const testForm = {
-  question: "string",
-  img: "string",
-  options: [
-    {
-      name: "string",
-    },
-    {
-      name: "string",
-    },
-    {
-      name: "string",
-    },
-  ],
-};
+// const testForm = {
+//   question: "string",
+//   img: "string",
+//   options: [
+//     {
+//       name: "string",
+//     },
+//     {
+//       name: "string",
+//     },
+//     {
+//       name: "string",
+//     },
+//   ],
+// };
 
 /* 댓글 형식 */
 export const replyForm = {

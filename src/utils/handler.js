@@ -32,7 +32,6 @@ export const getNextPageURL = (pmatch, plocation) => {
   const {
     params: { module, step },
     path,
-    url,
   } = pmatch;
   const reg = new RegExp("/([A-Za-z]*)", "gi");
   const where = (reg.exec(path) || "")[1];

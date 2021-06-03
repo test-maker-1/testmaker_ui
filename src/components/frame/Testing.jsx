@@ -46,6 +46,7 @@ const Testing = ({
           break;
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [module]);
 
   switch (module) {

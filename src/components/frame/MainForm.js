@@ -20,6 +20,7 @@ const MainForm = ({ children, history, location, match }) => {
 
   useEffect(() => {
     onClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (

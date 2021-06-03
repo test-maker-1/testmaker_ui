@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Button } from "@material-ui/core";
 import { NEXT } from "../../constants/Enum";
 import { PageContainer } from "../login/Login";
@@ -12,24 +12,21 @@ import styled, { css } from "styled-components";
 const RgEmailAuth = (props) => {
   const classes = useStyles();
   const { replace } = usePage();
-  const [email, setEmail] = useState("");
-  const [authNumber, setAuthNumber] = useState("");
-  const [error, setError] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [authNumber, setAuthNumber] = useState("");
+  // const [error, setError] = useState("");
 
-  const getAuthNumber = useCallback(
-    (e) => {
-      e.preventDefault();
-      // console.log("인증번호 받기");
-    },
-    [email]
-  );
+  const getAuthNumber = useCallback((e) => {
+    e.preventDefault();
+    // console.log("인증번호 받기");
+  }, []);
 
   const onComplete = useCallback(
     (e) => {
       e.preventDefault();
       return replace("/register/pw-setting");
     },
-    [email, authNumber, replace]
+    [replace]
   );
 
   return (
@@ -39,7 +36,7 @@ const RgEmailAuth = (props) => {
         <EmailInput
           type="email"
           placeholder="이메일을 적어주세요"
-          onChange={(e) => setEmail(e.target.value)}
+          // onChange={(e) => setEmail(e.target.value)}
           required
           className="email-input"
         />
@@ -52,7 +49,7 @@ const RgEmailAuth = (props) => {
         <Input
           type="text"
           placeholder="인증번호를 적어주세요"
-          onChange={(e) => setAuthNumber(e.target.value)}
+          // onChange={(e) => setAuthNumber(e.target.value)}
           required
           className="auth-input"
         />

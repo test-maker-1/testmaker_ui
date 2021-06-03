@@ -1,4 +1,3 @@
-import React from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { registerComponents } from "../../constants/loginModuleComponents";
 

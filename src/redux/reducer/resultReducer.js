@@ -16,6 +16,6 @@ const result = createSlice({
   },
 });
 
-export const {} = result.actions;
+// export const {} = result.actions;
 
 export default result;

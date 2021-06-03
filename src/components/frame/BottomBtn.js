@@ -3,10 +3,10 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { getNextPageURL } from "../../utils/handler";
-import { home, picktest, preview } from "../../constants/urlInfo";
+import { home, picktest } from "../../constants/urlInfo";
 import ENUM from "../../constants/Enum";
 
-const { HOME, PICKTEST, PREVIEW, MOVENEXT, SHARE } = ENUM;
+const { HOME, PICKTEST, PREVIEW, MOVENEXT } = ENUM;
 
 const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   const handleOnClick = async (idx, event) => {

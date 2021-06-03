@@ -1,13 +1,14 @@
-import React, { useState, useCallback } from "react";
-import styled, { css } from "styled-components";
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { NEXT } from "../../../constants/Enum";
+import React from "react";
+import styled from "styled-components";
+// import { Button } from "@material-ui/core";
+// import { NEXT } from "../../../constants/Enum";
+// import { Title, Input, MarginBox } from "../Email";
+// import usePage from "../../../hooks/usePage";
+// import { BtnField } from "../../../components/common";
+
 import { PageContainer } from "../Login";
-import { Title, Input, MarginBox } from "../Email";
-import usePage from "../../../hooks/usePage";
 import theme from "../../../styles/theme";
-import { BtnField } from "../../../components/common";
+import { makeStyles } from "@material-ui/core/styles";
 
 const { skyBlue, blue } = theme.colors;
 const sizes = {
@@ -31,32 +32,32 @@ export const useStyles = makeStyles((theme, color) => ({
 }));
 
 const PwEmailAuth = (props) => {
-  const classes = useStyles();
-  const { replace } = usePage();
-  const [email, setEmail] = useState("");
-  const [authNumber, setAuthNumber] = useState("");
-  const [errors, setErrors] = useState({});
+  // const classes = useStyles();
+  // const { replace } = usePage();
+  // const [email, setEmail] = useState("");
+  // const [authNumber, setAuthNumber] = useState("");
+  // const [errors, setErrors] = useState({});
 
-  const getAuthNumber = useCallback(
-    (e) => {
-      e.preventDefault();
-      // email 백엔드에 넘겨줘
-    },
-    [email]
-  );
+  // const getAuthNumber = useCallback(
+  //   (e) => {
+  //     e.preventDefault();
+  //     // email 백엔드에 넘겨줘
+  //   },
+  //   [email]
+  // );
 
-  const onComplete = useCallback(
-    (e) => {
-      e.preventDefault();
-      // email,authNumber
-      return replace("/login/find-pw/pw-setting");
-    },
-    [email, authNumber, replace]
-  );
+  // const onComplete = useCallback(
+  //   (e) => {
+  //     e.preventDefault();
+  //     // email,authNumber
+  //     return replace("/login/find-pw/pw-setting");
+  //   },
+  //   [email, authNumber, replace]
+  // );
 
   return (
     <PageContainer>
-      <Title>인증번호를 보내드려요</Title>
+      {/* <Title>인증번호를 보내드려요</Title>
       <EmailForm onSubmit={getAuthNumber} errors={errors}>
         <EmailInput
           type="email"
@@ -82,50 +83,50 @@ const PwEmailAuth = (props) => {
         <MarginBox>
           <BtnField type="submit" name={NEXT} color="blue" onClick={null} />
         </MarginBox>
-      </AuthForm>
+      </AuthForm> */}
     </PageContainer>
   );
 };
 
 export default PwEmailAuth;
 
-const EmailForm = styled.form`
-  display: flex;
+// const EmailForm = styled.form`
+//   display: flex;
 
-  .email-input {
-    &:focus {
-      outline: none;
-      ${({ errors }) => {
-        if (errors.email)
-          return css`
-            box-shadow: 0 0 0 1px #ff5146;
-          `;
-        else
-          return css`
-            box-shadow: 0 0 0 1px #697382;
-          `;
-      }}
-    }
-  }
-`;
+//   .email-input {
+//     &:focus {
+//       outline: none;
+//       ${({ errors }) => {
+//         if (errors.email)
+//           return css`
+//             box-shadow: 0 0 0 1px #ff5146;
+//           `;
+//         else
+//           return css`
+//             box-shadow: 0 0 0 1px #697382;
+//           `;
+//       }}
+//     }
+//   }
+// `;
 
-const AuthForm = styled.form`
-  .auth-input {
-    &:focus {
-      outline: none;
-      ${({ errors }) => {
-        if (errors.email)
-          return css`
-            box-shadow: 0 0 0 1px #ff5146;
-          `;
-        else
-          return css`
-            box-shadow: 0 0 0 1px #697382;
-          `;
-      }}
-    }
-  }
-`;
+// const AuthForm = styled.form`
+//   .auth-input {
+//     &:focus {
+//       outline: none;
+//       ${({ errors }) => {
+//         if (errors.email)
+//           return css`
+//             box-shadow: 0 0 0 1px #ff5146;
+//           `;
+//         else
+//           return css`
+//             box-shadow: 0 0 0 1px #697382;
+//           `;
+//       }}
+//     }
+//   }
+// `;
 
 export const EmailInput = styled.input`
   width: 100%;

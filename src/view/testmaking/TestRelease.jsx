@@ -54,6 +54,7 @@ const TestRelease = () => {
       submitTest();
     }
     return () => sessionStorage.removeItem("savedTest");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (status === LOADING) return null;

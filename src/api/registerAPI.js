@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { post } from "./instance";
 
 export default class RegisterAPI {
   // 이메일 인증번호

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { EMAIL, NAVER, GOOGLE } from "../../constants/Enum";
 
@@ -6,7 +6,7 @@ import { PageContainer, Logo, Summary } from "./Login";
 import usePage from "../../hooks/usePage";
 import { BtnField } from "../../components/common";
 
-const Other = ({}) => {
+const Other = () => {
   const { goPage } = usePage();
 
   return (
