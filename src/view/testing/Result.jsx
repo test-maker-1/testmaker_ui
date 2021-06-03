@@ -90,7 +90,7 @@ const Result = memo((props) => {
               {topResult.title} ({topResult.percent}%)
             </SubTitle>
             <div style={{ padding: "2.4em 0px" }}>
-              <ImageView imageUrl={null} />
+              <ImageView imageUrl={topResult.img} />
             </div>
             <BtnField
               color="skyBlue"
