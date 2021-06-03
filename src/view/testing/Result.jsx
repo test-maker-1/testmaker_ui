@@ -1,12 +1,11 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { TitleBox } from "../../components/common/TitleBox";
 import { ImageView, BtnField } from "../../components/common";
 import RoundContiner from "./SubComponents/RoundContainer";
-import Reply, { ComInput } from "./SubComponents/Reply";
-import theme from "../../styles/theme";
+import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
 import TestSwiper from "../../components/common/TestSwiper";
@@ -14,29 +13,6 @@ import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 
 const { HOME, SHARE } = ENUM;
-
-const userRanking = [
-  {
-    name: "닉네임A",
-    point: 8,
-  },
-  {
-    name: "닉네임B",
-    point: 7,
-  },
-  {
-    name: "닉네임C",
-    point: 6,
-  },
-  {
-    name: "닉네임D",
-    point: 5,
-  },
-  {
-    name: "닉네임E",
-    point: 4,
-  },
-];
 
 const settingRank = (isRank, pRanks) => {
   let result = [];
@@ -51,10 +27,11 @@ const settingRank = (isRank, pRanks) => {
 };
 
 const Result = memo((props) => {
+  const { current_testID } = useSelector((state) => state.testing);
   const {
     isRankMode,
     userTestResult,
-    currentResult: { title, percent, img, description },
+    currentResult: { percent, img, description },
     testResults,
     repliesCnt,
     results,
@@ -91,7 +68,9 @@ const Result = memo((props) => {
             </>
           )}
         </div>
-        <BtnField onClick={handleonClick}>테스트 다시하기</BtnField>
+        {current_testID && (
+          <BtnField onClick={handleonClick}>테스트 다시하기</BtnField>
+        )}
       </div>
       <RoundContiner noPadding>
         {isRankMode ? (

@@ -1,32 +1,31 @@
 /* Testing 공통 데이터 */
-const testForm = {
-  question: "string",
-  img: "string",
-  options: [
-    {
-      name: "string",
-    },
-    {
-      name: "string",
-    },
-    {
-      name: "string",
-    },
-  ],
-};
+// const testForm = {
+//   question: "string",
+//   img: "string",
+//   options: [
+//     {
+//       name: "string",
+//     },
+//     {
+//       name: "string",
+//     },
+//     {
+//       name: "string",
+//     },
+//   ],
+// // };
 
 /* 댓글 형식 */
 export const replyForm = {
-  testUid: "fe59e1a6-b4bb-4d15-8c65-547a37e82758",
-  uid: "2ac255a5-4759-4e7a-9640-20877b54e020",
-  content: "테스트 진짜 신박해요~!! ㅋㅋㅋ 우오아아 재밌다",
-  writtenAt: 1619324817995,
-  // writer: {nickname: "JAEN", profileImg: "", uid: "2aad0c77-6216-4915-817c-ca2f9fd871de"}
+  testUid: "",
+  uid: "",
+  content: "",
+  writtenAt: null,
   writer: {
-    uid: 34234,
+    uid: "",
     isMe: 0,
-    profileImg: "https://~~",
-    nickname: "jennny",
+    profileImg: "",
+    nickname: "",
   },
   reports: [],
   reportsCnt: 0,
@@ -35,14 +34,14 @@ export const replyForm = {
 const testing = {
   current_testID: "",
   testInfo: {
-    uid: "nz6eCHZ2GZJeor6BXJDC",
+    uid: "",
     title: "성격 유형검사 MBTI Test",
     description:
       "총 검사 시간은 12분 내외입니다. 혹 질문이 마음에 들지 않더라도 정직하게 답변하십시오. 가능하면 답변 시 '중립'을 선택하지 마십시오. ",
     coverImg: "https://google.storage/path/to/img",
     maker: {
       name: "메이커짱짱",
-      userUid: "nz6eCHZ2GZJeor6BXJDC",
+      userUid: "",
     },
     optionalURL: "this_is_url_to_share",
     participantsCnt: 3258,

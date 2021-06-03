@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { NoticeAlert } from "../../components/common";
@@ -23,7 +23,7 @@ const def_alert = {
 //Alert 창
 const returnALInfo = (type, callback) => {
   let result = {};
-  console.log(comment_id);
+
   if (type === "report") {
     result = {
       btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
@@ -48,7 +48,7 @@ const Comments = (props) => {
       //댓글 신고
       dispatch(reportComment(comment_id));
     },
-    [comment_id]
+    [dispatch]
   );
 
   const openAlert = (type, uid) => {
@@ -83,7 +83,7 @@ const Comments = (props) => {
       dispatch(moreReplyInfo({ timestamp: replies[replies.length - 1].uid }));
       // else setStop(true);
     }, 1500);
-  }, [replies]);
+  }, [dispatch, replies]);
 
   const handleScroll = undefined;
   // (a, b, c) => {

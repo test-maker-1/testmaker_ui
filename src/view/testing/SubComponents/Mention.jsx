@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
+import Avatar from "@material-ui/core/Avatar";
+import { styled as mstyled } from "@material-ui/core/styles";
 import { SVG } from "../../../components/common";
 import useOpen from "../../../hooks/useOpen";
 import Enum from "../../../constants/Enum";
@@ -27,6 +29,8 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
         case "sec":
           result = `${diff}초전`;
           break;
+        default:
+          break;
       }
 
       return result;
@@ -44,7 +48,7 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
   return (
     <MenContainer>
       <TEMP>
-        <Avatar img={writer.profileImg} />
+        <AvatarIcon src={writer.profileImg} />
         <UserName>{writer.nickname}</UserName>
         <Timer>{formatTime(timestamp)}</Timer>
         {/* isMe : -1.로그인안한상태 0.로그인 했지만, 당사자가 아닌 유저, 1.로그인한 당사자 유저  */}
@@ -184,14 +188,12 @@ const MenContainer = styled.div`
   }
 `;
 
-const Avatar = styled.div`
-  display: inline-block;
-  float: left;
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  background: #dadee6;
-`;
+const AvatarIcon = mstyled(Avatar)({
+  display: "inline-block",
+  float: "left",
+  width: "24px",
+  height: "24px",
+});
 
 const UserName = styled.p`
   display: inline-block;
