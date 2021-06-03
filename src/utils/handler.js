@@ -1,8 +1,8 @@
 import cookie from "react-cookies";
+import { clientURL } from "../constants/config";
 import headerInfo, { initHeader } from "../constants/headerInfo";
 import msg from "../constants/msg";
-import { seqTest } from "../constants/urlInfo";
-import { login, test, testing } from "../constants/urlInfo";
+import { seqTest, login, test, testing } from "../constants/urlInfo";
 
 // plocation: string; => path
 export const getConfiguration = (plocation) => {
@@ -214,4 +214,38 @@ export const copyLinkToClipBoard = () => {
   temp.select(); //전체선택
   document.execCommand("copy"); //복사
   document.body.removeChild(temp);
+};
+
+// 카카오 링크 공유
+// all params: string;
+const { Kakao } = window;
+export const shareKakao = (link, title, description, imageUrl) => {
+  Kakao.Link.sendDefault({
+    objectType: "feed",
+    content: {
+      title,
+      description,
+      imageUrl: imageUrl,
+      link: {
+        webUrl: `${clientURL}/${link}`,
+        mobileWebUrl: `${clientURL}/${link}`,
+      },
+    },
+    buttons: [
+      {
+        title: "테스트 해보기",
+        link: {
+          webUrl: `${clientURL}/${link}`,
+          mobileWebUrl: `${clientURL}/${link}`,
+        },
+      },
+      {
+        title: "테스트 만들기",
+        link: {
+          webUrl: clientURL,
+          mobileWebUrl: clientURL,
+        },
+      },
+    ],
+  });
 };

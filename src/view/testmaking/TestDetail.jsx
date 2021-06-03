@@ -95,6 +95,8 @@ const useDetail = () => {
   const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
+  const { testId, onFeed, title, description, coverImg } = data;
+
   const onEnterPress = (e) => {
     const { value } = e.target;
 
@@ -127,8 +129,11 @@ const useDetail = () => {
       sessionStorage.setItem(
         "savedTest",
         JSON.stringify({
-          testId: data.testId,
-          onFeed: data.onFeed,
+          testId,
+          onFeed,
+          title,
+          description,
+          coverImg,
           link: `testing/welcome?testid=${data.testId}`,
         })
       );

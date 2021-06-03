@@ -8,7 +8,7 @@ import insta from "../../resources/images/insta.png";
 import twitter from "../../resources/images/twitter.png";
 import url from "../../resources/images/url.png";
 
-import { copyLinkToClipBoard } from "../../utils/handler";
+import { copyLinkToClipBoard, shareKakao } from "../../utils/handler";
 
 const { KAKAO, INSTA, TWITTER } = ENUM;
 const platforms = [
@@ -27,11 +27,13 @@ const platforms = [
   },
 ];
 
-const BtnShare = ({ onClick }) => {
+const BtnShare = ({ shareInfo, onClick }) => {
+  const { link, title, description, imageUrl } = shareInfo;
+
   const handleOnClick = (id, event) => {
-    if (id === "url") {
-      copyLinkToClipBoard();
-    }
+    if (id === "url") copyLinkToClipBoard();
+    if (id === KAKAO) shareKakao(link, title, description, imageUrl);
+
     if (onClick) onClick(event, id);
   };
 

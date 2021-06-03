@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -22,6 +23,7 @@ import { LOADING } from "./utils/asyncUtils";
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/components/navigation/navigation.min.css";
+import initialize from "./utils/initialize";
 
 const App = () => {
   const { checkLogIn, status } = useUser();
@@ -29,8 +31,9 @@ const App = () => {
 
   useEffect(() => {
     checkLogIn();
+    initialize();
     dispatch(initFeed());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
