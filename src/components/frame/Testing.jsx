@@ -17,19 +17,20 @@ import {
 } from "../../constants/urlInfo";
 import { setTestID, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
+import { setTestResultID } from "../../redux/reducer/resultReducer";
 
 const Testing = ({
   match: {
-    params: { module, step },
+    params: { module },
   },
   location,
 }) => {
-  const { testid } = queryString.parse(location.search);
+  const { testid, resultid } = queryString.parse(location.search);
   const dispatch = useDispatch();
 
   useEffect(() => {
     //call api at didmount
-    if (testid) {
+    if (testid || (resultid && module === result)) {
       switch (module) {
         case welcome: // 웰컴
           dispatch(setTestID(testid));
@@ -40,14 +41,14 @@ const Testing = ({
         case exam: // 테스트
           dispatch(getTestExam({ testID: testid }));
           break;
-        case result: // 테스트결과 (module)
+        case result: // (module)
+          dispatch(setTestResultID(resultid));
           break;
         default:
           break;
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [module]);
+  }, [dispatch, module, testid, resultid]);
 
   switch (module) {
     case welcome: // 웰컴
@@ -57,11 +58,11 @@ const Testing = ({
     case exam: // 테스트
       return <Exam />;
     case result: // 테스트결과 (module)
-      return <Result type={step} />;
+      return <Result />;
     case otherType: // 다른유형 전체보기
       return <OtherType />;
     default:
-      console.warn("where are you?", module, step);
+      console.warn("where are you?", module);
       break;
   }
 

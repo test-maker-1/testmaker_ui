@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BtnShare, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
@@ -37,6 +37,16 @@ const returnALInfo = (type, callback) => {
 const Welcome = () => {
   const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const [alertInfo, setALInfo] = useState(def_alert);
+
+  useEffect(() => {
+    const current_scroll = document.documentElement.scrollTop;
+
+    if (current_scroll > 0) {
+      //최상단 스크롤로 이동
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
   const openAlert = (type) => {
     const msg =
       type === SHARE ? "친구한테 공유할래요!" : "이 댓글을 신고할까요?";

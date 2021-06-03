@@ -1,8 +1,9 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
-import Mention, { EmptyMention } from "./Mention";
+import star from "../../../resources/images/star.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
+import Mention, { EmptyMention } from "./Mention";
 
 export const ComInput = ({ hintText, onFocus, onSubmit }) => {
   const [words, setWords] = useState("");
@@ -29,7 +30,7 @@ export const ComInput = ({ hintText, onFocus, onSubmit }) => {
           />
         </WrapInput>
         <WrapBtn>
-          <input type={"submit"} />
+          <SubmitBtn src={star} type={"image"} />
         </WrapBtn>
       </InputContainer>
     </form>
@@ -72,28 +73,13 @@ const Reply = memo(({ repliesCnt, recent3replies }) => {
   );
 });
 
-const EmptyReply = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: ${({ height }) => height} || 245px;
-`;
-
-const FirstReply = styled.h1`
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
-  line-height: 36px;
-  text-align: center;
-  letter-spacing: -1px;
-  color: #e5e8ec;
-`;
-
 const InputItem = styled.div`
   margin: 16px 0px 24px;
 `;
 
 const WrapInput = styled.div`
   display: inline-block;
+  float: left;
   width: 85%;
 `;
 const WrapBtn = styled.div`
@@ -149,6 +135,10 @@ const Entire = styled.p`
   letter-spacing: -0.5px;
   color: #8a929e;
   cursor: pointer;
+`;
+
+const SubmitBtn = styled.input`
+  margin-top: 10px;
 `;
 
 export default Reply;

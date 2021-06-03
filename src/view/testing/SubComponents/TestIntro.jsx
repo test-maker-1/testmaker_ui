@@ -1,12 +1,11 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import { styled as mstyled } from "@material-ui/core/styles";
-import { SVG, Tag, ImageView } from "../../../components/common";
+import { SVG, ImageView } from "../../../components/common";
 import Enum from "../../../constants/Enum";
 import TagSwiper from "../../../components/common/TagSwiper";
-import { colors } from "@material-ui/core";
 
 const TestIntro = memo((props) => {
   const {
@@ -18,9 +17,9 @@ const TestIntro = memo((props) => {
     description,
   } = useSelector((state) => state.testing.testInfo);
 
-  const handleOnClick = useCallback((e) => {
-    props.openAlert("report");
-  }, []);
+  // const handleOnClick = useCallback((e) => {
+  //   props.openAlert("report");
+  // }, []);
 
   return (
     <InfoContainer>
@@ -96,10 +95,10 @@ const InfoImg = styled.div`
   margin: 24px 0px;
 `;
 
-const More = styled.p`
-  display: inline;
-  float: right;
-`;
+// const More = styled.p`
+//   display: inline;
+//   float: right;
+// `;
 
 const Partition = styled.p`
   display: inline-block;
