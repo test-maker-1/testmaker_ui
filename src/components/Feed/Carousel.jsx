@@ -4,9 +4,9 @@ import ImageView from "../common/ImageView";
 import { useSelector } from "react-redux";
 import usePage from "../../hooks/usePage";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Autoplay, Pagination, Navigation } from "swiper/core";
+import SwiperCore, { Autoplay, Pagination } from "swiper/core";
 
-SwiperCore.use([Autoplay, Pagination, Navigation, Swiper]);
+SwiperCore.use([Autoplay, Pagination, Swiper]);
 
 const CarouselComponent = React.memo(() => {
   const { goPage } = usePage();
@@ -44,7 +44,7 @@ const CarouselComponent = React.memo(() => {
         <Swiper
           slidesPerView={"auto"}
           centeredSlides={true}
-          navigation={true}
+          spaceBetween={10}
           onSlideChange={onSlideChange}
           autoplay={{
             delay: "5000",
@@ -90,6 +90,19 @@ const CarouselBox = styled.div`
   .swiper-button-next.swiper-button-disabled,
   .swiper-button-prev.swiper-button-disabled {
     pointer-events: auto;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    opacity: 0.5;
+    background: #fafafa;
+    box-shadow: 1px 1px 3px rgba(20, 23, 25, 0.7);
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #ffffff;
   }
 `;
 const Ranking = styled.div`
