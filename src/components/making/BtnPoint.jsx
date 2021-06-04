@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useMemo } from "react";
 import styled from "styled-components";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import { InputNumber } from "../../styles";
 import theme from "../../styles/theme";
 
-import useMaking from "../../hooks/useMaking";
 import useOpen from "../../hooks/useOpen";
 
 const { blue, skyBlue, white, gray } = theme.colors;
@@ -39,13 +38,8 @@ const useStyles = makeStyles(() => ({
   }),
 }));
 
-/*
- * questionIdx: number;
- * point: number;
- */
-const BtnPoint = ({ questionIdx, point }) => {
+const BtnPoint = ({ questionIdx, point, updateQuestion }) => {
   const { open: editing, onOpen: onEdit, onClose: onCancel } = useOpen();
-  const { updateQuestion } = useMaking();
 
   const onSetPoint = (e) => {
     const { name, value } = e.currentTarget;
@@ -73,10 +67,13 @@ const BtnPoint = ({ questionIdx, point }) => {
 };
 
 const Btn = memo(({ point, editing, value, onClick }) => {
-  const btnStyle =
-    !editing && point && point === Number(value)
-      ? btnColors.selected
-      : btnColors.unselected;
+  const btnStyle = useMemo(
+    () =>
+      !editing && point && point === Number(value)
+        ? btnColors.selected
+        : btnColors.unselected,
+    [editing, point, value]
+  );
 
   const classes = useStyles(btnStyle);
 

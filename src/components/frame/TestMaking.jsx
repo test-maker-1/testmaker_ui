@@ -1,13 +1,13 @@
-import React, { useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect, memo } from "react";
 import { withRouter } from "react-router-dom";
 
 import Error from "../../view/Error";
 import useUser from "../../hooks/useUser";
-import useMaking from "../../hooks/useMaking";
 import useOpen from "../../hooks/useOpen";
 
 import { ERROR, saveTest } from "../../utils/asyncUtils";
 import components from "../../constants/testStepComponents";
+import useCommon from "../../hooks/making/useCommon";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
@@ -18,7 +18,7 @@ const TestMaking = ({
 }) => {
   // state hooks
   const { logInLoading, loggedIn } = useUser();
-  const { data, dispatch, initCommonData } = useMaking();
+  const { data, dispatch, initCommon, updateStep } = useCommon();
   const { open: error, onOpen: onError } = useOpen();
 
   // timer utils
@@ -28,13 +28,13 @@ const TestMaking = ({
 
   const initTimer = useCallback(
     (initMaker = false) => {
-      if (data.testId) dispatch(initCommonData(initMaker));
+      if (data.testId) dispatch(initCommon(initMaker));
       if (intervalLoading.current) intervalLoading.current = false;
 
       testState.current = {};
       clearTimeout(saveTimer.current);
     },
-    [data.testId, dispatch, initCommonData]
+    [data.testId, dispatch, initCommon]
   );
 
   const interval = useCallback(() => {
@@ -71,6 +71,10 @@ const TestMaking = ({
     };
   }, []);
 
+  useEffect(() => {
+    updateStep(step);
+  }, [step, updateStep]);
+
   // undefined module
   if (!components.hasOwnProperty(module)) return <Error />;
   // undefined step
@@ -88,4 +92,4 @@ const TestMaking = ({
   return makingComponent[step];
 };
 
-export default withRouter(TestMaking);
+export default withRouter(memo(TestMaking));

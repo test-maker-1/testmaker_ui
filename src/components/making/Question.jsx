@@ -1,57 +1,46 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 
-import { InfoText, UploadImg } from "../common";
-import { SubTitle, BtnIcon, Option, BtnAddOption, BtnPoint } from ".";
+import { InfoText, NoticeAlert, UploadImg } from "../common";
+import { SubTitle, BtnIcon, Options, BtnPoint } from ".";
 import { InputTitle, Section } from "../../styles";
 
-import MakingAPI from "../../api/makingAPI";
-import useMaking from "../../hooks/useMaking";
-import { SUCCESS } from "../../utils/asyncUtils";
-
+import useQuestion from "../../hooks/making/useQuestion";
 import ENUM, { md } from "../../constants/Enum";
 import msg from "../../constants/msg";
 
-const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
+const { errorPage, errorMaking } = msg;
+
+const Questions = () => {
+  const { questions } = useQuestion();
+  return (
+    <>
+      <NoticeAlert btns={[{ name: "다시보기" }]} />
+      {questions.map((question, idx) => (
+        <Question key={question.questionId} questionIdx={idx} data={question} />
+      ))}
+    </>
+  );
+};
+
+const Question = memo(({ questionIdx, data }) => {
   const { question, img, openImg, answer, point, options } = data;
   const {
-    data: {
-      data: { target },
-    },
-    dispatch,
-    deleteQuestion,
     updateQuestion,
-    deleteOption,
-  } = useMaking();
+    updateImg,
+    deleteQuestionData,
+    handleUpdate,
+    getPreset,
+  } = useQuestion();
 
-  const handleUpdate = (e) => {
-    const { name, value } = e.target;
-    updateQuestion(name, value, questionIdx);
+  const onDelete = () => {
+    if (!deleteQuestionData(questionIdx)) {
+      NoticeAlert.open(errorMaking.invaliedQuestionsCnt);
+    }
   };
 
-  const onDeleteQuestion = () => {
-    if (questionsCnt - 1 < 1) {
-      openAlert("질문은 1개 이상 필요해요!");
-      return;
-    }
-    dispatch(deleteQuestion(questionIdx));
-  };
-
-  const onDeleteOption = (qIdx, oIdx) => {
-    if (options.length - 1 < 2) {
-      openAlert("선택지는 2개 이상 필요해요!");
-      return;
-    }
-    deleteOption(qIdx, oIdx);
-  };
-
-  const getPreset = async () => {
-    const { data, status } = await MakingAPI.getQuestionPreset(target);
-    if (status === SUCCESS) {
-      updateQuestion("question", data.questions[0], questionIdx);
-    } else {
-      openAlert(msg.errorPage[500]);
-    }
+  const onGetPreset = () => {
+    if (!getPreset(questionIdx)) NoticeAlert.open(errorPage[500]);
   };
 
   return (
@@ -60,9 +49,9 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
           onUpload={() => updateQuestion("openImg", !openImg, questionIdx)}
-          onDelete={onDeleteQuestion}
+          onDelete={onDelete}
         >
-          <BtnIcon type={ENUM.CASINO} onClick={getPreset} />
+          <BtnIcon type={ENUM.CASINO} onClick={onGetPreset} />
         </SubTitle>
         <Wrapper>
           {/* question */}
@@ -71,41 +60,37 @@ const Question = ({ data, questionIdx, questionsCnt, openAlert }) => {
             defaultValue={question}
             size={md}
             placeholder="질문을 입력해주세요"
-            onBlur={handleUpdate}
+            onBlur={(e) => handleUpdate(e, questionIdx)}
           />
           {/* coverImg */}
           {openImg && (
             <UploadImg
-              type={ENUM.QUESTION}
               img={img}
-              parentIdx={questionIdx}
-              openAlert={openAlert}
+              uploadImg={(img) => updateImg(img, questionIdx)}
+              openAlert={() => NoticeAlert.open(errorPage[500])}
             />
           )}
           {/* options */}
-          <ul>
-            {options.map((option, idx) => (
-              <Option
-                key={option.optionId}
-                value={option.name}
-                isAnswer={answer && option.name === answer}
-                idxs={{ questionIdx, optionIdx: idx }}
-                deleteOption={onDeleteOption}
-              />
-            ))}
-          </ul>
-          <BtnAddOption questionIdx={questionIdx} />
+          <Options
+            questionIdx={questionIdx}
+            options={options}
+            answer={answer}
+          />
           {/* point */}
-          <BtnPoint questionIdx={questionIdx} point={point} />
+          <BtnPoint
+            questionIdx={questionIdx}
+            point={point}
+            updateQuestion={updateQuestion}
+          />
           <InfoText text="정답 항목을 체크해주세요" color="blue" />
         </Wrapper>
       </div>
     </li>
   );
-};
+});
 
 const Wrapper = styled(Section)`
   margin-bottom: 24px;
 `;
 
-export default memo(Question);
+export default memo(Questions);

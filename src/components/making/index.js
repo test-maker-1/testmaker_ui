@@ -5,8 +5,8 @@ export { default as FeedBtn } from "./FeedBtn";
 export { default as BtnPoint } from "./BtnPoint";
 
 export { default as SubTitle, BtnIcon } from "./SubTitle";
-export { default as Option } from "./Option";
+export { default as Options } from "./Option";
 
 // component
-export { default as Question } from "./Question";
+export { default as Questions } from "./Question";
 export { default as Result } from "./Result";

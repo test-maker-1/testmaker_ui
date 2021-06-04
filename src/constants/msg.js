@@ -11,6 +11,8 @@ const errorMaking = {
   question: "비어있거나 잘못된 항목이 있는 질문이 있어요!",
   result: "비어있거나 잘못된 항목이 있는 결과가 있어요!",
   invaliedPoints: "테스트 총 점수가 너무 적어요!",
+  invaliedQuestionsCnt: "질문은 1개 이상 필요해요!",
+  invaliedOptionsCnt: "선택지는 2개 이상 필요해요!",
 };
 
 const msg = {

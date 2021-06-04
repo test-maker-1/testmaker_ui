@@ -4,10 +4,10 @@ import styled, { css } from "styled-components";
 import { SVG } from "../common";
 import theme from "../../styles/theme";
 
-import useMaking from "../../hooks/useMaking";
 import { changeTests } from "../../redux/reducer/feedReducer";
 import { setSelecteTag } from "../../redux/reducer/feedReducer";
 
+import useCommon from "../../hooks/making/useCommon";
 import ENUM, { ALL } from "../../constants/Enum";
 
 const { blue, white, bodyGray } = theme.colors;
@@ -18,10 +18,10 @@ const svgStyles = {
 
 // tag: string;
 const Tag = ({ tag, selected, selectable, deletable }) => {
-  const { dispatch, deleteTag } = useMaking();
+  const { dispatch, deleteTagData } = useCommon();
 
   const onClickDelete = () => {
-    if (deletable) dispatch(deleteTag(tag));
+    if (deletable) dispatch(deleteTagData(tag));
   };
 
   const onSelectTag = () => {

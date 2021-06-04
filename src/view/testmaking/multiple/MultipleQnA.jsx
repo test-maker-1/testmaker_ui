@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { NoticeAlert, SVG } from "../../../components/common";
-import { Question, BtnAdd } from "../../../components/making";
+import { Questions, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
 
-import useMaking from "../../../hooks/useMaking";
 import usePage from "../../../hooks/usePage";
+import useQnA from "../../../hooks/making/useQnA";
 
-import { getPointBoundList } from "../../../utils/constHandler";
+import msg from "../../../constants/msg";
 import ENUM from "../../../constants/Enum";
 
 const { blue, white, bodyGray, darkGray } = theme.colors;
-const currentStep = "qna";
 
 const svgStyles = {
   width: 32,
@@ -22,13 +21,6 @@ const svgStyles = {
 };
 
 const MultipleQnA = () => {
-  const {
-    questions = [],
-    questionsCnt,
-    addEmptyQuestion,
-    onSetResult,
-  } = useQnA();
-
   return (
     <PageContainer>
       <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
@@ -43,76 +35,35 @@ const MultipleQnA = () => {
         </GuideText>
       </RandomGuide>
 
-      {questions.map((question, idx) => (
-        <Question
-          key={question.questionId}
-          questionIdx={idx}
-          questionsCnt={questionsCnt}
-          data={question}
-          openAlert={NoticeAlert.open}
-        />
-      ))}
-      <BtnAdd onClick={addEmptyQuestion} />
+      <Questions />
+      <BtnAdd />
 
-      <BottomBtn
-        btnArr={[
-          { name: "미리보기", type: ENUM.PREVIEW },
-          { name: "다 적었어요", customClick: onSetResult },
-        ]}
-      />
+      <FooterBtn />
     </PageContainer>
   );
 };
 
-const useQnA = () => {
-  const {
-    data,
-    dispatch,
-    updateTypeData,
-    updateStep,
-    addQuestion,
-  } = useMaking();
+const FooterBtn = memo(() => {
+  const { onSetResult } = useQnA();
   const { goPage } = usePage();
 
-  useEffect(() => {
-    if (data.step !== currentStep) updateStep(currentStep);
-  }, [data.step, updateStep]);
-
-  const {
-    data: {
-      totalPoints,
-      questions = [],
-      results = [],
-      questionsCnt,
-      resultsCnt,
-    },
-  } = data;
-
-  const addEmptyQuestion = () => dispatch(addQuestion());
-
-  const onSetResult = () => {
-    if (totalPoints < resultsCnt - 1) {
-      NoticeAlert.open("테스트 총 점수가 너무 적어요!");
+  const onSubmitQnA = () => {
+    if (onSetResult()) {
+      goPage("/test/multiple/result");
       return;
     }
-
-    const pointBoundList = getPointBoundList(totalPoints, resultsCnt);
-    const baseResults = [...results];
-    const updateResults = baseResults.map((result, idx) => {
-      return { ...result, pointBound: { ...pointBoundList[idx] } };
-    });
-    dispatch(updateTypeData({ key: "results", value: updateResults }));
-
-    goPage("/test/multiple/result");
+    NoticeAlert.open(msg.errorMaking.invaliedPoints);
   };
 
-  return {
-    questions,
-    questionsCnt,
-    addEmptyQuestion,
-    onSetResult,
-  };
-};
+  return (
+    <BottomBtn
+      btnArr={[
+        { name: "미리보기", type: ENUM.PREVIEW },
+        { name: "다 적었어요", customClick: onSubmitQnA },
+      ]}
+    />
+  );
+});
 
 const RandomGuide = styled.section`
   margin-bottom: 24px;

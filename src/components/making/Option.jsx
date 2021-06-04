@@ -1,5 +1,7 @@
-import { memo } from "react";
-import { SVG } from "../common";
+import { memo, useMemo } from "react";
+import { NoticeAlert, SVG } from "../common";
+import { BtnAddOption } from ".";
+
 import {
   Container,
   InputContainer,
@@ -8,35 +10,52 @@ import {
   OptionText,
   CancelWrap,
 } from "../../styles/Options";
-import useMaking from "../../hooks/useMaking";
 
+import useOption from "../../hooks/making/useOption";
 import ENUM from "../../constants/Enum";
+import msg from "../../constants/msg";
 
-/*
- * value: string;
- * answer: string;
- */
-const Option = ({ value, isAnswer, deleteOption, idxs }) => {
-  const { updateQuestion, updateOption } = useMaking();
+const Options = ({ questionIdx, answer, options }) => {
+  return (
+    <>
+      <NoticeAlert btns={[{ name: "다시보기" }]} />
+      <ul>
+        {options.map(({ optionId, name }, idx) => (
+          <Option
+            key={optionId}
+            value={name}
+            answer={answer}
+            optionsCnt={options.length}
+            idxs={{ questionIdx, optionIdx: idx }}
+          />
+        ))}
+      </ul>
+      <BtnAddOption questionIdx={questionIdx} />
+    </>
+  );
+};
+
+const Option = memo(({ value, answer, idxs, optionsCnt }) => {
   const { questionIdx, optionIdx } = idxs;
+  const isAnswer = useMemo(() => answer && value === answer, [answer, value]);
+  const { onUpdate, checkAnswer, deleteOption } = useOption();
 
-  const onUpdate = (e) => {
-    const { value: newOption } = e.target;
-    updateOption(questionIdx, optionIdx, value, newOption);
+  const onCheck = () => {
+    if (answer === value || value.length < 1) return;
+    checkAnswer(questionIdx, value);
   };
 
-  const onDelete = () => deleteOption(questionIdx, optionIdx);
-
-  const onCheckAnswer = () => {
-    if (value.length < 1) return;
-    updateQuestion("answer", value, questionIdx);
+  const onDelete = () => {
+    if (!deleteOption(questionIdx, optionIdx, optionsCnt)) {
+      NoticeAlert.open(msg.errorMaking.invaliedOptionsCnt);
+    }
   };
 
   return (
     <Container bgColor={isAnswer ? "blue" : "white"}>
       <InputContainer>
         <CheckWrap>
-          <SVG type={ENUM.CHECK} onClick={onCheckAnswer} />
+          <SVG type={ENUM.CHECK} onClick={onCheck} />
         </CheckWrap>
         <InputWrap>
           <OptionText
@@ -44,7 +63,7 @@ const Option = ({ value, isAnswer, deleteOption, idxs }) => {
             defaultValue={value}
             rows={1}
             color={isAnswer ? "white" : "darkGray"}
-            onBlur={onUpdate}
+            onBlur={(e) => onUpdate(e, questionIdx, optionIdx, value)}
           />
         </InputWrap>
       </InputContainer>
@@ -53,6 +72,6 @@ const Option = ({ value, isAnswer, deleteOption, idxs }) => {
       </CancelWrap>
     </Container>
   );
-};
+});
 
-export default memo(Option);
+export default memo(Options);

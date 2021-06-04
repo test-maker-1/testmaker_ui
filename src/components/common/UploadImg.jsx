@@ -4,11 +4,14 @@ import styled from "styled-components";
 import { SVG, ImageView, Loading } from "../common/index";
 import theme from "../../styles/theme";
 
+import MakingAPI from "../../api/makingAPI";
 import useOpen from "../../hooks/useOpen";
-import useImage from "../../hooks/useImage";
+import useCommon from "../../hooks/making/useCommon";
+
+import { SUCCESS } from "../../utils/asyncUtils";
+import { getFormData } from "../../utils/asyncMakingUtils";
 
 import ENUM from "../../constants/Enum";
-import msg from "../../constants/msg";
 
 const { CHANGE, DELETE, CANCEL } = ENUM;
 
@@ -23,21 +26,27 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
-  const { uploadImg, deleteImg } = useImage(type, parentIdx, () =>
-    openAlert(msg.errorPage[500])
-  );
+export const UploadImg = memo(({ img, uploadImg, openAlert }) => {
   const { open: loading, onOpen, onClose } = useOpen();
+  const {
+    data: { testId },
+  } = useCommon();
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
   const fileInput = useRef();
 
   const handleOnCick = () => fileInput.current.click();
   const onUpload = async (e) => {
-    const files = e.target.files;
-
     onOpen();
-    await uploadImg(files[0]);
+
+    const files = e.target.files;
+    const form = getFormData(files[0], testId);
+
+    const { data, status } = await MakingAPI.uploadImg(form);
+    if (status === SUCCESS) {
+      uploadImg(data.url);
+    } else openAlert();
+
     // init
     fileInput.current.value = null;
     onClose();
@@ -45,9 +54,14 @@ export const UploadImg = memo(({ type, img, parentIdx, openAlert }) => {
 
   const onDelete = async () => {
     if (!img) return;
-
     onOpen();
-    await deleteImg(img);
+
+    const { status } = await MakingAPI.deleteImg(img);
+    if (status === SUCCESS) {
+      uploadImg(null);
+    } else openAlert();
+
+    fileInput.current.value = null;
     onClose();
   };
 

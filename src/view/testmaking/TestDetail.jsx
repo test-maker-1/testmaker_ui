@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { Input, InputTitle, TextArea } from "../../styles";
 
+import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
-import useMaking from "../../hooks/useMaking";
 import { checkMakingData } from "../../utils/handler";
+import { saveTest, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";
-import { saveTest, SUCCESS } from "../../utils/asyncUtils";
 import msg from "../../constants/msg";
 
 const { PREVIEW, ENTER, WARNING } = ENUM;
-const currentStep = "detail";
 
 const TestDetail = () => {
   const {
@@ -22,6 +21,7 @@ const TestDetail = () => {
     btns,
     updateCommonByInput,
     onEnterPress,
+    uploadImg,
     handleSubmit,
   } = useDetail();
   const { title, description, coverImg, optionalURL } = data;
@@ -41,8 +41,8 @@ const TestDetail = () => {
         />
         {/* coverImg */}
         <UploadImg
-          type="coverImg"
           img={coverImg}
+          uploadImg={uploadImg}
           openAlert={NoticeAlert.open}
         />
         {/* description */}
@@ -91,7 +91,7 @@ const TestDetail = () => {
 };
 
 const useDetail = () => {
-  const { data, updateStep, updateCommonByInput, addNewTag } = useMaking();
+  const { data, updateCommon, updateCommonByInput, addNewTag } = useCommon();
   const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
@@ -105,6 +105,8 @@ const useDetail = () => {
       e.target.value = "";
     }
   };
+
+  const uploadImg = (img) => updateCommon("coverImg", img);
 
   const handleSubmit = () => {
     const { releasable, msg = "" } = checkMakingData(data);
@@ -141,11 +143,14 @@ const useDetail = () => {
     } else NoticeAlert.open(msg.errorPage[500]);
   };
 
-  useEffect(() => {
-    if (data.step !== currentStep) updateStep(currentStep);
-  }, [data.step, updateStep]);
-
-  return { data, btns, updateCommonByInput, onEnterPress, handleSubmit };
+  return {
+    data,
+    btns,
+    updateCommonByInput,
+    onEnterPress,
+    uploadImg,
+    handleSubmit,
+  };
 };
 
 const TagInput = styled(Input)`

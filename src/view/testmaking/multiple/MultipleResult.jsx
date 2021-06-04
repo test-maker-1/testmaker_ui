@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -9,13 +9,10 @@ import ResultBound from "./ResultBound";
 import ResultPoint from "./ResultPoint";
 import theme from "../../../styles/theme";
 
-import useMaking from "../../../hooks/useMaking";
 import useOpen from "../../../hooks/useOpen";
-
 import ENUM from "../../../constants/Enum";
 
 const { PREVIEW, MOVENEXT } = ENUM;
-const currentStep = "result";
 
 const useStyles = makeStyles(() => ({
   btnRank: () => ({
@@ -50,7 +47,6 @@ const MultipleResult = () => {
         : ["구간 별 결과", "점수 모드"],
     [isRankMode]
   );
-  const { data, addEmptyResult } = useResult();
 
   const classes = useStyles();
 
@@ -69,12 +65,8 @@ const MultipleResult = () => {
         </TitleWrap>
       </TitleBox>
       {/* set result by test mode */}
-      {isRankMode ? (
-        <ResultPoint />
-      ) : (
-        <ResultBound data={data.data} addResult={addEmptyResult} />
-      )}
-
+      {isRankMode ? <ResultPoint /> : <ResultBound />}
+      
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
@@ -83,18 +75,6 @@ const MultipleResult = () => {
       />
     </Container>
   );
-};
-
-const useResult = () => {
-  const { data, dispatch, updateStep, addResult } = useMaking();
-
-  const addEmptyResult = () => dispatch(addResult());
-
-  useEffect(() => {
-    if (data.step !== currentStep) updateStep(currentStep);
-  }, [data.step, updateStep]);
-
-  return { data, addEmptyResult };
 };
 
 const Container = styled(PageContainer)`
