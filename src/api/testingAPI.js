@@ -22,4 +22,8 @@ export default class TestingAPI {
     // PUT /testing/:testUid/reply/:replyID/report
     return put(`/testing/${uID}/reply/${cID}/report`);
   }
+  /** Result 정보 */
+  static getResultInfo(uID) {
+    return get(`/testing/${uID}/result`);
+  }
 }

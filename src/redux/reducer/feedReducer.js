@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { ALL } from "../../constants/Enum";
 // init state
 export const initState = {
   feedLoading: false,
@@ -18,11 +18,11 @@ export const initState = {
 
   // 태그 바뀔 때 loading
   changeTestsLoading: false,
-  // 무한 스크롤 loading
-  updateTestsLoading: false,
+  // 무한 스크롤 stop
+  isStop: false,
 
   lastTestUid: 0,
-  selectedTag: "전체",
+  selectedTag: ALL,
 };
 
 const feed = createSlice({
@@ -34,6 +34,7 @@ const feed = createSlice({
       state.feedLoading = true;
     },
     initFeedSuccess: (state, { payload: { top10Tags, top20Tests } }) => {
+      state.isStop = false;
       state.feedLoading = false;
       state.top5Tests = top20Tests.slice(0, 5);
       state.top10Tags = top10Tags;
@@ -54,6 +55,7 @@ const feed = createSlice({
       state.changeTestsLoading = true;
     },
     changeTestsSuccess: (state, { payload }) => {
+      state.isStop = false;
       state.testsByTagLoading = false;
       state.changeTestsLoading = false;
 
@@ -73,9 +75,10 @@ const feed = createSlice({
       state.updateTestsLoading = true;
     },
     updateTestsSuccess: (state, { payload }) => {
+      if (payload.length === 0) state.isStop = true;
+      else state.isStop = false;
       state.testsByTagLoading = false;
       state.updateTestsLoading = false;
-
       state.testsByTag.push(...payload);
       state.lastTestUid = state.testsByTag[state.testsByTag.length - 1].uid;
     },

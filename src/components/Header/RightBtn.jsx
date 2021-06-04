@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { SVG } from "../common";
 import { MENU, NOTHING } from "../../constants/headerInfo";
 

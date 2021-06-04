@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import ImageView from "./ImageView";
-import usePage from "../../hooks/usePage";
+// import usePage from "../../hooks/usePage";
 
 const TestSwiper = (props) => {
-  const { goPage } = usePage();
+  // const { goPage } = usePage();
 
   // test data
   const moreTests = [
@@ -29,13 +29,13 @@ const TestSwiper = (props) => {
   const onClick = useCallback((e) => {
     // goPage(`/${testLink}`)
     console.log("출력");
-  });
+  }, []);
 
   return (
     <Container>
       <Swiper slidesPerView={"auto"} spaceBetween={16} className="mySwiper">
-        {moreTests.map((test) => (
-          <SwiperSlide>
+        {moreTests.map((test, idx) => (
+          <SwiperSlide key={idx}>
             <div>
               <div onClick={onClick}>
                 <ImageView imageUrl={test.img} height={"60%"} />

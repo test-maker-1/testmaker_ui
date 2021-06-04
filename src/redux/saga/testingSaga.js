@@ -1,4 +1,3 @@
-import { generatePath, history } from "react-router";
 import {
   select,
   call,
@@ -17,10 +16,7 @@ import {
   saveResult,
 } from "../reducer/testingReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils";
-import { testing, result } from "../../constants/urlInfo";
-
-const getTestInform = createPromiseSaga(setTestID, testingAPI.getTestInfo);
+import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
 function* getOneTestInform(action) {
   const param = action.payload;
@@ -70,14 +66,6 @@ function* insertExam(action) {
 
     console.log("getTestExamInform3", data, status);
     if (status === SUCCESS) {
-      const {
-        isRankMode,
-        responseUid,
-        userTestResult,
-        repliesCnt,
-        recent3Replies,
-      } = data;
-
       yield put({
         type: saveResult.type,
         payload: data,
@@ -86,15 +74,12 @@ function* insertExam(action) {
   }
 }
 
-function* moveResultPage() {
-  const result2 = generatePath(
-    `/${testing}/${result}`,
-    document.location.search
-  );
-  window.history.push(`/${testing}/${result}`, document.location.search);
-  // document.location.href =
-  //   "http://localhost:3000/testing/result?testid=7b947dc7-d2f0-4e6d-8e55-a6259014c227";
-  console.log(result2);
+function* moveResultPage(action) {
+  const {
+    payload: { responseUid },
+  } = action;
+
+  yield (window.location.href = `${window.location.origin}/testing/result?resultid=${responseUid}`);
 }
 
 function* getTestInformation() {

@@ -23,7 +23,7 @@ const RgPwSetting = (props) => {
       }
       return replace("/register/profile");
     },
-    [password, passwordCheck]
+    [password, passwordCheck, replace]
   );
 
   return (

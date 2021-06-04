@@ -63,7 +63,7 @@ class NoticeAlert extends PureComponent {
 
   render() {
     const { open, content, mode } = this.state;
-    const { icon, btns, msg, component } = this.props;
+    const { icon, btns } = this.props;
 
     if (!open) return null;
 

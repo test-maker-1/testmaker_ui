@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const InfinScroll = ({ children, datas, getMoreDatas, isStop, ...other }) => {
@@ -21,7 +21,7 @@ const InfinScroll = ({ children, datas, getMoreDatas, isStop, ...other }) => {
     } else if (isStop && hasMore) {
       setHasMore(false);
     }
-  }, [datas, isStop]);
+  }, [datas, hasMore, isStop, jsonData.length]);
 
   return (
     <div style={{ overflow: "visible", height: "auto" }}>
@@ -31,16 +31,16 @@ const InfinScroll = ({ children, datas, getMoreDatas, isStop, ...other }) => {
         next={getMoreDatas}
         hasMore={hasMore}
         style={{ overflow: "none" }}
-        loader={
-          <h3 style={{ paddingTop: "15px", textAlign: "center" }}>
-            loading...
-          </h3>
-        }
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>FIN</b>
-          </p>
-        }
+        // loader={
+        //   <h3 style={{ paddingTop: "15px", textAlign: "center" }}>
+        //     loading...
+        //   </h3>
+        // }
+        // endMessage={
+        //   <p style={{ textAlign: "center" }}>
+        //     <b>FIN</b>
+        //   </p>
+        // }
         {...other}
       >
         {children}

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import ENUM from "../../constants/Enum";
-import { InfoText, SVG } from "../../components/common";
+import { SVG } from "../../components/common";
 
 import { PageContainer } from "../login/Login";
 import usePage from "../../hooks/usePage";
@@ -76,7 +76,7 @@ const RgProfile = (props) => {
   const [imgURL, setImgURL] = useState("");
   const [isHover, setHover] = useState(false);
   const [nickname, setNickname] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   const onClick = useCallback((e) => {
     fileInput.current.click();
@@ -156,9 +156,9 @@ const RgProfile = (props) => {
           중복 체크
         </Button>
       </form>
-      {error && (
+      {/* {error && (
         <InfoText text="이미 등록된 닉네임이 있습니다!" color="alert" />
-      )}
+      )} */}
 
       <div style={{ display: "flex" }}>
         <Button className={classes.leftBtn} onClick={onSkip}>

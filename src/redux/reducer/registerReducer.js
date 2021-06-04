@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleAsyncReducer, reducerUtils } from "../../utils/asyncUtils";
+import { reducerUtils } from "../../utils/asyncUtils";
 
 const prefix = "register";
 
@@ -16,7 +16,7 @@ const register = createSlice({
   initialState,
   reducers: {
     emailAuth: (state, action) => {
-      state.email = reducerUtils.loading();
+      // state.email = reducerUtils.loading();
     },
     emailAuthSuccess: (state, { payload }) => {
       state.email = reducerUtils.success(payload);

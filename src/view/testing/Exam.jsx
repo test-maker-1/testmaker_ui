@@ -54,7 +54,7 @@ const Exam = memo((props) => {
   useEffect(() => {
     //헤더 타이틀 변경
     dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
-  }, [page]);
+  }, [dispatch, page, questsCnt]);
 
   const onClickAnswer = (idx, value, event) => {
     event.stopPropagation();

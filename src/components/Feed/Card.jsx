@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import ImageView from "../common/ImageView";
 import styled from "styled-components";
 import { Title } from "./Carousel";
@@ -12,7 +12,7 @@ const Card = ({
   title,
   coverImg,
   makerName,
-  makerImg,
+  makerProfile,
   sharedCnt,
   participatedCnt,
   testLink,
@@ -75,8 +75,8 @@ const Card = ({
 
         <InfoBox>
           <Profile>
-            {makerImg ? (
-              <img src={makerImg} alt={"이미지"} style={imgStyle} />
+            {makerProfile ? (
+              <img src={makerProfile} alt={"이미지"} style={imgStyle} />
             ) : (
               <EmptyImg />
             )}

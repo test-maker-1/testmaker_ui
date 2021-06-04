@@ -69,6 +69,7 @@ const TestMaking = ({
     return () => {
       if (intervalLoading.current) initTimer(true);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

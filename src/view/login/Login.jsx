@@ -2,12 +2,12 @@ import React from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { BtnField, NoticeAlert, SVG } from "../../components/common";
+import { NoticeAlert, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
 import { key } from "../../constants/config";
-import ENUM, { KAKAO, EMAIL } from "../../constants/Enum";
+import ENUM, { KAKAO } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
@@ -33,10 +33,10 @@ const Login = () => {
     kakaoLogIn(reqData);
   };
 
-  const onClickEmail = () => {
-    NoticeAlert.open("곧 업데이트 예정이에요!");
-    // goPage("/login/email"); 1차 MVP 제외
-  };
+  // const onClickEmail = () => {
+  //   NoticeAlert.open("곧 업데이트 예정이에요!");
+  //   // goPage("/login/email"); 1차 MVP 제외
+  // };
 
   return (
     <PageContainer>
@@ -62,9 +62,9 @@ const Login = () => {
             {KAKAO}
           </BtnKakaoLogin>
           {/* redirect email login */}
-          <BtnField color="skyBlue" onClick={onClickEmail}>
+          {/* <BtnField color="skyBlue" onClick={onClickEmail}>
             {EMAIL}
-          </BtnField>
+          </BtnField> */}
         </div>
       </TitleWrap>
       {/* summary */}

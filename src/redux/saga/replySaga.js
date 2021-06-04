@@ -29,7 +29,6 @@ function* getComments(action) {
     param.timestamp
   );
 
-  console.log("getComments", data, status);
   if (status === SUCCESS) {
     if (data?.length > 0) {
       yield put({
@@ -67,7 +66,7 @@ function* reportToComment(action) {
   const state = yield select();
   const param = action.payload;
 
-  const { data, status } = yield call(
+  const { status } = yield call(
     testingAPI.reportComment,
     state.reply.testUid, //state.testing.current_testID,
     param
