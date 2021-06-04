@@ -69,10 +69,11 @@ const TestMaking = ({
     return () => {
       if (intervalLoading.current) initTimer(true);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     updateStep(step);
   }, [step, updateStep]);
 

@@ -132,6 +132,7 @@ const BtnEdit = memo(
 );
 
 const BtnGroup = styled(ButtonGroup)`
+  margin-bottom: 16px;
   width: 100%;
   border: none;
 
