@@ -19,6 +19,16 @@ import msg from "../../constants/msg";
 const { lightGray } = theme.colors;
 
 const Options = ({ questionIdx, answer, options }) => {
+  const isExist = (e) => {
+    const values = options.map((option) => option.name);
+
+    if (values.includes(e.target.value)) {
+      e.target.value = "";
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <NoticeAlert btns={[{ name: "다시보기" }]} />
@@ -30,6 +40,7 @@ const Options = ({ questionIdx, answer, options }) => {
             answer={answer}
             optionsCnt={options.length}
             idxs={{ questionIdx, optionIdx: idx }}
+            isExist={isExist}
           />
         ))}
       </ul>
@@ -38,12 +49,20 @@ const Options = ({ questionIdx, answer, options }) => {
   );
 };
 
-const Option = memo(({ value, answer, idxs, optionsCnt }) => {
+const Option = memo(({ value, answer, idxs, optionsCnt, isExist }) => {
   const { questionIdx, optionIdx } = idxs;
   const { onUpdate, checkAnswer, deleteOption } = useOption();
 
   const isAnswer = useMemo(() => answer && value === answer, [answer, value]);
   const svgStyle = { stroke: isAnswer ? "white" : lightGray };
+
+  const handleUpdate = (e) => {
+    if (isExist(e)) {
+      NoticeAlert.open("이미 존재하는 답변이에요!");
+      return;
+    }
+    onUpdate(e, questionIdx, optionIdx, value);
+  };
 
   const onCheck = () => {
     if (answer === value || value.length < 1) return;
@@ -68,7 +87,7 @@ const Option = memo(({ value, answer, idxs, optionsCnt }) => {
             defaultValue={value}
             rows={1}
             color={isAnswer ? "white" : "darkGray"}
-            onBlur={(e) => onUpdate(e, questionIdx, optionIdx, value)}
+            onBlur={handleUpdate}
           />
         </InputWrap>
       </InputContainer>
