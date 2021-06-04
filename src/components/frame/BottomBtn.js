@@ -62,7 +62,7 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
 const BtnContainer = styled.footer`
   position: fixed;
   left: 50%;
-  bottom: 0px;
+  bottom: -1px;
   transform: translateX(-50%);
 
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
@@ -72,6 +72,7 @@ const BtnContainer = styled.footer`
 
 const Button = styled.button`
   flex: 1;
+  width: 100%;
 
   font-weight: bold;
   font-size: 20px;

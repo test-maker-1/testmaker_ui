@@ -52,6 +52,7 @@ const Error = ({ location: { search }, code = 404 }) => {
 
 const ErrorSection = styled(Section)`
   margin: auto;
+  padding-bottom: ${({ theme: { heights } }) => heights.header}px;
   width: 100%;
   text-align: center;
 `;
