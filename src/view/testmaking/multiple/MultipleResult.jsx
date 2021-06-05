@@ -64,9 +64,9 @@ const MultipleResult = () => {
           </Button>
         </TitleWrap>
       </TitleBox>
-      {/* set result by test mode */}
+
       {isRankMode ? <ResultPoint /> : <ResultBound />}
-      
+
       <BottomBtn
         btnArr={[
           { name: "미리보기", type: PREVIEW },
