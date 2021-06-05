@@ -4,6 +4,8 @@ const prefix = "common";
 
 export const commonInitState = {
   headTitle: "",
+  loading: false,
+  isError: null,
 };
 
 const common = createSlice({
@@ -16,10 +18,16 @@ const common = createSlice({
     setHeadTitle: (state, { payload }) => {
       state.headTitle = payload;
     },
+    setLoading: (state, { payload }) => {
+      state.loading = payload;
+    },
+    setError: (state, { payload }) => {
+      state.isError = payload;
+    },
   },
 });
 
 //actions
-export const { setHeadTitle } = common.actions;
+export const { setHeadTitle, setLoading, setError } = common.actions;
 
 export default common;

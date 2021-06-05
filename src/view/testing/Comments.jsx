@@ -11,6 +11,9 @@ import {
   reportComment,
   moreReplyInfo,
 } from "../../redux/reducer/replyReducer";
+import useUser from "../../hooks/useUser";
+import usePage from "../../hooks/usePage";
+import { login } from "../../constants/urlInfo";
 
 let comment_id = null;
 
@@ -26,12 +29,18 @@ const returnALInfo = (type, callback) => {
 
   if (type === "report") {
     result = {
+      msg: "이 댓글을 신고할까요?",
       btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
     };
   } else if (type === "share") {
     result = {
       msg: "공유할건가요?",
       btn: ["아니요", "예"],
+    };
+  } else if (type === "join") {
+    result = {
+      msg: ["오늘의 테스트 멤버가되면", <br key={`br${1}`}/>, "공개 댓글을 달 수 있어요!"],
+      btn: [{ name: "다음에 할래요" }, { name: "회원가입", callback }],
     };
   }
 
@@ -41,9 +50,11 @@ const returnALInfo = (type, callback) => {
 const Comments = (props) => {
   const { replies, isStop } = useSelector((state) => state.reply);
   const dispatch = useDispatch();
+  const { loggedIn } = useUser();
+  const { goPage } = usePage();
   const [alertInfo, setALInfo] = useState(def_alert);
 
-  const handleOnAlertClick = useCallback(
+  const onReportClick = useCallback(
     (event) => {
       //댓글 신고
       dispatch(reportComment(comment_id));
@@ -51,29 +62,34 @@ const Comments = (props) => {
     [dispatch]
   );
 
-  const openAlert = (type, uid) => {
-    comment_id = uid;
+  const moveToLogin = () => goPage(`/${login}`);
 
-    const alert_info = Object.assign(
-      {},
-      def_alert,
-      returnALInfo(type, handleOnAlertClick)
-    );
-    if (type === "report") {
-      setALInfo(alert_info);
-      NoticeAlert.open("이 댓글을 신고할까요?");
-    }
+  const openAlert = (type, uid) => {
+    comment_id = uid; //for report
+
+    const func = type === "join" ? moveToLogin : onReportClick;
+
+    const alert_info = Object.assign({}, def_alert, returnALInfo(type, func));
+
+    setALInfo(alert_info);
+    NoticeAlert.open(alert_info.msg);
   };
 
   const handleOnSubmit = (value) => {
-    //댓글 작성
-    dispatch(submitOneComment(value));
+    if (loggedIn) {
+      if (value) {
+        //댓글 작성
+        dispatch(submitOneComment(value));
 
-    const current_scroll = document.documentElement.scrollTop;
+        const current_scroll = document.documentElement.scrollTop;
 
-    if (current_scroll > 0) {
-      //최상단 스크롤로 이동
-      window.scrollTo({ top: 0, behavior: "smooth" });
+        if (current_scroll > 0) {
+          //최상단 스크롤로 이동
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    } else {
+      openAlert("join");
     }
   };
 

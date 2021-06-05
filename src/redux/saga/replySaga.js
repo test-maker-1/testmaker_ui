@@ -16,23 +16,48 @@ import {
   moreReplyInfo,
   stopCallComments,
 } from "../reducer/replyReducer";
+import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { SUCCESS } from "../../utils/asyncUtils";
+import { createActionString, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+
+//#region >> 테스트 정보 불러오기 (welcome)
+// const getComments = createPromiseSaga(
+//   getTestInfo.type,
+//   testingAPI.getTestInfo
+// );
+
+// function* getTestInformSuccess() {
+//   //로딩바 닫기
+//   yield put({ type: setLoading.type, payload: false });
+// }
+
+// function* getTestInformError() {
+//   //로딩바 닫기 및 오류 화면 표시
+//   yield put({ type: setError.type, payload: true });
+//   yield put({ type: setLoading.type, payload: false });
+// }
+//#endregion
 
 function* getComments(action) {
   const state = yield select();
   const param = action.payload;
   const testID = param.testid ? param.testid : state.reply.testUid;
+  const { success, error } = createActionString(action.type);
+
   const { data, status } = yield call(
     testingAPI.getReplyInfo,
     testID,
     param.timestamp
   );
 
+  //로딩바 닫기
+  if (state.common.loading)
+    yield put({ type: setLoading.type, payload: false });
+
   if (status === SUCCESS) {
     if (data?.length > 0) {
       yield put({
-        type: addReplyInfo.type,
+        type: success,
         payload: data,
       });
     } else {
@@ -41,6 +66,9 @@ function* getComments(action) {
         payload: true,
       });
     }
+  } else {
+    //오류 화면 표시
+    yield put({ type: setError.type, payload: true });
   }
 }
 

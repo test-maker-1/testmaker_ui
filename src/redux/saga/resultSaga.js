@@ -1,13 +1,24 @@
 import { call, put, fork, all, takeLeading } from "redux-saga/effects";
-import { setTestResultID, updateTestResult } from "../reducer/resultReducer";
+import {
+  getTestResultInfo,
+  getTestResultInfoSuccess,
+  getTestResultInfoError,
+} from "../reducer/resultReducer";
+import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
+// const getResultInform = createPromiseSaga(
+//   getTestResultInfo.type,
+//   testingAPI.getResultInfo
+// );
+
+//#region > 테스트 결과 가져오기
 function* getResultInform(action) {
   const param = action.payload;
   const { data, status } = yield call(testingAPI.getResultInfo, param);
 
-  if (status === SUCCESS) {
+  if (status === SUCCESS && data.testResults.length > 0) {
     const {
       isRankMode,
       recent3Replies,
@@ -17,7 +28,7 @@ function* getResultInform(action) {
     } = data;
 
     yield put({
-      type: updateTestResult.type,
+      type: getTestResultInfoSuccess.type,
       payload: {
         isRankMode,
         recent3Replies,
@@ -26,11 +37,30 @@ function* getResultInform(action) {
         userTestResult,
       },
     });
+  } else {
+    yield put({
+      type: getTestResultInfoError.type,
+      payload: data,
+    });
   }
 }
 
+function* getResultInformSuccess(action) {
+  //로딩바 닫기
+  yield put({ type: setLoading.type, payload: false });
+}
+
+function* getResultInformError() {
+  //로딩바 닫기 및 오류 화면 표시
+  yield put({ type: setError.type, payload: true });
+  yield put({ type: setLoading.type, payload: false });
+}
+//#endregion
+
 function* getResultInfromation() {
-  yield takeLeading(setTestResultID.type, getResultInform);
+  yield takeLeading(getTestResultInfo.type, getResultInform);
+  yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
+  yield takeLeading(getTestResultInfoError.type, getResultInformError);
   // yield takeLeading(getTestResult.type, get)
 }
 

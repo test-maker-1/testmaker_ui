@@ -53,7 +53,8 @@ const Exam = memo((props) => {
 
   useEffect(() => {
     //헤더 타이틀 변경
-    dispatch(setHeadTitle(`${page + 1}/${questsCnt}`));
+    const title = questsCnt > 0 ? `${page + 1}/${questsCnt}` : "";
+    dispatch(setHeadTitle(title));
   }, [dispatch, page, questsCnt]);
 
   const onClickAnswer = (idx, value, event) => {
@@ -75,14 +76,20 @@ const Exam = memo((props) => {
     }
   };
 
-  const PageComponent = () => (
-    <Page
-      page={page}
-      answers={answers}
-      questions={questions[page]}
-      onClick={onClickAnswer}
-    />
-  );
+  const PageComponent = () => {
+    if (questions?.length > 0) {
+      return (
+        <Page
+          page={page}
+          answers={answers}
+          questions={questions[page]}
+          onClick={onClickAnswer}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div style={{ padding: "10px 2rem" }}>

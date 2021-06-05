@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import queryString from "query-string";
 import Welcome from "../../view/testing/Welcome";
 import Comments from "../../view/testing/Comments";
@@ -15,9 +15,11 @@ import {
   result,
   otherType,
 } from "../../constants/urlInfo";
-import { setTestID, getTestExam } from "../../redux/reducer/testingReducer";
+import { Loading } from "../common";
+import { setLoading, setError } from "../../redux/reducer/commonReducer";
+import { getTestInfo, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
-import { setTestResultID } from "../../redux/reducer/resultReducer";
+import { getTestResultInfo } from "../../redux/reducer/resultReducer";
 
 const Testing = ({
   match: {
@@ -26,23 +28,27 @@ const Testing = ({
   location,
 }) => {
   const { testid, resultid } = queryString.parse(location.search);
+  const { loading, isError } = useSelector((state) => state.common);
   const dispatch = useDispatch();
+  const checkModule =
+    testid || (resultid && [result, otherType].includes(module));
 
   useEffect(() => {
-    //call api at didmount
-    if (testid || (resultid && module === result)) {
+    if (checkModule) {
+      if (module !== otherType) dispatch(setLoading(true));
+      //call api at didmount
       switch (module) {
         case welcome: // 웰컴
-          dispatch(setTestID(testid));
+          dispatch(getTestInfo(testid));
           break;
         case comments: // 댓글
           dispatch(getReplyInfo({ testid, timestamp: 0 }));
           break;
         case exam: // 테스트
-          dispatch(getTestExam({ testID: testid }));
+          dispatch(getTestExam(testid));
           break;
         case result: // (module)
-          dispatch(setTestResultID(resultid));
+          dispatch(getTestResultInfo(resultid));
           break;
         default:
           break;
@@ -50,20 +56,24 @@ const Testing = ({
     }
   }, [dispatch, module, testid, resultid]);
 
-  switch (module) {
-    case welcome: // 웰컴
-      return <Welcome />;
-    case comments: // 댓글
-      return <Comments />;
-    case exam: // 테스트
-      return <Exam />;
-    case result: // 테스트결과 (module)
-      return <Result />;
-    case otherType: // 다른유형 전체보기
-      return <OtherType />;
-    default:
-      console.warn("where are you?", module);
-      break;
+  if (loading) return <Loading loading={loading} />;
+
+  if (!isError && checkModule) {
+    switch (module) {
+      case welcome: // 웰컴
+        return <Welcome />;
+      case comments: // 댓글
+        return <Comments />;
+      case exam: // 테스트
+        return <Exam />;
+      case result: // 테스트결과 (module)
+        return <Result />;
+      case otherType: // 다른유형 전체보기
+        return <OtherType />;
+      default:
+        console.warn("where are you?", module);
+        break;
+    }
   }
 
   return <Error />;
