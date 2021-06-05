@@ -31,7 +31,8 @@ const Testing = ({
   const { loading, isError } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const checkModule =
-    testid || (resultid && [result, otherType].includes(module));
+    (testid && [welcome, comments, exam].includes(module)) ||
+    (resultid && [result, otherType].includes(module));
 
   useEffect(() => {
     if (checkModule) {
@@ -48,6 +49,7 @@ const Testing = ({
           dispatch(getTestExam(testid));
           break;
         case result: // (module)
+        case otherType: // (module)
           dispatch(getTestResultInfo(resultid));
           break;
         default:
