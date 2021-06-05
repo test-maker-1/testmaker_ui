@@ -8,15 +8,12 @@ import BtnShare from "./BtnShare";
 
 const { SHARE } = ENUM;
 let that = null; // 정적 메소드용
+const initState = { open: false, content: "", mode: null };
 
 class NoticeAlert extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-      content: "",
-      mode: null,
-    };
+    this.state = initState;
     that = this;
   }
 
@@ -36,7 +33,7 @@ class NoticeAlert extends PureComponent {
     this.handleOnClose();
   };
 
-  handleOnClose = () => this.setState({ open: false });
+  handleOnClose = () => this.setState({ ...initState, open: false });
 
   setButtons() {
     const { btns } = this.props;
@@ -63,7 +60,7 @@ class NoticeAlert extends PureComponent {
 
   render() {
     const { open, content, mode } = this.state;
-    const { icon, btns } = this.props;
+    const { icon, btns, shareInfo = {} } = this.props;
 
     if (!open) return null;
 
@@ -76,7 +73,10 @@ class NoticeAlert extends PureComponent {
             {mode === SHARE ? (
               <>
                 <AlertText>친구한테 공유할래요!</AlertText>
-                <BtnShare onClick={this.handleShareClick} />
+                <BtnShare
+                  shareInfo={shareInfo}
+                  onClick={this.handleShareClick}
+                />
               </>
             ) : (
               <>

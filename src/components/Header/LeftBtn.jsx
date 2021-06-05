@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NoticeAlert, SVG } from "../common";
 import usePage from "../../hooks/usePage";
 
@@ -9,6 +9,7 @@ import ENUM from "../../constants/Enum";
  */
 const LeftBtn = ({ type = BACK }) => {
   const { goBack } = usePage();
+
   const onClickEvent = () => {
     switch (type) {
       case BACK:
@@ -24,7 +25,9 @@ const LeftBtn = ({ type = BACK }) => {
 
   return (
     <>
-      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
+      {type !== BACK && (
+        <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
+      )}
       <SVG
         type={type}
         onClick={onClickEvent}
