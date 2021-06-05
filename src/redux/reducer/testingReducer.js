@@ -7,24 +7,34 @@ const testing = createSlice({
   name: prefix,
   initialState: initState.testing,
   reducers: {
-    setTestID: (state, { payload }) => {
+    //#region : welcome
+    getTestInfo: (state, { payload }) => {
       state.current_testID = payload;
     },
+    getTestInfoSuccess: (state, { payload }) => {
+      state.testInfo = payload.testDoc;
+      state.recent3replies = payload.recent3replies;
+    },
+    getTestInfoError: (state, { payload }) => {
+      state.current_testID = null;
+    },
+    //#endregion
     updateTestInfo: (state, { payload: { testInfo, recent3replies } }) => {
       state.testInfo = testInfo;
       state.recent3replies = recent3replies;
     },
-    getTestExam: (state, { payload: { testID, testType } }) => {
-      if (state.current_testID !== testID) {
+    getTestExam: (state, { payload }) => {
+      if (state.current_testID !== payload) {
         console.log("현재 페이지가 아님!");
-        state.current_testID = testID;
+        state.current_testID = payload;
       }
       state.answers.type = "multi"; //testType
     },
-    updateTestExam: (state, { payload: { questions } }) => {
+    getTestExamSuccess: (state, { payload: { questions } }) => {
       state.questions = questions;
       state.questsCnt = questions.length;
     },
+    getTestExamError: (state, { payload }) => {},
     saveAnwerByStep: (state, { payload: { page, value } }) => {
       if (state.answers.values.length > page)
         state.answers.values[page] = value;
@@ -44,10 +54,13 @@ const testing = createSlice({
 });
 
 export const {
-  setTestID,
+  getTestInfo,
+  getTestInfoSuccess,
+  getTestInfoError,
   updateTestInfo,
   getTestExam,
-  updateTestExam,
+  getTestExamSuccess,
+  getTestExamError,
   saveAnwerByStep,
   saveResult,
 } = testing.actions;

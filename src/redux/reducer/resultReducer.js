@@ -7,9 +7,20 @@ const result = createSlice({
   name: prefix,
   initialState: initState.result,
   reducers: {
-    setTestResultID: (state, { payload }) => {
+    getTestResultInfo: (state, { payload }) => {
       state.responseUid = payload;
     },
+    getTestResultInfoSuccess: (state, { payload }) => {
+      console.log("updateTestResult!!!", payload);
+      state = Object.assign(state, payload);
+
+      if (payload.userTestResult) {
+        state.currentResult = payload.testResults.find((resultForm) => {
+          return resultForm.title === payload.userTestResult;
+        });
+      }
+    },
+    getTestResultInfoError: (state, { payload }) => {},
     updateTestResult: (state, { payload }) => {
       console.log("updateTestResult", payload);
       state = Object.assign(state, payload);
@@ -28,7 +39,9 @@ const result = createSlice({
 });
 
 export const {
-  setTestResultID,
+  getTestResultInfo,
+  getTestResultInfoSuccess,
+  getTestResultInfoError,
   updateTestResult,
   getTestResult,
 } = result.actions;
