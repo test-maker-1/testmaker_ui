@@ -68,6 +68,7 @@ const BtnContainer = styled.footer`
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: ${({ theme: { heights } }) => heights.bottomBtn}px;
   display: flex;
+  z-index: ${({ theme: { zIndex } }) => zIndex.header};
 `;
 
 const Button = styled.button`
