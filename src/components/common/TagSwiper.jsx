@@ -3,7 +3,13 @@ import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Tag } from ".";
 
-const TagSwiper = ({ tags, selectedTag, selectable = false, noPadding }) => {
+const TagSwiper = ({
+  tags,
+  selectedTag,
+  selectable = false,
+  allSelected = false,
+  noPadding,
+}) => {
   const resultTag = selectedTag === "" ? "전체" : selectedTag;
   return (
     <Container noPadding={noPadding}>
@@ -13,7 +19,7 @@ const TagSwiper = ({ tags, selectedTag, selectable = false, noPadding }) => {
             <Tag
               key={`${tag}-${idx}`}
               tag={tag}
-              selected={resultTag === tag}
+              selected={allSelected || resultTag === tag}
               selectable={selectable}
             />
           ))}
