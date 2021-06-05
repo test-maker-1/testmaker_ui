@@ -33,6 +33,8 @@ const useCommon = () => {
   };
   const updateStep = (step) => {
     if (data.step === step) return;
+    
+    window.scrollTo({ top: 0 });
     updateCommon("step", step);
   };
 
