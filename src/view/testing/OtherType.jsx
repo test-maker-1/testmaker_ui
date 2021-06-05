@@ -31,6 +31,7 @@ const OtherType = ({ otherType }) => {
         {testResults?.map(({ title, percent, img, description }, idx) => {
           return (
             <TestInform
+              key={`OtherType_${idx}`}
               rank={idx + 1}
               title={title}
               percent={percent}

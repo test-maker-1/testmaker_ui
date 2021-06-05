@@ -83,7 +83,7 @@ function* moveResultPage(action) {
     payload: { responseUid },
   } = action;
 
-  yield (window.location.href = `${window.location.origin}/testing/result?resultid=${responseUid}`);
+  yield (window.location.replace(`${window.location.origin}/testing/result?resultid=${responseUid}`));
 }
 //#endregion
 
