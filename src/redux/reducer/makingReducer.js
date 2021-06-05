@@ -99,8 +99,9 @@ const making = createSlice({
     },
 
     /* delete */
-    deleteTag: ({ tags }, { payload }) => {
-      tags = tags.filter((tag) => tag !== payload);
+    deleteTag: (state, { payload }) => {
+      const { tags } = state;
+      state.tags = tags.filter((tag) => tag !== payload);
     },
     deleteQuestion: (state, { payload }) => {
       const { totalPoints, questions } = state.data;

@@ -5,10 +5,10 @@ import { TitleBox, UploadImg } from "../common";
 import { SubTitle } from ".";
 import { InputTitle, TextArea } from "../../styles";
 
-import useMaking from "../../hooks/useMaking";
-import ENUM, { md } from "../../constants/Enum";
+import useResult from "../../hooks/making/useResult";
+import { md } from "../../constants/Enum";
 
-const Result = ({ resultIdx, result, deleteResult, openAlert }) => {
+const Result = ({ result, resultIdx, deleteResult, openAlert }) => {
   const {
     title,
     description,
@@ -17,12 +17,7 @@ const Result = ({ resultIdx, result, deleteResult, openAlert }) => {
     pointBound: { start, end },
   } = result;
 
-  const { updateResult } = useMaking();
-
-  const onUpdate = (e) => {
-    const { name, value } = e.target;
-    updateResult(name, value, resultIdx);
-  };
+  const { updateResult, updateResultByInput, updateImg } = useResult();
 
   return (
     <li>
@@ -41,14 +36,13 @@ const Result = ({ resultIdx, result, deleteResult, openAlert }) => {
             placeholder="결과명을 적어주세요"
             size={md}
             defaultValue={title}
-            onBlur={onUpdate}
+            onBlur={(e) => updateResultByInput(e, resultIdx)}
           />
           {/* img */}
           {openImg && (
             <UploadImg
-              type={ENUM.RESULT}
               img={img}
-              parentIdx={resultIdx}
+              uploadImg={(img) => updateImg(img, resultIdx)}
               openAlert={openAlert}
             />
           )}
@@ -58,7 +52,7 @@ const Result = ({ resultIdx, result, deleteResult, openAlert }) => {
             placeholder="결과를 설명해주세요"
             rows={1}
             defaultValue={description}
-            onBlur={onUpdate}
+            onBlur={(e) => updateResultByInput(e, resultIdx)}
           />
         </TitleBox>
       </Container>

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import { TitleBox, Select, InfoText } from "../../../components/common";
 
-import useMaking from "../../../hooks/useMaking";
+import useCommon from "../../../hooks/making/useCommon";
 import ENUM from "../../../constants/Enum";
 
-const [FRITEND, FAMILY, currentStep] = ["friends", "family", "preset"];
+const [FRITEND, FAMILY] = ["friends", "family", "preset"];
 
 const MultiplePreset = () => {
   const { value, updateTypeDataByInput } = useTestInfo();
@@ -16,7 +16,11 @@ const MultiplePreset = () => {
     <Container>
       <TitleBox title="누구에게 공유하실건가요?">
         {/* select target */}
-        <Select name="target" value={value} onChange={updateTypeDataByInput}>
+        <Select
+          name="target"
+          defaultValue={value}
+          onChange={updateTypeDataByInput}
+        >
           <option value={FRITEND}>친구에게 보낼거예요</option>
           <option value={FAMILY}>가족한테 보낼거예요</option>
         </Select>
@@ -31,17 +35,12 @@ const MultiplePreset = () => {
 };
 
 const useTestInfo = () => {
-  const { data, updateStep, updateTypeDataByInput } = useMaking();
-  const typeData = data.data;
+  const { data, updateTypeDataByInput } = useCommon();
 
-  useEffect(() => {
-    if (data.step !== currentStep) updateStep(currentStep);
-  }, [data.step, updateStep]);
-
-  const value =
-    typeData.hasOwnProperty("target") && typeData.target
-      ? typeData.target
-      : FRITEND;
+  const value = useMemo(
+    () => (data.hasOwnProperty("target") ? data.target.target : FRITEND),
+    [data]
+  );
 
   return { updateTypeDataByInput, value };
 };

@@ -1,6 +1,8 @@
 import { Button, makeStyles } from "@material-ui/core";
 import { SVG } from "../common";
 import theme from "../../styles/theme";
+
+import useQuestion from "../../hooks/making/useQuestion";
 import ENUM from "../../constants/Enum";
 
 const useStyles = makeStyles(() => ({
@@ -20,12 +22,13 @@ const useStyles = makeStyles(() => ({
 // target: string; ex) 질문 || 결과
 const BtnAdd = ({ onClick, target = "질문" }) => {
   const classes = useStyles();
+  const { addEmptyQuestion } = useQuestion();
 
   return (
     <Button
       className={classes.addBtn}
       startIcon={<SVG type={ENUM.ADD} />}
-      onClick={onClick}
+      onClick={addEmptyQuestion}
     >
       {target}&nbsp;추가하기
     </Button>

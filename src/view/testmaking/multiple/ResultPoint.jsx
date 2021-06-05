@@ -7,7 +7,7 @@ import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
 import theme from "../../../styles/theme";
 
-import useMaking from "../../../hooks/useMaking";
+import useResult from "../../../hooks/making/useResult";
 
 const userRanking = [
   {
@@ -51,16 +51,10 @@ const useStyles = makeStyles(() => ({
 
 const ResultPoint = () => {
   const classes = useStyles();
-  const {
-    data: { data },
-    dispatch,
-    updateTypeData,
-  } = useMaking();
 
-  const onUpdate = (e) => {
-    const { name, value } = e.target;
-    dispatch(updateTypeData({ key: name, value: Number(value) }));
-  };
+  const { top, updateTop } = useResult();
+
+  const onUpdate = (e) => updateTop(e.target.value);
 
   return (
     <Container>
@@ -69,7 +63,7 @@ const ResultPoint = () => {
           <span>점수 높은</span>
           {/* input top */}
           <Button component="label" className={classes.btn} disableFocusRipple>
-            <InputRank name="top" defaultValue={data.top} onBlur={onUpdate} />
+            <InputRank name="top" defaultValue={top} onBlur={onUpdate} />
           </Button>
           <span>명까지 공개할래요</span>
         </Wrapper>

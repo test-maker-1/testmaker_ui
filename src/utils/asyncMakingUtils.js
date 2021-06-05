@@ -5,11 +5,10 @@ export const saveTest = async (params) => {
   return status;
 };
 
-export const uploadImg = async (file) => {
+export const getFormData = (file, testId) => {
   const form = new FormData();
-  form.append("img", file.img);
-  form.append("path", file.path);
-  const { data, status } = await MakingAPI.uploadImg(form);
+  form.append("img", file);
+  form.append("path", `test/${testId}`);
 
-  return { data, status };
+  return form;
 };

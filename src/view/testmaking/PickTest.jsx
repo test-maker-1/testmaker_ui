@@ -7,8 +7,8 @@ import Error from "../Error.jsx";
 import MakingAPI from "../../api/makingAPI.js";
 import usePage from "../../hooks/usePage.js";
 import useOpen from "../../hooks/useOpen.js";
-import useMaking from "../../hooks/useMaking.js";
 import useUser from "../../hooks/useUser.js";
+import useCommon from "../../hooks/making/useCommon.js";
 import { LOADING, SUCCESS } from "../../utils/asyncUtils.js";
 
 import { mbti, multiple, weight } from "../../constants/Enum.js";
@@ -70,13 +70,7 @@ const TestCard = ({ type, onClick }) => {
 };
 
 const usePick = () => {
-  const {
-    dispatch,
-    data,
-    initCommonData,
-    initStateByType,
-    updateCommon,
-  } = useMaking();
+  const { data, initCommon, initStateByType, updateCommon } = useCommon();
   const { goPage } = usePage();
   const { maker } = data;
 
@@ -95,7 +89,7 @@ const usePick = () => {
       return true;
     }
 
-    dispatch(initCommonData(true));
+    initCommon(true);
     return false;
   };
 

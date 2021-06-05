@@ -5,37 +5,25 @@ import { NoticeAlert, TitleBox } from "../../../components/common";
 import { BtnAdd, Result } from "../../../components/making";
 import { TextBox } from "../../../styles";
 
-import useMaking from "../../../hooks/useMaking";
-import { getPointBoundList } from "../../../utils/constHandler";
-
+import useQnA from "../../../hooks/making/useQnA";
 import ENUM from "../../../constants/Enum";
 
-const ResultBound = ({ data, addResult }) => {
-  const { questionsCnt, totalPoints, results, resultsCnt } = data;
-  const { dispatch, updateResult, deleteResult } = useMaking();
+const ResultBound = () => {
+  const {
+    questionsCnt,
+    totalPoints,
+    results,
+    addEmptyResult,
+    handleDeleteResult,
+  } = useQnA();
 
-  const addEmptyResult = () => {
-    const pointBoundList = getPointBoundList(totalPoints, resultsCnt + 1);
-    if (!pointBoundList) {
-      NoticeAlert.open("결과 개수가 너무 많아요!");
-      return;
-    }
-    addResult();
-    pointBoundList.forEach((bound, idx) => {
-      updateResult("pointBound", bound, idx);
-    });
+  const addResult = () => {
+    if (!addEmptyResult()) NoticeAlert.open("결과 개수가 너무 많아요!");
   };
 
-  const handleDeleteResult = (idx) => {
-    if (resultsCnt - 1 < 1) {
+  const deleteResult = (idx) => {
+    if (!handleDeleteResult(idx))
       NoticeAlert.open("결과는 1개 이상 있어야 해요!");
-      return;
-    }
-    const pointBoundList = getPointBoundList(totalPoints, resultsCnt - 1);
-    dispatch(deleteResult(idx));
-    pointBoundList.forEach((bound, idx) => {
-      updateResult("pointBound", bound, idx);
-    });
   };
 
   return (
@@ -55,11 +43,11 @@ const ResultBound = ({ data, addResult }) => {
           key={result.resultId}
           resultIdx={idx}
           result={result}
-          deleteResult={handleDeleteResult}
+          deleteResult={deleteResult}
           openAlert={NoticeAlert.open}
         />
       ))}
-      <BtnAdd target="결과" onClick={addEmptyResult} />
+      <BtnAdd target="결과" onClick={addResult} />
     </Container>
   );
 };
