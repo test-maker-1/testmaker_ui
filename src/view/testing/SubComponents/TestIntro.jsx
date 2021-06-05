@@ -43,7 +43,7 @@ const TestIntro = memo((props) => {
       </InfoImg>
       {tags?.length > 0 && (
         <TagContainer>
-          <TagSwiper tags={tags} noPadding />
+          <TagSwiper tags={tags} allSelected noPadding />
         </TagContainer>
       )}
       <Inform>
