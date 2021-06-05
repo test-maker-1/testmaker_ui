@@ -35,7 +35,7 @@ const Testing = ({
 
   useEffect(() => {
     if (checkModule) {
-      dispatch(setLoading(true));
+      if (module !== otherType) dispatch(setLoading(true));
       //call api at didmount
       switch (module) {
         case welcome: // 웰컴
