@@ -28,6 +28,9 @@ export const [
   comments,
   exam,
   otherType,
+  main,
+  manage,
+  reply,
 ] = [
   "",
   "login",
@@ -56,6 +59,9 @@ export const [
   "comments",
   "exam",
   "otherType",
+  "main",
+  "manage",
+  "reply",
 ];
 
 // https://www.notion.so/depromeet/Routing-URL-9a3efbefa3d84b679a23ea4a798a299f
