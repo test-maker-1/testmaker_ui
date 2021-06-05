@@ -30,9 +30,11 @@ const Testing = ({
   const { testid, resultid } = queryString.parse(location.search);
   const { loading, isError } = useSelector((state) => state.common);
   const dispatch = useDispatch();
+  const checkModule =
+    testid || (resultid && [result, otherType].includes(module));
 
   useEffect(() => {
-    if (testid || (resultid && module === result)) {
+    if (checkModule) {
       dispatch(setLoading(true));
       //call api at didmount
       switch (module) {
@@ -56,10 +58,7 @@ const Testing = ({
 
   if (loading) return <Loading loading={loading} />;
 
-  if (
-    !isError &&
-    (testid || (resultid && [result, otherType].includes(module)))
-  ) {
+  if (!isError && checkModule) {
     switch (module) {
       case welcome: // 웰컴
         return <Welcome />;

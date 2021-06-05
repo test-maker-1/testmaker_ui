@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BtnShare, NoticeAlert } from "../../components/common";
+import { NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
 import RoundContiner from "./SubComponents/RoundContainer";
@@ -21,12 +21,18 @@ const returnALInfo = (type, callback) => {
 
   if (type === "report") {
     result = {
+      msg: "이 테스트를 신고할까요?",
       btn: [{ name: "돌아가기" }, { name: "신고하기", callback }],
     };
   } else if (type === SHARE) {
     result = {
       msg: "친구한테 공유할래요!",
-      component: <BtnShare />,
+      showInfo: {
+        link: "",
+        title: "",
+        description: "TEST",
+        imageUrl: "",
+      },
       btn: [{ name: SHARE, callback }],
     };
   }
@@ -48,16 +54,15 @@ const Welcome = () => {
   });
 
   const openAlert = (type) => {
-    const msg =
-      type === SHARE ? "친구한테 공유할래요!" : "이 댓글을 신고할까요?";
     const alert_info = Object.assign(
       {},
       def_alert,
       returnALInfo(type, handleOnAlertClick)
     );
-    setALInfo(alert_info);
-    NoticeAlert.open(msg, SHARE);
+    setALInfo(alert_info); //얼럿에 띄울 정보
+    NoticeAlert.open(alert_info.msg, SHARE);
   };
+
   const handleOnAlertClick = useCallback((id, event) => {
     // 선택한 버튼명 반환
     console.log(id, "클릭되었습니다!");
