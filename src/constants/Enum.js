@@ -34,6 +34,13 @@ export const [
 // feed
 export const [ALL] = ["전체"];
 
+// mypage
+export const [PARTTEST, MADETEST, TEMPSTORAGE] = [
+  "참여 테스트",
+  "만든 테스트",
+  "임시저장",
+];
+
 const ENUM = {
   HOME: "home",
   PICKTEST: "picktest",
@@ -61,6 +68,7 @@ const ENUM = {
   BEFORE_BOOKMARK: "before_bookmark",
   AFTER_BOOKMARK: "after_bookmark",
   STAR: "star",
+  NEXT: "next",
 
   // key type
   ENTER: "Enter",
