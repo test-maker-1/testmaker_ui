@@ -81,6 +81,11 @@ const headerInfo = {
     title: { type: NOTHING },
     background: "#fff",
   },
+
+  "mypage/main": {
+    leftType: BACK,
+    title: { type: TITLE, title: "마이페이지" },
+  },
 };
 
 export default headerInfo;
