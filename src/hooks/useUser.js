@@ -9,14 +9,16 @@ import {
 import { INIT, LOADING, SUCCESS } from "../utils/asyncUtils";
 
 const useUser = () => {
+  const { selectedTab, tabTests } = useSelector((state) => state.user);
   const { data, status } = useSelector((state) => state.user.user);
-  const logInLoading = useMemo(() => [LOADING, INIT].includes(status), [
-    status,
-  ]); // 로그인 요청 중
-  const loggedIn = useMemo(() => status === SUCCESS && data !== null, [
-    data,
-    status,
-  ]); // 로그인 상태
+  const logInLoading = useMemo(
+    () => [LOADING, INIT].includes(status),
+    [status]
+  ); // 로그인 요청 중
+  const loggedIn = useMemo(
+    () => status === SUCCESS && data !== null,
+    [data, status]
+  ); // 로그인 상태
 
   const dispatch = useDispatch();
 
@@ -33,6 +35,8 @@ const useUser = () => {
     checkLogIn,
     kakaoLogIn,
     logOut,
+    selectedTab,
+    tabTests,
   };
 };
 
