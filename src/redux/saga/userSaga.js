@@ -2,7 +2,14 @@ import cookie from "react-cookies";
 import { call, put, fork, all, takeLeading } from "redux-saga/effects";
 
 import UserAPI from "../../api/userAPI";
-import { checkLogIn, kakaoLogIn, logOut } from "../reducer/userReducer";
+import {
+  checkLogIn,
+  kakaoLogIn,
+  logOut,
+  partTests,
+  // madeTests,
+  // tempSaveTests,
+} from "../reducer/userReducer";
 
 import {
   createPromiseSaga,
@@ -38,6 +45,9 @@ function* checkLogInSaga(action) {
 
 const kakaoLogInSaga = createPromiseSaga(kakaoLogIn.type, UserAPI.kakaoLogIn);
 const logOutSaga = createPromiseSaga(logOut.type, UserAPI.logOut);
+const partTestsSaga = createPromiseSaga(partTests.type, UserAPI.partTests);
+// const madeTestsSaga= createPromiseSaga(madeTests.type, UserAPI.madeTests);
+// const tempSaveTestsSaga=createPromiseSaga(tempSaveTests.type, UserAPI.tempSaveTests);
 
 function* watchCheckLogin() {
   yield takeLeading(checkLogIn.type, checkLogInSaga);
@@ -51,6 +61,25 @@ function* watchLogOut() {
   yield takeLeading(logOut.type, logOutSaga);
 }
 
+function* watchPartTests() {
+  yield takeLeading(partTests.type, partTestsSaga);
+}
+
+// function* watchMadeTests() {
+//   yield takeLeading(madeTests.type, madeTestsSaga);
+// }
+
+// function* watchTempSaveTests() {
+//   yield takeLeading(tempSaveTests.type, tempSaveTestsSaga);
+// }
+
 export default function* userSaga() {
-  yield all([fork(watchCheckLogin), fork(watchKakaoLogIn), fork(watchLogOut)]);
+  yield all([
+    fork(watchCheckLogin),
+    fork(watchKakaoLogIn),
+    fork(watchLogOut),
+    fork(watchPartTests),
+    // fork(watchMadeTests),
+    // fork(watchTempSaveTests),
+  ]);
 }
