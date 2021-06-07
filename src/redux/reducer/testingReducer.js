@@ -40,15 +40,9 @@ const testing = createSlice({
         state.answers.values[page] = value;
       else state.answers.values.push(value);
     },
-    saveResult: (state, { paylaod }) => {
-      console.log(paylaod);
-      // state.result = {
-      //   isRankMode,
-      //   responseUid,
-      //   userTestResult,
-      //   repliesCnt,
-      //   recent3Replies,
-      // }; //init
+    saveResult: (state, { payload }) => {
+      // state.questsCnt = 0;
+      // state.questions = [];
     },
   },
 });

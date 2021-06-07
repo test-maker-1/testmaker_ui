@@ -83,7 +83,12 @@ function* moveResultPage(action) {
     payload: { responseUid },
   } = action;
 
-  yield (window.location.replace(`${window.location.origin}/testing/result?resultid=${responseUid}`));
+  // yield (window.location.replace(`${window.location.origin}/testing/result?resultid=${responseUid}`));
+  yield window.history.replaceState(
+    { resultid: responseUid },
+    "result",
+    `${window.location.origin}/testing/result?resultid=${responseUid}`
+  );
 }
 //#endregion
 
@@ -95,7 +100,7 @@ function* getTestInformation() {
   yield takeLatest(getTestExamSuccess.type, getTestExamInformSuccess);
   yield takeLatest(getTestExamError.type, getTestExamInformError);
   yield takeLatest(saveAnwerByStep.type, insertExam);
-  yield takeLatest(saveResult.type, moveResultPage);
+  // yield takeLatest(saveResult.type, moveResultPage);
 }
 
 export default function* testingsaga() {
