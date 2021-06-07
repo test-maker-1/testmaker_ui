@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TitleBox, UploadImg } from "../common";
-import { SubTitle } from ".";
+import { TitleBox } from "../common";
+import { SubTitle, UploadImg } from ".";
 import { InputTitle, TextArea } from "../../styles";
 
 import useResult from "../../hooks/making/useResult";

@@ -26,7 +26,7 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-export const UploadImg = memo(({ img, uploadImg, openAlert }) => {
+const UploadImg = memo(({ img, uploadImg, openAlert }) => {
   const { open: loading, onOpen, onClose } = useOpen();
   const {
     data: { testId },
@@ -139,3 +139,5 @@ const EditIcon = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export default UploadImg;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
+import { TitleBox, Tag, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
+import { UploadImg } from "../../components/making";
 import { Input, InputTitle, TextArea } from "../../styles";
 
 import useCommon from "../../hooks/making/useCommon";

@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 
-import { InfoText, NoticeAlert, UploadImg } from "../common";
-import { SubTitle, BtnIcon, Options, BtnPoint } from ".";
+import { InfoText, NoticeAlert } from "../common";
+import { SubTitle, BtnIcon, Options, BtnPoint, UploadImg } from ".";
 import { InputTitle, Section } from "../../styles";
 
 import useQuestion from "../../hooks/making/useQuestion";
