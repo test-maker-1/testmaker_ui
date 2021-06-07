@@ -37,10 +37,10 @@ export const ComInput = ({ hintText, onFocus, onSubmit }) => {
   );
 };
 
-const Reply = memo(({ repliesCnt, recent3replies }) => {
+const Reply = memo(({ repliesCnt, recent3replies, testid }) => {
   const { goPage } = usePage();
   const onMoveComments = () =>
-    goPage(`/${testing}/${comments}`, document.location.search);
+    goPage(`/${testing}/${comments}`, `?testid=${testid}`);
 
   return (
     <>

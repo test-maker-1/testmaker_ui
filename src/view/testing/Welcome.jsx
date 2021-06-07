@@ -82,6 +82,7 @@ const Welcome = () => {
         <Reply
           repliesCnt={testInfo.repliesCnt}
           recent3replies={recent3replies}
+          testid={testInfo.uid}
         />
       </RoundContiner>
       <BottomBtn
