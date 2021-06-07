@@ -89,7 +89,7 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
       {/* required multiple */}
       <input
         type="file"
-        accept="image/*;capture=camera"
+        accept=".jpg, .jpeg, .png;capture=camera"
         ref={fileInput}
         onChange={onUpload}
         style={{ width: 0, display: "none" }}
