@@ -16,7 +16,7 @@ import {
   otherType,
 } from "../../constants/urlInfo";
 import { Loading } from "../common";
-import { setLoading, setError } from "../../redux/reducer/commonReducer";
+import { setLoading } from "../../redux/reducer/commonReducer";
 import { getTestInfo, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
 import { getTestResultInfo } from "../../redux/reducer/resultReducer";
@@ -63,7 +63,7 @@ const Testing = ({
           break;
       }
     }
-  }, [dispatch, module, testid, resultid]);
+  }, [dispatch, module, testid, resultid, responseUid]);
 
   if (loading) return <Loading loading={loading} />;
 

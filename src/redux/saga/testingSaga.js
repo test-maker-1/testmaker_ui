@@ -78,18 +78,18 @@ function* insertExam(action) {
   }
 }
 
-function* moveResultPage(action) {
-  const {
-    payload: { responseUid },
-  } = action;
+// function* moveResultPage(action) {
+//   const {
+//     payload: { responseUid },
+//   } = action;
 
-  // yield (window.location.replace(`${window.location.origin}/testing/result?resultid=${responseUid}`));
-  yield window.history.replaceState(
-    { resultid: responseUid },
-    "result",
-    `${window.location.origin}/testing/result?resultid=${responseUid}`
-  );
-}
+//   // yield (window.location.replace(`${window.location.origin}/testing/result?resultid=${responseUid}`));
+//   yield window.history.replaceState(
+//     { resultid: responseUid },
+//     "result",
+//     `${window.location.origin}/testing/result?resultid=${responseUid}`
+//   );
+// }
 //#endregion
 
 function* getTestInformation() {

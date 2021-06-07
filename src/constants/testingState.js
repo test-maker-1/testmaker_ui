@@ -53,6 +53,7 @@ const testing = {
   /* 정답 형식 */
   answers: { type: "multi", values: [] },
   recent3replies: [],
+  finish: false,
 };
 
 const reply = {
