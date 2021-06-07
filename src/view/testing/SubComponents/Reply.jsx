@@ -124,7 +124,7 @@ const Title = styled.h1`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
   letter-spacing: -1px;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.darker};
 `;
 
 const Entire = styled.p`
@@ -138,7 +138,7 @@ const Entire = styled.p`
 `;
 
 const SubmitBtn = styled.input`
-  margin-top: 10px;
+  margin-top: 13px;
 `;
 
 export default Reply;

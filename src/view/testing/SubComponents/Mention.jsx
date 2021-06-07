@@ -194,12 +194,13 @@ const AvatarIcon = mstyled(Avatar)({
 
 const UserName = styled.p`
   display: inline-block;
+  font-weight: bold;
   float: left;
   margin: 0px 10px;
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.3px;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.titleGray};
 `;
 
 const Timer = styled.p`

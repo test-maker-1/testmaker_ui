@@ -25,9 +25,7 @@ const Page = ({
   return (
     <>
       <Question>{question}</Question>
-      <Box>
-        <ImageView imageUrl={img} />
-      </Box>
+      <Box>{img && <ImageView imageUrl={img} />}</Box>
       <div style={{ marginBottom: "50px" }}>
         {options.map(({ name }, idx) => {
           return (
@@ -53,9 +51,8 @@ const Exam = memo((props) => {
   );
   const { responseUid } = useSelector((state) => state.result);
   const { replace } = usePage();
-  console.log(">>>>> Exam", page);
+
   useEffect(() => {
-    console.log("responseUid !!!", responseUid, finish);
     if (responseUid && finish) {
       replace("/testing/result", `?resultid=${responseUid}`);
     }
@@ -121,7 +118,7 @@ const Question = styled.h1`
   font-weight: bold;
   text-align: center;
   letter-spacing: -1px;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.darker};
   margin: 30px 0px 32px;
 `;
 
