@@ -1,11 +1,8 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
 import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
-import theme from "../../../styles/theme";
 
 import useResult from "../../../hooks/making/useResult";
 
@@ -32,26 +29,7 @@ const userRanking = [
   },
 ];
 
-const useStyles = makeStyles(() => ({
-  btn: () => ({
-    padding: "6px 10px",
-    margin: "0 10px",
-    width: "min-content",
-    fontSize: `${theme.fontSizes.lg}rem`,
-    fontWeight: "bold",
-    letterSpacing: -0.6,
-    lineHeight: "27px",
-    borderRadius: 5,
-    backgroundColor: theme.colors.skyBlue,
-    "&:hover": {
-      backgroundColor: theme.colors.skyBlue,
-    },
-  }),
-}));
-
 const ResultPoint = () => {
-  const classes = useStyles();
-
   const { top, updateTop } = useResult();
 
   const onUpdate = (e) => updateTop(e.target.value);
@@ -61,14 +39,11 @@ const ResultPoint = () => {
       <InputSection>
         <Wrapper className="input-wrap">
           <span>점수 높은</span>
-          {/* input top */}
-          <Button component="label" className={classes.btn} disableFocusRipple>
-            <InputRank name="top" defaultValue={top} onBlur={onUpdate} />
-          </Button>
+          <InputRank name="top" defaultValue={top} onBlur={onUpdate} />
           <span>명까지 공개할래요</span>
         </Wrapper>
       </InputSection>
-      {/* ranking */}
+
       <RankingList top={5} userRanking={userRanking} noline />
       <Section>
         <InfoText text="점수 모드 예시화면이에요" color="blue" />
@@ -101,9 +76,19 @@ const Wrapper = styled.div`
 `;
 
 const InputRank = styled(InputNumber)`
-  width: 100%;
+  margin: 0 10px;
+  width: 56px;
+  padding: 6px 10px;
+
   text-align: left;
-  color: ${theme.colors.blue};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem;
+  font-weight: bold;
+  letter-spacing: -0.6;
+  line-height: 27px;
+
+  border-radius: 5px;
+  background-color: ${({ theme: { colors } }) => colors.skyBlue};
+  color: ${({ theme: { colors } }) => colors.blue};
 `;
 
 export default ResultPoint;

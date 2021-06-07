@@ -9,7 +9,7 @@ import ResultBound from "./ResultBound";
 import ResultPoint from "./ResultPoint";
 import theme from "../../../styles/theme";
 
-import useOpen from "../../../hooks/useOpen";
+import useResult from "../../../hooks/making/useResult";
 import ENUM from "../../../constants/Enum";
 
 const { PREVIEW, MOVENEXT } = ENUM;
@@ -39,7 +39,7 @@ const svgStyle = {
 };
 
 const MultipleResult = () => {
-  const { open: isRankMode, onToggle } = useOpen();
+  const { isRankMode, updateMode } = useResult();
   const [currentMode, otherMode] = useMemo(
     () =>
       isRankMode
@@ -47,6 +47,8 @@ const MultipleResult = () => {
         : ["구간 별 결과", "점수 모드"],
     [isRankMode]
   );
+
+  const toggleMode = () => updateMode();
 
   const classes = useStyles();
 
@@ -58,7 +60,7 @@ const MultipleResult = () => {
           <Button
             className={classes.btnRank}
             startIcon={<SVG style={svgStyle} type={ENUM.CHANGE} />}
-            onClick={onToggle}
+            onClick={toggleMode}
           >
             {otherMode}
           </Button>

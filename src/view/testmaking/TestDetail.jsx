@@ -7,7 +7,7 @@ import { Input, InputTitle, TextArea } from "../../styles";
 
 import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
-import { checkMakingData } from "../../utils/handler";
+import { checkMakingData } from "../../utils/asyncMakingUtils";
 import { saveTest, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";

@@ -7,12 +7,17 @@ import {
 const useResult = () => {
   const {
     testId,
-    data: { top },
+    data: { isRankMode, top },
   } = useSelector((state) => state.making);
   const dispatch = useDispatch();
 
-  const updateTop = (top) => {
-    dispatch(updateTypeData({ key: "top", value: top }));
+  const updateTop = (value) => {
+    const newTop = Number(value);
+    if (newTop === top || newTop < 0) return;
+    dispatch(updateTypeData({ key: "top", value: newTop }));
+  };
+  const updateMode = () => {
+    dispatch(updateTypeData({ key: "isRankMode", value: !isRankMode }));
   };
 
   const updateResult = (key, value, idx) => {
@@ -30,8 +35,10 @@ const useResult = () => {
   return {
     // data
     testId,
+    isRankMode,
     top,
     // update
+    updateMode,
     updateTop,
     updateResult,
     updateResultByInput,
