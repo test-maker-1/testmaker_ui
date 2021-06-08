@@ -31,9 +31,8 @@ const TestIntro = memo((props) => {
         </More> */}
       </InfoTitle>
       <InfoUser>
-        <InfoAva>
-          <AvatarIcon alt="user" src="/static/images/avatar/1.jpg" />
-        </InfoAva>
+        <AvatarIcon alt="user" src="/static/images/avatar/1.jpg" />
+
         <Partition>{name}</Partition>
         <SVG type={Enum.SPLIT} style={{ width: "12px", height: "12px" }} />
         <Partition isBody={true}>참여인원 {participantsCnt}명</Partition>
@@ -79,16 +78,18 @@ const Title = styled.p`
 
 const InfoAva = styled.div`
   display: inline-block;
-  margin-right: 8px;
 `;
 
 const AvatarIcon = mstyled(Avatar)({
+  float: "left",
   width: "32px",
   height: "32px",
+  marginRight: "8px",
 });
 
 const InfoUser = styled.div`
   margin-top: 7px;
+  line-height: 32px;
 `;
 
 const InfoImg = styled.div`
