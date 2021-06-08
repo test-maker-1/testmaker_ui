@@ -22,12 +22,13 @@ const MypageMain = memo((props) => {
   } = useUser();
 
   useEffect(() => {
-    getUser();
+    if (!logInLoading) getUser(); // -> pareTests ? .... 안불러와지잖아. -> 유저 정보/참여한 테스트들...
+    // 이미 checkLogIn 중일 때 -> logInLoading => true
+    console.log("요청상태", status);
     data && getPartTests({ num_elements: 20, uid: data.uid });
   }, []);
-  const onClick = useCallback(() => {
-    goPage("/mypage/manage");
-  }, []);
+
+  const onClick = () => goPage("/mypage/manage");
 
   if (!loggedIn) return <Error code={403} />;
   return updateUserLoading && logInLoading ? (
