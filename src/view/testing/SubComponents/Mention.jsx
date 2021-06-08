@@ -16,8 +16,11 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
     const { mode, diff } = diffByTime(ptimestamp, current);
 
     switch (mode) {
+      case "week":
+        result = getDateInfo(ptimestamp, "."); //yyyy년mm월dd일
+        break;
       case "day":
-        result = getDateInfo(ptimestamp, "년월일"); //yyyy년mm월dd일
+        result = `${diff}일전`;
         break;
       case "hour":
         result = `${diff}시간전`;
@@ -186,7 +189,6 @@ const MenContainer = styled.div`
 `;
 
 const AvatarIcon = mstyled(Avatar)({
-  display: "inline-block",
   float: "left",
   width: "24px",
   height: "24px",

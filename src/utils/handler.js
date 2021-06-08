@@ -116,16 +116,19 @@ export const diffByTime = (dateA, dateB) => {
   let mode = "",
     diff = "";
 
-  if (diffHour > 23) {
-    mode = "day";
+  if (diffHour > 168) {
+    mode = "week";
     diff = parseInt(diffHour);
+  } else if (diffHour > 24) {
+    mode = "day";
+    diff = parseInt((B - A) / (24 * 60 * 60 * 1000));
   } else if (diffHour >= 1) {
     mode = "hour";
     diff = parseInt(diffHour);
   } else if (diffMinute >= 1) {
     mode = "min";
     diff = parseInt(diffMinute);
-  } else if (diffSecond > 0) {
+  } else if (diffSecond > -1) {
     mode = "sec";
     diff = diffSecond < 1 ? 1 : parseInt(diffSecond);
   } else {

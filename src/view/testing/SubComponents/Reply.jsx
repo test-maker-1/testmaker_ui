@@ -1,11 +1,11 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, forwardRef } from "react";
 import styled from "styled-components";
 import star from "../../../resources/images/star.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 import Mention, { EmptyMention } from "./Mention";
 
-export const ComInput = ({ hintText, onFocus, onSubmit }) => {
+export const ComInput = forwardRef(({ hintText, onFocus, onSubmit }, ref) => {
   const [words, setWords] = useState("");
   const handleOnFocus = (event) => {
     if (onFocus) onFocus(event);
@@ -23,6 +23,7 @@ export const ComInput = ({ hintText, onFocus, onSubmit }) => {
       <InputContainer>
         <WrapInput>
           <InputCom
+            ref={ref}
             value={words}
             placeholder={hintText || "입력해주세요"}
             onFocus={handleOnFocus}
@@ -35,7 +36,7 @@ export const ComInput = ({ hintText, onFocus, onSubmit }) => {
       </InputContainer>
     </form>
   );
-};
+});
 
 const Reply = memo(({ repliesCnt, recent3replies, testid }) => {
   const { goPage } = usePage();
