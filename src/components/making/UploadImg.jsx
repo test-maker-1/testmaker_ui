@@ -62,8 +62,7 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
         meta: true,
         orientation: true,
         canvas: true,
-        maxWidth: 800,
-        maxHeight: 800,
+        maxWidth: 500,
       }
     );
   };
