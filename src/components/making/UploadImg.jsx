@@ -1,5 +1,6 @@
 import React, { useRef, memo } from "react";
 import styled from "styled-components";
+import * as loadImage from "blueimp-load-image";
 
 import { SVG, ImageView, Loading } from "../common/index";
 import theme from "../../styles/theme";
@@ -34,22 +35,31 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
 
   const fileInput = useRef();
-
   const handleOnCick = () => fileInput.current.click();
+
   const onUpload = async (e) => {
     onOpen();
 
-    const files = e.target.files;
-    const form = getFormData(files[0], testId);
+    const file = e.target.files[0];
+    const fileType = file.type;
 
-    const { data, status } = await MakingAPI.uploadImg(form);
-    if (status === SUCCESS) {
-      uploadImg(data.url);
-    } else openAlert();
+    loadImage(
+      file,
+      (img) => {
+        img.toBlob(async (blob) => {
+          var rotateFile = new File([blob], file.name, { type: fileType });
+          const form = getFormData(rotateFile, testId);
 
-    // init
-    fileInput.current.value = null;
-    onClose();
+          const { data, status } = await MakingAPI.uploadImg(form);
+          if (status === SUCCESS) {
+            uploadImg(data.url);
+          } else openAlert();
+
+          onClose();
+        }, fileType);
+      },
+      { orientation: true, canvas: true }
+    );
   };
 
   const onDelete = async () => {
