@@ -59,7 +59,7 @@ const TagContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  padding: 12px 2rem; /*20px*/
+  padding: 12px 2rem 24px; /*20px*/
 `;
 
 const InfoTitle = styled.div`
@@ -113,9 +113,9 @@ const Partition = styled.p`
 `;
 
 const Inform = styled.div`
-  max-height: 150px;
-  min-height: 150px;
-  padding: 15px 0px;
+  /*max-height: 150px;*/
+  /*min-height: 150px;*/
+  padding: 15px 0px 0px;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   line-height: 2.5rem; /*25px*/
   letter-spacing: -0.5px;
