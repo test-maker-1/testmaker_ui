@@ -1,25 +1,38 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { SVG } from "../../components/common";
+import { Loading, SVG } from "../../components/common";
 import ENUM from "../../constants/Enum";
 import Tab from "../../components/MyPage/Tab";
-import useCommon from "../../hooks/making/useCommon";
-import { partTests } from "../../redux/reducer/userReducer";
 
 import useUser from "../../hooks/useUser";
 import Error from "../Error";
 import TabTests from "../../components/MyPage/TabTests";
+import usePage from "../../hooks/usePage";
 
 const MypageMain = memo((props) => {
-  const { loggedIn, status, data, tabTests, selectedTab } = useUser();
-  const { dispatch } = useCommon();
+  const { goPage } = usePage();
+  const {
+    logInLoading,
+    loggedIn,
+    data,
+    status,
+    getUser,
+    getPartTests,
+    updateUserLoading,
+  } = useUser();
 
   useEffect(() => {
-    if (!loggedIn) return <Error code={403} />;
-    dispatch(partTests({ num_elements: 20, uid: data.uid }));
+    getUser();
+    data && getPartTests({ num_elements: 20, uid: data.uid });
+  }, []);
+  const onClick = useCallback(() => {
+    goPage("/mypage/manage");
   }, []);
 
-  return status !== "success" ? null : (
+  if (!loggedIn) return <Error code={403} />;
+  return updateUserLoading && logInLoading ? (
+    <Loading loading={updateUserLoading && logInLoading} />
+  ) : (
     <div style={{ width: "100%" }}>
       <InfoContainer>
         <InfoUser>
@@ -31,7 +44,7 @@ const MypageMain = memo((props) => {
                 <EmptyImg />
               )}
             </InfoAva>
-            <Partition>{data.nickname}</Partition>
+            <Partition onClick={onClick}>{data.nickname}</Partition>
           </div>
           <div className="space-right">
             <SVG
@@ -40,6 +53,7 @@ const MypageMain = memo((props) => {
                 width: "24",
                 height: "24",
               }}
+              onClick={onClick}
             />
           </div>
         </InfoUser>

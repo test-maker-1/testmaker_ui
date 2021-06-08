@@ -7,6 +7,7 @@ import {
   kakaoLogIn,
   logOut,
   partTests,
+  getUserInfo,
   // madeTests,
   // tempSaveTests,
 } from "../reducer/userReducer";
@@ -46,6 +47,7 @@ function* checkLogInSaga(action) {
 const kakaoLogInSaga = createPromiseSaga(kakaoLogIn.type, UserAPI.kakaoLogIn);
 const logOutSaga = createPromiseSaga(logOut.type, UserAPI.logOut);
 const partTestsSaga = createPromiseSaga(partTests.type, UserAPI.partTests);
+const getUserInfoSaga = createPromiseSaga(getUserInfo.type, UserAPI.getMyInfo);
 // const madeTestsSaga= createPromiseSaga(madeTests.type, UserAPI.madeTests);
 // const tempSaveTestsSaga=createPromiseSaga(tempSaveTests.type, UserAPI.tempSaveTests);
 
@@ -65,6 +67,10 @@ function* watchPartTests() {
   yield takeLeading(partTests.type, partTestsSaga);
 }
 
+function* watchGetUserInfo() {
+  yield takeLeading(getUserInfo.type, getUserInfoSaga);
+}
+
 // function* watchMadeTests() {
 //   yield takeLeading(madeTests.type, madeTestsSaga);
 // }
@@ -79,6 +85,7 @@ export default function* userSaga() {
     fork(watchKakaoLogIn),
     fork(watchLogOut),
     fork(watchPartTests),
+    fork(watchGetUserInfo),
     // fork(watchMadeTests),
     // fork(watchTempSaveTests),
   ]);

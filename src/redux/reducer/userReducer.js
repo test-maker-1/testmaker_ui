@@ -12,6 +12,8 @@ const initialState = {
   tabTestsLoading: false,
   tabTestsError: false,
   tabTests: [],
+
+  updateUserLoading: false,
 };
 
 const user = createSlice({
@@ -28,6 +30,20 @@ const user = createSlice({
     // log out
     logOut: () => {
       cookie.remove("token");
+    },
+
+    // 마이페이지 유저 정보 업뎃
+    getUserInfo: (state) => {
+      state.updateUserLoading = true;
+      // state.user = reducerUtils.loading(state.user.data);
+    },
+    getUserInfoSuccess: (state, { payload }) => {
+      state.updateUserLoading = false;
+      state.user = reducerUtils.success(payload);
+    },
+    getUserInfoError: (state, { payload }) => {
+      state.updateUserLoading = false;
+      state.user = reducerUtils.error(payload);
     },
 
     // 탭이 바뀌는 순간 요청
@@ -104,6 +120,7 @@ export const {
   partTests,
   madeTests,
   tempSaveTests,
+  getUserInfo,
 } = user.actions;
 
 export default user;
