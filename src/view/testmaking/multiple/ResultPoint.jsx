@@ -39,7 +39,12 @@ const ResultPoint = () => {
       <InputSection>
         <Wrapper className="input-wrap">
           <span>점수 높은</span>
-          <InputRank name="top" defaultValue={top} onBlur={onUpdate} />
+          <InputRank
+            inputMode="numeric"
+            name="top"
+            defaultValue={top}
+            onBlur={onUpdate}
+          />
           <span>명까지 공개할래요</span>
         </Wrapper>
       </InputSection>

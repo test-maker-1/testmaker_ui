@@ -119,6 +119,7 @@ const BtnEdit = memo(
 
     return (
       <InputPoint
+        inputMode="numeric"
         name="point"
         placeholder="직접 입력"
         value={value}
