@@ -58,7 +58,13 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
           onClose();
         }, fileType);
       },
-      { orientation: true, canvas: true }
+      {
+        meta: true,
+        orientation: true,
+        canvas: true,
+        maxWidth: 800,
+        maxHeight: 800,
+      }
     );
   };
 
