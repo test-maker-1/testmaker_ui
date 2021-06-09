@@ -8,6 +8,7 @@ import useUser from "../../hooks/useUser";
 import Error from "../Error";
 import TabTests from "../../components/MyPage/TabTests";
 import usePage from "../../hooks/usePage";
+// import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 const MypageMain = memo((props) => {
   const { goPage } = usePage();
@@ -15,24 +16,22 @@ const MypageMain = memo((props) => {
     logInLoading,
     loggedIn,
     data,
-    status,
+    // status,
     getUser,
     getPartTests,
     updateUserLoading,
   } = useUser();
 
   useEffect(() => {
-    if (!logInLoading) getUser(); // -> pareTests ? .... 안불러와지잖아. -> 유저 정보/참여한 테스트들...
-    // 이미 checkLogIn 중일 때 -> logInLoading => true
-    console.log("요청상태", status);
-    data && getPartTests({ num_elements: 20, uid: data.uid });
+    if (!logInLoading) getUser();
+    getPartTests({ num_elements: 10 });
   }, []);
 
   const onClick = () => goPage("/mypage/manage");
 
   if (!loggedIn) return <Error code={403} />;
-  return updateUserLoading && logInLoading ? (
-    <Loading loading={updateUserLoading && logInLoading} />
+  return updateUserLoading ? (
+    <Loading loading={updateUserLoading} />
   ) : (
     <div style={{ width: "100%" }}>
       <InfoContainer>
@@ -75,7 +74,7 @@ const MypageMain = memo((props) => {
             <InfoSubBox>
               <InfoInBox>
                 <InfoTitle>참여 테스트</InfoTitle>
-                <InfoCnt>{data.didTestUids.length}개</InfoCnt>
+                <InfoCnt>{data.testParticipantsCnt}개</InfoCnt>
               </InfoInBox>
             </InfoSubBox>
           </InfoArea>
