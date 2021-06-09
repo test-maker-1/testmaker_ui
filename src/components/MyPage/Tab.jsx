@@ -2,31 +2,37 @@ import React, { useCallback } from "react";
 import styled, { css } from "styled-components";
 import theme from "../../styles/theme";
 import { PARTTEST, MADETEST, TEMPSTORAGE } from "../../constants/Enum";
-import useCommon from "../../hooks/making/useCommon";
-import { setSelecteTab, partTests } from "../../redux/reducer/userReducer";
 import useUser from "../../hooks/useUser";
 
 const { darkGray, bodyGray } = theme.colors;
 const TabScroll = (props) => {
   const tabs = [PARTTEST, MADETEST, TEMPSTORAGE];
-  const { data, selectedTab } = useUser();
-  const { dispatch } = useCommon();
+  const {
+    data,
+    selectedTab,
+    selecTab,
+    getPartTests,
+    getMadeTests,
+    getTempSaveTests,
+  } = useUser();
 
   const onClick = useCallback(
     (tab) => {
       if (selectedTab === tab) return;
-      dispatch(setSelecteTab(tab));
+      selecTab(tab);
 
       switch (tab) {
         case PARTTEST:
-          return dispatch(partTests({ num_elements: 8, uid: data.uid }));
+          return getPartTests({ num_elements: 10 });
         case MADETEST:
+          return getMadeTests({ num_elements: 10 });
         case TEMPSTORAGE:
+          return getTempSaveTests();
         default:
           return;
       }
     },
-    [selectedTab, dispatch, data]
+    [selectedTab, data]
   );
 
   return (
