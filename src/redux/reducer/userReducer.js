@@ -9,9 +9,13 @@ const initialState = {
   user: reducerUtils.init(),
 
   selectedTab: PARTTEST,
+  moreTabTestsLoading: false,
   tabTestsLoading: false,
   tabTestsError: false,
   tabTests: [],
+  tabTestsLast: null,
+  // 무한 스크롤 stop
+  isStop: false,
 
   updateUserLoading: false,
 };
@@ -48,6 +52,7 @@ const user = createSlice({
 
     // 탭이 바뀌는 순간 요청
     setSelecteTab: (state, { payload }) => {
+      state.isStop = false;
       state.selectedTab = payload;
     },
 
@@ -58,9 +63,27 @@ const user = createSlice({
     partTestsSuccess: (state, { payload }) => {
       state.tabTestsLoading = false;
       state.tabTests = payload;
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].uid;
     },
     partTestsError: (state) => {
       state.tabTestsLoading = false;
+      state.tabTestsError = true;
+    },
+
+    // 참여 테스트 (무한 스크롤)
+    updatePartTests: (state) => {
+      state.moreTabTestsLoading = true;
+    },
+    updatePartTestsSuccess: (state, { payload }) => {
+      if (payload.length === 0) state.isStop = true;
+      else state.isStop = false;
+
+      state.moreTabTestsLoading = false;
+      state.tabTests.push(...payload);
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].uid;
+    },
+    updatePartTestsError: (state) => {
+      state.moreTabTestsLoading = false;
       state.tabTestsError = true;
     },
 
@@ -71,9 +94,27 @@ const user = createSlice({
     madeTestsSuccess: (state, { payload }) => {
       state.tabTestsLoading = false;
       state.tabTests = payload;
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createAt;
     },
     madeTestsError: (state) => {
       state.tabTestsLoading = false;
+      state.tabTestsError = true;
+    },
+
+    // 만든 테스트 (무한 스크롤)
+    updateMadeTests: (state) => {
+      state.moreTabTestsLoading = true;
+    },
+    updateMadeTestsSuccess: (state, { payload }) => {
+      if (payload.length === 0) state.isStop = true;
+      else state.isStop = false;
+
+      state.moreTabTestsLoading = false;
+      state.tabTests.push(...payload);
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createAt;
+    },
+    updateMadeTestsError: (state) => {
+      state.moreTabTestsLoading = false;
       state.tabTestsError = true;
     },
 
@@ -119,6 +160,8 @@ export const {
   setSelecteTab,
   partTests,
   madeTests,
+  updatePartTests,
+  updateMadeTests,
   tempSaveTests,
   getUserInfo,
 } = user.actions;
