@@ -73,10 +73,12 @@ class NoticeAlert extends PureComponent {
             {mode === SHARE ? (
               <>
                 <AlertText>친구한테 공유할래요!</AlertText>
-                <BtnShare
-                  shareInfo={shareInfo}
-                  onClick={this.handleShareClick}
-                />
+                <div>
+                  <BtnShare
+                    shareInfo={shareInfo}
+                    onClick={this.handleShareClick}
+                  />
+                </div>
               </>
             ) : (
               <>
@@ -162,7 +164,6 @@ const ModalCloser = styled.div`
 
 const LaterText = styled.p`
   display: inline-block;
-  text-align: center;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem;
   line-height: 24px;
   text-align: center;
