@@ -16,6 +16,7 @@ const MypageMain = memo((props) => {
     logInLoading,
     loggedIn,
     data,
+    selectedTab,
     // status,
     getUser,
     getPartTests,
@@ -26,6 +27,11 @@ const MypageMain = memo((props) => {
     if (!logInLoading) getUser();
     getPartTests({ num_elements: 10 });
   }, []);
+
+  useEffect(() => {
+    // 태그 바뀔 때 스크롤 상단으로
+    window.scrollTo(0, 0);
+  }, [selectedTab]);
 
   const onClick = () => goPage("/mypage/manage");
 
@@ -79,8 +85,10 @@ const MypageMain = memo((props) => {
             </InfoSubBox>
           </InfoArea>
         </InfoBox>
-        <Tab />
       </InfoContainer>
+      <TabBox>
+        <Tab />
+      </TabBox>
       <TabTests />
     </div>
   );
@@ -172,6 +180,13 @@ const InfoCnt = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.xl}rem; /*20px*/
   line-height: 30px;
   letter-spacing: -0.8px;
+`;
+
+const TabBox = styled.div`
+  position: sticky;
+  top: 5.6rem;
+  background: white;
+  z-index: ${({ theme: { zIndex } }) => zIndex.header};
 `;
 
 export default MypageMain;

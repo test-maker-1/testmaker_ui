@@ -55,6 +55,7 @@ export default TabScroll;
 
 const TabArea = styled.div`
   display: block;
+  padding: 0 2rem 0.8rem 2rem;
 `;
 
 const Tab = styled.span`
