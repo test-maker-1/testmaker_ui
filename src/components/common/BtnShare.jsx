@@ -27,10 +27,12 @@ const platforms = [
   },
 ];
 
-const BtnShare = ({ shareInfo, onClick }) => {
-  const { link, title, description, imageUrl } = shareInfo;
-
+const BtnShare = ({ shareInfo = null, onClick }) => {
   const handleOnClick = (id, event) => {
+    if (!shareInfo) return;
+
+    const { link, title, description, imageUrl } = shareInfo;
+
     if (id === "url") copyLinkToClipBoard();
     if (id === KAKAO) shareKakao(link, title, description, imageUrl);
 
