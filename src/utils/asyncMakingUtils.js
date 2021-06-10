@@ -79,7 +79,13 @@ export const checkQuestion = (questions) => {
   return okQuestion;
 };
 
-const checkResult = (isRankMode, top, results, resultsCnt, totalPoints) => {
+export const checkResult = (
+  isRankMode,
+  top,
+  results,
+  resultsCnt,
+  totalPoints
+) => {
   if (isRankMode) {
     // invalied data
     if (top < 1) return { okResult: false, resultError: errorMaking.invalied };
