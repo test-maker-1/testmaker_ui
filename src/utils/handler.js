@@ -100,7 +100,7 @@ export const getDateInfo = (timestamp, form = "/") => {
       return StringFormat("{0}년{1}월{2}일", year, month, date);
     else if (form === "temp")
       return StringFormat(
-        "{0}-{1}-{2} {3}-{4}",
+        "{0}-{1}-{2} {3}:{4}",
         year,
         month,
         date,
