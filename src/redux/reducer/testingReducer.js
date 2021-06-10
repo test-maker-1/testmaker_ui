@@ -12,10 +12,14 @@ const testing = createSlice({
       state.current_testID = payload;
     },
     getTestInfoSuccess: (state, { payload }) => {
+      state.finish = false;
+      state.answers.values = [];
       state.testInfo = payload.testDoc;
       state.recent3replies = payload.recent3replies;
     },
     getTestInfoError: (state, { payload }) => {
+      state.finish = false;
+      state.answers.values = [];
       state.current_testID = null;
     },
     //#endregion
@@ -35,20 +39,16 @@ const testing = createSlice({
       state.questsCnt = questions.length;
     },
     getTestExamError: (state, { payload }) => {},
-    saveAnwerByStep: (state, { payload: { page, value } }) => {
+    saveAnwerByStep: (state, { payload: { page, value, isIng } }) => {
+      if (!isIng) state.finish = true;
+
       if (state.answers.values.length > page)
         state.answers.values[page] = value;
       else state.answers.values.push(value);
     },
-    saveResult: (state, { paylaod }) => {
-      console.log(paylaod);
-      // state.result = {
-      //   isRankMode,
-      //   responseUid,
-      //   userTestResult,
-      //   repliesCnt,
-      //   recent3Replies,
-      // }; //init
+    saveResult: (state, { payload }) => {
+      state.questsCnt = 0;
+      state.questions = [];
     },
   },
 });

@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { NoticeAlert } from "../../components/common";
+import { NoticeAlert, Loading } from "../../components/common";
 import { PageContainer } from "../../components/frame/BottomBtn";
 import InfinScroll from "../../components/common/InfinScroll";
 import Mention, { EmptyMention } from "./SubComponents/Mention";
@@ -14,6 +14,7 @@ import {
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import { login } from "../../constants/urlInfo";
+import { SUCCESS, LOADING } from "../../utils/asyncUtils";
 
 let comment_id = null;
 
@@ -39,7 +40,11 @@ const returnALInfo = (type, callback) => {
     };
   } else if (type === "join") {
     result = {
-      msg: ["오늘의 테스트 멤버가되면", <br key={`br${1}`}/>, "공개 댓글을 달 수 있어요!"],
+      msg: [
+        "오늘의 테스트 멤버가되면",
+        <br key={`br${1}`} />,
+        "공개 댓글을 달 수 있어요!",
+      ],
       btn: [{ name: "다음에 할래요" }, { name: "회원가입", callback }],
     };
   }
@@ -49,10 +54,24 @@ const returnALInfo = (type, callback) => {
 
 const Comments = (props) => {
   const { replies, isStop } = useSelector((state) => state.reply);
+  const comInput = useRef();
   const dispatch = useDispatch();
-  const { loggedIn } = useUser();
+  const { loggedIn, status } = useUser();
   const { goPage } = usePage();
   const [alertInfo, setALInfo] = useState(def_alert);
+  const [progress, setProgress] = useState(false);
+
+  useEffect(() => {
+    if (comInput.current) {
+      comInput.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (progress) {
+      setProgress(false);
+    }
+  }, [replies]);
 
   const onReportClick = useCallback(
     (event) => {
@@ -75,37 +94,40 @@ const Comments = (props) => {
     NoticeAlert.open(alert_info.msg);
   };
 
-  const handleOnSubmit = (value) => {
-    if (loggedIn) {
-      if (value) {
-        //댓글 작성
-        dispatch(submitOneComment(value));
-
-        const current_scroll = document.documentElement.scrollTop;
-
-        if (current_scroll > 0) {
-          //최상단 스크롤로 이동
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }
+  const checkLogin = () => {
+    //로그인 여부
+    if (!loggedIn) {
+      if (status !== LOADING) openAlert("join");
+      return false;
     } else {
-      openAlert("join");
+      return true;
+    }
+  };
+
+  const handleOnSubmit = (value) => {
+    if (checkLogin() && value) {
+      setProgress(true);
+      //댓글 작성
+      dispatch(submitOneComment(value));
+
+      const current_scroll = document.documentElement.scrollTop;
+
+      if (current_scroll > 0) {
+        //최상단 스크롤로 이동
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   };
 
   const fetchMoreData = useCallback(() => {
     setTimeout(() => {
-      console.log(replies, "!!!!");
       dispatch(moreReplyInfo({ timestamp: replies[replies.length - 1].uid }));
       // else setStop(true);
     }, 1500);
   }, [dispatch, replies]);
 
   const handleScroll = undefined;
-  // (a, b, c) => {
-  //   console.log("handleScroll", a, b, c, ref);
-  // };
-  console.log(">>>>replies", replies);
+
   return (
     <PageContainer>
       <CommentBox>
@@ -134,10 +156,15 @@ const Comments = (props) => {
         )}
         <BtnContainer>
           <FootArea>
-            <ComInput onSubmit={handleOnSubmit} />
+            <ComInput
+              ref={comInput}
+              onSubmit={handleOnSubmit}
+              onFocus={checkLogin}
+            />
           </FootArea>
         </BtnContainer>
       </CommentBox>
+      {progress && <Loading loading={progress} />}
       <NoticeAlert icon={alertInfo.icon} btns={alertInfo.btn} />
     </PageContainer>
   );

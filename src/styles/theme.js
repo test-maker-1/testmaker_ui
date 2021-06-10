@@ -16,6 +16,8 @@ const colors = {
   darkGray: "#363D4A",
   black: "#1B1C1F",
   lightblue: "#F1F6FF",
+  darker: "#363D4A",
+  body: "#515966 ",
   // warning
   alert: "#ff5146",
 };
