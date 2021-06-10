@@ -1,9 +1,10 @@
 import React, { memo } from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Error from "../../view/Error";
 import Mypage from "../../view/mypage/MypageMain";
 import Comments from "../../view/testing/Comments";
 import { main, reply, manage } from "../../constants/urlInfo";
+import AccountManage from "../../view/mypage/AccountManage";
 
 const MyPage = memo(
   ({
@@ -17,7 +18,7 @@ const MyPage = memo(
       case reply: // 댓글
         return <Comments />;
       case manage: // 계정관리
-        return <div>{manage}</div>;
+        return <AccountManage />;
       default:
         console.warn("where are you?", module, step);
         break;
