@@ -60,6 +60,9 @@ const TestRelease = () => {
     if (testId) {
       onFire();
       submitTest();
+      window.scrollTo({
+        top: 0,
+      });
     }
     return () => sessionStorage.removeItem("testId");
     // eslint-disable-next-line react-hooks/exhaustive-deps
