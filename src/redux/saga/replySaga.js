@@ -9,7 +9,6 @@ import {
 } from "redux-saga/effects";
 import {
   getReplyInfo,
-  addReplyInfo,
   submitOneComment,
   addOneComment,
   reportComment,
@@ -58,7 +57,7 @@ function* getComments(action) {
     if (data?.length > 0) {
       yield put({
         type: success,
-        payload: data,
+        payload: { data, timestamp: param.timestamp },
       });
     } else {
       yield put({

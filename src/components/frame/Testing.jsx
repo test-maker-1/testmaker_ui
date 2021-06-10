@@ -16,7 +16,7 @@ import {
   otherType,
 } from "../../constants/urlInfo";
 import { Loading } from "../common";
-import { setLoading, setError } from "../../redux/reducer/commonReducer";
+import { setLoading } from "../../redux/reducer/commonReducer";
 import { getTestInfo, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
 import { getTestResultInfo } from "../../redux/reducer/resultReducer";
@@ -29,6 +29,7 @@ const Testing = ({
 }) => {
   const { testid, resultid } = queryString.parse(location.search);
   const { loading, isError } = useSelector((state) => state.common);
+  const { responseUid } = useSelector((state) => state.result);
   const dispatch = useDispatch();
   const checkModule =
     (testid && [welcome, comments, exam].includes(module)) ||
@@ -36,27 +37,33 @@ const Testing = ({
 
   useEffect(() => {
     if (checkModule) {
-      if (module !== otherType) dispatch(setLoading(true));
       //call api at didmount
       switch (module) {
         case welcome: // 웰컴
+          dispatch(setLoading(true));
           dispatch(getTestInfo(testid));
           break;
         case comments: // 댓글
+          dispatch(setLoading(true));
           dispatch(getReplyInfo({ testid, timestamp: 0 }));
           break;
         case exam: // 테스트
+          dispatch(setLoading(true));
           dispatch(getTestExam(testid));
           break;
         case result: // (module)
         case otherType: // (module)
-          dispatch(getTestResultInfo(resultid));
+          if (resultid !== responseUid) {
+            if (module !== otherType) dispatch(setLoading(true));
+            dispatch(getTestResultInfo(resultid));
+          }
+
           break;
         default:
           break;
       }
     }
-  }, [dispatch, module, testid, resultid]);
+  }, [dispatch, module, testid, resultid, responseUid]);
 
   if (loading) return <Loading loading={loading} />;
 

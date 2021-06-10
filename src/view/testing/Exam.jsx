@@ -6,6 +6,7 @@ import { ImageView, BtnExam } from "../../components/common";
 import theme from "../../styles/theme";
 import { setHeadTitle } from "../../redux/reducer/commonReducer";
 import { saveAnwerByStep } from "../../redux/reducer/testingReducer";
+import usePage from "../../hooks/usePage";
 
 /**
  * anwser: "옵션1"
@@ -24,9 +25,7 @@ const Page = ({
   return (
     <>
       <Question>{question}</Question>
-      <Box>
-        <ImageView imageUrl={img} />
-      </Box>
+      <Box>{img && <ImageView imageUrl={img} />}</Box>
       <div style={{ marginBottom: "50px" }}>
         {options.map(({ name }, idx) => {
           return (
@@ -47,26 +46,32 @@ const Page = ({
 const Exam = memo((props) => {
   const [page, movePage] = useState(0);
   const dispatch = useDispatch();
-  const { questsCnt, questions, answers } = useSelector(
+  const { questsCnt, questions, answers, finish } = useSelector(
     (state) => state.testing
   );
+  const { responseUid } = useSelector((state) => state.result);
+  const { replace } = usePage();
+
+  useEffect(() => {
+    if (responseUid && finish) {
+      replace("/testing/result", `?resultid=${responseUid}`);
+    }
+  }, [replace, responseUid, finish]);
 
   useEffect(() => {
     //헤더 타이틀 변경
     const title = questsCnt > 0 ? `${page + 1}/${questsCnt}` : "";
     dispatch(setHeadTitle(title));
-  }, [dispatch, page, questsCnt]);
+  }, [dispatch, , page, questsCnt]);
 
   const onClickAnswer = (idx, value, event) => {
     event.stopPropagation();
+
+    movePage(page + 1);
+
     const isIng = page + 1 < questsCnt;
 
-    //answer.length
-    if (isIng) {
-      //next exam
-      movePage(page + 1);
-    }
-    //post answer & go to result page
+    // post answer & go to result page
     dispatch(saveAnwerByStep({ page, isIng, value }));
   };
 
@@ -113,7 +118,7 @@ const Question = styled.h1`
   font-weight: bold;
   text-align: center;
   letter-spacing: -1px;
-  color: #697382;
+  color: ${({ theme: { colors } }) => colors.darker};
   margin: 30px 0px 32px;
 `;
 
