@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import styled from "styled-components";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,7 +9,7 @@ import { InputNumber } from "../../styles";
 import theme from "../../styles/theme";
 
 import useOpen from "../../hooks/useOpen";
-import { checkPointScope } from "../../utils/handler";
+import useNumber from "../../hooks/making/useNumber";
 
 const { blue, skyBlue, white, gray } = theme.colors;
 
@@ -91,18 +91,7 @@ const Btn = memo(({ point, editing, value, onClick }) => {
 const BtnEdit = memo(
   ({ questionIdx, point, editing, onEdit, onUpdate, onCancel }) => {
     const isFreePoint = point && ![1, 2].includes(point);
-    const [value, setValue] = useState(isFreePoint ? point : "");
-
-    const handleOnChange = (e) => {
-      const { value } = e.target;
-      const { check, reset } = checkPointScope(value);
-
-      if (!check) {
-        if (reset) setValue("");
-        return;
-      }
-      setValue(value);
-    };
+    const { value, handleOnChange } = useNumber(isFreePoint ? point : "");
 
     const onBlur = (e) => {
       const { name, value } = e.target;

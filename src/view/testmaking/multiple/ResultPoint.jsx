@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
 
 import useResult from "../../../hooks/making/useResult";
-import { checkPointScope } from "../../../utils/handler";
+import useNumber from "../../../hooks/making/useNumber";
 
 const userRanking = [
   {
@@ -32,18 +32,7 @@ const userRanking = [
 
 const ResultPoint = () => {
   const { top, updateTop } = useResult();
-  const [value, setValue] = useState(top);
-
-  const handleOnChange = (e) => {
-    const { value } = e.target;
-    const { check, reset } = checkPointScope(value);
-
-    if (!check) {
-      if (reset) setValue("");
-      return;
-    }
-    setValue(value);
-  };
+  const { value, handleOnChange } = useNumber(top);
 
   return (
     <Container>
