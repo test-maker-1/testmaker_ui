@@ -8,29 +8,6 @@ import InfinScroll from "../common/InfinScroll";
 import { StyledSpinner } from "../common/Loading";
 
 const TabTests = (props) => {
-  const tempTests = [
-    // {
-    //   type: "객관식 테스트",
-    //   lastCreateAt: "202106091921",
-    //   testUid: "q321d5a121g5-df51as5151w",
-    // },
-    // {
-    //   type: "성향 테스트",
-    //   lastCreateAt: "202106091921",
-    //   testUid: "df5q198-df14d159q8",
-    // },
-    // {
-    //   type: "유형 테스트",
-    //   lastCreateAt: "202106091921",
-    //   testUid: "sd534ga68g4-df1q132d1",
-    // },
-    // {
-    //   type: "유형 테스트",
-    //   lastCreateAt: "202106091921",
-    //   testUid: "ds31v89-fq11hfd1j86",
-    // },
-  ];
-
   const {
     selectedTab,
     tabTests,
@@ -52,6 +29,7 @@ const TabTests = (props) => {
             millis_timestamp: tabTestsLast,
           });
         case TEMPSTORAGE:
+        default:
           return;
       }
     }
@@ -63,7 +41,7 @@ const TabTests = (props) => {
         <StyledSpinner />
       </SpinnerContainer>
     );
-  if (tabTests.lenght == 0) {
+  if (tabTests.lenght === 0) {
     return (
       <Notihing>
         {selectedTab === TEMPSTORAGE
@@ -75,8 +53,8 @@ const TabTests = (props) => {
     if (selectedTab === TEMPSTORAGE) {
       return (
         <TempContainer>
-          {tempTests.map((test) => (
-            <TempTest key={`key${test.testUid}`} test={test} />
+          {tabTests.map((test) => (
+            <TempTest key={`key${test.createdAt}`} test={test} />
           ))}
         </TempContainer>
       );
@@ -90,8 +68,8 @@ const TabTests = (props) => {
             coverImg={test.coverImg}
             makerName={test.maker.name}
             makerProfile={test.maker.profileImg}
-            sharedCnt={13}
-            participatedCnt={50}
+            sharedCnt={test.sharedCnt}
+            participatedCnt={test.participantsCnt}
             testLink={test.testLink}
           />
         ))}
