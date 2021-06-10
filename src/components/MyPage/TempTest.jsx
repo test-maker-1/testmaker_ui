@@ -2,16 +2,19 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import SVG from "../common/SVG";
 import ENUM from "../../constants/Enum";
+import { getDateInfo } from "../../utils/handler";
+import { NoticeAlert } from "../common";
 
 const TempTest = ({ test }) => {
   const onClick = useCallback(() => {
-    // console.log("임시 저장 이동");
+    return NoticeAlert.open("곧 업데이트 예정이에요!");
   }, []);
   return (
     <TempBox>
       <TempInfo>
+        <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
         <Type>{test.type}</Type>
-        <CreateAt>{test.lastCreateAt}</CreateAt>
+        <CreateAt>{getDateInfo(test.createdAt, "temp")}</CreateAt>
       </TempInfo>
       <SvgBox>
         <SVG
