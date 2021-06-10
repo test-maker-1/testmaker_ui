@@ -5,12 +5,17 @@ import {
   addQuestion,
   deleteQuestion,
 } from "../../redux/reducer/makingReducer";
+import { checkQuestion } from "../../utils/asyncMakingUtils";
 
 const useQuestion = () => {
   const { target, questions = [], questionsCnt } = useSelector(
     (state) => state.making.data
   );
   const dispatch = useDispatch();
+
+  const checkNextStep = () => {
+    return checkQuestion(questions);
+  };
 
   const updateQuestion = (key, value, idx) => {
     dispatch(updateQuestionData({ key, value, idx }));
@@ -43,6 +48,8 @@ const useQuestion = () => {
     // data
     target,
     questions,
+    // check
+    checkNextStep,
     // update
     updateQuestion,
     handleUpdate,

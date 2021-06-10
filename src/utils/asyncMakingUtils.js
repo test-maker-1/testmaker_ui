@@ -48,18 +48,8 @@ export const checkMakingData = (state) => {
     return { releasable: false, msg: errorMaking.empty };
   }
   // check question
-  const checkQuestion = questions.some((item) => {
-    const { question, point, options, answer } = item;
-    if (question.length < 1 || !answer) return false;
-    if (options.length < 2 || point === null || point < -1 || point > 10)
-      return false;
-
-    const checkOption = options.some((option) => option.name.length < 1);
-    if (checkOption) return false;
-
-    return true;
-  });
-  if (!checkQuestion) return { releasable: false, msg: errorMaking.question };
+  const okQuestion = checkQuestion(questions);
+  if (!okQuestion) return { releasable: false, msg: errorMaking.question };
   // check result
   const { okResult, resultError } = checkResult(
     isRankMode,
@@ -71,6 +61,22 @@ export const checkMakingData = (state) => {
   if (!okResult) return { releasable: false, msg: resultError };
 
   return { releasable: true, msg: "만들고 나면 수정할 수 없어요!" };
+};
+
+export const checkQuestion = (questions) => {
+  const okQuestion = questions.some((item) => {
+    const { question, point, options, answer } = item;
+    if (question.length < 1 || !answer) return false;
+    if (options.length < 2 || point === null || point < -1 || point > 10)
+      return false;
+
+    const checkOption = options.some((option) => option.name.length < 1);
+    if (checkOption) return false;
+
+    return true;
+  });
+
+  return okQuestion;
 };
 
 const checkResult = (isRankMode, top, results, resultsCnt, totalPoints) => {

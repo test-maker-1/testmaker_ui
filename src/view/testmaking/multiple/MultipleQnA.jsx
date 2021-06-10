@@ -13,6 +13,7 @@ import useQuestion from "../../../hooks/making/useQuestion";
 import msg from "../../../constants/msg";
 import ENUM from "../../../constants/Enum";
 
+const { errorMaking } = msg;
 const { blue, white, bodyGray, darkGray } = theme.colors;
 
 const svgStyles = {
@@ -46,14 +47,18 @@ const MultipleQnA = () => {
 const FooterBtns = memo(() => {
   const { goPage } = usePage();
   const { onSetResult } = useQnA();
-  const { addEmptyQuestion } = useQuestion();
+  const { addEmptyQuestion, checkNextStep } = useQuestion();
 
   const onSubmitQnA = () => {
+    if (!checkNextStep()) {
+      NoticeAlert.open(errorMaking.question);
+      return;
+    }
     if (onSetResult()) {
       goPage("/test/multiple/result");
       return;
     }
-    NoticeAlert.open(msg.errorMaking.invaliedPoints);
+    NoticeAlert.open(errorMaking.invaliedPoints);
   };
 
   return (
