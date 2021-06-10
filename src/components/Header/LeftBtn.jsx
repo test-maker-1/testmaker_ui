@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NoticeAlert, SVG } from "../common";
 import usePage from "../../hooks/usePage";
 

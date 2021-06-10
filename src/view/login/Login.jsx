@@ -23,7 +23,7 @@ const Login = () => {
         replace("/");
       }
     }
-  }, [loggedIn]);
+  }, [location.state, loggedIn, replace]);
 
   const onSuccessKakao = async (resData) => {
     const {

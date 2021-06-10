@@ -14,7 +14,7 @@ import {
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import { login } from "../../constants/urlInfo";
-import { SUCCESS, LOADING } from "../../utils/asyncUtils";
+import { LOADING } from "../../utils/asyncUtils";
 
 let comment_id = null;
 
@@ -71,6 +71,7 @@ const Comments = (props) => {
     if (progress) {
       setProgress(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replies]);
 
   const onReportClick = useCallback(

@@ -63,7 +63,7 @@ const Testing = ({
           break;
       }
     }
-  }, [dispatch, module, testid, resultid, responseUid]);
+  }, [dispatch, module, testid, resultid, responseUid, checkModule]);
 
   if (loading) return <Loading loading={loading} />;
 

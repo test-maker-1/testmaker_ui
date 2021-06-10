@@ -41,7 +41,7 @@ function* getComments(action) {
   const state = yield select();
   const param = action.payload;
   const testID = param.testid ? param.testid : state.reply.testUid;
-  const { success, error } = createActionString(action.type);
+  const { success } = createActionString(action.type);
 
   const { data, status } = yield call(
     testingAPI.getReplyInfo,

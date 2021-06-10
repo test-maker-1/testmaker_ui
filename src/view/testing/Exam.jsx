@@ -62,7 +62,7 @@ const Exam = memo((props) => {
     //헤더 타이틀 변경
     const title = questsCnt > 0 ? `${page + 1}/${questsCnt}` : "";
     dispatch(setHeadTitle(title));
-  }, [dispatch, , page, questsCnt]);
+  }, [dispatch, page, questsCnt]);
 
   const onClickAnswer = (idx, value, event) => {
     event.stopPropagation();

@@ -7,7 +7,7 @@ import {
 } from "../reducer/resultReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
 // const getResultInform = createPromiseSaga(
 //   getTestResultInfo.type,

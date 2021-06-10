@@ -79,10 +79,6 @@ const Title = styled.p`
     title ? colors.darker : colors.lightGray};
 `;
 
-const InfoAva = styled.div`
-  display: inline-block;
-`;
-
 const AvatarIcon = mstyled(Avatar)({
   float: "left",
   width: "32px",
@@ -110,7 +106,7 @@ const Partition = styled.p`
   line-height: 2.1rem; /*21px*/
   letter-spacing: -0.3px;
   color: ${({ theme: { colors } }) => colors.darker};
-  &: last-child {
+  &:last-child {
     margin-left: 8px;
     color: ${({ theme: { colors } }) => colors.body};
   }
