@@ -7,6 +7,10 @@ export default class UserAPI {
   static getMyInfo() {
     return get("/me");
   }
+  // sign up
+  static signUpEmail(params) {
+    return post("/auth/sign_up/email", params);
+  }
   // sns log in
   static kakaoLogIn(params) {
     return post("/auth/login/kakao", params);

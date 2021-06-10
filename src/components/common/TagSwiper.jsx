@@ -31,10 +31,9 @@ const TagSwiper = ({
 
 const Container = styled.div`
   position: absolute;
-  margin: 4px 0 12px 0;
-  padding: 0
-    ${({ noPadding, theme: { paddings } }) =>
-      noPadding ? 0 : paddings.main}rem;
+  margin: 0 0 12px 0;
+  padding: 0 2rem 0.8rem 2rem;
+  background: white;
   width: 100%;
 
   .swiper-container {

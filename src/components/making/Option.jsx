@@ -16,16 +16,14 @@ import useOption from "../../hooks/making/useOption";
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
 
+const { errorMaking } = msg;
 const { lightGray } = theme.colors;
 
 const Options = ({ questionIdx, answer, options }) => {
-  const isExist = (e) => {
-    const values = options.map((option) => option.name);
+  const isExist = (value) => {
+    const optionList = options.map((option) => option.name);
 
-    if (values.includes(e.target.value)) {
-      e.target.value = "";
-      return true;
-    }
+    if (optionList.includes(value)) return true;
     return false;
   };
 
@@ -36,7 +34,7 @@ const Options = ({ questionIdx, answer, options }) => {
         {options.map(({ optionId, name }, idx) => (
           <Option
             key={optionId}
-            value={name}
+            option={name}
             answer={answer}
             optionsCnt={options.length}
             idxs={{ questionIdx, optionIdx: idx }}
@@ -49,29 +47,34 @@ const Options = ({ questionIdx, answer, options }) => {
   );
 };
 
-const Option = memo(({ value, answer, idxs, optionsCnt, isExist }) => {
+const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
   const { questionIdx, optionIdx } = idxs;
   const { onUpdate, checkAnswer, deleteOption } = useOption();
 
-  const isAnswer = useMemo(() => answer && value === answer, [answer, value]);
+  const isAnswer = useMemo(() => answer && option === answer, [answer, option]);
   const svgStyle = { stroke: isAnswer ? "white" : lightGray };
 
   const handleUpdate = (e) => {
-    if (isExist(e)) {
-      NoticeAlert.open("이미 존재하는 답변이에요!");
+    const value = e.target.value;
+
+    if (value === option) return; // same
+    if (value.length > 0 && isExist(value)) {
+      // duplicate
+      NoticeAlert.open(errorMaking.duplicateOption);
+      e.target.value = "";
       return;
     }
-    onUpdate(e, questionIdx, optionIdx, value);
+    onUpdate(value, questionIdx, optionIdx, value);
   };
 
   const onCheck = () => {
-    if (answer === value || value.length < 1) return;
-    checkAnswer(questionIdx, value);
+    if (answer === option || option.length < 1) return;
+    checkAnswer(questionIdx, option);
   };
 
   const onDelete = () => {
     if (!deleteOption(questionIdx, optionIdx, optionsCnt)) {
-      NoticeAlert.open(msg.errorMaking.invaliedOptionsCnt);
+      NoticeAlert.open(errorMaking.invaliedOptionsCnt);
     }
   };
 
@@ -84,7 +87,7 @@ const Option = memo(({ value, answer, idxs, optionsCnt, isExist }) => {
         <InputWrap>
           <OptionText
             placeholder="선택지를 입력해주세요"
-            defaultValue={value}
+            defaultValue={option}
             rows={1}
             color={isAnswer ? "white" : "darkGray"}
             onBlur={handleUpdate}

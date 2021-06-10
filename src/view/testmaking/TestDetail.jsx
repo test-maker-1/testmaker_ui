@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag, UploadImg, NoticeAlert } from "../../components/common";
+import { TitleBox, Tag, NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
+import { UploadImg } from "../../components/making";
 import { Input, InputTitle, TextArea } from "../../styles";
 
 import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
-import { checkMakingData } from "../../utils/handler";
+import { checkMakingData } from "../../utils/asyncMakingUtils";
 import { saveTest, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";
@@ -95,8 +96,6 @@ const useDetail = () => {
   const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
-  const { testId, onFeed, title, description, coverImg } = data;
-
   const onEnterPress = (e) => {
     const { value } = e.target;
 
@@ -128,17 +127,7 @@ const useDetail = () => {
     const status = await saveTest(data);
 
     if (status === SUCCESS) {
-      sessionStorage.setItem(
-        "savedTest",
-        JSON.stringify({
-          testId,
-          onFeed,
-          title,
-          description,
-          coverImg,
-          link: `testing/welcome?testid=${data.testId}`,
-        })
-      );
+      sessionStorage.setItem("testId", data.testId);
       goPage("/test/release");
     } else NoticeAlert.open(msg.errorPage[500]);
   };

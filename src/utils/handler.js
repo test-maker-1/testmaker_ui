@@ -1,7 +1,6 @@
 import cookie from "react-cookies";
 import { clientURL } from "../constants/config";
 import headerInfo, { initHeader } from "../constants/headerInfo";
-import msg from "../constants/msg";
 import { seqTest, login, test, testing } from "../constants/urlInfo";
 
 // plocation: string; => path
@@ -136,76 +135,6 @@ export const diffByTime = (dateA, dateB) => {
   }
 
   return { mode, diff };
-};
-
-/*
- * 테스트 메이킹 데이터 유효성 검사
- * state: object; -> making reducer state
- */
-const { errorMaking } = msg; // error msg
-export const checkMakingData = (state) => {
-  const { testId, type, title, description, data } = state;
-  const {
-    top,
-    target,
-    questionsCnt,
-    resultsCnt,
-    totalPoints,
-    questions,
-    results,
-  } = data;
-
-  // empty data
-  if (
-    !testId ||
-    !type ||
-    data === {} ||
-    !target ||
-    questionsCnt < 1 ||
-    resultsCnt < 1 ||
-    questions.length < 1 ||
-    results.length < 1
-  ) {
-    return { releasable: false, msg: errorMaking.empty };
-  }
-
-  // empty string
-  if (title.length < 1 || description.length < 1) {
-    return { releasable: false, msg: errorMaking.empty };
-  }
-
-  // invalied data
-  if (top < 1) return { releasable: false, msg: errorMaking.invalied };
-  // invalied totalPoints
-  if (totalPoints < resultsCnt - 1 || totalPoints < results.length - 1) {
-    return { releasable: false, msg: errorMaking.invaliedPoints };
-  }
-
-  // check question
-  const checkQuestion = questions.some((item) => {
-    const { question, point, options, answer } = item;
-    if (question.length < 1 || !answer) return false;
-    if (options.length < 2 || point === null || point < -1 || point > 10)
-      return false;
-
-    const checkOption = options.some((option) => option.name.length < 1);
-    if (checkOption) return false;
-
-    return true;
-  });
-  if (!checkQuestion) return { releasable: false, msg: errorMaking.question };
-
-  // check result
-  const checkResult = results.some((item) => {
-    const { title, description, pointBound } = item;
-    if (title.length < 1 || description.length < 1) return false;
-    if (pointBound.start === null || pointBound.end === null) return false;
-
-    return true;
-  });
-  if (!checkResult) return { releasable: false, msg: errorMaking.result };
-
-  return { releasable: true, msg: "만들고 나면 수정할 수 없어요!" };
 };
 
 export const copyLinkToClipBoard = () => {

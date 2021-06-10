@@ -72,10 +72,7 @@ const TestMaking = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0 });
-    updateStep(step);
-  }, [step, updateStep]);
+  useEffect(() => updateStep(step), [step, updateStep]);
 
   // undefined module
   if (!components.hasOwnProperty(module)) return <Error />;

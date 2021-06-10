@@ -17,7 +17,8 @@ import MakingAPI from "../../api/makingAPI";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import useOpen from "../../hooks/useOpen";
-import { ERROR, LOADING } from "../../utils/asyncUtils";
+import useMiniReducer from "../../hooks/useMiniReducer";
+import { ERROR, INIT, LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
@@ -36,30 +37,37 @@ const TestRelease = () => {
   const { status, loggedIn } = useUser();
   const { goPage } = usePage();
 
-  const savedTest = JSON.parse(sessionStorage.getItem("savedTest"));
   const { open: feed, onOpen, onClose } = useOpen();
   const { open: fire, onOpen: onFire } = useOpen();
+  const { state, request, requestSuccess } = useMiniReducer();
+
+  const testId = sessionStorage.getItem("testId");
 
   const submitTest = async () => {
-    const { status } = await MakingAPI.submitTest(savedTest.testId);
-    if (status === ERROR) {
-      sessionStorage.removeItem("savedTest");
-      goPage("/error", "?errorCode=500");
+    request();
+
+    const { status, data } = await MakingAPI.submitTest(testId);
+    sessionStorage.removeItem("testId");
+
+    if (status === SUCCESS) {
+      requestSuccess(data);
+      return;
     }
+    if (status === ERROR) goPage("/error", "?errorCode=500");
   };
 
   useEffect(() => {
-    if (savedTest) {
+    if (testId) {
       onFire();
       submitTest();
     }
-    return () => sessionStorage.removeItem("savedTest");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => sessionStorage.removeItem("testId");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (status === LOADING) return null;
   if (!loggedIn) return <Error code={403} />; // logOut
-  if (!savedTest) return <Error code={406} />; // invalied step
+  if (!testId && state.status === INIT) return <Error code={406} />; // invalied step
 
   const onSetFeed = async (e) => {
     const openTest = JSON.parse(e.currentTarget.value);
@@ -69,7 +77,7 @@ const TestRelease = () => {
     else onClose();
 
     const params = {
-      testId: savedTest.testId,
+      testId: state.data.uid, // testId
       onFeed: openTest,
     };
     const { status } = await MakingAPI.updateOnFeed(params);
@@ -111,7 +119,15 @@ const TestRelease = () => {
       </TitleBox>
 
       <TitleBox title="친구에게 공유할래요!" noline>
-        <BtnShare shareInfo={{ ...savedTest, imageUrl: savedTest.coverImg }} />
+        <BtnShare
+          shareInfo={
+            state.data && {
+              ...state.data,
+              link: state.data.testLink,
+              imageUrl: state.data.coverImg || "",
+            }
+          }
+        />
       </TitleBox>
       <BottomBtn btnArr={[{ name: "홈으로", type: ENUM.HOME }]} />
     </div>
