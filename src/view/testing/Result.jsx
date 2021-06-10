@@ -8,7 +8,7 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
-import TestSwiper from "../../components/common/TestSwiper";
+// import TestSwiper from "../../components/common/TestSwiper";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 
@@ -114,9 +114,9 @@ const Result = memo((props) => {
             testid={testUid}
           />
         </TitleBox>
-        <TitleBox title="더 많은 테스트가 있어요!" noline>
+        {/* <TitleBox title="더 많은 테스트가 있어요!" noline>
           <TestSwiper />
-        </TitleBox>
+        </TitleBox> */}
       </RoundContiner>
       <BottomBtn
         btnArr={[
