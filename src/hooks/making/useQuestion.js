@@ -1,12 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import MakingAPI from "../../api/makingAPI";
 import {
   updateQuestionData,
   updateOptionData,
   addQuestion,
   deleteQuestion,
 } from "../../redux/reducer/makingReducer";
-import { SUCCESS } from "../../utils/asyncUtils";
 
 const useQuestion = () => {
   const { target, questions = [], questionsCnt } = useSelector(
@@ -37,17 +35,13 @@ const useQuestion = () => {
     return true;
   };
 
-  const getPreset = async (questionIdx) => {
-    const { data, status } = await MakingAPI.getQuestionPreset(target);
-    if (status === SUCCESS) {
-      updateQuestion("question", data.questions[0], questionIdx);
-      return true;
-    }
-    return false;
+  const setPreset = (questionIdx, preset) => {
+    updateQuestion("question", preset, questionIdx);
   };
 
   return {
     // data
+    target,
     questions,
     // update
     updateQuestion,
@@ -58,7 +52,7 @@ const useQuestion = () => {
     addEmptyQuestion,
     // delete
     deleteQuestionData,
-    getPreset,
+    setPreset,
   };
 };
 
