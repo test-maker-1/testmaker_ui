@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { TitleBox } from ".";
 
@@ -28,7 +28,7 @@ export const RankingRow = ({ ranking, rank }) => {
  * top: number;
  * userRanking: ranking[];
  */
-export const RankingList = ({ top, userRanking, noline = false }) => {
+export const RankingList = memo(({ top, userRanking, noline = false }) => {
   return (
     <Container>
       <TitleBox title={`점수 TOP ${top}`} noline={noline}>
@@ -40,7 +40,7 @@ export const RankingList = ({ top, userRanking, noline = false }) => {
       </TitleBox>
     </Container>
   );
-};
+});
 
 const Container = styled.div`
   li:last-child {

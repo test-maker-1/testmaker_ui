@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
 
 import useResult from "../../../hooks/making/useResult";
+import { checkPointScope } from "../../../utils/handler";
 
 const userRanking = [
   {
@@ -31,8 +32,18 @@ const userRanking = [
 
 const ResultPoint = () => {
   const { top, updateTop } = useResult();
+  const [value, setValue] = useState(top);
 
-  const onUpdate = (e) => updateTop(e.target.value);
+  const handleOnChange = (e) => {
+    const { value } = e.target;
+    const { check, reset } = checkPointScope(value);
+
+    if (!check) {
+      if (reset) setValue("");
+      return;
+    }
+    setValue(value);
+  };
 
   return (
     <Container>
@@ -42,8 +53,9 @@ const ResultPoint = () => {
           <InputRank
             inputMode="numeric"
             name="top"
-            defaultValue={top}
-            onBlur={onUpdate}
+            value={value}
+            onChange={handleOnChange}
+            onBlur={() => updateTop(value)}
           />
           <span>명까지 공개할래요</span>
         </Wrapper>
