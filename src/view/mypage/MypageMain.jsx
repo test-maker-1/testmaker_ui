@@ -1,17 +1,16 @@
 import React, { memo, useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { Loading, SVG } from "../../components/common";
+import { Loading, NoticeAlert, SVG } from "../../components/common";
 import ENUM from "../../constants/Enum";
 import Tab from "../../components/MyPage/Tab";
 
 import useUser from "../../hooks/useUser";
 import Error from "../Error";
 import TabTests from "../../components/MyPage/TabTests";
-import usePage from "../../hooks/usePage";
+// import usePage from "../../hooks/usePage";
 // import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 const MypageMain = memo((props) => {
-  const { goPage } = usePage();
   const {
     logInLoading,
     loggedIn,
@@ -33,7 +32,9 @@ const MypageMain = memo((props) => {
     window.scrollTo(0, 0);
   }, [selectedTab]);
 
-  const onClick = () => goPage("/mypage/manage");
+  const onClick = useCallback(() => {
+    return NoticeAlert.open("곧 업데이트 예정이에요!");
+  }, []);
 
   if (!loggedIn) return <Error code={403} />;
   return updateUserLoading ? (
@@ -42,6 +43,7 @@ const MypageMain = memo((props) => {
     <div style={{ width: "100%" }}>
       <InfoContainer>
         <InfoUser>
+          <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
           <div className="space-left">
             <InfoAva>
               {data.profileImg ? (
@@ -66,7 +68,7 @@ const MypageMain = memo((props) => {
         <InfoBox>
           <InfoArea>
             <InfoSubBox>
-              <InfoInBox>
+              <InfoInBox onClick={onClick}>
                 <InfoTitle>북마크</InfoTitle>
                 <InfoCnt>0개</InfoCnt>
               </InfoInBox>
@@ -80,7 +82,7 @@ const MypageMain = memo((props) => {
             <InfoSubBox>
               <InfoInBox>
                 <InfoTitle>참여 테스트</InfoTitle>
-                <InfoCnt>{data.testParticipantsCnt}개</InfoCnt>
+                <InfoCnt>{data.participantsCnt}개</InfoCnt>
               </InfoInBox>
             </InfoSubBox>
           </InfoArea>
@@ -141,6 +143,7 @@ const Partition = styled.p`
   line-height: 24px;
   letter-spacing: -0.5px;
   color: #515966;
+  cursor: pointer;
 `;
 
 const InfoBox = styled.div`
@@ -167,6 +170,7 @@ const InfoSubBox = styled.div`
 
 const InfoInBox = styled.div`
   text-align: center;
+  cursor: pointer;
 `;
 
 const InfoTitle = styled.p`
