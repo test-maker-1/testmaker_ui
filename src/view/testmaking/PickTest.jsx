@@ -15,7 +15,6 @@ import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
 
 const breakWidth = 350;
-const [pt, pl] = [20, 23];
 
 const PickTest = () => {
   const { status, loggedIn } = useUser();
@@ -102,15 +101,20 @@ const usePick = () => {
 };
 
 const Thumbnail = styled.div`
-  padding-right: ${pl}px;
+  padding-right: 14px;
   display: flex;
   align-items: center;
+
+  img {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const BtnWrap = styled.button`
   width: 100%;
   margin-bottom: 16px;
-  padding: ${pt}px ${pl}px;
+  padding: 23px 16px;
 
   display: flex;
   align-items: center;
@@ -127,7 +131,7 @@ const BtnWrap = styled.button`
     flex-direction: column;
     ${Thumbnail} {
       width: 100%;
-      padding-bottom: ${pt}px;
+      padding-bottom: 16px;
     }
   }
 `;
