@@ -1,7 +1,6 @@
 import cookie from "react-cookies";
 import { clientURL } from "../constants/config";
 import headerInfo, { initHeader } from "../constants/headerInfo";
-import regex from "../constants/regex";
 import { seqTest, login, test, testing } from "../constants/urlInfo";
 
 // plocation: string; => path
