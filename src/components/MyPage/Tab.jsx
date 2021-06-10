@@ -8,7 +8,6 @@ const { darkGray, bodyGray } = theme.colors;
 const TabScroll = (props) => {
   const tabs = [PARTTEST, MADETEST, TEMPSTORAGE];
   const {
-    data,
     selectedTab,
     selecTab,
     getPartTests,
@@ -32,7 +31,7 @@ const TabScroll = (props) => {
           return;
       }
     },
-    [selectedTab, data]
+    [getMadeTests, getPartTests, getTempSaveTests, selecTab, selectedTab]
   );
 
   return (
