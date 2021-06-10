@@ -1,7 +1,6 @@
 export { TitleBox, Title } from './TitleBox'
 export { BtnField, BtnExam } from './BtnField'
 export { default as BtnShare } from './BtnShare'
-export { UploadImg } from './UploadImg'
 export { RankingList, RankingRow } from './PointRanking'
 export { Loading } from './Loading';
 export { default as Tag } from './Tag'

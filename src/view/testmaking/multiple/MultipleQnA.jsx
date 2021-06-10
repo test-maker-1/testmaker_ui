@@ -8,6 +8,7 @@ import theme from "../../../styles/theme";
 
 import usePage from "../../../hooks/usePage";
 import useQnA from "../../../hooks/making/useQnA";
+import useQuestion from "../../../hooks/making/useQuestion";
 
 import msg from "../../../constants/msg";
 import ENUM from "../../../constants/Enum";
@@ -36,16 +37,16 @@ const MultipleQnA = () => {
       </RandomGuide>
 
       <Questions />
-      <BtnAdd />
 
-      <FooterBtn />
+      <FooterBtns />
     </PageContainer>
   );
 };
 
-const FooterBtn = memo(() => {
-  const { onSetResult } = useQnA();
+const FooterBtns = memo(() => {
   const { goPage } = usePage();
+  const { onSetResult } = useQnA();
+  const { addEmptyQuestion } = useQuestion();
 
   const onSubmitQnA = () => {
     if (onSetResult()) {
@@ -56,12 +57,15 @@ const FooterBtn = memo(() => {
   };
 
   return (
-    <BottomBtn
-      btnArr={[
-        { name: "미리보기", type: ENUM.PREVIEW },
-        { name: "다 적었어요", customClick: onSubmitQnA },
-      ]}
-    />
+    <>
+      <BtnAdd onAdd={addEmptyQuestion}>질문 추가하기</BtnAdd>
+      <BottomBtn
+        btnArr={[
+          { name: "미리보기", type: ENUM.PREVIEW },
+          { name: "다 적었어요", customClick: onSubmitQnA },
+        ]}
+      />
+    </>
   );
 });
 

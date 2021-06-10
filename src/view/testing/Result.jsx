@@ -8,7 +8,7 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
-import TestSwiper from "../../components/common/TestSwiper";
+// import TestSwiper from "../../components/common/TestSwiper";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 
@@ -30,6 +30,7 @@ const Result = memo((props) => {
   const { current_testID } = useSelector((state) => state.testing);
   const {
     isRankMode,
+    testUid,
     userTestResult,
     currentResult: { percent, img, description },
     testResults,
@@ -43,7 +44,7 @@ const Result = memo((props) => {
   const rankOrder = settingRank(true, results);
 
   const handleonClick = (id, e) => {
-    goPage(`/${testing}/${welcome}`, document.location.search);
+    goPage(`/${testing}/${welcome}`, `?testid=${testUid}`);
   };
 
   return (
@@ -107,11 +108,15 @@ const Result = memo((props) => {
           <ComInput hintText={"익명으로 메이커만 볼 수 있어요"} />
         </TitleBox> */}
         <TitleBox>
-          <Reply repliesCnt={repliesCnt} recent3replies={recent3Replies} />
+          <Reply
+            repliesCnt={repliesCnt}
+            recent3replies={recent3Replies}
+            testid={testUid}
+          />
         </TitleBox>
-        <TitleBox title="더 많은 테스트가 있어요!" noline>
+        {/* <TitleBox title="더 많은 테스트가 있어요!" noline>
           <TestSwiper />
-        </TitleBox>
+        </TitleBox> */}
       </RoundContiner>
       <BottomBtn
         btnArr={[

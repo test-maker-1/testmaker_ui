@@ -11,8 +11,10 @@ const reply = createSlice({
       //recent3replies
       state.testUid = testid;
     },
-    getReplyInfoSuccess: (state, { payload }) => {
-      state.replies.push(...payload);
+    getReplyInfoSuccess: (state, { payload: { data, timestamp } }) => {
+      console.log(data, timestamp);
+      if (timestamp === 0) state.replies = [];
+      state.replies.push(...data);
     },
     moreReplyInfo: (state, { payload: { testid } }) => {},
     addReplyInfo: (state, { payload }) => {

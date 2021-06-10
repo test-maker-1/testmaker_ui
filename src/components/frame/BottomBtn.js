@@ -62,12 +62,13 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
 const BtnContainer = styled.footer`
   position: fixed;
   left: 50%;
-  bottom: -1px;
+  bottom: -2px;
   transform: translateX(-50%);
 
   width: min(${({ theme: { widths } }) => widths.main}px, 100%);
   height: ${({ theme: { heights } }) => heights.bottomBtn}px;
   display: flex;
+  z-index: ${({ theme: { zIndex } }) => zIndex.header};
 `;
 
 const Button = styled.button`

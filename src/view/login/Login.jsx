@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
@@ -12,9 +12,18 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { replace } = usePage();
+  const { location, replace } = usePage();
 
-  if (loggedIn) replace("/");
+  useEffect(() => {
+    if (loggedIn) {
+      if (location.state && location.state.hasOwnProperty("from")) {
+        const { from, search = "" } = location.state;
+        replace(from, search);
+      } else {
+        replace("/");
+      }
+    }
+  }, [location.state, loggedIn, replace]);
 
   const onSuccessKakao = async (resData) => {
     const {
@@ -115,6 +124,11 @@ const Title = styled.h1`
 export const Icon = styled.span`
   margin-right: 8px;
   display: flex;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const BtnKakaoLogin = styled(KaKaoLogin)`

@@ -2,6 +2,7 @@ import { useHistory } from "react-router";
 
 const usePage = () => {
   const history = useHistory();
+  const { location } = history;
 
   const replace = (pathname, search = null, state = null) => {
     history.replace({
@@ -23,7 +24,7 @@ const usePage = () => {
   const go = () => history.go(); // go front
   const goBack = () => history.goBack(); // go back
 
-  return { goPage, go, goBack, replace };
+  return { location, goPage, go, goBack, replace };
 };
 
 export default usePage;

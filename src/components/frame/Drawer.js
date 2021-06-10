@@ -17,6 +17,7 @@ const logoSvgStyle = {
 
 const Drawer = ({ onClose }) => {
   const { loggedIn, logOut } = useUser();
+  const { pathname, search } = window.location;
 
   return (
     <Dimmed>
@@ -49,7 +50,10 @@ const Drawer = ({ onClose }) => {
             </Item>
           ) : (
             <Item>
-              <Link to="/login" className="menu">
+              <Link
+                to={{ pathname: "/login", state: { from: pathname, search } }}
+                className="menu"
+              >
                 로그인
               </Link>
             </Item>

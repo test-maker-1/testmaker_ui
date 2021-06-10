@@ -28,16 +28,15 @@ const ResultBound = () => {
 
   return (
     <Container>
-      {/* alert */}
       <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
+
       <TitleBox>
         <TextBox>
-          {/* summary */}
           <Summary type="questions" value={questionsCnt} />
           <Summary type="points" value={totalPoints} />
         </TextBox>
       </TitleBox>
-      {/* result */}
+
       {results.map((result, idx) => (
         <Result
           key={result.resultId}
@@ -47,7 +46,8 @@ const ResultBound = () => {
           openAlert={NoticeAlert.open}
         />
       ))}
-      <BtnAdd target="결과" onClick={addResult} />
+
+      <BtnAdd onAdd={addResult}>결과 추가하기</BtnAdd>
     </Container>
   );
 };

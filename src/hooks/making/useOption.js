@@ -16,8 +16,7 @@ const useOption = () => {
   const updateOption = (questionIdx, idx, beforeOption, option) => {
     dispatch(updateOptionData({ questionIdx, idx, beforeOption, option }));
   };
-  const onUpdate = (e, questionIdx, optionIdx, value) => {
-    const { value: newOption } = e.target;
+  const onUpdate = (newOption, questionIdx, optionIdx, value) => {
     updateOption(questionIdx, optionIdx, value, newOption);
   };
 

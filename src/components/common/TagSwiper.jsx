@@ -9,10 +9,11 @@ const TagSwiper = ({
   selectable = false,
   allSelected = false,
   noPadding,
+  useable = false,
 }) => {
   const resultTag = selectedTag === "" ? "전체" : selectedTag;
   return (
-    <Container noPadding={noPadding}>
+    <Container noPadding={noPadding} useable={useable}>
       <Swiper slidesPerView={"auto"} spaceBetween={0} className="tag-swiper">
         <SwiperSlide>
           {tags.map((tag, idx) => (
@@ -31,10 +32,9 @@ const TagSwiper = ({
 
 const Container = styled.div`
   position: absolute;
-  margin: 4px 0 12px 0;
-  padding: 0
-    ${({ noPadding, theme: { paddings } }) =>
-      noPadding ? 0 : paddings.main}rem;
+  margin: 0 0 12px 0;
+  padding: ${(props) => (props.useable ? "0 2rem 0.8rem 2rem" : "0")};
+  background: ${(props) => (props.useable ? "white" : "none")};
   width: 100%;
 
   .swiper-container {

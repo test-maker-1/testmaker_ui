@@ -1,4 +1,5 @@
 import { call, put, fork, all, takeLeading } from "redux-saga/effects";
+import { saveResult } from "../reducer/testingReducer";
 import {
   getTestResultInfo,
   getTestResultInfoSuccess,
@@ -6,7 +7,7 @@ import {
 } from "../reducer/resultReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
 // const getResultInform = createPromiseSaga(
 //   getTestResultInfo.type,
@@ -19,30 +20,39 @@ function* getResultInform(action) {
   const { data, status } = yield call(testingAPI.getResultInfo, param);
 
   if (status === SUCCESS && data.testResults.length > 0) {
-    const {
-      isRankMode,
-      recent3Replies,
-      repliesCnt,
-      testResults,
-      userTestResult,
-    } = data;
-
-    yield put({
-      type: getTestResultInfoSuccess.type,
-      payload: {
-        isRankMode,
-        recent3Replies,
-        repliesCnt,
-        testResults,
-        userTestResult,
-      },
-    });
+    yield updateTestResult({ payload: data });
   } else {
     yield put({
       type: getTestResultInfoError.type,
       payload: data,
     });
   }
+}
+
+function* updateTestResult(action) {
+  const data = action.payload;
+  const {
+    isRankMode,
+    responseUid,
+    testUid,
+    recent3Replies,
+    repliesCnt,
+    testResults,
+    userTestResult,
+  } = data;
+
+  yield put({
+    type: getTestResultInfoSuccess.type,
+    payload: {
+      isRankMode,
+      responseUid,
+      testUid,
+      recent3Replies,
+      repliesCnt,
+      testResults,
+      userTestResult,
+    },
+  });
 }
 
 function* getResultInformSuccess(action) {
@@ -61,7 +71,7 @@ function* getResultInfromation() {
   yield takeLeading(getTestResultInfo.type, getResultInform);
   yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
   yield takeLeading(getTestResultInfoError.type, getResultInformError);
-  // yield takeLeading(getTestResult.type, get)
+  yield takeLeading(saveResult.type, updateTestResult);
 }
 
 export default function* resultSaga() {
