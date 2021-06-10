@@ -45,7 +45,7 @@ const Feed = () => {
     <Container>
       <CarouselComponent />
       <TagContainer>
-        <TagSwiper tags={tags} selectedTag={selectedTag} selectable />
+        <TagSwiper tags={tags} selectedTag={selectedTag} selectable useable />
       </TagContainer>
 
       <CardContainer>
