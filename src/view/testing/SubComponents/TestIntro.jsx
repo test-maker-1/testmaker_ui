@@ -10,7 +10,7 @@ import TagSwiper from "../../../components/common/TagSwiper";
 const TestIntro = memo((props) => {
   const {
     title,
-    maker: { name },
+    maker: { name, profileImg },
     participantsCnt,
     coverImg,
     tags,
@@ -31,7 +31,10 @@ const TestIntro = memo((props) => {
         </More> */}
       </InfoTitle>
       <InfoUser>
-        <AvatarIcon alt="user" src="/static/images/avatar/1.jpg" />
+        <AvatarIcon
+          alt="user"
+          src={profileImg || "/static/images/avatar/1.jpg"}
+        />
 
         <Partition>{name}</Partition>
         <SVG type={Enum.SPLIT} style={{ width: "12px", height: "12px" }} />

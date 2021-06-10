@@ -41,6 +41,7 @@ const testing = {
     maker: {
       name: "",
       userUid: "",
+      profileImg: "",
     },
     optionalURL: "",
     participantsCnt: 0,
