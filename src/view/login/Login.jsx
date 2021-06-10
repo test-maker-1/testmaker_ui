@@ -115,6 +115,11 @@ const Title = styled.h1`
 export const Icon = styled.span`
   margin-right: 8px;
   display: flex;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 const BtnKakaoLogin = styled(KaKaoLogin)`
