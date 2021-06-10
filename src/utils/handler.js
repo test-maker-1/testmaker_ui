@@ -1,6 +1,7 @@
 import cookie from "react-cookies";
 import { clientURL } from "../constants/config";
 import headerInfo, { initHeader } from "../constants/headerInfo";
+import regex from "../constants/regex";
 import { seqTest, login, test, testing } from "../constants/urlInfo";
 
 // plocation: string; => path
@@ -179,4 +180,11 @@ export const shareKakao = (link, title, description, imageUrl) => {
       },
     ],
   });
+};
+
+export const checkPointScope = (value) => {
+  if (!regex.point.test(value)) return { check: false, reset: false }; // prevent string
+  if (value < 1 || value > 10) return { check: false, reset: true }; // prevent value
+
+  return { check: true };
 };

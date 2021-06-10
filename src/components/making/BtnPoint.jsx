@@ -9,6 +9,7 @@ import { InputNumber } from "../../styles";
 import theme from "../../styles/theme";
 
 import useOpen from "../../hooks/useOpen";
+import { checkPointScope } from "../../utils/handler";
 
 const { blue, skyBlue, white, gray } = theme.colors;
 
@@ -94,14 +95,12 @@ const BtnEdit = memo(
 
     const handleOnChange = (e) => {
       const { value } = e.target;
-      const regex = /^[0-9\b]{0,13}$/;
+      const { check, reset } = checkPointScope(value);
 
-      if (!regex.test(value)) return; // prevent string
-      if (value < 1 || value > 10) {
-        setValue("");
+      if (!check) {
+        if (reset) setValue("");
         return;
-      } // prevent value < 0
-
+      }
       setValue(value);
     };
 
