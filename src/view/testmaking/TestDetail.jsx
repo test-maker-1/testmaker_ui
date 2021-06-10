@@ -96,8 +96,6 @@ const useDetail = () => {
   const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
-  const { testId, onFeed, title, description, coverImg } = data;
-
   const onEnterPress = (e) => {
     const { value } = e.target;
 
@@ -129,17 +127,7 @@ const useDetail = () => {
     const status = await saveTest(data);
 
     if (status === SUCCESS) {
-      sessionStorage.setItem(
-        "savedTest",
-        JSON.stringify({
-          testId,
-          onFeed,
-          title,
-          description,
-          coverImg,
-          link: `testing/welcome?testid=${data.testId}`,
-        })
-      );
+      sessionStorage.setItem("testId", data.testId);
       goPage("/test/release");
     } else NoticeAlert.open(msg.errorPage[500]);
   };
