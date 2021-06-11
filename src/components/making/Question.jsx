@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { InfoText, Loading, NoticeAlert } from "../common";
 import { SubTitle, BtnIcon, Options, BtnPoint, UploadImg } from ".";
-import { InputTitle, Section } from "../../styles";
+import { InputFile, InputTitle, Section } from "../../styles";
 
 import MakingAPI from "../../api/makingAPI";
 import useQuestion from "../../hooks/making/useQuestion";
@@ -134,11 +134,6 @@ const BtnPreset = ({ target, setPreset }) => {
 
 const Wrapper = styled(Section)`
   margin-bottom: 24px;
-`;
-
-const InputFile = styled.input`
-  width: 0;
-  display: none;
 `;
 
 export default memo(Questions);

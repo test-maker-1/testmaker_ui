@@ -38,4 +38,9 @@ export const InputNumber = styled.input`
   }
 `;
 
+export const InputFile = styled.input`
+  width: 0;
+  display: none;
+`;
+
 export default Input;

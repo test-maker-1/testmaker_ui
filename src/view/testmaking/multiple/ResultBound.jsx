@@ -43,7 +43,7 @@ const ResultBound = () => {
           resultIdx={idx}
           result={result}
           deleteResult={deleteResult}
-          openAlert={NoticeAlert.open}
+          openAlert={(msg) => NoticeAlert.open(msg)}
         />
       ))}
 
