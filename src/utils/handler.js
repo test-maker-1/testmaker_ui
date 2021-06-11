@@ -86,14 +86,27 @@ export const getDateInfo = (timestamp, form = "/") => {
   const year = current.getFullYear();
   let month = current.getMonth() + 1;
   let date = current.getDate();
+  let hours = current.getHours();
+  let minutes = current.getMinutes();
 
   if (form === "object") return { year, month, date };
   else {
     month = month.toString().padStart(2, "0");
     date = date.toString().padStart(2, "0");
+    hours = hours.toString().padStart(2, "0");
+    minutes = minutes.toString().padStart(2, "0");
 
     if (form === "년월일")
       return StringFormat("{0}년{1}월{2}일", year, month, date);
+    else if (form === "temp")
+      return StringFormat(
+        "{0}-{1}-{2} {3}:{4}",
+        year,
+        month,
+        date,
+        hours,
+        minutes
+      );
     else return StringFormat(`{0}${form}{1}${form}{2}`, year, month, date);
   }
 };

@@ -32,7 +32,7 @@ const Drawer = ({ onClose }) => {
         <ul className="menus">
           {loggedIn && (
             <Item>
-              <Link to="/" className="menu">
+              <Link to="/mypage/main" className="menu">
                 마이페이지
               </Link>
             </Item>

@@ -21,6 +21,7 @@ const {
   BEFORE_BOOKMARK,
   AFTER_BOOKMARK,
   STAR,
+  NEXT,
 } = Enum;
 
 export const svgInfo = {
@@ -311,6 +312,20 @@ export const svgInfo = {
       <path
         d="M11.0002 15.831L16.6652 19.2502L15.1618 12.806L20.1668 8.47016L13.576 7.911L11.0002 1.8335L8.42433 7.911L1.8335 8.47016L6.8385 12.806L5.33516 19.2502L11.0002 15.831Z"
         fill="#DADEE6"
+      />,
+    ],
+  },
+  [NEXT]: {
+    width: "20",
+    height: "20",
+    viewBox: "0 0 20 20",
+    fill: "none",
+    inContext: [
+      <path
+        d="M7.49984 15.8335L13.3064 10.7527C13.7617 10.3543 13.7617 9.646 13.3064 9.24759L7.49984 4.16683"
+        stroke="#8A929E"
+        strokeWidth="3"
+        strokeLinecap="round"
       />,
     ],
   },
