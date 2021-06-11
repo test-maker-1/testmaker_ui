@@ -8,11 +8,13 @@ import RoundContiner from "./SubComponents/RoundContainer";
 import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
+import useUser from "../../hooks/useUser";
 // import TestSwiper from "../../components/common/TestSwiper";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 import { NoticeAlert } from "../../components/common";
 import { returnTextDom } from "../../utils/handler";
+import { LOADING } from "../../utils/asyncUtils";
 
 const { HOME, SHARE } = ENUM;
 
@@ -43,6 +45,7 @@ const Result = memo((props) => {
   } = useSelector((state) => state.result);
   const topResult = testResults[0];
   const { goPage } = usePage();
+  const { loggedIn, status } = useUser();
 
   const rankOrder = settingRank(isRankMode, testResults);
 
@@ -84,9 +87,11 @@ const Result = memo((props) => {
         {isRankMode ? (
           <TitleBox>
             <RankingList top={5} userRanking={rankOrder} noline />
-            <BtnField color="skyBlue" onClick={() => goPage("/login")}>
-              랭킹에 점수 남기기
-            </BtnField>
+            {!loggedIn && status !== LOADING && (
+              <BtnField color="skyBlue" onClick={() => goPage("/login")}>
+                랭킹에 점수 남기기
+              </BtnField>
+            )}
           </TitleBox>
         ) : (
           <TitleBox>
