@@ -11,6 +11,7 @@ import usePage from "../../hooks/usePage";
 // import TestSwiper from "../../components/common/TestSwiper";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
+import { NoticeAlert } from "../../components/common";
 
 const { HOME, SHARE } = ENUM;
 
@@ -29,6 +30,7 @@ const settingRank = (isRank, pRanks) => {
 const Result = memo((props) => {
   const { current_testID } = useSelector((state) => state.testing);
   const {
+    responseUid,
     isRankMode,
     testUid,
     userTestResult,
@@ -45,6 +47,10 @@ const Result = memo((props) => {
 
   const handleonClick = (id, e) => {
     goPage(`/${testing}/${welcome}`, `?testid=${testUid}`);
+  };
+
+  const openAlert = (type) => {
+    NoticeAlert.open("친구한테 공유할래요!", SHARE);
   };
 
   return (
@@ -123,8 +129,20 @@ const Result = memo((props) => {
       <BottomBtn
         btnArr={[
           { name: "홈으로", type: HOME },
-          { name: "공유", type: SHARE },
+          {
+            name: "공유",
+            type: SHARE,
+            customClick: openAlert.bind(this, "share"),
+          },
         ]}
+      />
+      <NoticeAlert
+        shareInfo={{
+          link: `/testing/result?resultid=${responseUid}`,
+          title: userTestResult,
+          description: description,
+          imageUrl: img || "",
+        }}
       />
     </PageContainer>
   );

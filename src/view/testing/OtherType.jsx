@@ -44,7 +44,7 @@ const OtherType = ({ otherType }) => {
               key={`OtherType_${idx}`}
               rank={idx + 1}
               title={title}
-              percent={percent}
+              percent={Math.round(percent)}
               img={img}
               description={description}
             />
