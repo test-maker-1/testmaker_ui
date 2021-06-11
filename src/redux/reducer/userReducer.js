@@ -94,7 +94,7 @@ const user = createSlice({
     madeTestsSuccess: (state, { payload }) => {
       state.tabTestsLoading = false;
       state.tabTests = payload;
-      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createAt;
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createdAt;
     },
     madeTestsError: (state) => {
       state.tabTestsLoading = false;
@@ -111,7 +111,7 @@ const user = createSlice({
 
       state.moreTabTestsLoading = false;
       state.tabTests.push(...payload);
-      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createAt;
+      state.tabTestsLast = state.tabTests[state.tabTests.length - 1].createdAt;
     },
     updateMadeTestsError: (state) => {
       state.moreTabTestsLoading = false;
