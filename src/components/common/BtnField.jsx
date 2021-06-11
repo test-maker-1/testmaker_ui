@@ -95,11 +95,15 @@ const useStyles = makeStyles(() => ({
     color: btnColors[color].color,
 
     "&:hover": {
-      transition: "0.1s",
       background: isTestBtn
         ? btnColors["blue"].bgColor
         : btnColors[color].bgColor,
       color: isTestBtn ? "white" : btnColors[color].color,
+      "@media (hover: none)": {
+        // eslint-disable-line no-useless-computed-key
+        color: btnColors[color].color,
+        background: btnColors[color].bgColor,
+      },
     },
     "&:active": {
       // isTestBtn = true일 때 스타일 변경 로직 필요

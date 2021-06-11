@@ -62,7 +62,9 @@ const Result = memo((props) => {
             <>
               <div style={{ paddingBottom: "2.4rem" }}>
                 <Title>{userTestResult}</Title>
-                <SubTitle>{percent}%의 참여자와 같은 유형이에요!</SubTitle>
+                <SubTitle>
+                  {Math.round(percent)}%의 참여자와 같은 유형이에요!
+                </SubTitle>
               </div>
               <ImageView imageUrl={img} />
               <Inform>{description}</Inform>
@@ -88,7 +90,7 @@ const Result = memo((props) => {
           <TitleBox>
             <Title>가장 많은 유형 TOP 1</Title>
             <SubTitle>
-              {topResult.title} ({topResult.percent}%)
+              {topResult.title} ({Math.round(topResult.percent)}%)
             </SubTitle>
             <div style={{ padding: "2.4em 0px" }}>
               <ImageView imageUrl={topResult.img} />
