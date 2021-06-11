@@ -69,6 +69,9 @@ const ENUM = {
   AFTER_BOOKMARK: "after_bookmark",
   STAR: "star",
   NEXT: "next",
+  // SHARE: "share",
+  PART: "part",
+  CONFIRM: "Confirm",
 
   // key type
   ENTER: "Enter",
