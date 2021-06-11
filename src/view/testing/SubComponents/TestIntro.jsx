@@ -6,6 +6,7 @@ import { styled as mstyled } from "@material-ui/core/styles";
 import { SVG, ImageView } from "../../../components/common";
 import Enum from "../../../constants/Enum";
 import TagSwiper from "../../../components/common/TagSwiper";
+import { returnTextDom } from "../../../utils/handler";
 
 const TestIntro = memo((props) => {
   const {
@@ -49,7 +50,7 @@ const TestIntro = memo((props) => {
         </TagContainer>
       )}
       <Inform>
-        <p>{description}</p>
+        <p>{returnTextDom(description)}</p>
       </Inform>
     </InfoContainer>
   );

@@ -12,6 +12,7 @@ import usePage from "../../hooks/usePage";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 import { NoticeAlert } from "../../components/common";
+import { returnTextDom } from "../../utils/handler";
 
 const { HOME, SHARE } = ENUM;
 
@@ -73,7 +74,7 @@ const Result = memo((props) => {
                 </SubTitle>
               </div>
               <ImageView imageUrl={img} />
-              <Inform>{description}</Inform>
+              <Inform>{returnTextDom(description)}</Inform>
             </>
           )}
         </div>

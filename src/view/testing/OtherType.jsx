@@ -5,6 +5,7 @@ import { ImageView, TitleBox } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import ENUM from "../../constants/Enum";
 import { SubTitle, Title } from "./Result";
+import { returnTextDom } from "../../utils/handler";
 
 const { HOME } = ENUM;
 
@@ -18,7 +19,7 @@ const TestInform = ({ rank, title, percent, img, description }) => {
       <div style={{ padding: "2.4em 0px" }}>
         <ImageView imageUrl={img} />
       </div>
-      <Description>{description}</Description>
+      <Description>{returnTextDom(description)}</Description>
     </TitleBox>
   );
 };
