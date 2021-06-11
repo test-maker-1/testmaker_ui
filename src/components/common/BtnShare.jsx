@@ -69,6 +69,7 @@ const Container = styled.div`
 const StyledBtn = mstyled(Button)({
   padding: 0,
   margin: "1px 4px",
+  borderRadius: 25,
 });
 
 export default BtnShare;
