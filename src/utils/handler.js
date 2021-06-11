@@ -181,7 +181,7 @@ export const shareKakao = (link, title, description, imageUrl) => {
     },
     buttons: [
       {
-        title: "테스트 해보기",
+        title: `${link.includes("testing/result") ? "결과 보기 ": "테스트 해보기"}`,
         link: {
           webUrl: `${clientURL}${link}`,
           mobileWebUrl: `${clientURL}${link}`,
