@@ -1,6 +1,6 @@
 import React, { memo, useState, forwardRef } from "react";
 import styled from "styled-components";
-import star from "../../../resources/images/star.png";
+import confirm from "../../../resources/images/confirm.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 import Mention, { EmptyMention } from "./Mention";
@@ -31,7 +31,7 @@ export const ComInput = forwardRef(({ hintText, onFocus, onSubmit }, ref) => {
           />
         </WrapInput>
         <WrapBtn>
-          <SubmitBtn src={star} type={"image"} />
+          <SubmitBtn src={confirm} type={"image"} />
         </WrapBtn>
       </InputContainer>
     </form>

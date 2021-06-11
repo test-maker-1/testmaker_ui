@@ -85,17 +85,7 @@ const Card = ({
 
           <CountItems>
             <SVG
-              type={ENUM.STAR}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
-            <Count>{numberFormat(participatedCnt)}</Count>
-
-            <SVG
-              type={ENUM.STAR}
+              type={ENUM.SHARE}
               style={{
                 width: "22",
                 height: "22",
@@ -103,6 +93,16 @@ const Card = ({
               className="svg-margin"
             />
             <Count>{numberFormat(sharedCnt)}</Count>
+
+            <SVG
+              type={ENUM.PART}
+              style={{
+                width: "22",
+                height: "22",
+              }}
+              className="svg-margin"
+            />
+            <Count>{numberFormat(participatedCnt)}</Count>
           </CountItems>
         </InfoBox>
       </PaddingBox>

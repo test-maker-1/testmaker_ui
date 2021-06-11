@@ -59,7 +59,7 @@ const MypageMain = memo((props) => {
           </div>
           <div className="space-right">
             <SVG
-              type={ENUM.STAR}
+              type={ENUM.CONFIRM}
               style={{
                 width: "24",
                 height: "24",
