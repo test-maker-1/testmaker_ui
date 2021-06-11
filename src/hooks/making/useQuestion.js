@@ -1,18 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
-import MakingAPI from "../../api/makingAPI";
 import {
   updateQuestionData,
   updateOptionData,
   addQuestion,
   deleteQuestion,
 } from "../../redux/reducer/makingReducer";
-import { SUCCESS } from "../../utils/asyncUtils";
+import { checkQuestion } from "../../utils/asyncMakingUtils";
 
 const useQuestion = () => {
   const { target, questions = [], questionsCnt } = useSelector(
     (state) => state.making.data
   );
   const dispatch = useDispatch();
+
+  const checkNextStep = () => {
+    return checkQuestion(questions);
+  };
 
   const updateQuestion = (key, value, idx) => {
     dispatch(updateQuestionData({ key, value, idx }));
@@ -37,18 +40,16 @@ const useQuestion = () => {
     return true;
   };
 
-  const getPreset = async (questionIdx) => {
-    const { data, status } = await MakingAPI.getQuestionPreset(target);
-    if (status === SUCCESS) {
-      updateQuestion("question", data.questions[0], questionIdx);
-      return true;
-    }
-    return false;
+  const setPreset = (questionIdx, preset) => {
+    updateQuestion("question", preset, questionIdx);
   };
 
   return {
     // data
+    target,
     questions,
+    // check
+    checkNextStep,
     // update
     updateQuestion,
     handleUpdate,
@@ -58,7 +59,7 @@ const useQuestion = () => {
     addEmptyQuestion,
     // delete
     deleteQuestionData,
-    getPreset,
+    setPreset,
   };
 };
 

@@ -5,6 +5,7 @@ import { InfoText, RankingList } from "../../../components/common";
 import { InputNumber, Section } from "../../../styles";
 
 import useResult from "../../../hooks/making/useResult";
+import useNumber from "../../../hooks/making/useNumber";
 
 const userRanking = [
   {
@@ -31,8 +32,7 @@ const userRanking = [
 
 const ResultPoint = () => {
   const { top, updateTop } = useResult();
-
-  const onUpdate = (e) => updateTop(e.target.value);
+  const { value, handleOnChange } = useNumber(top);
 
   return (
     <Container>
@@ -42,8 +42,9 @@ const ResultPoint = () => {
           <InputRank
             inputMode="numeric"
             name="top"
-            defaultValue={top}
-            onBlur={onUpdate}
+            value={value}
+            onChange={handleOnChange}
+            onBlur={() => updateTop(value)}
           />
           <span>명까지 공개할래요</span>
         </Wrapper>

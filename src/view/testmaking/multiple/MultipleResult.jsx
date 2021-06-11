@@ -3,16 +3,20 @@ import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
-import { TitleBox, Title, SVG } from "../../../components/common";
+import { TitleBox, Title, SVG, NoticeAlert } from "../../../components/common";
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
 import ResultBound from "./ResultBound";
 import ResultPoint from "./ResultPoint";
 import theme from "../../../styles/theme";
 
 import useResult from "../../../hooks/making/useResult";
-import ENUM from "../../../constants/Enum";
+import useQnA from "../../../hooks/making/useQnA";
+import { checkResult } from "../../../utils/asyncMakingUtils";
 
-const { PREVIEW, MOVENEXT } = ENUM;
+import ENUM from "../../../constants/Enum";
+import usePage from "../../../hooks/usePage";
+
+const { PREVIEW, WARNING } = ENUM;
 
 const useStyles = makeStyles(() => ({
   btnRank: () => ({
@@ -39,7 +43,7 @@ const svgStyle = {
 };
 
 const MultipleResult = () => {
-  const { isRankMode, updateMode } = useResult();
+  const { isRankMode, top, updateMode } = useResult();
   const [currentMode, otherMode] = useMemo(
     () =>
       isRankMode
@@ -47,13 +51,13 @@ const MultipleResult = () => {
         : ["구간 별 결과", "점수 모드"],
     [isRankMode]
   );
+  const classes = useStyles();
 
   const toggleMode = () => updateMode();
 
-  const classes = useStyles();
-
   return (
     <Container>
+      <NoticeAlert icon={WARNING} btns={[{ name: "다시보기" }]} />
       <TitleBox noline>
         <TitleWrap>
           <Title>{currentMode}</Title>
@@ -69,13 +73,38 @@ const MultipleResult = () => {
 
       {isRankMode ? <ResultPoint /> : <ResultBound />}
 
-      <BottomBtn
-        btnArr={[
-          { name: "미리보기", type: PREVIEW },
-          { name: "다 적었어요", type: MOVENEXT },
-        ]}
-      />
+      <BtnWrapper isRankMode={isRankMode} top={top} />
     </Container>
+  );
+};
+
+const BtnWrapper = ({ isRankMode, top }) => {
+  const { results, resultsCnt, totalPoints } = useQnA();
+  const { goPage } = usePage();
+
+  const checkNextStep = () => {
+    const { okResult, msg, resultError } = checkResult(
+      isRankMode,
+      top,
+      results,
+      resultsCnt,
+      totalPoints
+    );
+
+    if (okResult) {
+      goPage("/test/multiple/detail");
+      return;
+    }
+    NoticeAlert.open(resultError || msg);
+  };
+
+  return (
+    <BottomBtn
+      btnArr={[
+        { name: "미리보기", type: PREVIEW },
+        { name: "다 적었어요", customClick: checkNextStep },
+      ]}
+    />
   );
 };
 

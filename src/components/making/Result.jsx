@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
-import { TitleBox } from "../common";
+import { Loading, TitleBox } from "../common";
 import { SubTitle, UploadImg } from ".";
-import { InputTitle, TextArea } from "../../styles";
+import { InputFile, InputTitle, TextArea } from "../../styles";
 
+import useImage from "../../hooks/making/useImage";
 import useResult from "../../hooks/making/useResult";
+
+import { LOADING } from "../../utils/asyncUtils";
+import msg from "../../constants/msg";
 import { md } from "../../constants/Enum";
 
 const Result = ({ result, resultIdx, deleteResult, openAlert }) => {
@@ -13,20 +17,27 @@ const Result = ({ result, resultIdx, deleteResult, openAlert }) => {
     title,
     description,
     img,
-    openImg,
     pointBound: { start, end },
   } = result;
 
-  const { updateResult, updateResultByInput, updateImg } = useResult();
+  const { updateResultByInput, updateImg } = useResult();
+  const { state, onUpload, deleteImg } = useImage(
+    (img) => updateImg(img, resultIdx),
+    () => openAlert(msg.errorPage[500])
+  );
+
+  const fileInput = useRef();
+  const handleOnCick = () => fileInput.current.click();
 
   return (
     <li>
+      {state.status === LOADING && <Loading />}
       <Container>
         {/* pointBound */}
         <SubTitle
           title={`${start !== null ? start : ""}점 이상
                   ${end !== null ? end : ""}점 이하`}
-          onUpload={() => updateResult("openImg", !openImg, resultIdx)}
+          onUpload={handleOnCick}
           onDelete={() => deleteResult(resultIdx)}
         ></SubTitle>
         <TitleBox noline>
@@ -39,13 +50,19 @@ const Result = ({ result, resultIdx, deleteResult, openAlert }) => {
             onBlur={(e) => updateResultByInput(e, resultIdx)}
           />
           {/* img */}
-          {openImg && (
+          {img && (
             <UploadImg
               img={img}
-              uploadImg={(img) => updateImg(img, resultIdx)}
-              openAlert={openAlert}
+              handleUpload={handleOnCick}
+              deleteImg={deleteImg}
             />
           )}
+          <InputFile
+            type="file"
+            accept=".jpg, .jpeg, .png;capture=camera"
+            ref={fileInput}
+            onChange={onUpload}
+          />
           {/* description */}
           <DescText
             name="description"

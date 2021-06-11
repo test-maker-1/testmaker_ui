@@ -1,13 +1,18 @@
-import React, { memo } from "react";
+import React, { memo, useRef } from "react";
 import styled from "styled-components";
 
-import { InfoText, NoticeAlert } from "../common";
+import { InfoText, Loading, NoticeAlert } from "../common";
 import { SubTitle, BtnIcon, Options, BtnPoint, UploadImg } from ".";
-import { InputTitle, Section } from "../../styles";
+import { InputFile, InputTitle, Section } from "../../styles";
 
+import MakingAPI from "../../api/makingAPI";
 import useQuestion from "../../hooks/making/useQuestion";
+import useMiniReducer from "../../hooks/useMiniReducer";
+
 import ENUM, { md } from "../../constants/Enum";
+import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 import msg from "../../constants/msg";
+import useImage from "../../hooks/making/useImage";
 
 const { errorPage, errorMaking } = msg;
 
@@ -24,14 +29,23 @@ const Questions = () => {
 };
 
 const Question = memo(({ questionIdx, data }) => {
-  const { question, img, openImg, answer, point, options } = data;
+  const { question, img, answer, point, options } = data;
   const {
+    target,
     updateQuestion,
     updateImg,
     deleteQuestionData,
     handleUpdate,
-    getPreset,
+    setPreset,
   } = useQuestion();
+
+  const { state, onUpload, deleteImg } = useImage(
+    (img) => updateImg(img, questionIdx),
+    () => NoticeAlert.open(errorPage[500])
+  );
+
+  const fileInput = useRef();
+  const handleOnCick = () => fileInput.current.click();
 
   const onDelete = () => {
     if (!deleteQuestionData(questionIdx)) {
@@ -39,19 +53,18 @@ const Question = memo(({ questionIdx, data }) => {
     }
   };
 
-  const onGetPreset = () => {
-    if (!getPreset(questionIdx)) NoticeAlert.open(errorPage[500]);
-  };
+  const onSetPreset = (preset) => setPreset(questionIdx, preset);
 
   return (
     <li>
+      {state.status === LOADING && <Loading />}
       <div>
         <SubTitle
           title={`${questionIdx + 1}번 질문`}
-          onUpload={() => updateQuestion("openImg", !openImg, questionIdx)}
+          onUpload={handleOnCick}
           onDelete={onDelete}
         >
-          <BtnIcon type={ENUM.CASINO} onClick={onGetPreset} />
+          <BtnPreset target={target} setPreset={onSetPreset} />
         </SubTitle>
         <Wrapper>
           {/* question */}
@@ -63,13 +76,19 @@ const Question = memo(({ questionIdx, data }) => {
             onBlur={(e) => handleUpdate(e, questionIdx)}
           />
           {/* coverImg */}
-          {openImg && (
+          {img && (
             <UploadImg
               img={img}
-              uploadImg={(img) => updateImg(img, questionIdx)}
-              openAlert={() => NoticeAlert.open(errorPage[500])}
+              handleUpload={handleOnCick}
+              deleteImg={deleteImg}
             />
           )}
+          <InputFile
+            type="file"
+            accept=".jpg, .jpeg, .png;capture=camera"
+            ref={fileInput}
+            onChange={onUpload}
+          />
           {/* options */}
           <Options
             questionIdx={questionIdx}
@@ -88,6 +107,30 @@ const Question = memo(({ questionIdx, data }) => {
     </li>
   );
 });
+
+const BtnPreset = ({ target, setPreset }) => {
+  const { state, request, requestSuccess, requestError } = useMiniReducer();
+
+  const onGetPreset = async () => {
+    request();
+    const { data, status } = await MakingAPI.getQuestionPreset(target);
+
+    if (status === SUCCESS) {
+      setPreset(data.questions[0]);
+      requestSuccess();
+    } else {
+      requestError(data);
+      NoticeAlert.open(errorPage[500]);
+    }
+  };
+
+  return (
+    <>
+      {state.status === LOADING && <Loading />}
+      <BtnIcon type={ENUM.CASINO} onClick={onGetPreset} />
+    </>
+  );
+};
 
 const Wrapper = styled(Section)`
   margin-bottom: 24px;

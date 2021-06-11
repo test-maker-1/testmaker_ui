@@ -1,5 +1,11 @@
 // input
-export { Input, TextArea, InputNumber, inputStyles } from "./InputText";
+export {
+  Input,
+  TextArea,
+  InputNumber,
+  InputFile,
+  inputStyles,
+} from "./InputText";
 export { default as InputTitle } from "./InputTitle";
 
 // frame

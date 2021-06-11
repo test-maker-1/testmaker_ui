@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-import { TitleBox, Tag, NoticeAlert } from "../../components/common";
+import { TitleBox, Tag, NoticeAlert, Loading } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { UploadImg } from "../../components/making";
-import { Input, InputTitle, TextArea } from "../../styles";
+import { Input, InputFile, InputTitle, TextArea } from "../../styles";
 
 import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
+import useImage from "../../hooks/making/useImage";
 import { checkMakingData } from "../../utils/asyncMakingUtils";
-import { saveTest, SUCCESS } from "../../utils/asyncUtils";
+import { LOADING, saveTest, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";
 import msg from "../../constants/msg";
@@ -26,9 +27,16 @@ const TestDetail = () => {
     handleSubmit,
   } = useDetail();
   const { title, description, coverImg, optionalURL } = data;
+  const fileInput = useRef();
+
+  const { state, onUpload, deleteImg } = useImage(
+    (img) => uploadImg(img),
+    () => NoticeAlert.open(msg.errorPage[500])
+  );
 
   return (
     <PageContainer>
+      <Loading loading={state.status === LOADING} />
       {/* alert */}
       <NoticeAlert icon={WARNING} btns={btns} />
       <TitleBox>
@@ -43,8 +51,14 @@ const TestDetail = () => {
         {/* coverImg */}
         <UploadImg
           img={coverImg}
-          uploadImg={uploadImg}
-          openAlert={NoticeAlert.open}
+          handleUpload={() => fileInput.current.click()}
+          deleteImg={deleteImg}
+        />
+        <InputFile
+          type="file"
+          accept=".jpg, .jpeg, .png;capture=camera"
+          ref={fileInput}
+          onChange={onUpload}
         />
         {/* description */}
         <TextArea
