@@ -9,7 +9,7 @@ import {
   BtnShare,
   NoticeAlert,
 } from "../../components/common";
-import BottomBtn from "../../components/frame/BottomBtn";
+import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { FeedBtn } from "../../components/making";
 import Error from "../Error";
 
@@ -89,7 +89,7 @@ const TestRelease = () => {
   };
 
   return (
-    <div>
+    <PageContainer>
       {/* modal */}
       <NoticeAlert
         icon={ENUM.WARNING}
@@ -133,7 +133,7 @@ const TestRelease = () => {
         />
       </TitleBox>
       <BottomBtn btnArr={[{ name: "홈으로", type: ENUM.HOME }]} />
-    </div>
+    </PageContainer>
   );
 };
 
