@@ -44,7 +44,7 @@ const Result = memo((props) => {
   const topResult = testResults[0];
   const { goPage } = usePage();
 
-  const rankOrder = settingRank(true, results);
+  const rankOrder = settingRank(isRankMode, testResults);
 
   const handleonClick = (id, e) => {
     goPage(`/${testing}/${welcome}`, `?testid=${testUid}`);
@@ -61,9 +61,7 @@ const Result = memo((props) => {
           {isRankMode ? (
             <>
               <Title>내 점수는 {userTestResult.score}점</Title>
-              <SubTitle>
-                {userTestResult.score}%의 참여자와 같은 유형이에요!
-              </SubTitle>
+              <SubTitle>전체 참여자 중 {userTestResult.rank}등이에요!</SubTitle>
             </>
           ) : (
             <>
@@ -86,11 +84,8 @@ const Result = memo((props) => {
         {isRankMode ? (
           <TitleBox>
             <RankingList top={5} userRanking={rankOrder} noline />
-            <BtnField
-              color="skyBlue"
-              onClick={() => goPage("/testing/otherType")}
-            >
-              내 점수 반영하기
+            <BtnField color="skyBlue" onClick={() => goPage("/login")}>
+              랭킹에 점수 남기기
             </BtnField>
           </TitleBox>
         ) : (
@@ -140,8 +135,12 @@ const Result = memo((props) => {
       <NoticeAlert
         shareInfo={{
           link: `/testing/result?resultid=${responseUid}`,
-          title: userTestResult,
-          description: description,
+          title: isRankMode
+            ? `내 점수는 ${userTestResult.score}점`
+            : userTestResult,
+          description: isRankMode
+            ? `전체 참여자 중 ${userTestResult.rank}등이에요!`
+            : description || "",
           imageUrl: img || "",
         }}
       />

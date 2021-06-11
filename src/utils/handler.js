@@ -203,7 +203,7 @@ export const shareKakao = (link, title, description, imageUrl) => {
 export const returnTextDom = (text = "") => {
   const tempStr = text.split("\n");
 
-  return tempStr.map((item) => {
-    return [item, <br />];
+  return tempStr.map((item, idx) => {
+    return [item, <br key={`br${idx}`} />];
   });
 };
