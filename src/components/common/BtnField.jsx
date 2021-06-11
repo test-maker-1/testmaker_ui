@@ -95,6 +95,7 @@ const useStyles = makeStyles(() => ({
     color: btnColors[color].color,
 
     "&:hover": {
+      transition: "0s",
       background: isTestBtn
         ? btnColors["blue"].bgColor
         : btnColors[color].bgColor,

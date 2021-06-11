@@ -35,8 +35,8 @@ const testing = createSlice({
       state.answers.type = "multi"; //testType
     },
     getTestExamSuccess: (state, { payload: { questions } }) => {
-      state.questions = questions;
-      state.questsCnt = questions.length;
+      state.questions = questions || [];
+      state.questsCnt = state.questions.length;
     },
     getTestExamError: (state, { payload }) => {},
     saveAnwerByStep: (state, { payload: { page, value, isIng } }) => {
