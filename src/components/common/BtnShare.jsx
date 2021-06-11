@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { styled as mstyled } from "@material-ui/core/styles";
+
+import { copyLinkToClipBoard, shareKakao } from "../../utils/handler";
 import ENUM from "../../constants/Enum";
 import kakao from "../../resources/images/kakao.png";
 import insta from "../../resources/images/face_temp.png";
 import twitter from "../../resources/images/twitter_temp.png";
 import url from "../../resources/images/link.png";
-
-import { copyLinkToClipBoard, shareKakao } from "../../utils/handler";
 
 const _url = "url";
 const { KAKAO, INSTA, TWITTER } = ENUM;
@@ -17,10 +17,6 @@ const platforms = [
     name: KAKAO,
     img: kakao,
   },
-  // {
-  //   name: INSTA,
-  //   img: insta,
-  // },
   {
     name: INSTA,
     img: insta,
@@ -32,13 +28,13 @@ const platforms = [
   },
 ];
 
-const BtnShare = ({ shareInfo = null, onClick }) => {
+const BtnShare = ({ shareInfo = null, customLink = null, onClick }) => {
   const handleOnClick = (id, event) => {
     if (!shareInfo) return;
 
     const { link, title, description, imageUrl } = shareInfo;
 
-    if (id === "url") copyLinkToClipBoard();
+    if (id === "url") copyLinkToClipBoard(customLink);
     if (id === KAKAO) shareKakao(link, title, description, imageUrl);
 
     if (onClick) onClick(event, id);

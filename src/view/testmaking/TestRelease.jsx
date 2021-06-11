@@ -126,10 +126,11 @@ const TestRelease = () => {
           shareInfo={
             state.data && {
               ...state.data,
-              link: state.data.testLink,
+              link: `/${state.data.testLink}`,
               imageUrl: state.data.coverImg || "",
             }
           }
+          customLink={state.data && `/${state.data.testLink}`}
         />
       </TitleBox>
       <BottomBtn btnArr={[{ name: "홈으로", type: ENUM.HOME }]} />

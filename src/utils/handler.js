@@ -137,12 +137,16 @@ export const diffByTime = (dateA, dateB) => {
   return { mode, diff };
 };
 
-export const copyLinkToClipBoard = () => {
+export const copyLinkToClipBoard = (customLink) => {
   //현재 주소 링크 클립보드에 복사
   let temp = document.createElement("input");
+
   document.body.appendChild(temp);
-  temp.value = document.location.href;
+  temp.value = customLink
+    ? `${clientURL}${customLink}`
+    : document.location.href;
   temp.select(); //전체선택
+
   document.execCommand("copy"); //복사
   document.body.removeChild(temp);
 };
@@ -158,16 +162,16 @@ export const shareKakao = (link, title, description, imageUrl) => {
       description,
       imageUrl: imageUrl,
       link: {
-        webUrl: `${clientURL}/${link}`,
-        mobileWebUrl: `${clientURL}/${link}`,
+        webUrl: `${clientURL}${link}`,
+        mobileWebUrl: `${clientURL}${link}`,
       },
     },
     buttons: [
       {
         title: "테스트 해보기",
         link: {
-          webUrl: `${clientURL}/${link}`,
-          mobileWebUrl: `${clientURL}/${link}`,
+          webUrl: `${clientURL}${link}`,
+          mobileWebUrl: `${clientURL}${link}`,
         },
       },
       {
