@@ -1,17 +1,10 @@
-import React, { useRef, memo } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import * as loadImage from "blueimp-load-image";
 
-import { SVG, ImageView, Loading } from "../common/index";
+import { SVG, ImageView } from "../common/index";
 import theme from "../../styles/theme";
 
-import MakingAPI from "../../api/makingAPI";
 import useOpen from "../../hooks/useOpen";
-import useCommon from "../../hooks/making/useCommon";
-
-import { SUCCESS } from "../../utils/asyncUtils";
-import { getFormData } from "../../utils/asyncMakingUtils";
-
 import ENUM from "../../constants/Enum";
 
 const { CHANGE, DELETE, CANCEL } = ENUM;
@@ -27,62 +20,10 @@ const cancelStyles = {
   stroke: theme.colors.deepGray,
 };
 
-const UploadImg = memo(({ img, uploadImg, openAlert }) => {
-  const { open: loading, onOpen, onClose } = useOpen();
-  const {
-    data: { testId },
-  } = useCommon();
+const UploadImg = memo(({ img, handleUpload, deleteImg }) => {
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
-
-  const fileInput = useRef();
-  const handleOnCick = () => fileInput.current.click();
-
-  const onUpload = async (e) => {
-    onOpen();
-
-    const file = e.target.files[0];
-    const fileType = file.type;
-
-    loadImage(
-      file,
-      (img) => {
-        img.toBlob(async (blob) => {
-          var rotateFile = new File([blob], file.name, { type: fileType });
-          const form = getFormData(rotateFile, testId);
-
-          const { data, status } = await MakingAPI.uploadImg(form);
-          if (status === SUCCESS) {
-            uploadImg(data.url);
-          } else openAlert();
-
-          onClose();
-        }, fileType);
-      },
-      {
-        meta: true,
-        orientation: true,
-        canvas: true,
-        maxWidth: 500,
-      }
-    );
-  };
-
-  const onDelete = async () => {
-    if (!img) return;
-    onOpen();
-
-    const { status } = await MakingAPI.deleteImg(img);
-    if (status === SUCCESS) {
-      uploadImg(null);
-    } else openAlert();
-
-    fileInput.current.value = null;
-    onClose();
-  };
-
   return (
     <>
-      {loading && <Loading />}
       <Wrapper>
         <OpenDiv onClick={onEdit} />
         <ImageView imageUrl={img} />
@@ -90,10 +31,14 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
         {edit && (
           <Dimmed>
             <EditIcon>
-              <SVG type={CHANGE} style={svgStyles} onClick={handleOnCick} />
+              <SVG type={CHANGE} style={svgStyles} onClick={handleUpload} />
             </EditIcon>
             <EditIcon>
-              <SVG type={DELETE} style={svgStyles} onClick={onDelete} />
+              <SVG
+                type={DELETE}
+                style={svgStyles}
+                onClick={() => deleteImg(img)}
+              />
             </EditIcon>
             <EditIcon>
               <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
@@ -101,14 +46,6 @@ const UploadImg = memo(({ img, uploadImg, openAlert }) => {
           </Dimmed>
         )}
       </Wrapper>
-      {/* required multiple */}
-      <input
-        type="file"
-        accept=".jpg, .jpeg, .png;capture=camera"
-        ref={fileInput}
-        onChange={onUpload}
-        style={{ width: 0, display: "none" }}
-      />
     </>
   );
 });
