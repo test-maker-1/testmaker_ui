@@ -94,9 +94,7 @@ class NoticeAlert extends PureComponent {
           </ModalMain>
           {/* buttons */}
           {mode === SHARE ? (
-            <LaterText onClick={this.handleOnClose}>
-              나중에 할래요
-            </LaterText>
+            <LaterText onClick={this.handleOnClose}>나중에 할래요</LaterText>
           ) : (
             <ModalFooter btnLength={btns.length}>
               {this.setButtons()}

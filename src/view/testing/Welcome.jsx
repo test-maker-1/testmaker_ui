@@ -98,6 +98,12 @@ const Welcome = () => {
       <NoticeAlert
         icon={alertInfo.icon}
         btns={alertInfo.btn}
+        shareInfo={{
+          link: `/${testInfo.testLink}`,
+          title: testInfo.title,
+          description: testInfo.description,
+          imageUrl: testInfo.coverImg,
+        }}
         onShareClick={handleShareClick}
       />
     </PageContainer>
