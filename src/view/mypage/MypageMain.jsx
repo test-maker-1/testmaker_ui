@@ -16,6 +16,7 @@ const MypageMain = memo((props) => {
     loggedIn,
     data,
     selectedTab,
+    tabTests,
     // status,
     getUser,
     getPartTests,
@@ -24,7 +25,8 @@ const MypageMain = memo((props) => {
 
   useEffect(() => {
     if (!logInLoading) getUser();
-    getPartTests({ num_elements: 10 });
+    if (tabTests.length === 0 || logInLoading)
+      getPartTests({ num_elements: 10 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
