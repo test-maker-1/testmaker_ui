@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components";
-import { BtnField, SVG } from ".";
+
+import { BtnField, BtnShare, SVG } from ".";
 import { modalStyles } from "../../styles";
+
 import { md } from "../../constants/Enum";
 import ENUM from "../../constants/Enum";
-import BtnShare from "./BtnShare";
 
 const { SHARE } = ENUM;
 let that = null; // 정적 메소드용
@@ -94,7 +95,7 @@ class NoticeAlert extends PureComponent {
           {/* buttons */}
           {mode === SHARE ? (
             <LaterText onClick={this.handleOnClose}>
-              <u>나중에 다시 할래요</u>
+              나중에 할래요
             </LaterText>
           ) : (
             <ModalFooter btnLength={btns.length}>
@@ -130,7 +131,7 @@ const Section = styled.div`
 `;
 
 const ModalMain = styled.div`
-  height: 134px;
+  padding: 16px 0 24px 0;
   display: flex;
   flex-direction: column;
   place-content: center center;
@@ -141,6 +142,7 @@ const ModalMain = styled.div`
 `;
 
 const AlertText = styled.p`
+  margin-bottom: 16px;
   font-weight: bold;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.xl}rem;
   line-height: 30px;
