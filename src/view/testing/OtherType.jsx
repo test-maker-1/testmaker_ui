@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { ImageView, TitleBox } from "../../components/common";
@@ -25,6 +25,16 @@ const TestInform = ({ rank, title, percent, img, description }) => {
 
 const OtherType = ({ otherType }) => {
   const { testResults = [] } = useSelector((state) => state.result);
+
+  useEffect(() => {
+    const current_scroll = document.documentElement.scrollTop;
+
+    if (current_scroll > 0) {
+      //최상단 스크롤로 이동
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
   return (
     <PageContainer>
       <div>
