@@ -77,9 +77,9 @@ const MypageMain = memo((props) => {
               </InfoInBox>
             </InfoSubBox>
             <InfoSubBox>
-              <InfoInBox>
+              <InfoInBox onClick={onClick}>
                 <InfoTitle>내가 쓴 댓글</InfoTitle>
-                <InfoCnt>10개</InfoCnt>
+                <InfoCnt>{data.replyCnt}개</InfoCnt>
               </InfoInBox>
             </InfoSubBox>
             <InfoSubBox>
