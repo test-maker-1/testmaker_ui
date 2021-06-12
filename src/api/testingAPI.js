@@ -26,4 +26,7 @@ export default class TestingAPI {
   static getResultInfo(uID) {
     return get(`/testing/${uID}/result`);
   }
+  static shareResultInfo(uID) {
+    return put(`/testing/${uID}/sharing`);
+  }
 }

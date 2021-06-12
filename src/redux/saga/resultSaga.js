@@ -4,10 +4,11 @@ import {
   getTestResultInfo,
   getTestResultInfoSuccess,
   getTestResultInfoError,
+  shareResult,
 } from "../reducer/resultReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils"; //
 
 // const getResultInform = createPromiseSaga(
 //   getTestResultInfo.type,
@@ -65,6 +66,11 @@ function* getResultInformError() {
   yield put({ type: setError.type, payload: true });
   yield put({ type: setLoading.type, payload: false });
 }
+
+const updateShareResult = createPromiseSaga(
+  shareResult.type,
+  testingAPI.shareResultInfo
+);
 //#endregion
 
 function* getResultInfromation() {
@@ -72,6 +78,7 @@ function* getResultInfromation() {
   yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
   yield takeLeading(getTestResultInfoError.type, getResultInformError);
   yield takeLeading(saveResult.type, updateTestResult);
+  yield takeLeading(shareResult.type, updateShareResult);
 }
 
 export default function* resultSaga() {

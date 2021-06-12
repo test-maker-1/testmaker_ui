@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
 import RoundContiner from "./SubComponents/RoundContainer";
 import Reply from "./SubComponents/Reply";
 import ENUM from "../../constants/Enum";
+import { shareResult } from "../../redux/reducer/resultReducer";
 
 const { SHARE, MOVENEXT } = ENUM;
 
@@ -43,6 +44,7 @@ const returnALInfo = (type, callback) => {
 const Welcome = () => {
   const { testInfo, recent3replies } = useSelector((state) => state.testing);
   const [alertInfo, setALInfo] = useState(def_alert);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const current_scroll = document.documentElement.scrollTop;
@@ -70,7 +72,7 @@ const Welcome = () => {
 
   const handleShareClick = (id, event) => {
     // 선택한 버튼명 반환
-    if (id === "kakao") console.log(id, "클릭되었습니다!");
+    dispatch(shareResult(testInfo.uid));
   };
 
   return (

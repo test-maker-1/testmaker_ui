@@ -1,6 +1,6 @@
 import React, { memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { TitleBox } from "../../components/common/TitleBox";
 import { ImageView, BtnField } from "../../components/common";
@@ -10,6 +10,7 @@ import ENUM from "../../constants/Enum";
 import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
 // import TestSwiper from "../../components/common/TestSwiper";
+import { shareResult } from "../../redux/reducer/resultReducer";
 import { testing, welcome } from "../../constants/urlInfo";
 import { RankingList } from "../../components/common";
 import { NoticeAlert } from "../../components/common";
@@ -40,12 +41,12 @@ const Result = memo((props) => {
     currentResult: { percent, img, description },
     testResults,
     repliesCnt,
-    results,
     recent3Replies,
   } = useSelector((state) => state.result);
   const topResult = testResults[0];
   const { goPage } = usePage();
   const { loggedIn, status } = useUser();
+  const dispatch = useDispatch();
 
   const rankOrder = settingRank(isRankMode, testResults);
 
@@ -55,6 +56,11 @@ const Result = memo((props) => {
 
   const openAlert = (type) => {
     NoticeAlert.open("친구한테 공유할래요!", SHARE);
+  };
+
+  const handleShareClick = (id, event) => {
+    // 선택한 버튼명 반환
+    dispatch(shareResult(testUid));
   };
 
   return (
@@ -148,6 +154,7 @@ const Result = memo((props) => {
             : description || "",
           imageUrl: img || "",
         }}
+        onShareClick={handleShareClick}
       />
     </PageContainer>
   );

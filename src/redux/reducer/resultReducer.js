@@ -28,6 +28,7 @@ const result = createSlice({
       // if (state.responseUid !== resultID) {
       // state.responseUid = testID;
     },
+    shareResult: () => {},
   },
 });
 
@@ -36,6 +37,7 @@ export const {
   getTestResultInfoSuccess,
   getTestResultInfoError,
   getTestResult,
+  shareResult,
 } = result.actions;
 
 export default result;
