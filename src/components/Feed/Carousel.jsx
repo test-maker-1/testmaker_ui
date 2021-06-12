@@ -118,25 +118,36 @@ const TitleBox = styled.div`
   height: 3.2rem;
   text-align: center;
 `;
+
 const Top = styled.div`
   margin-right: 8px;
-  width: 6rem;
-  padding: 6px;
+  width: 60px;
+
   border-radius: 8px;
   background: ${({ theme: { colors } }) => colors.skyBlue};
   color: ${({ theme: { colors } }) => colors.blue};
+
   font-weight: bold;
   font-size: 1.3rem;
   line-height: 19px;
   letter-spacing: -0.3px;
+
+  display: flex;
+  place-content: center center;
+  flex-wrap: wrap;
 `;
+
 export const Title = styled.div`
   width: 100%;
+  height: 32px;
+  overflow: hidden;
+
+  text-align: left;
   font-weight: bold;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.xl}rem;
   line-height: 30px;
-  text-align: left;
   letter-spacing: -0.8px;
+
   color: ${({ theme: { colors } }) => colors.darkGray};
   cursor: pointer;
 `;
