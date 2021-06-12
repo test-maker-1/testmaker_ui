@@ -67,7 +67,7 @@ const Welcome = () => {
 
   const handleOnAlertClick = useCallback((id, event) => {
     // 선택한 버튼명 반환
-    console.log(id, "클릭되었습니다!");
+    //console.log(id, "클릭되었습니다!");
   }, []);
 
   const handleShareClick = (id, event) => {

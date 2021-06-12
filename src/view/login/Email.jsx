@@ -27,7 +27,7 @@ const Email = () => {
         return;
       }
 
-      console.log("맞음");
+      //console.log("맞음");
       return replace("/");
     },
     [email, errors, replace]

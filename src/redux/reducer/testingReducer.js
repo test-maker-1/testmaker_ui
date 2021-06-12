@@ -29,7 +29,7 @@ const testing = createSlice({
     },
     getTestExam: (state, { payload }) => {
       if (state.current_testID !== payload) {
-        console.log("현재 페이지가 아님!");
+        //console.log("현재 페이지가 아님!");
         state.current_testID = payload;
       }
       state.answers.type = "multi"; //testType

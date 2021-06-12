@@ -17,7 +17,7 @@ const LoginFrame = ({
 
   if (module === "find-pw") {
     let findPwComponent = components[module];
-    console.log(findPwComponent);
+    //console.log(findPwComponent);
     if (step == undefined || !findPwComponent.hasOwnProperty(step)) {
       history.push("/error");
       return null;

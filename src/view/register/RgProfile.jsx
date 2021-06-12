@@ -88,7 +88,7 @@ const RgProfile = (props) => {
 
     reader.readAsDataURL(files[0]);
     reader.onload = (e) => {
-      console.log("onload", e);
+      //console.log("onload", e);
       setList(fileArr);
       setImgURL(e.target.result);
     };
@@ -100,7 +100,7 @@ const RgProfile = (props) => {
     (e) => {
       e.preventDefault();
       if (!nickname) return;
-      console.log(nickname);
+      //console.log(nickname);
     },
     [nickname]
   );

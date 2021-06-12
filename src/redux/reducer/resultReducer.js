@@ -11,7 +11,7 @@ const result = createSlice({
       state.responseUid = payload;
     },
     getTestResultInfoSuccess: (state, { payload }) => {
-      console.log("updateTestResult!!!", payload);
+      //console.log("updateTestResult!!!", payload);
       state = Object.assign(state, payload);
 
       if (payload.userTestResult) {

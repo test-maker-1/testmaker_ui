@@ -144,7 +144,7 @@ export const diffByTime = (dateA, dateB) => {
     mode = "sec";
     diff = diffSecond < 1 ? 1 : parseInt(diffSecond);
   } else {
-    console.log(diffHour, diffMinute, diffSecond, "///", dateA, dateB);
+    //console.log(diffHour, diffMinute, diffSecond, "///", dateA, dateB);
   }
 
   return { mode, diff };

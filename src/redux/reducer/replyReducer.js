@@ -12,7 +12,7 @@ const reply = createSlice({
       state.testUid = testid;
     },
     getReplyInfoSuccess: (state, { payload: { data, timestamp } }) => {
-      console.log(data, timestamp);
+      //console.log(data, timestamp);
       if (timestamp === 0) state.replies = [];
       state.replies.push(...data);
     },

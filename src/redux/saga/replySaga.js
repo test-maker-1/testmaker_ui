@@ -80,7 +80,7 @@ function* setComments(action) {
     param
   );
 
-  console.log("setComments", data, status);
+  //console.log("setComments", data, status);
   if (status === SUCCESS) {
     yield put({
       type: addOneComment.type,

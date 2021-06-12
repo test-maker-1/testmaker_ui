@@ -59,7 +59,7 @@ const TestsAtOneTag = (props) => {
 
   useEffect(() => {
     // dispatch(tagRequest(selected))
-    console.log("현재 선택된 태그: ", selected);
+    //console.log("현재 선택된 태그: ", selected);
   });
 
   return (

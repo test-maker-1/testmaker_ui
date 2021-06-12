@@ -28,7 +28,7 @@ const TestSwiper = (props) => {
 
   const onClick = useCallback((e) => {
     // goPage(`/${testLink}`)
-    console.log("출력");
+    //console.log("출력");
   }, []);
 
   return (
