@@ -87,21 +87,21 @@ const Comments = (props) => {
   const moveToLogin = () => goPage(`/${login}`);
 
   const handlePopup = (id, uid) => {
-    // if (loggedIn && status === SUCCESS) {
-    switch (id) {
-      case "report":
-        openAlert(id, uid);
-        break;
-      case "update":
-        dispatch(updateComment(uid));
-        break;
-      case "delete":
-        dispatch(deleteComment(uid));
-        break;
+    if (loggedIn && status === SUCCESS) {
+      switch (id) {
+        case "report":
+          openAlert(id, uid);
+          break;
+        case "update":
+          dispatch(updateComment(uid));
+          break;
+        case "delete":
+          dispatch(deleteComment(uid));
+          break;
+      }
+    } else {
+    openAlert("join", uid);
     }
-    // } else {
-    // openAlert("join", uid);
-    // }
   };
 
   const openAlert = (type, uid) => {
