@@ -29,6 +29,8 @@ const reply = createSlice({
     stopCallComments: (state, { payload }) => {
       state.isStop = true;
     },
+    updateComment: (state, { payload }) => {},
+    deleteComment: (state, { payload }) => {},
   },
 });
 
@@ -41,6 +43,8 @@ export const {
   reportComment,
   moreReplyInfo,
   stopCallComments,
+  updateComment,
+  deleteComment,
 } = reply.actions;
 
 export default reply;

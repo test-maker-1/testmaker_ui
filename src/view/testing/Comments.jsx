@@ -10,11 +10,13 @@ import {
   submitOneComment,
   reportComment,
   moreReplyInfo,
+  updateComment,
+  deleteComment,
 } from "../../redux/reducer/replyReducer";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import { login } from "../../constants/urlInfo";
-import { LOADING } from "../../utils/asyncUtils";
+import { SUCCESS, LOADING } from "../../utils/asyncUtils";
 
 let comment_id = null;
 
@@ -84,6 +86,24 @@ const Comments = (props) => {
 
   const moveToLogin = () => goPage(`/${login}`);
 
+  const handlePopup = (id, uid) => {
+    // if (loggedIn && status === SUCCESS) {
+    switch (id) {
+      case "report":
+        openAlert(id, uid);
+        break;
+      case "update":
+        dispatch(updateComment(uid));
+        break;
+      case "delete":
+        dispatch(deleteComment(uid));
+        break;
+    }
+    // } else {
+    // openAlert("join", uid);
+    // }
+  };
+
   const openAlert = (type, uid) => {
     comment_id = uid; //for report
 
@@ -147,7 +167,7 @@ const Comments = (props) => {
                   writer={item.writer}
                   content={item.content}
                   timestamp={item.writtenAt}
-                  popupClick={openAlert}
+                  popupClick={handlePopup}
                 />
               );
             })}

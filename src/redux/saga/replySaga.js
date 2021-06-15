@@ -14,29 +14,14 @@ import {
   reportComment,
   moreReplyInfo,
   stopCallComments,
+  updateComment,
+  deleteComment,
 } from "../reducer/replyReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
 import { createActionString, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
 
-//#region >> 테스트 정보 불러오기 (welcome)
-// const getComments = createPromiseSaga(
-//   getTestInfo.type,
-//   testingAPI.getTestInfo
-// );
-
-// function* getTestInformSuccess() {
-//   //로딩바 닫기
-//   yield put({ type: setLoading.type, payload: false });
-// }
-
-// function* getTestInformError() {
-//   //로딩바 닫기 및 오류 화면 표시
-//   yield put({ type: setError.type, payload: true });
-//   yield put({ type: setLoading.type, payload: false });
-// }
-//#endregion
-
+//#region >> 댓글 정보 불러오기 / 입력
 function* getComments(action) {
   const state = yield select();
   const param = action.payload;
@@ -80,7 +65,6 @@ function* setComments(action) {
     param
   );
 
-  //console.log("setComments", data, status);
   if (status === SUCCESS) {
     yield put({
       type: addOneComment.type,
@@ -88,7 +72,9 @@ function* setComments(action) {
     });
   }
 }
+//#endregion
 
+//#region >> 댓글 신고
 function* reportToComment(action) {
   const state = yield select();
   const param = action.payload;
@@ -103,12 +89,32 @@ function* reportToComment(action) {
     //data update for reportsCnt
   }
 }
+//#endregion
+
+//#region >> 댓글 수정
+function* updateComments(action) {
+  const state = yield select();
+  const param = action.payload;
+
+  const { status } = yield call(
+    testingAPI.updateComment,
+    state.reply.testUid, //state.testing.current_testID,
+    param
+  );
+}
+//#endregion
+
+//#region >> 댓글 삭제
+function* deleteComments(action) {}
+//#endregion
 
 function* replyInformation() {
   yield takeLeading(getReplyInfo.type, getComments);
   yield takeLatest(submitOneComment.type, setComments);
   yield takeLeading(reportComment.type, reportToComment);
   yield takeLeading(moreReplyInfo.type, getComments);
+  yield takeLeading(updateComment.type, updateComments);
+  yield takeLeading(deleteComment.type, deleteComments);
 }
 
 export default function* replySaga() {

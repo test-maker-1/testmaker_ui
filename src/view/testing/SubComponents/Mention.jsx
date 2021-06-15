@@ -40,7 +40,8 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
 
   const handleOnClick = (id, event) => {
     setOpen(false);
-    if (id === "report" && popupClick) {
+
+    if (popupClick) {
       popupClick(id, uid);
     }
   };
@@ -54,15 +55,26 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
         {/* isMe : -1.로그인안한상태 0.로그인 했지만, 당사자가 아닌 유저, 1.로그인한 당사자 유저  */}
         <RightSide>
           <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
-          {writer?.isMe === 0 && openPop && (
+          {openPop && (
             <>
               <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
               <Popup>
                 <PopContainer>
                   <PopWrap>
-                    <PopItem onClick={handleOnClick.bind(this, "report")}>
-                      댓글신고
-                    </PopItem>
+                    {writer?.isMe === 1 ? (
+                      <>
+                        <PopItem onClick={handleOnClick.bind(this, "update")}>
+                          댓글수정
+                        </PopItem>
+                        <PopItem onClick={handleOnClick.bind(this, "delete")}>
+                          댓글삭제
+                        </PopItem>
+                      </>
+                    ) : (
+                      <PopItem onClick={handleOnClick.bind(this, "report")}>
+                        댓글신고
+                      </PopItem>
+                    )}
                   </PopWrap>
                   <PopWrap>
                     <PopItem close onClick={handleOnClick.bind(this, "close")}>
