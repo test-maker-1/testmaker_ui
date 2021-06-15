@@ -119,9 +119,9 @@ const Result = memo((props) => {
           </TitleBox>
         )}
         {/* TODO: 2차 개발*/}
-        {/* <TitleBox title="테스트 메이커에게 한마디">
+        <TitleBox title="테스트 메이커에게 한마디">
           <ComInput hintText={"익명으로 메이커만 볼 수 있어요"} />
-        </TitleBox> */}
+        </TitleBox>
         <TitleBox>
           <Reply
             repliesCnt={repliesCnt}
