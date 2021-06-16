@@ -12,18 +12,28 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { location, replace } = usePage();
+  const {
+    location: { state },
+    replace,
+  } = usePage();
 
   useEffect(() => {
     if (loggedIn) {
-      if (location.state && location.state.hasOwnProperty("from")) {
-        const { from, search = "" } = location.state;
-        replace(from, search);
+      if (state !== undefined) {
+        const { from, search = "" } = state;
+        if (state.hasOwnProperty("resultID")) {
+          // 2-4-1. 회원가입 후 테스트 결과 저장
+          //PUT /testing/:responseUid/overwrite
+        }
+        if (state.hasOwnProperty("from")) {
+          //로그인 후 이전 페이지 이동
+          replace(from, search);
+        }
       } else {
         replace("/");
       }
     }
-  }, [location.state, loggedIn, replace]);
+  }, [state, loggedIn, replace]);
 
   const onSuccessKakao = async (resData) => {
     const {
