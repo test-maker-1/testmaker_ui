@@ -3,17 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { TitleBox } from "../../components/common/TitleBox";
-import { ImageView, BtnField } from "../../components/common";
+import {
+  ImageView,
+  BtnField,
+  RankingList,
+  NoticeAlert,
+} from "../../components/common";
 import RoundContiner from "./SubComponents/RoundContainer";
-import Reply from "./SubComponents/Reply";
-import ENUM from "../../constants/Enum";
+import Reply, { ComInput } from "./SubComponents/Reply";
+// import TestSwiper from "../../components/common/TestSwiper";
 import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
-// import TestSwiper from "../../components/common/TestSwiper";
-import { shareResult } from "../../redux/reducer/resultReducer";
+import ENUM from "../../constants/Enum";
+import { shareResult, postFeedback } from "../../redux/reducer/resultReducer";
 import { testing, welcome } from "../../constants/urlInfo";
-import { RankingList } from "../../components/common";
-import { NoticeAlert } from "../../components/common";
 import { returnTextDom } from "../../utils/handler";
 import { LOADING } from "../../utils/asyncUtils";
 
@@ -55,12 +58,39 @@ const Result = memo((props) => {
   };
 
   const openAlert = (type) => {
-    NoticeAlert.open("친구한테 공유할래요!", SHARE);
+    if (type === "join") {
+      NoticeAlert.open("공유할건가요", SHARE);
+    } else {
+      NoticeAlert.open("친구한테 공유할래요!", SHARE);
+    }
   };
 
   const handleShareClick = (id, event) => {
     // 선택한 버튼명 반환
     dispatch(shareResult(testUid));
+  };
+
+  const checkLogin = () => {
+    //로그인 여부
+    if (!loggedIn) {
+      if (status !== LOADING) openAlert("join");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleOnSubmit = (value) => {
+    if (checkLogin() && value) {
+      //피드백 작성
+      dispatch(postFeedback({ uID: responseUid, value }));
+    }
+  };
+
+  const handleOnFocus = (event) => {
+    if (!checkLogin()) {
+      openAlert("join");
+    }
   };
 
   return (
@@ -94,7 +124,12 @@ const Result = memo((props) => {
           <TitleBox>
             <RankingList top={5} userRanking={rankOrder} noline />
             {!loggedIn && status !== LOADING && (
-              <BtnField color="skyBlue" onClick={() => goPage("/login")}>
+              <BtnField
+                color="skyBlue"
+                onClick={() =>
+                  goPage("/login", null, { resultID: responseUid })
+                }
+              >
                 랭킹에 점수 남기기
               </BtnField>
             )}
@@ -120,7 +155,11 @@ const Result = memo((props) => {
         )}
         {/* TODO: 2차 개발*/}
         <TitleBox title="테스트 메이커에게 한마디">
-          <ComInput hintText={"익명으로 메이커만 볼 수 있어요"} />
+          <ComInput
+            hintText={"익명으로 메이커만 볼 수 있어요"}
+            onSubmit={handleOnSubmit}
+            onFocus={handleOnFocus}
+          />
         </TitleBox>
         <TitleBox>
           <Reply

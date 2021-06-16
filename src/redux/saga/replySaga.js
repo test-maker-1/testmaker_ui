@@ -109,8 +109,8 @@ function* deleteComments(action) {}
 //#endregion
 
 function* replyInformation() {
-  yield takeLeading(getReplyInfo.type, getComments);
-  yield takeLatest(submitOneComment.type, setComments);
+  yield takeLatest(getReplyInfo.type, getComments);
+  yield takeLeading(submitOneComment.type, setComments);
   yield takeLeading(reportComment.type, reportToComment);
   yield takeLeading(moreReplyInfo.type, getComments);
   yield takeLeading(updateComment.type, updateComments);

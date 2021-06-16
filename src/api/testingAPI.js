@@ -37,4 +37,15 @@ export default class TestingAPI {
   static shareResultInfo(uID) {
     return put(`/testing/${uID}/sharing`);
   }
+  static postFeedbackMaker({ uID, value }) {
+    //POST /testing/:responseUid/feedback
+    return post(`/testing/${uID}/feedback`, {
+      emoji: "happy",
+      msg: value,
+    });
+  }
+  static maintainResult() {
+    //회원가입 후 테스트 결과 저장
+    // PUT /testing/:responseUid/overwrite
+  }
 }
