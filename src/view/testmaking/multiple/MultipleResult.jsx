@@ -101,7 +101,7 @@ const BtnWrapper = ({ isRankMode, top }) => {
   return (
     <BottomBtn
       btnArr={[
-        { name: "미리보기", type: PREVIEW },
+        { name: "임시저장" },
         { name: "다 적었어요", customClick: checkNextStep },
       ]}
     />
