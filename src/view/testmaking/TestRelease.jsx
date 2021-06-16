@@ -37,7 +37,7 @@ const TestRelease = () => {
   const { status, loggedIn } = useUser();
   const { goPage } = usePage();
 
-  const { open: feed, onOpen, onClose } = useOpen();
+  const { open: feed, onOpen, onClose } = useOpen(true);
   const { open: fire, onOpen: onFire } = useOpen();
   const { state, request, requestSuccess } = useMiniReducer();
 
