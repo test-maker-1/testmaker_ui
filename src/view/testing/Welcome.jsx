@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
 import { NoticeAlert } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import TestIntro from "./SubComponents/TestIntro";
@@ -76,7 +77,7 @@ const Welcome = () => {
   };
 
   return (
-    <PageContainer>
+    <Container>
       {/* 테스트 상세 정보 */}
       <TestIntro openAlert={openAlert} />
       {/* 댓글 영역 */}
@@ -108,8 +109,13 @@ const Welcome = () => {
         }}
         onShareClick={handleShareClick}
       />
-    </PageContainer>
+    </Container>
   );
 };
+
+const Container = styled(PageContainer)`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Welcome;
