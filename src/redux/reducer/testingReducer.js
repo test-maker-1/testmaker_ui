@@ -27,6 +27,10 @@ const testing = createSlice({
       state.testInfo = testInfo;
       state.recent3replies = recent3replies;
     },
+    setInitExam: (state, { payload }) => {
+      state.questions = [];
+      state.questsCnt = 0;
+    },
     getTestExam: (state, { payload }) => {
       if (state.current_testID !== payload) {
         //console.log("현재 페이지가 아님!");
@@ -63,6 +67,7 @@ export const {
   getTestExamError,
   saveAnwerByStep,
   saveResult,
+  setInitExam,
 } = testing.actions;
 
 export default testing;

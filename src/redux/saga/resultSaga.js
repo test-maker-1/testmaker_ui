@@ -1,4 +1,11 @@
-import { call, put, fork, all, takeLeading } from "redux-saga/effects";
+import {
+  call,
+  put,
+  fork,
+  all,
+  takeLeading,
+  takeLatest,
+} from "redux-saga/effects";
 import { saveResult } from "../reducer/testingReducer";
 import {
   getTestResultInfo,
@@ -83,7 +90,7 @@ const sendFeedback = createPromiseSaga(
 function* getResultInfromation() {
   yield takeLeading(getTestResultInfo.type, getResultInform);
   yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
-  yield takeLeading(getTestResultInfoError.type, getResultInformError);
+  yield takeLatest(getTestResultInfoError.type, getResultInformError);
   yield takeLeading(saveResult.type, updateTestResult);
   yield takeLeading(shareResult.type, updateShareResult);
   yield takeLeading(postFeedback.type, sendFeedback);
