@@ -1,14 +1,16 @@
 import React, { useCallback, useRef, useEffect, memo } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 
 import Error from "../../view/Error";
 import useUser from "../../hooks/useUser";
 import useOpen from "../../hooks/useOpen";
+import useCommon from "../../hooks/making/useCommon";
 
 import { ERROR } from "../../utils/asyncUtils";
 import { saveTest } from "../../utils/asyncMakingUtils";
+
 import components from "../../constants/testStepComponents";
-import useCommon from "../../hooks/making/useCommon";
+import msg from "../../constants/msg";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
@@ -21,6 +23,7 @@ const TestMaking = ({
   const { logInLoading, loggedIn } = useUser();
   const { data, dispatch, initCommon, updateStep } = useCommon();
   const { open: error, onOpen: onError } = useOpen();
+  const history = useHistory();
 
   // timer utils
   const saveTimer = useRef({});
@@ -60,11 +63,26 @@ const TestMaking = ({
 
   useEffect(() => {
     testState.current = { ...data };
-
+    // run timer
     if (!loggedIn || error) initTimer(error);
     if (!intervalLoading.current && loggedIn) interval();
-    // run timer
-  }, [data, error, initTimer, interval, loggedIn]);
+
+    // prevent exit page
+    const unBlock = history.block(({ pathname }) => {
+      if (loggedIn && data.testId) {
+        if (
+          !pathname.includes("/test/multiple") &&
+          !pathname.includes("/test/release")
+        ) {
+          return window.confirm(msg.noticeMaking.leavePage);
+        }
+        return true;
+      }
+      return true;
+    });
+
+    return () => unBlock();
+  }, [data, error, history, initTimer, interval, loggedIn]);
 
   useEffect(() => {
     return () => {
