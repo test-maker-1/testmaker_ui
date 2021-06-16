@@ -9,8 +9,8 @@ import { Input, InputFile, InputTitle, TextArea } from "../../styles";
 import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
 import useImage from "../../hooks/making/useImage";
-import { checkMakingData } from "../../utils/asyncMakingUtils";
-import { LOADING, saveTest, SUCCESS } from "../../utils/asyncUtils";
+import { checkMakingData, saveTest } from "../../utils/asyncMakingUtils";
+import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";
 import msg from "../../constants/msg";

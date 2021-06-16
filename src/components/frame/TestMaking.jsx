@@ -5,7 +5,8 @@ import Error from "../../view/Error";
 import useUser from "../../hooks/useUser";
 import useOpen from "../../hooks/useOpen";
 
-import { ERROR, saveTest } from "../../utils/asyncUtils";
+import { ERROR } from "../../utils/asyncUtils";
+import { saveTest } from "../../utils/asyncMakingUtils";
 import components from "../../constants/testStepComponents";
 import useCommon from "../../hooks/making/useCommon";
 
