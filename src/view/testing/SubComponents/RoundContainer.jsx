@@ -10,6 +10,7 @@ const RoundBox = styled.div`
   background: ${({ theme: { colors } }) => colors.snow};
   border-radius: 25px 25px 0px 0px;
   width: 100%;
+  flex: 1;
   /*24px 20px*/
   padding: ${({ noPadding, theme: { paddings } }) =>
     noPadding ? "0px" : "24px " + paddings.main + "rem 0px;"};
