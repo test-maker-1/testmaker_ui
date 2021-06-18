@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import { Loading } from "../../components/common";
-import usePage from "../../hooks/usePage";
 import useMiniReducer from "../../hooks/useMiniReducer";
 import useCommon from "../../hooks/making/useCommon";
 
@@ -16,15 +15,14 @@ import { home, picktest } from "../../constants/urlInfo";
 
 const { HOME, PICKTEST, PREVIEW, MOVENEXT, TEMP_SAVE } = ENUM;
 
-const BottomBtn = memo(({ btnArr = [], location, match }) => {
-  const { goPage } = usePage();
+const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   const { data } = useCommon();
   const { state, request, requestSuccess } = useMiniReducer();
 
   const saveTempTest = async () => {
     request();
     const status = await saveTest(data);
-    if (status === ERROR) goPage("/error", "?errorCode=500");
+    if (status === ERROR) history.push("/error?errorCode=500");
     if (status === SUCCESS) requestSuccess();
   };
 
@@ -41,18 +39,18 @@ const BottomBtn = memo(({ btnArr = [], location, match }) => {
     if (type) {
       switch (type) {
         case HOME: // 홈(메인)
-        case PICKTEST: // 난이도선택his
+        case PICKTEST: // 난이도선택
           const page = type === PICKTEST ? `test/${picktest}` : home;
-          goPage(`/${page}`);
+          history.push(`/${page}`);
           break;
 
         case PREVIEW: // 테스트메이킹 미리보기
-          goPage(`/test/${match.params.module}/${type}`);
+          history.push(`/test/${match.params.module}/${type}`);
           break;
 
         case MOVENEXT: // 다음 페이지 이동
           const next_url = getNextPageURL(match, location);
-          goPage(`/${next_url}`);
+          history.push(`/${next_url}`);
           break;
 
         case TEMP_SAVE:
