@@ -75,7 +75,19 @@ const TestMaking = ({
           !pathname.includes("/test/multiple") &&
           !pathname.includes("/test/release")
         ) {
-          NoticeAlert.open(msg.noticeMaking.leavePage);
+          NoticeAlert.open({
+            text: msg.noticeMaking.leavePage,
+            btns: [
+              { name: "돌아가기" },
+              {
+                name: "떠나기",
+                callback: () => {
+                  console.log("떠나라");
+                  history.push("/");
+                },
+              },
+            ],
+          });
           // return window.confirm(msg.noticeMaking.leavePage);
           console.log("리턴되었니");
           return false;
@@ -111,23 +123,7 @@ const TestMaking = ({
   // server error
   if (error) return <Error code={500} />;
 
-  return (
-    <>
-      <NoticeAlert
-        btns={[
-          { name: "돌아가기" },
-          {
-            name: "떠나기",
-            callback: () => {
-              console.log("떠나라");
-              history.push("/");
-            },
-          },
-        ]}
-      />
-      {makingComponent[step]}
-    </>
-  );
+  return <>{makingComponent[step]}</>;
 };
 
 export default withRouter(TestMaking);

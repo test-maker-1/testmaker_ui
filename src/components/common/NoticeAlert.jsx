@@ -9,7 +9,13 @@ import ENUM from "../../constants/Enum";
 
 const { SHARE } = ENUM;
 let that = null; // 정적 메소드용
-const initState = { open: false, content: "", mode: null };
+const initState = {
+  open: false,
+  mode: null,
+  icon: null,
+  text: "",
+  btns: [],
+};
 
 class NoticeAlert extends PureComponent {
   constructor(props) {
@@ -18,9 +24,13 @@ class NoticeAlert extends PureComponent {
     that = this;
   }
 
-  static open(content, mode = null) {
+  componentWillUnmount() {
+    this.setState(initState);
+  }
+
+  static open({ icon, text, btns, onShareClick = null }, mode = null) {
     if (!that.state.open) {
-      that.setState({ content, open: true, mode });
+      that.setState({ open: true, icon, text, btns, onShareClick, mode });
     }
   } // open 여부, 내용을 소스 내에서 관리
 
@@ -30,14 +40,14 @@ class NoticeAlert extends PureComponent {
   };
 
   handleShareClick = (event, id) => {
-    if (this.props.onShareClick) this.props.onShareClick(id, event);
+    if (this.state.onShareClick) this.state.onShareClick(id, event);
     this.handleOnClose();
   };
 
   handleOnClose = () => this.setState({ ...initState, open: false });
 
   setButtons() {
-    const { btns } = this.props;
+    const { btns } = this.state;
 
     return btns.map((oneBtn, idx) => {
       const onClick =
@@ -60,8 +70,7 @@ class NoticeAlert extends PureComponent {
   }
 
   render() {
-    const { open, content, mode } = this.state;
-    const { icon, btns, shareInfo = {} } = this.props;
+    const { open, text, mode, icon, btns, shareInfo = {} } = this.state;
 
     if (!open) return null;
 
@@ -88,7 +97,7 @@ class NoticeAlert extends PureComponent {
                     <SVG type={icon} />
                   </div>
                 )}
-                <AlertText>{content}</AlertText>
+                <AlertText>{text}</AlertText>
               </>
             )}
           </ModalMain>
@@ -105,13 +114,6 @@ class NoticeAlert extends PureComponent {
     );
   }
 }
-
-NoticeAlert.defaultProps = {
-  icon: null,
-  msg: "",
-  btn: [],
-  component: null,
-};
 
 const Modal = styled.div`
   ${modalStyles}

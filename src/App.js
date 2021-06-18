@@ -9,7 +9,7 @@ import MainForm from "./components/frame/MainForm";
 import Testing from "./components/frame/Testing";
 import TestMaking from "./components/frame/TestMaking";
 import Mypage from "./components/frame/MyPage";
-import { Loading } from "./components/common";
+import { Loading, NoticeAlert } from "./components/common";
 
 import Login from "./view/login/Login";
 import Error from "./view/Error";
@@ -39,6 +39,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Loading loading={status === LOADING} />
+      <NoticeAlert />
       <MainForm>
         <Switch>
           <Route exact path="/" component={Feed} />

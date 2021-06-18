@@ -29,7 +29,7 @@ const Options = ({ questionIdx, answer, options }) => {
 
   return (
     <>
-      <NoticeAlert btns={[{ name: "다시보기" }]} />
+      {/* <NoticeAlert btns={[{ name: "다시보기" }]} /> */}
       <ul>
         {options.map(({ optionId, name }, idx) => (
           <Option
@@ -60,7 +60,10 @@ const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
     if (value === option) return; // same
     if (value.length > 0 && isExist(value)) {
       // duplicate
-      NoticeAlert.open(errorMaking.duplicateOption);
+      NoticeAlert.open({
+        text: errorMaking.duplicateOption,
+        btns: [{ name: "다시보기" }],
+      });
       e.target.value = "";
       return;
     }
@@ -74,7 +77,10 @@ const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
 
   const onDelete = () => {
     if (!deleteOption(questionIdx, optionIdx, optionsCnt)) {
-      NoticeAlert.open(errorMaking.invaliedOptionsCnt);
+      NoticeAlert.open({
+        text: errorMaking.invaliedOptionsCnt,
+        btns: [{ name: "다시보기" }],
+      });
     }
   };
 

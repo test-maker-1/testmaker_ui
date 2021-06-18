@@ -15,7 +15,11 @@ const LeftBtn = ({ type = BACK }) => {
       case BACK:
         return goBack();
       case SEARCH:
-        return NoticeAlert.open("곧 업데이트 예정이에요!");
+        return NoticeAlert.open({
+          icon: ENUM.WARNING,
+          text: "곧 업데이트 예정이에요!",
+          btns: [{ name: "닫기" }],
+        });
       default:
         return null;
     }
@@ -25,9 +29,9 @@ const LeftBtn = ({ type = BACK }) => {
 
   return (
     <>
-      {type !== BACK && (
+      {/* {type !== BACK && (
         <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
-      )}
+      )} */}
       <SVG
         type={type}
         onClick={onClickEvent}
