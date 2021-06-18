@@ -8,6 +8,7 @@ import usePage from "../../hooks/usePage";
 
 import { key } from "../../constants/config";
 import ENUM, { EMAIL, KAKAO } from "../../constants/Enum";
+import links from "../../constants/links";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
@@ -75,9 +76,11 @@ const Login = () => {
       </TitleWrap>
       {/* summary */}
       <Summary>
-        로그인 시 <strong>개인정보보호정책</strong>을 읽었으며
+        로그인 시 <a href={links.login.privacyPolicy}>개인정보보호정책</a>
+        을 읽었으며
         <br />
-        <strong>서비스 이용약관</strong>에 동의하는 것으로 간주합니다.
+        <a href={links.login.termsOfService}>서비스 이용약관</a>에 동의하는
+        것으로 간주합니다.
       </Summary>
     </PageContainer>
   );
@@ -151,7 +154,7 @@ export const Summary = styled.p`
   line-height: 21px;
   color: ${({ theme: { colors } }) => colors.gray};
 
-  strong {
+  a {
     font-weight: bold;
     color: ${({ theme: { colors } }) => colors.blue};
   }
