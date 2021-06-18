@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { NoticeAlert, SVG } from "../../components/common";
+import { BtnField, NoticeAlert, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
 import { key } from "../../constants/config";
-import ENUM, { KAKAO } from "../../constants/Enum";
+import ENUM, { EMAIL, KAKAO } from "../../constants/Enum";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { location, replace } = usePage();
+  const { location, replace, goPage } = usePage();
 
   useEffect(() => {
     if (loggedIn) {
@@ -42,10 +42,7 @@ const Login = () => {
     kakaoLogIn(reqData);
   };
 
-  // const onClickEmail = () => {
-  //   NoticeAlert.open("곧 업데이트 예정이에요!");
-  //   // goPage("/login/email"); 1차 MVP 제외
-  // };
+  const onClickEmail = () => goPage("/login/email");
 
   return (
     <PageContainer>
@@ -71,9 +68,9 @@ const Login = () => {
             {KAKAO}
           </BtnKakaoLogin>
           {/* redirect email login */}
-          {/* <BtnField color="skyBlue" onClick={onClickEmail}>
+          <BtnField color="skyBlue" onClick={onClickEmail}>
             {EMAIL}
-          </BtnField> */}
+          </BtnField>
         </div>
       </TitleWrap>
       {/* summary */}

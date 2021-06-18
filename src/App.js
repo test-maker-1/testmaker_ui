@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-// import LoginFrame from "./components/frame/Login";
+import LoginFrame from "./components/frame/Login";
 import RegisterFrame from "./components/frame/Register";
 import MainForm from "./components/frame/MainForm";
 import Testing from "./components/frame/Testing";
@@ -50,7 +50,7 @@ const App = () => {
           {/* login */}
           <Route exact path="/login" component={Login} />
           {/* module: kakao, other, naver, google, email */}
-          {/* <Route exact path="/login/:module/:step?" component={LoginFrame} /> */}
+          <Route exact path="/login/:module/:step?" component={LoginFrame} />
           {/* register */}
           <Route exact path="/register/:module" component={RegisterFrame} />
           {/* Testing */}
