@@ -12,6 +12,9 @@ import {
   updatePartTests,
   updateMadeTests,
   setSelecteTab,
+  updateProfile,
+  updateNickname,
+  uploadProfile,
 } from "../redux/reducer/userReducer";
 import { INIT, LOADING, SUCCESS } from "../utils/asyncUtils";
 
@@ -23,6 +26,7 @@ const useUser = () => {
     tabTestsLast,
     isStop,
     tabTestsLoading,
+    profileUrl,
   } = useSelector((state) => state.user);
   const { data, status } = useSelector((state) => state.user.user);
   const logInLoading = useMemo(
@@ -51,6 +55,10 @@ const useUser = () => {
   const morePartTests = (payload) => dispatch(updatePartTests(payload));
   const moreMadeTests = (payload) => dispatch(updateMadeTests(payload));
 
+  const putProfile = (payload) => dispatch(updateProfile(payload));
+  const putNickname = (payload) => dispatch(updateNickname(payload));
+  const uploadImg = (payload) => dispatch(uploadProfile(payload));
+
   return {
     data,
     status,
@@ -72,6 +80,10 @@ const useUser = () => {
     getTempSaveTests,
     morePartTests,
     moreMadeTests,
+    putProfile,
+    putNickname,
+    uploadImg,
+    profileUrl,
   };
 };
 
