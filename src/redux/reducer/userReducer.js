@@ -18,6 +18,19 @@ const initialState = {
   isStop: false,
 
   updateUserLoading: false,
+
+  // 프로필 업로드
+  profileUrl: null,
+  uploadLoading: false,
+  uploadError: false,
+
+  // 프로필 변경
+  profileLoading: false,
+  profileError: false,
+
+  // 닉네임 변경
+  nicknameLoading: false,
+  nicknameError: false,
 };
 
 const user = createSlice({
@@ -130,6 +143,44 @@ const user = createSlice({
       state.tabTestsLoading = false;
       state.tabTestsError = true;
     },
+
+    // 프로필 업로드
+    uploadProfile: (state) => {
+      state.uploadLoading = true;
+    },
+    uploadProfileSuccess: (state, { payload: { url } }) => {
+      console.log(url);
+      state.uploadLoading = false;
+      state.profileUrl = url;
+    },
+    uploadProfileError: (state) => {
+      state.uploadLoading = false;
+      state.uploadError = true;
+    },
+
+    // 프로필 변경
+    updateProfile: (state) => {
+      state.profileLoading = true;
+    },
+    updateProfileSuccess: (state) => {
+      state.profileLoading = false;
+    },
+    updateProfileError: (state) => {
+      state.profileLoading = false;
+      state.profileError = true;
+    },
+
+    // 닉네임 변경
+    updateNickname: (state) => {
+      state.nicknameLoading = true;
+    },
+    updateNicknameSuccess: (state) => {
+      state.nicknameLoading = false;
+    },
+    updateNicknameError: (state) => {
+      state.nicknameLoading = false;
+      state.nicknameError = true;
+    },
   },
 
   extraReducers: (builder) => {
@@ -164,6 +215,9 @@ export const {
   updateMadeTests,
   tempSaveTests,
   getUserInfo,
+  updateProfile,
+  updateNickname,
+  uploadProfile,
 } = user.actions;
 
 export default user;
