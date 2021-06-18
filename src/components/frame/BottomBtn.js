@@ -2,13 +2,32 @@ import React, { memo } from "react";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+import { Loading } from "../../components/common";
+import usePage from "../../hooks/usePage";
+import useMiniReducer from "../../hooks/useMiniReducer";
+import useCommon from "../../hooks/making/useCommon";
+
 import { getNextPageURL } from "../../utils/handler";
-import { home, picktest } from "../../constants/urlInfo";
+import { ERROR, LOADING, SUCCESS } from "../../utils/asyncUtils";
+import { saveTest } from "../../utils/asyncMakingUtils";
+
 import ENUM from "../../constants/Enum";
+import { home, picktest } from "../../constants/urlInfo";
 
-const { HOME, PICKTEST, PREVIEW, MOVENEXT } = ENUM;
+const { HOME, PICKTEST, PREVIEW, MOVENEXT, TEMP_SAVE } = ENUM;
 
-const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
+const BottomBtn = memo(({ btnArr = [], location, match }) => {
+  const { goPage } = usePage();
+  const { data } = useCommon();
+  const { state, request, requestSuccess } = useMiniReducer();
+
+  const saveTempTest = async () => {
+    request();
+    const status = await saveTest(data);
+    if (status === ERROR) goPage("/error", "?errorCode=500");
+    if (status === SUCCESS) requestSuccess();
+  };
+
   const handleOnClick = async (idx, event) => {
     const target = btnArr[idx];
     const type = target.type;
@@ -22,18 +41,22 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
     if (type) {
       switch (type) {
         case HOME: // 홈(메인)
-        case PICKTEST: // 난이도선택
+        case PICKTEST: // 난이도선택his
           const page = type === PICKTEST ? `test/${picktest}` : home;
-          history.push(`/${page}`);
+          goPage(`/${page}`);
           break;
 
         case PREVIEW: // 테스트메이킹 미리보기
-          history.push(`/test/${match.params.module}/${type}`);
+          goPage(`/test/${match.params.module}/${type}`);
           break;
 
         case MOVENEXT: // 다음 페이지 이동
           const next_url = getNextPageURL(match, location);
-          history.push(`/${next_url}`);
+          goPage(`/${next_url}`);
+          break;
+
+        case TEMP_SAVE:
+          await saveTempTest();
           break;
 
         default:
@@ -45,17 +68,20 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   if (btnArr.length < 1) return null;
 
   return (
-    <BtnContainer>
-      {btnArr.map((item, idx) => (
-        <Button
-          key={`btn${idx}`}
-          type={item.type}
-          onClick={handleOnClick.bind(this, idx)}
-        >
-          {item.name}
-        </Button>
-      ))}
-    </BtnContainer>
+    <>
+      {state.status === LOADING && <Loading />}
+      <BtnContainer>
+        {btnArr.map((item, idx) => (
+          <Button
+            key={`btn${idx}`}
+            type={item.type}
+            onClick={handleOnClick.bind(this, idx)}
+          >
+            {item.name}
+          </Button>
+        ))}
+      </BtnContainer>
+    </>
   );
 });
 

@@ -16,7 +16,7 @@ import { checkResult } from "../../../utils/asyncMakingUtils";
 import ENUM from "../../../constants/Enum";
 import usePage from "../../../hooks/usePage";
 
-const { PREVIEW, WARNING } = ENUM;
+const { TEMP_SAVE, WARNING } = ENUM;
 
 const useStyles = makeStyles(() => ({
   btnRank: () => ({
@@ -101,7 +101,7 @@ const BtnWrapper = ({ isRankMode, top }) => {
   return (
     <BottomBtn
       btnArr={[
-        { name: "임시저장" },
+        { name: "임시저장", type: TEMP_SAVE },
         { name: "다 적었어요", customClick: checkNextStep },
       ]}
     />

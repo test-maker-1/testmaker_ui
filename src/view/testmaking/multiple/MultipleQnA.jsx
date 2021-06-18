@@ -66,7 +66,7 @@ const FooterBtns = memo(() => {
       <BtnAdd onAdd={addEmptyQuestion}>질문 추가하기</BtnAdd>
       <BottomBtn
         btnArr={[
-          { name: "임시저장" },
+          { name: "임시저장", type: ENUM.TEMP_SAVE },
           { name: "다 적었어요", customClick: onSubmitQnA },
         ]}
       />

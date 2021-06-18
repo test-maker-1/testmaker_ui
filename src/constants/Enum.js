@@ -47,6 +47,7 @@ const ENUM = {
   PREVIEW: "preview",
   MOVENEXT: "movenext",
   SHARE: "share",
+  TEMP_SAVE: "temp_save",
 
   // svg type
   ADD: "add",
