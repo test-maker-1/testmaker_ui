@@ -7,10 +7,11 @@ import Tab from "../../components/MyPage/Tab";
 import useUser from "../../hooks/useUser";
 import Error from "../Error";
 import TabTests from "../../components/MyPage/TabTests";
-// import usePage from "../../hooks/usePage";
+import usePage from "../../hooks/usePage";
 // import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 const MypageMain = memo((props) => {
+  const { goPage } = usePage();
   const {
     logInLoading,
     loggedIn,
@@ -39,6 +40,10 @@ const MypageMain = memo((props) => {
     return NoticeAlert.open("곧 업데이트 예정이에요!");
   }, []);
 
+  const onClickAccount = () => {
+    return goPage("/mypage/manage");
+  };
+
   if (!loggedIn) return <Error code={403} />;
   return updateUserLoading ? (
     <Loading loading={updateUserLoading} />
@@ -55,7 +60,7 @@ const MypageMain = memo((props) => {
                 <EmptyImg />
               )}
             </InfoAva>
-            <Partition onClick={onClick}>{data.nickname}</Partition>
+            <Partition onClick={onClickAccount}>{data.nickname}</Partition>
           </div>
           <div className="space-right">
             <SVG
@@ -64,7 +69,7 @@ const MypageMain = memo((props) => {
                 width: "24",
                 height: "24",
               }}
-              onClick={onClick}
+              onClick={onClickAccount}
             />
           </div>
         </InfoUser>
