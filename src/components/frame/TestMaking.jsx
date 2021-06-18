@@ -68,7 +68,8 @@ const TestMaking = ({
     if (!intervalLoading.current && loggedIn) interval();
 
     // prevent exit page
-    const unBlock = history.block(({ pathname }) => {
+    const unBlock = history.block(({ pathname, search }) => {
+      if (search && search.length > 0) return true;
       if (loggedIn && data.testId) {
         if (
           !pathname.includes("/test/multiple") &&
