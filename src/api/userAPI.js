@@ -1,4 +1,4 @@
-import { get, post } from "./instance";
+import { get, post, put } from "./instance";
 
 export default class UserAPI {
   static refreshToken() {
@@ -36,5 +36,17 @@ export default class UserAPI {
   // 임시 저장 테스트
   static tempSaveTests() {
     return get("me/test/saved");
+  }
+  // 프로필 업로드
+  static uploadImg(form) {
+    return post("/img", form);
+  }
+  // 프로필 변경
+  static updateProfile(params) {
+    return put("/me/profile-img", params);
+  }
+  // 닉네임 변경
+  static updateNickname(params) {
+    return put("/me/nickname", params);
   }
 }
