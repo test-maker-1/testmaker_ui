@@ -13,6 +13,7 @@ import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 import { formattingTempTest } from "../../utils/asyncMakingUtils";
 
 import ENUM from "../../constants/Enum";
+import testInfo from "../../constants/testInfo";
 
 const TempTests = ({ tests }) => {
   const { state, request, requestSuccess, requestError } = useMiniReducer();
@@ -24,12 +25,10 @@ const TempTests = ({ tests }) => {
 
     const { data, status } = await MakingAPI.getTest(uid);
     if (status === SUCCESS) {
-      console.log(data, status);
       // initTemp(data);
       console.log(formattingTempTest(data));
       requestSuccess();
     } else {
-      console.log(status);
       requestError();
     }
   };
@@ -51,10 +50,12 @@ const TempTests = ({ tests }) => {
 };
 
 const TempTest = memo(({ test, onClick }) => {
+  if (!test.type) return null;
+
   return (
     <TempBox onClick={() => onClick(test.uid)}>
       <div>
-        <Type>{test.type}</Type>
+        <Type>{`${testInfo[test.type].name} 테스트`}</Type>
         <CreateAt>{getDateInfo(test.createdAt, "temp")}</CreateAt>
       </div>
       <SvgBox>
