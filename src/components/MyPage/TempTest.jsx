@@ -85,21 +85,18 @@ const TempBox = styled.li`
 `;
 
 const Type = styled.div`
-  font-style: normal;
   font-weight: bold;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem;
   line-height: 27px;
   letter-spacing: -0.6px;
-  color: #515966;
+  color: ${({ theme: { colors } }) => colors.bodyGray};
 `;
 
 const CreateAt = styled.div`
-  font-style: normal;
-  font-weight: normal;
   font-size: 1.5rem;
   line-height: 24px;
   letter-spacing: -0.5px;
-  color: #8a929e;
+  color: ${({ theme: { colors } }) => colors.deepGray};
 `;
 
 const SvgBox = styled.div`
