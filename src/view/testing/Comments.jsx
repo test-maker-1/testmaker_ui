@@ -66,6 +66,7 @@ const Comments = (props) => {
   const { loggedIn, status } = useUser();
   const { goPage } = usePage();
   const [progress, setProgress] = useState(false);
+  const [word, setWord] = useState("");
 
   useEffect(() => {
     if (comInput.current) {
@@ -80,38 +81,54 @@ const Comments = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replies]);
 
-  const onReportClick = useCallback(
-    (event) => {
-      //댓글 신고
-      dispatch(reportComment(comment_id));
+  const alertCallback = useCallback(
+    (type, event) => {
+      if (type === "report") {
+        //댓글 신고
+        dispatch(reportComment(comment_id));
+      } else {
+        //댓글 삭제
+        dispatch(deleteComment(comment_id));
+      }
     },
     [dispatch]
   );
 
   const moveToLogin = () => goPage(`/${login}`);
 
-  const handlePopup = (id, uid) => {
+  const handlePopup = (id, uid, content) => {
     if (loggedIn && status === SUCCESS) {
       switch (id) {
         case "report":
           openAlert(id, uid);
           break;
         case "update":
-          dispatch(updateComment(uid));
+          setWord(content);
+          // dispatch(updateComment(uid));
           break;
         case "delete":
-          dispatch(deleteComment(uid));
+          openAlert(id, uid); //dispatch(deleteComment(uid));
           break;
       }
     } else {
-    openAlert("join", uid);
+      openAlert("join", uid);
     }
   };
 
   const openAlert = (type, uid) => {
     comment_id = uid; //for report
 
-    const func = type === "join" ? moveToLogin : onReportClick;
+    let func = null;
+
+    switch (type) {
+      case "join":
+        func = moveToLogin;
+        break;
+      case "delete":
+      case "report":
+        func = alertCallback.bind(this, type);
+        break;
+    }
 
     const alert_info = Object.assign({}, def_alert, returnALInfo(type, func));
 
@@ -185,6 +202,7 @@ const Comments = (props) => {
         <BtnContainer>
           <FootArea>
             <ComInput
+              word={word}
               ref={comInput}
               onSubmit={handleOnSubmit}
               onFocus={checkLogin}

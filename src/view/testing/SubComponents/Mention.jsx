@@ -7,7 +7,15 @@ import useOpen from "../../../hooks/useOpen";
 import Enum from "../../../constants/Enum";
 import { getDateInfo, diffByTime } from "../../../utils/handler";
 
-const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
+const Mention = ({
+  uid,
+  writer,
+  content,
+  timestamp,
+  popupClick,
+  readOnly,
+  onFocus,
+}) => {
   const { open: openPop, onToggle: setOpen, onClose } = useOpen();
 
   const formatTime = useCallback((ptimestamp) => {
@@ -38,11 +46,19 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
     return result;
   }, []);
 
-  const handleOnClick = (id, event) => {
+  const handleOnPopClick = () => {
+    if (readOnly && onFocus) {
+      onFocus();
+    } else {
+      setOpen(!openPop);
+    }
+  };
+
+  const handleOnClick = (id, content = "", event) => {
     setOpen(false);
 
     if (popupClick) {
-      popupClick(id, uid);
+      popupClick(id, uid, content);
     }
   };
 
@@ -54,7 +70,7 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
         <Timer>{formatTime(timestamp)}</Timer>
         {/* isMe : -1.로그인안한상태 0.로그인 했지만, 당사자가 아닌 유저, 1.로그인한 당사자 유저  */}
         <RightSide>
-          <SVG type={Enum.MORE} onClick={() => setOpen(!openPop)} />
+          <SVG type={Enum.MORE} onClick={handleOnPopClick} />
           {openPop && (
             <>
               <Dimmed onClick={() => onClose()} onScroll={() => onClose()} />
@@ -63,7 +79,9 @@ const Mention = ({ uid, writer, content, timestamp, popupClick }) => {
                   <PopWrap>
                     {writer?.isMe === 1 ? (
                       <>
-                        <PopItem onClick={handleOnClick.bind(this, "update")}>
+                        <PopItem
+                          onClick={handleOnClick.bind(this, "update", content)}
+                        >
                           댓글수정
                         </PopItem>
                         <PopItem onClick={handleOnClick.bind(this, "delete")}>
