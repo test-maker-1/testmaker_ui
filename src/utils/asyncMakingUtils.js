@@ -113,3 +113,23 @@ export const checkResult = (
 
   return { okResult: true };
 };
+
+const serverKeys = [
+  "createdAt",
+  "isDisabled",
+  "isSubmitted",
+  "linksCnt",
+  "participantsCnt",
+  "repliesCnt",
+  "sharedCnt",
+  "testLink",
+];
+
+export const formattingTempTest = (tempTest) => {
+  const modifyTest = { ...tempTest };
+  serverKeys.forEach((key) => {
+    if (modifyTest.hasOwnProperty(key)) delete modifyTest[key];
+  });
+
+  return modifyTest;
+};

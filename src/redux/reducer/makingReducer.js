@@ -19,6 +19,9 @@ const making = createSlice({
         ? { ...initState.common, maker: { ...state.maker } }
         : initState.common;
     },
+    initTempData: (state, { payload }) => {
+      return payload;
+    },
     initTypeData: (state, { payload: { type, questions, results } }) => {
       state.type = type;
       state.data = { ...initState[type] };
@@ -147,6 +150,7 @@ export const { initCommonData, initTypeData, initResultsInfo } = making.actions;
 
 /* update */
 export const {
+  initTempData,
   updateCommonData,
   updateTypeData,
   updateQuestionData,

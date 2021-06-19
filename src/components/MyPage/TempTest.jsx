@@ -1,21 +1,62 @@
-import React, { useCallback } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
-import SVG from "../common/SVG";
-import ENUM from "../../constants/Enum";
-import { getDateInfo } from "../../utils/handler";
-import { NoticeAlert } from "../common";
 
-const TempTest = ({ test }) => {
-  const onClick = useCallback(() => {
-    return NoticeAlert.open("곧 업데이트 예정이에요!");
-  }, []);
+import { Loading, SVG } from "../common";
+
+import useMiniReducer from "../../hooks/useMiniReducer";
+import MakingAPI from "../../api/makingAPI";
+
+import { getDateInfo } from "../../utils/handler";
+import { LOADING, SUCCESS } from "../../utils/asyncUtils";
+// import usePage from "../../hooks/usePage";
+// import useCommon from "../../hooks/making/useCommon";
+import { formattingTempTest } from "../../utils/asyncMakingUtils";
+
+import ENUM from "../../constants/Enum";
+
+const TempTests = ({ tests }) => {
+  const { state, request, requestSuccess, requestError } = useMiniReducer();
+  // const { goPage } = usePage();
+  // const { initTemp } = useCommon();
+
+  const onClick = async (uid) => {
+    request();
+
+    const { data, status } = await MakingAPI.getTest(uid);
+    if (status === SUCCESS) {
+      console.log(data, status);
+      // initTemp(data);
+      console.log(formattingTempTest(data));
+      requestSuccess();
+    } else {
+      console.log(status);
+      requestError();
+    }
+  };
+
   return (
-    <TempBox>
-      <TempInfo>
-        <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
+    <>
+      {state.status === LOADING && <Loading />}
+      <Container>
+        {tests.map((test) => (
+          <TempTest
+            key={`temp-test-${test.uid}`}
+            test={test}
+            onClick={onClick}
+          />
+        ))}
+      </Container>
+    </>
+  );
+};
+
+const TempTest = memo(({ test, onClick }) => {
+  return (
+    <TempBox onClick={() => onClick(test.uid)}>
+      <div>
         <Type>{test.type}</Type>
         <CreateAt>{getDateInfo(test.createdAt, "temp")}</CreateAt>
-      </TempInfo>
+      </div>
       <SvgBox>
         <SVG
           type={ENUM.NEXT}
@@ -28,18 +69,19 @@ const TempTest = ({ test }) => {
       </SvgBox>
     </TempBox>
   );
-};
+});
 
-export default TempTest;
+const Container = styled.ul`
+  margin-top: 12px;
+`;
 
-const TempBox = styled.div`
+const TempBox = styled.li`
   border-bottom: 1px solid ${({ theme: { colors } }) => colors.ivory};
   padding: 1.2rem 2rem 1.2rem 2rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `;
-
-const TempInfo = styled.div``;
 
 const Type = styled.div`
   font-style: normal;
@@ -64,3 +106,5 @@ const SvgBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export default TempTests;
