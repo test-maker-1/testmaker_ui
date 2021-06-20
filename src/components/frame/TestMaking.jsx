@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect, memo } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 
 import Error from "../../view/Error";
@@ -11,6 +11,7 @@ import { saveTest } from "../../utils/asyncMakingUtils";
 
 import components from "../../constants/testStepComponents";
 import msg from "../../constants/msg";
+import { NoticeAlert } from "../common";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
@@ -75,7 +76,22 @@ const TestMaking = ({
           !pathname.includes("/test/multiple") &&
           !pathname.includes("/test/release")
         ) {
-          return window.confirm(msg.noticeMaking.leavePage);
+          NoticeAlert.open({
+            text: msg.noticeMaking.leavePage,
+            btns: [
+              { name: "돌아가기" },
+              {
+                name: "떠나기",
+                callback: () => {
+                  console.log("떠나라");
+                  history.push("/");
+                },
+              },
+            ],
+          });
+          // return window.confirm(msg.noticeMaking.leavePage);
+          console.log("리턴되었니");
+          return false;
         }
         return true;
       }
@@ -108,7 +124,7 @@ const TestMaking = ({
   // server error
   if (error) return <Error code={500} />;
 
-  return makingComponent[step];
+  return <>{makingComponent[step]}</>;
 };
 
-export default withRouter(memo(TestMaking));
+export default withRouter(TestMaking);

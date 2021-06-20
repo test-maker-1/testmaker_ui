@@ -62,7 +62,22 @@ const Welcome = () => {
       returnALInfo(type, handleOnAlertClick)
     );
     setALInfo(alert_info); //얼럿에 띄울 정보
-    NoticeAlert.open(alert_info.msg, SHARE);
+
+    NoticeAlert.open(
+      {
+        icon: alertInfo.icon,
+        text: alert_info.msg,
+        btns: alertInfo.btn,
+        shareInfo: {
+          link: `/${testInfo.testLink}`,
+          title: testInfo.title,
+          description: testInfo.description,
+          imageUrl: testInfo.coverImg,
+        },
+        onShareClick: handleShareClick,
+      },
+      SHARE
+    );
   };
 
   const handleOnAlertClick = useCallback((id, event) => {
@@ -97,7 +112,7 @@ const Welcome = () => {
           { name: "시작하기", type: MOVENEXT },
         ]}
       />
-      <NoticeAlert
+      {/* <NoticeAlert
         icon={alertInfo.icon}
         btns={alertInfo.btn}
         shareInfo={{
@@ -107,7 +122,7 @@ const Welcome = () => {
           imageUrl: testInfo.coverImg,
         }}
         onShareClick={handleShareClick}
-      />
+      /> */}
     </PageContainer>
   );
 };

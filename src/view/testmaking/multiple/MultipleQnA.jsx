@@ -22,10 +22,17 @@ const svgStyles = {
   fill: blue,
 };
 
+const showAlert = (msg) =>
+  NoticeAlert.open({
+    icon: ENUM.WARNING,
+    text: msg,
+    btns: [{ name: "돌아가기" }],
+  });
+
 const MultipleQnA = () => {
   return (
     <PageContainer>
-      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
+      {/* <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} /> */}
 
       <RandomGuide>
         <div>
@@ -51,14 +58,14 @@ const FooterBtns = memo(() => {
 
   const onSubmitQnA = () => {
     if (!checkNextStep()) {
-      NoticeAlert.open(errorMaking.question);
+      showAlert(errorMaking.question);
       return;
     }
     if (onSetResult()) {
       goPage("/test/multiple/result");
       return;
     }
-    NoticeAlert.open(errorMaking.invaliedPoints);
+    showAlert(errorMaking.invaliedPoints);
   };
 
   return (
