@@ -3,35 +3,30 @@ import styled, { css } from "styled-components";
 import theme from "../../styles/theme";
 import { PARTTEST, MADETEST, TEMPSTORAGE } from "../../constants/Enum";
 import useUser from "../../hooks/useUser";
+import { useEffect } from "react";
 
 const { darkGray, bodyGray } = theme.colors;
 const TabScroll = (props) => {
   const tabs = [PARTTEST, MADETEST, TEMPSTORAGE];
-  const {
-    selectedTab,
-    selecTab,
-    getPartTests,
-    getMadeTests,
-    getTempSaveTests,
-  } = useUser();
+  const { selectedTab, selecTab } = useUser();
 
   const onClick = useCallback(
     (tab) => {
       if (selectedTab === tab) return;
       selecTab(tab);
 
-      switch (tab) {
-        case PARTTEST:
-          return getPartTests({ num_elements: 10 });
-        case MADETEST:
-          return getMadeTests({ num_elements: 10 });
-        case TEMPSTORAGE:
-          return getTempSaveTests();
-        default:
-          return;
-      }
+      // switch (tab) {
+      //   case PARTTEST:
+      //     return getPartTests({ num_elements: 10 });
+      //   case MADETEST:
+      //     return getMadeTests({ num_elements: 10 });
+      //   case TEMPSTORAGE:
+      //     return getTempSaveTests();
+      //   default:
+      //     return;
+      // }
     },
-    [getMadeTests, getPartTests, getTempSaveTests, selecTab, selectedTab]
+    [selecTab, selectedTab]
   );
 
   return (
