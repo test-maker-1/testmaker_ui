@@ -36,10 +36,6 @@ function* checkLogInSaga(action) {
           token,
         },
       });
-      // yield put({
-      //   type: partTests.type,
-      //   payload: { num_elements: 10 },
-      // });
     } else {
       cookie.remove("token");
       yield put({ type: error, payload: user });
