@@ -4,33 +4,33 @@ import styled from "styled-components";
 import { Loading, SVG } from "../common";
 
 import useMiniReducer from "../../hooks/useMiniReducer";
-import MakingAPI from "../../api/makingAPI";
+import usePage from "../../hooks/usePage";
+import useCommon from "../../hooks/making/useCommon";
 
-import { getDateInfo } from "../../utils/handler";
+import MakingAPI from "../../api/makingAPI";
 import { LOADING, SUCCESS } from "../../utils/asyncUtils";
-// import usePage from "../../hooks/usePage";
-// import useCommon from "../../hooks/making/useCommon";
 import { formattingTempTest } from "../../utils/asyncMakingUtils";
+import { getDateInfo } from "../../utils/handler";
 
 import ENUM from "../../constants/Enum";
 import testInfo from "../../constants/testInfo";
 
 const TempTests = ({ tests }) => {
-  const { state, request, requestSuccess, requestError } = useMiniReducer();
-  // const { goPage } = usePage();
-  // const { initTemp } = useCommon();
+  const { goPage } = usePage();
+  const { state, request, requestError } = useMiniReducer();
+  const { initTemp, initStateByType } = useCommon();
 
   const onClick = async (uid) => {
     request();
 
     const { data, status } = await MakingAPI.getTest(uid);
     if (status === SUCCESS) {
-      // initTemp(data);
-      console.log(formattingTempTest(data));
-      requestSuccess();
-    } else {
-      requestError();
-    }
+      if (!data.hasOwnProperty("data")) initStateByType(data.type);
+      const tempTest = formattingTempTest(data);
+
+      initTemp(tempTest);
+      goPage(`/test/${tempTest.type}/${tempTest.step}`);
+    } else requestError(status);
   };
 
   return (

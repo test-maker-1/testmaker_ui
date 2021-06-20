@@ -31,8 +31,8 @@ const TestMaking = ({
   const testState = useRef(data);
 
   const initTimer = useCallback(
-    (initMaker = false) => {
-      if (data.testId) dispatch(initCommon(initMaker));
+    (keepMaker = false) => {
+      if (data.testId) dispatch(initCommon(keepMaker));
       if (intervalLoading.current) intervalLoading.current = false;
 
       testState.current = {};

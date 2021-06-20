@@ -118,7 +118,7 @@ const serverKeys = [
   "createdAt",
   "isDisabled",
   "isSubmitted",
-  "linksCnt",
+  "likesCnt",
   "participantsCnt",
   "repliesCnt",
   "sharedCnt",
@@ -127,9 +127,49 @@ const serverKeys = [
 
 export const formattingTempTest = (tempTest) => {
   const modifyTest = { ...tempTest };
+
+  modifyTest.testId = modifyTest.uid;
+  delete modifyTest.uid;
+
+  // delete unusual key
   serverKeys.forEach((key) => {
     if (modifyTest.hasOwnProperty(key)) delete modifyTest[key];
   });
+
+  // step: preset
+  if (modifyTest.step === "preset") {
+    if (modifyTest.hasOwnProperty("data")) return modifyTest;
+    return modifyTest;
+  }
+
+  modifyTest.data.questionsCnt = modifyTest.data.questsCnt;
+  delete modifyTest.data.questsCnt;
+
+  const { questionsCnt, resultsCnt } = modifyTest.data;
+
+  // add only front data in question (+ option)
+  let totalPoints = 0;
+
+  for (let i = 0; i < questionsCnt; i++) {
+    const { point, options } = modifyTest.data.questions[i];
+
+    modifyTest.data.questions[i].questionId = i;
+    totalPoints += point;
+
+    modifyTest.data.questions[i].nextOptionId = options.length;
+
+    for (let j = 0; j < options.length; j++) {
+      modifyTest.data.questions[i].options[j].optionId = j;
+    }
+  }
+  modifyTest.data.nextQuestionId = questionsCnt;
+  modifyTest.data.totalPoints = totalPoints;
+
+  // add only front data in result
+  for (let i = 0; i < resultsCnt; i++) {
+    modifyTest.data.results[i].resultId = i;
+  }
+  modifyTest.data.nextResultId = resultsCnt;
 
   return modifyTest;
 };

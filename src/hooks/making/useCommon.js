@@ -15,7 +15,7 @@ const useCommon = () => {
   const dispatch = useDispatch();
 
   // init
-  const initCommon = (initMaker = false) => dispatch(initCommonData(initMaker));
+  const initCommon = (keepMaker) => dispatch(initCommonData(keepMaker));
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
     const questions = getQuestions(type, questionsCnt);
