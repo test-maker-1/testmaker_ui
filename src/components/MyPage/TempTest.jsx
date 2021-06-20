@@ -1,11 +1,35 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import SVG from "../common/SVG";
-import ENUM from "../../constants/Enum";
+import ENUM, {
+  mbti,
+  multiple,
+  weight,
+  MULTIPLE,
+  MBTI,
+  WEIGHT,
+} from "../../constants/Enum";
 import { getDateInfo } from "../../utils/handler";
 import { NoticeAlert } from "../common";
 
 const TempTest = ({ test }) => {
+  let name = "";
+  if (test) {
+    switch (test.type) {
+      case mbti:
+        name = MBTI;
+        break;
+      case multiple:
+        name = MULTIPLE;
+        break;
+      case weight:
+        name = WEIGHT;
+        break;
+
+      default:
+        break;
+    }
+  }
   const onClick = useCallback(() => {
     return NoticeAlert.open("곧 업데이트 예정이에요!");
   }, []);
@@ -13,7 +37,7 @@ const TempTest = ({ test }) => {
     <TempBox>
       <TempInfo>
         <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
-        <Type>{test.type}</Type>
+        <Type>{name !== "" && name}</Type>
         <CreateAt>{getDateInfo(test.createdAt, "temp")}</CreateAt>
       </TempInfo>
       <SvgBox>
