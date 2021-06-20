@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { Loading, NoticeAlert, SVG } from "../../components/common";
-import ENUM from "../../constants/Enum";
+import ENUM, { PARTTEST, MADETEST, TEMPSTORAGE } from "../../constants/Enum";
 import Tab from "../../components/MyPage/Tab";
 
 import useUser from "../../hooks/useUser";
@@ -16,23 +16,32 @@ const MypageMain = memo((props) => {
     loggedIn,
     data,
     selectedTab,
-    tabTests,
     // status,
     getUser,
     getPartTests,
+    getMadeTests,
+    getTempSaveTests,
     updateUserLoading,
   } = useUser();
 
   useEffect(() => {
-    if (!logInLoading) getUser();
-    if (tabTests.length === 0 || logInLoading)
-      getPartTests({ num_elements: 10 });
+    if (!logInLoading && loggedIn) getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     // 태그 바뀔 때 스크롤 상단으로
     window.scrollTo(0, 0);
+    switch (selectedTab) {
+      case PARTTEST:
+        return getPartTests({ num_elements: 10 });
+      case MADETEST:
+        return getMadeTests({ num_elements: 10 });
+      case TEMPSTORAGE:
+        return getTempSaveTests();
+      default:
+        return;
+    }
   }, [selectedTab]);
 
   const onClick = useCallback(() => {
