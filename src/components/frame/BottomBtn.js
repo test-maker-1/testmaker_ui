@@ -6,7 +6,7 @@ import { getNextPageURL } from "../../utils/handler";
 import { home, picktest } from "../../constants/urlInfo";
 import ENUM from "../../constants/Enum";
 
-const { HOME, PICKTEST, PREVIEW, MOVENEXT } = ENUM;
+const { HOME, PICKTEST, PREVIEW, MOVENEXT, LOGOUT } = ENUM;
 
 const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   const handleOnClick = async (idx, event) => {
@@ -34,6 +34,10 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
         case MOVENEXT: // 다음 페이지 이동
           const next_url = getNextPageURL(match, location);
           history.push(`/${next_url}`);
+          break;
+
+        case LOGOUT: // 마이페이지(계정관리)에서 로그아웃
+          history.push("/");
           break;
 
         default:
