@@ -1,13 +1,15 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import * as loadImage from "blueimp-load-image";
 import { getFormData } from "../../utils/asyncMakingUtils";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import ENUM from "../../constants/Enum";
 import { Loading, SVG } from "../../components/common";
 import theme from "../../styles/theme";
 import useUser from "../../hooks/useUser";
 import AutosizeInput from "react-input-autosize";
 import Error from "../Error";
+import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
+import ManageList from "../../components/MyPage/ManageList";
 
 const { deepGray } = theme.colors;
 const { lg } = theme.fontSizes;
@@ -22,6 +24,7 @@ const AccountManage = () => {
     putProfile,
     putNickname,
     uploadImg,
+    logOut,
   } = useUser();
 
   const fileInput = useRef();
@@ -33,7 +36,7 @@ const AccountManage = () => {
   }, []);
 
   useEffect(() => {
-    putProfile({ profileUrl: profileUrl });
+    profileUrl && putProfile({ profileUrl: profileUrl });
   }, [profileUrl]);
 
   const onChange = useCallback(
@@ -84,7 +87,7 @@ const AccountManage = () => {
   return logInLoading ? (
     <Loading loading={updateUserLoading} />
   ) : (
-    <Container>
+    <PageContainer>
       <ProfileBox>
         <div>
           <Profile isHover={isHover}>
@@ -135,7 +138,7 @@ const AccountManage = () => {
         </Form>
       </ProfileBox>
 
-      <Menu></Menu>
+      <ManageList />
 
       <input
         type="file"
@@ -144,13 +147,14 @@ const AccountManage = () => {
         onChange={onUpload}
         style={{ width: 0, display: "none" }}
       />
-    </Container>
+      <BottomBtn
+        btnArr={[{ name: "로그아웃", type: ENUM.LOGOUT, customClick: logOut }]}
+      />
+    </PageContainer>
   );
 };
 
 export default AccountManage;
-
-const Container = styled.div``;
 
 const ProfileBox = styled.div`
   position: relative;
@@ -207,4 +211,14 @@ const Button = styled.button`
   align-items: center;
 `;
 
-const Menu = styled.div``;
+const Menu = styled.ul`
+  padding: 0 2rem 0 2rem;
+`;
+
+const Item = styled.li`
+  font-weight: bold;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: ${({ theme: { colors } }) => colors.deepGray};
+`;
