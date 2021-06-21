@@ -211,7 +211,7 @@ export const Title = styled.h1`
   line-height: ${({ where }) =>
     where === "middle" ? "3.6" : "2.4"}rem; /*36px*/
   letter-spacing: -1px;
-  color: #515966;
+  color: ${({ theme: { colors } }) => colors.darkGray};
 `;
 
 export const SubTitle = styled.p`
