@@ -141,7 +141,7 @@ const Result = memo((props) => {
           </TitleBox>
         ) : (
           <TitleBox>
-            <Title>가장 많은 유형 TOP 1</Title>
+            <Title where="middle">가장 많은 유형 TOP 1</Title>
             <SubTitle>
               {topResult.title} ({Math.round(topResult.percent)}%)
             </SubTitle>
@@ -208,7 +208,8 @@ export const Title = styled.h1`
   text-align: center;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
-  line-height: 2.4rem; /*2.25em:36px*/
+  line-height: ${({ where }) =>
+    where === "middle" ? "3.6" : "2.4"}rem; /*36px*/
   letter-spacing: -1px;
   color: #515966;
 `;

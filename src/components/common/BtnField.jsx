@@ -77,7 +77,12 @@ export const BtnExam = ({ name, clicked, onClick }) => {
   const color = clicked ? "skyBlue" : "gray";
   const classes = useStyles({ color: color, size: lg, isTestBtn: true });
   return (
-    <Button fullWidth={true} className={classes.btn} onClick={onClick}>
+    <Button
+      fullWidth={true}
+      className={classes.btn}
+      onClick={onClick}
+      style={{ textTransform: "none" }}
+    >
       {name}
     </Button>
   );
