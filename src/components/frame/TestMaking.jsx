@@ -1,7 +1,9 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 
+import { NoticeAlert } from "../common";
 import Error from "../../view/Error";
+
 import useUser from "../../hooks/useUser";
 import useOpen from "../../hooks/useOpen";
 import useCommon from "../../hooks/making/useCommon";
@@ -11,7 +13,6 @@ import { saveTest } from "../../utils/asyncMakingUtils";
 
 import components from "../../constants/testStepComponents";
 import msg from "../../constants/msg";
-import { NoticeAlert } from "../common";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
@@ -83,14 +84,12 @@ const TestMaking = ({
               {
                 name: "떠나기",
                 callback: () => {
-                  console.log("떠나라");
-                  history.push("/");
+                  unBlock();
+                  history.push(pathname);
                 },
               },
             ],
           });
-          // return window.confirm(msg.noticeMaking.leavePage);
-          console.log("리턴되었니");
           return false;
         }
         return true;
@@ -98,7 +97,7 @@ const TestMaking = ({
       return true;
     });
 
-    return () => unBlock();
+    return unBlock;
   }, [data, error, history, initTimer, interval, loggedIn]);
 
   useEffect(() => {

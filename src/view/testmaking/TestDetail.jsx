@@ -126,7 +126,6 @@ const useDetail = () => {
     const { releasable, msg = "" } = checkMakingData(data);
 
     if (releasable) {
-      console.log("오픈하기", msg);
       NoticeAlert.open({
         icon: WARNING,
         text: msg,
@@ -139,7 +138,6 @@ const useDetail = () => {
         ],
       });
     } else {
-      console.log("못해, 다시보기");
       NoticeAlert.open({
         icon: WARNING,
         text: msg,
