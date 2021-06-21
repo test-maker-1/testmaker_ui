@@ -13,6 +13,7 @@ import {
   getTestResultInfoError,
   shareResult,
   postFeedback,
+  reflectResult,
 } from "../reducer/resultReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
@@ -87,6 +88,11 @@ const sendFeedback = createPromiseSaga(
   testingAPI.postFeedbackMaker
 );
 
+const reflectNewResult = createPromiseSaga(
+  reflectResult.type,
+  testingAPI.maintainResult
+);
+
 function* getResultInfromation() {
   yield takeLeading(getTestResultInfo.type, getResultInform);
   yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
@@ -94,6 +100,7 @@ function* getResultInfromation() {
   yield takeLeading(saveResult.type, updateTestResult);
   yield takeLeading(shareResult.type, updateShareResult);
   yield takeLeading(postFeedback.type, sendFeedback);
+  yield takeLeading(reflectResult.type, reflectNewResult);
 }
 
 export default function* resultSaga() {

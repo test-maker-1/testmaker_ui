@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 import { NoticeAlert, SVG } from "../../components/common";
+import { reflectResult } from "../../redux/reducer/resultReducer";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
@@ -12,6 +14,7 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
+  const dispatch = useDispatch();
   const {
     location: { state },
     replace,
@@ -23,7 +26,7 @@ const Login = () => {
         const { from, search = "" } = state;
         if (state.hasOwnProperty("resultID")) {
           // 2-4-1. 회원가입 후 테스트 결과 저장
-          //PUT /testing/:responseUid/overwrite
+          dispatch(reflectResult(state.resultID));
         }
         if (state.hasOwnProperty("from")) {
           //로그인 후 이전 페이지 이동

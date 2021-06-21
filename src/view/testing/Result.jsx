@@ -126,9 +126,14 @@ const Result = memo((props) => {
             {!loggedIn && status !== LOADING && (
               <BtnField
                 color="skyBlue"
-                onClick={() =>
-                  goPage("/login", null, { resultID: responseUid })
-                }
+                onClick={() => {
+                  const { pathname, search } = window.location;
+                  goPage("/login", null, {
+                    from: pathname,
+                    search,
+                    resultID: responseUid,
+                  });
+                }}
               >
                 랭킹에 점수 남기기
               </BtnField>

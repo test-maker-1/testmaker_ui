@@ -44,8 +44,9 @@ export default class TestingAPI {
       msg: value,
     });
   }
-  static maintainResult() {
+  static maintainResult(uID) {
     //회원가입 후 테스트 결과 저장
     // PUT /testing/:responseUid/overwrite
+    return put(`/testing/${uID}/overwrite`);
   }
 }
