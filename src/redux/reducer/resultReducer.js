@@ -30,7 +30,6 @@ const result = createSlice({
     },
     shareResult: () => {},
     postFeedback: () => {},
-    reflectResult: () => {},
   },
 });
 
@@ -41,7 +40,6 @@ export const {
   getTestResult,
   shareResult,
   postFeedback,
-  reflectResult,
 } = result.actions;
 
 export default result;

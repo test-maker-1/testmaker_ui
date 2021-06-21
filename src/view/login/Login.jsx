@@ -4,9 +4,10 @@ import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 import { NoticeAlert, SVG } from "../../components/common";
-import { reflectResult } from "../../redux/reducer/resultReducer";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
+import testingAPI from "../../api/testingAPI";
+import { ERROR } from "../../utils/asyncUtils";
 
 import { key } from "../../constants/config";
 import ENUM, { KAKAO } from "../../constants/Enum";
@@ -20,16 +21,21 @@ const Login = () => {
     replace,
   } = usePage();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (loggedIn) {
       if (state !== undefined) {
         const { from, search = "" } = state;
         if (state.hasOwnProperty("resultID")) {
-          // 2-4-1. 회원가입 후 테스트 결과 저장
-          dispatch(reflectResult(state.resultID));
+          // 회원가입 후 테스트 결과 저장 (동기)
+          const { data, status } = await testingAPI.maintainResult(
+            state.resultID
+          );
+          if (status === ERROR) {
+            console.warn("fail to save result");
+          }
         }
         if (state.hasOwnProperty("from")) {
-          //로그인 후 이전 페이지 이동
+          // 로그인 후 이전 페이지 이동
           replace(from, search);
         }
       } else {
