@@ -98,13 +98,14 @@ const Comments = (props) => {
 
   const handlePopup = (id, uid, content) => {
     if (loggedIn && status === SUCCESS) {
+      comment_id = uid; //for report
+
       switch (id) {
         case "report":
           openAlert(id, uid);
           break;
         case "update":
           setWord(content);
-          // dispatch(updateComment(uid));
           break;
         case "delete":
           openAlert(id, uid); //dispatch(deleteComment(uid));
@@ -116,8 +117,6 @@ const Comments = (props) => {
   };
 
   const openAlert = (type, uid) => {
-    comment_id = uid; //for report
-
     let func = null;
 
     switch (type) {
@@ -153,15 +152,20 @@ const Comments = (props) => {
     if (checkLogin() && value) {
       setProgress(true);
       //댓글 작성
-      dispatch(submitOneComment(value));
+      if (word) {
+        dispatch(updateComment({ comment_id, value }));
+      } else {
+        dispatch(submitOneComment(value));
 
-      const current_scroll = document.documentElement.scrollTop;
+        const current_scroll = document.documentElement.scrollTop;
 
-      if (current_scroll > 0) {
-        //최상단 스크롤로 이동
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (current_scroll > 0) {
+          //최상단 스크롤로 이동
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
     }
+    if (word) setWord("");
   };
 
   const fetchMoreData = useCallback(() => {

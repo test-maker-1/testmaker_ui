@@ -99,13 +99,23 @@ function* updateComments(action) {
   const { status } = yield call(
     testingAPI.updateComment,
     state.reply.testUid, //state.testing.current_testID,
-    param
+    param.comment_id,
+    param.value
   );
 }
 //#endregion
 
 //#region >> 댓글 삭제
-function* deleteComments(action) {}
+function* deleteComments(action) {
+  const state = yield select();
+  const param = action.payload;
+
+  const { status } = yield call(
+    testingAPI.deleteComment,
+    state.reply.testUid, //state.testing.current_testID,
+    param
+  );
+}
 //#endregion
 
 function* replyInformation() {

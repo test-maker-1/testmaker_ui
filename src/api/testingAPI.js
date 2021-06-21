@@ -22,13 +22,13 @@ export default class TestingAPI {
     // PUT /testing/:testUid/reply/:replyID/report
     return put(`/testing/${uID}/reply/${cID}/report`);
   }
-  static updateComment(uID, cID) {
-    // PUT /testing/:testUid/reply/:replyID/report
-    return put(`/testing/${uID}/reply/${cID}/report`);
+  static updateComment(uID, cID, value) {
+    // POST /testing/:testUid/reply/:replyID/modify
+    return post(`/testing/${uID}/reply/${cID}/modify`, { reply: value });
   }
   static deleteComment(uID, cID) {
-    // PUT /testing/:testUid/reply/:replyID/report
-    return put(`/testing/${uID}/reply/${cID}/report`);
+    // PUT /testing/:testUid/reply/:replyID/delete
+    return put(`/testing/${uID}/reply/${cID}/delete`);
   }
   /** Result 정보 */
   static getResultInfo(uID) {
