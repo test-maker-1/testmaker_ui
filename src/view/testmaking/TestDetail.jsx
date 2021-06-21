@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 import { TitleBox, Tag, NoticeAlert, Loading } from "../../components/common";
@@ -20,7 +20,6 @@ const { PREVIEW, ENTER, WARNING } = ENUM;
 const TestDetail = () => {
   const {
     data,
-    btns,
     updateCommonByInput,
     onEnterPress,
     uploadImg,
@@ -31,14 +30,17 @@ const TestDetail = () => {
 
   const { state, onUpload, deleteImg } = useImage(
     (img) => uploadImg(img),
-    () => NoticeAlert.open(msg.errorPage[500])
+    () =>
+      NoticeAlert.open({
+        icon: WARNING,
+        text: msg.errorPage[500],
+        btns: [{ name: "다시보기" }],
+      })
   );
 
   return (
     <PageContainer>
       <Loading loading={state.status === LOADING} />
-      {/* alert */}
-      <NoticeAlert icon={WARNING} btns={btns} />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -107,7 +109,6 @@ const TestDetail = () => {
 
 const useDetail = () => {
   const { data, updateCommon, updateCommonByInput, addNewTag } = useCommon();
-  const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
   const onEnterPress = (e) => {
@@ -125,16 +126,26 @@ const useDetail = () => {
     const { releasable, msg = "" } = checkMakingData(data);
 
     if (releasable) {
-      setBtns([
-        { name: "다시보기" },
-        {
-          name: "테스트 만들기",
-          callback: saveFinalTest,
-        },
-      ]);
-    } else setBtns([{ name: "다시보기" }]);
-
-    NoticeAlert.open(msg);
+      console.log("오픈하기", msg);
+      NoticeAlert.open({
+        icon: WARNING,
+        text: msg,
+        btns: [
+          { name: "다시보기" },
+          {
+            name: "테스트 만들기",
+            callback: saveFinalTest,
+          },
+        ],
+      });
+    } else {
+      console.log("못해, 다시보기");
+      NoticeAlert.open({
+        icon: WARNING,
+        text: msg,
+        btns: [{ name: "다시보기" }],
+      });
+    }
   };
 
   const saveFinalTest = async () => {
@@ -148,7 +159,6 @@ const useDetail = () => {
 
   return {
     data,
-    btns,
     updateCommonByInput,
     onEnterPress,
     uploadImg,

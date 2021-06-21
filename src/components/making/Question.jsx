@@ -26,7 +26,6 @@ const Questions = () => {
   const { questions } = useQuestion();
   return (
     <>
-      {/* <NoticeAlert btns={[{ name: "다시보기" }]} /> */}
       {questions.map((question, idx) => (
         <Question key={question.questionId} questionIdx={idx} data={question} />
       ))}

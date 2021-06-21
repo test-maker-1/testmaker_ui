@@ -57,7 +57,6 @@ const MultipleResult = () => {
 
   return (
     <Container>
-      <NoticeAlert icon={WARNING} btns={[{ name: "다시보기" }]} />
       <TitleBox noline>
         <TitleWrap>
           <Title>{currentMode}</Title>
@@ -95,7 +94,12 @@ const BtnWrapper = ({ isRankMode, top }) => {
       goPage("/test/multiple/detail");
       return;
     }
-    NoticeAlert.open(resultError || msg);
+
+    NoticeAlert.open({
+      icon: WARNING,
+      text: resultError || msg,
+      btns: [{ name: "다시보기" }],
+    });
   };
 
   return (

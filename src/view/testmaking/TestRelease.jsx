@@ -85,17 +85,15 @@ const TestRelease = () => {
     };
     const { status } = await MakingAPI.updateOnFeed(params);
 
-    if (status === ERROR) NoticeAlert.open(msg.errorPage[500]);
+    if (status === ERROR)
+      NoticeAlert.open({
+        text: msg.errorPage[500],
+        btns: [{ name: "홈으로", callback: () => goPage("/") }],
+      });
   };
 
   return (
     <PageContainer>
-      {/* modal */}
-      <NoticeAlert
-        icon={ENUM.WARNING}
-        btns={[{ name: "홈으로", callback: () => goPage("/") }]}
-      />
-
       <TitleBox noline>
         <ImgWrap>
           <Confetti

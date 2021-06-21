@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { NoticeAlert, SVG } from "../../components/common";
+import { SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 
@@ -42,14 +42,8 @@ const Login = () => {
     kakaoLogIn(reqData);
   };
 
-  // const onClickEmail = () => {
-  //   NoticeAlert.open("곧 업데이트 예정이에요!");
-  //   // goPage("/login/email"); 1차 MVP 제외
-  // };
-
   return (
     <PageContainer>
-      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
       {/* title */}
       <TitleWrap>
         <LogoWrap>

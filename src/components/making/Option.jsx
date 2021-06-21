@@ -29,7 +29,6 @@ const Options = ({ questionIdx, answer, options }) => {
 
   return (
     <>
-      {/* <NoticeAlert btns={[{ name: "다시보기" }]} /> */}
       <ul>
         {options.map(({ optionId, name }, idx) => (
           <Option

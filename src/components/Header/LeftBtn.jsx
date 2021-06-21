@@ -46,16 +46,11 @@ const LeftBtn = ({ type = BACK }) => {
   };
 
   return (
-    <>
-      {/* {type !== BACK && (
-        <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
-      )} */}
-      <SVG
-        type={type === MAKING_BACK ? BACK : type}
-        onClick={onClickEvent}
-        style={{ width: "24", height: "24" }}
-      />
-    </>
+    <SVG
+      type={type === MAKING_BACK ? BACK : type}
+      onClick={onClickEvent}
+      style={{ width: "24", height: "24" }}
+    />
   );
 };
 
