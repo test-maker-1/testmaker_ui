@@ -5,7 +5,10 @@ import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { ImageView, BtnExam } from "../../components/common";
 import theme from "../../styles/theme";
 import { setHeadTitle } from "../../redux/reducer/commonReducer";
-import { saveAnwerByStep } from "../../redux/reducer/testingReducer";
+import {
+  saveAnwerByStep,
+  setInitExam,
+} from "../../redux/reducer/testingReducer";
 import usePage from "../../hooks/usePage";
 
 /**
@@ -51,6 +54,12 @@ const Exam = memo((props) => {
   );
   const { responseUid } = useSelector((state) => state.result);
   const { replace } = usePage();
+
+  useEffect(() => {
+    return () => {
+      if (questsCnt > 0) dispatch(setInitExam());
+    };
+  }, []);
 
   useEffect(() => {
     if (responseUid && finish) {

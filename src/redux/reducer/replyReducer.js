@@ -29,6 +29,20 @@ const reply = createSlice({
     stopCallComments: (state, { payload }) => {
       state.isStop = true;
     },
+    updateComment: (state, { payload: { comment_id, value } }) => {
+      const idx = state.replies.findIndex((item) => {
+        return item.uid === comment_id;
+      });
+
+      if (idx > -1) state.replies[idx].content = value;
+    },
+    deleteComment: (state, { payload }) => {
+      const idx = state.replies.findIndex((item) => {
+        return item.uid === payload;
+      });
+
+      if (idx > -1) state.replies.splice(idx, 1);
+    },
   },
 });
 
@@ -41,6 +55,8 @@ export const {
   reportComment,
   moreReplyInfo,
   stopCallComments,
+  updateComment,
+  deleteComment,
 } = reply.actions;
 
 export default reply;

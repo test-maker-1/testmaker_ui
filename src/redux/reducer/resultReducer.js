@@ -29,6 +29,7 @@ const result = createSlice({
       // state.responseUid = testID;
     },
     shareResult: () => {},
+    postFeedback: () => {},
   },
 });
 
@@ -38,6 +39,7 @@ export const {
   getTestResultInfoError,
   getTestResult,
   shareResult,
+  postFeedback,
 } = result.actions;
 
 export default result;

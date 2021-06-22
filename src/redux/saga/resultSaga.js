@@ -1,10 +1,18 @@
-import { call, put, fork, all, takeLeading } from "redux-saga/effects";
+import {
+  call,
+  put,
+  fork,
+  all,
+  takeLeading,
+  takeLatest,
+} from "redux-saga/effects";
 import { saveResult } from "../reducer/testingReducer";
 import {
   getTestResultInfo,
   getTestResultInfoSuccess,
   getTestResultInfoError,
   shareResult,
+  postFeedback,
 } from "../reducer/resultReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
@@ -73,12 +81,19 @@ const updateShareResult = createPromiseSaga(
 );
 //#endregion
 
+//피드백 작성
+const sendFeedback = createPromiseSaga(
+  postFeedback.type,
+  testingAPI.postFeedbackMaker
+);
+
 function* getResultInfromation() {
   yield takeLeading(getTestResultInfo.type, getResultInform);
   yield takeLeading(getTestResultInfoSuccess.type, getResultInformSuccess);
-  yield takeLeading(getTestResultInfoError.type, getResultInformError);
+  yield takeLatest(getTestResultInfoError.type, getResultInformError);
   yield takeLeading(saveResult.type, updateTestResult);
   yield takeLeading(shareResult.type, updateShareResult);
+  yield takeLeading(postFeedback.type, sendFeedback);
 }
 
 export default function* resultSaga() {

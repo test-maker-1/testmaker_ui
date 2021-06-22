@@ -1,42 +1,52 @@
-import React, { memo, useState, forwardRef } from "react";
+import React, { memo, useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
 import confirm from "../../../resources/images/confirm.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 import Mention, { EmptyMention } from "./Mention";
 
-export const ComInput = forwardRef(({ hintText, onFocus, onSubmit }, ref) => {
-  const [words, setWords] = useState("");
-  const handleOnFocus = (event) => {
-    if (onFocus) onFocus(event);
-  };
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
+export const ComInput = forwardRef(
+  ({ word = "", hintText, onFocus, onSubmit }, ref) => {
+    const [words, setWords] = useState("");
 
-    if (onFocus) onFocus(event);
-    if (onSubmit) onSubmit(words);
-    if (words) setWords("");
-  };
+    useEffect(() => {
+      if (word) {
+        setWords(word);
+        ref.current.focus();
+      }
+    }, [word]);
 
-  return (
-    <form style={{ width: "100%" }} onSubmit={handleOnSubmit}>
-      <InputContainer>
-        <WrapInput>
-          <InputCom
-            ref={ref}
-            value={words}
-            placeholder={hintText || "입력해주세요"}
-            onFocus={handleOnFocus}
-            onChange={(event) => setWords(event.target.value)}
-          />
-        </WrapInput>
-        <WrapBtn>
-          <SubmitBtn src={confirm} type={"image"} />
-        </WrapBtn>
-      </InputContainer>
-    </form>
-  );
-});
+    const handleOnFocus = (event) => {
+      if (onFocus) onFocus(event);
+    };
+    const handleOnSubmit = (event) => {
+      event.preventDefault();
+
+      if (onFocus) onFocus(event);
+      if (onSubmit) onSubmit(words);
+      if (words) setWords("");
+    };
+
+    return (
+      <form style={{ width: "100%" }} onSubmit={handleOnSubmit}>
+        <InputContainer>
+          <WrapInput>
+            <InputCom
+              ref={ref}
+              value={words}
+              placeholder={hintText || "입력해주세요"}
+              onFocus={handleOnFocus}
+              onChange={(event) => setWords(event.target.value)}
+            />
+          </WrapInput>
+          <WrapBtn>
+            <SubmitBtn src={confirm} type={"image"} />
+          </WrapBtn>
+        </InputContainer>
+      </form>
+    );
+  }
+);
 
 const Reply = memo(({ repliesCnt, recent3replies, testid }) => {
   const { goPage } = usePage();
@@ -64,6 +74,8 @@ const Reply = memo(({ repliesCnt, recent3replies, testid }) => {
               writer={item.writer}
               content={item.content}
               timestamp={item.writtenAt}
+              readOnly={true}
+              onFocus={onMoveComments}
             />
           );
         })

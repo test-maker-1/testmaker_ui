@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
 import { NoticeAlert, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
+import testingAPI from "../../api/testingAPI";
+import { ERROR } from "../../utils/asyncUtils";
 
 import { key } from "../../constants/config";
 import ENUM, { KAKAO } from "../../constants/Enum";
@@ -12,18 +15,34 @@ import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const { location, replace } = usePage();
+  const dispatch = useDispatch();
+  const {
+    location: { state },
+    replace,
+  } = usePage();
 
-  useEffect(() => {
+  useEffect(async () => {
     if (loggedIn) {
-      if (location.state && location.state.hasOwnProperty("from")) {
-        const { from, search = "" } = location.state;
-        replace(from, search);
+      if (state !== undefined) {
+        const { from, search = "" } = state;
+        if (state.hasOwnProperty("resultID")) {
+          // 회원가입 후 테스트 결과 저장 (동기)
+          const { data, status } = await testingAPI.maintainResult(
+            state.resultID
+          );
+          if (status === ERROR) {
+            console.warn("fail to save result");
+          }
+        }
+        if (state.hasOwnProperty("from")) {
+          // 로그인 후 이전 페이지 이동
+          replace(from, search);
+        }
       } else {
         replace("/");
       }
     }
-  }, [location.state, loggedIn, replace]);
+  }, [state, loggedIn, replace]);
 
   const onSuccessKakao = async (resData) => {
     const {
