@@ -17,6 +17,14 @@ import msg from "../../constants/msg";
 
 const { PREVIEW, ENTER, WARNING } = ENUM;
 
+const showAlert = (text) => {
+  NoticeAlert.open({
+    icon: ENUM.WARNING,
+    text,
+    btns: [{ name: "다시보기" }],
+  });
+};
+
 const TestDetail = () => {
   const {
     data,
@@ -30,12 +38,7 @@ const TestDetail = () => {
 
   const { state, onUpload, deleteImg } = useImage(
     (img) => uploadImg(img),
-    () =>
-      NoticeAlert.open({
-        icon: WARNING,
-        text: msg.errorPage[500],
-        btns: [{ name: "다시보기" }],
-      })
+    () => showAlert(msg.errorPage[500])
   );
 
   return (
@@ -137,13 +140,7 @@ const useDetail = () => {
           },
         ],
       });
-    } else {
-      NoticeAlert.open({
-        icon: WARNING,
-        text: msg,
-        btns: [{ name: "다시보기" }],
-      });
-    }
+    } else showAlert(msg);
   };
 
   const saveFinalTest = async () => {
@@ -152,7 +149,7 @@ const useDetail = () => {
     if (status === SUCCESS) {
       sessionStorage.setItem("testId", data.testId);
       goPage("/test/release");
-    } else NoticeAlert.open(msg.errorPage[500]);
+    } else showAlert(msg.errorPage[500]);
   };
 
   return {

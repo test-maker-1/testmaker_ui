@@ -12,7 +12,7 @@ const showAlert = (text) => {
   NoticeAlert.open({
     icon: ENUM.WARNING,
     text,
-    btns: [{ name: "돌아가기" }],
+    btns: [{ name: "확인" }],
   });
 };
 
@@ -30,8 +30,7 @@ const ResultBound = () => {
   };
 
   const deleteResult = (idx) => {
-    if (!handleDeleteResult(idx))
-      if (!addEmptyResult()) showAlert("결과는 1개 이상 있어야 해요!");
+    if (!handleDeleteResult(idx)) showAlert("결과는 1개 이상 있어야 해요!");
   };
 
   return (
@@ -49,7 +48,7 @@ const ResultBound = () => {
           resultIdx={idx}
           result={result}
           deleteResult={deleteResult}
-          openAlert={(msg) => NoticeAlert.open(msg)}
+          openAlert={(msg) => showAlert(msg)}
         />
       ))}
 
