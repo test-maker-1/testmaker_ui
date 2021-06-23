@@ -1,35 +1,33 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useCallback } from "react";
 import KaKaoLogin from "react-kakao-login";
 import styled from "styled-components";
 
-import { SVG } from "../../components/common";
+import { BtnField, SVG } from "../../components/common";
 import useUser from "../../hooks/useUser";
 import usePage from "../../hooks/usePage";
 import testingAPI from "../../api/testingAPI";
 import { ERROR } from "../../utils/asyncUtils";
 
 import { key } from "../../constants/config";
-import ENUM, { KAKAO } from "../../constants/Enum";
+import ENUM, { EMAIL, KAKAO } from "../../constants/Enum";
+import links from "../../constants/links";
 import kakao from "../../resources/images/kakaoSm.png";
 
 const Login = () => {
   const { loggedIn, kakaoLogIn } = useUser();
-  const dispatch = useDispatch();
   const {
     location: { state },
+    goPage,
     replace,
   } = usePage();
 
-  useEffect(async () => {
+  const saveResult = useCallback(async () => {
     if (loggedIn) {
       if (state !== undefined) {
         const { from, search = "" } = state;
         if (state.hasOwnProperty("resultID")) {
           // 회원가입 후 테스트 결과 저장 (동기)
-          const { data, status } = await testingAPI.maintainResult(
-            state.resultID
-          );
+          const { status } = await testingAPI.maintainResult(state.resultID);
           if (status === ERROR) {
             console.warn("fail to save result");
           }
@@ -42,7 +40,11 @@ const Login = () => {
         replace("/");
       }
     }
-  }, [state, loggedIn, replace]);
+  }, [loggedIn, replace, state]);
+
+  useEffect(() => {
+    saveResult();
+  }, [saveResult]);
 
   const onSuccessKakao = async (resData) => {
     const {
@@ -60,6 +62,8 @@ const Login = () => {
 
     kakaoLogIn(reqData);
   };
+
+  const onClickEmail = () => goPage("/login/email");
 
   return (
     <PageContainer>
@@ -84,16 +88,18 @@ const Login = () => {
             {KAKAO}
           </BtnKakaoLogin>
           {/* redirect email login */}
-          {/* <BtnField color="skyBlue" onClick={onClickEmail}>
+          <BtnField color="skyBlue" onClick={onClickEmail}>
             {EMAIL}
-          </BtnField> */}
+          </BtnField>
         </div>
       </TitleWrap>
       {/* summary */}
       <Summary>
-        로그인 시 <strong>개인정보보호정책</strong>을 읽었으며
+        로그인 시 <a href={links.login.privacyPolicy}>개인정보보호정책</a>
+        을 읽었으며
         <br />
-        <strong>서비스 이용약관</strong>에 동의하는 것으로 간주합니다.
+        <a href={links.login.termsOfService}>서비스 이용약관</a>에 동의하는
+        것으로 간주합니다.
       </Summary>
     </PageContainer>
   );
@@ -167,7 +173,7 @@ export const Summary = styled.p`
   line-height: 21px;
   color: ${({ theme: { colors } }) => colors.gray};
 
-  strong {
+  a {
     font-weight: bold;
     color: ${({ theme: { colors } }) => colors.blue};
   }

@@ -1,4 +1,3 @@
-import React from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { loginComponents } from "../../constants/loginModuleComponents";
 
@@ -17,8 +16,7 @@ const LoginFrame = ({
 
   if (module === "find-pw") {
     let findPwComponent = components[module];
-    //console.log(findPwComponent);
-    if (step == undefined || !findPwComponent.hasOwnProperty(step)) {
+    if (step === undefined || !findPwComponent.hasOwnProperty(step)) {
       history.push("/error");
       return null;
     }
