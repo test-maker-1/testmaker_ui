@@ -55,7 +55,7 @@ const MypageMain = memo((props) => {
     <div style={{ width: "100%" }}>
       <InfoContainer>
         <InfoUser>
-          <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} />
+          {/* <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} /> */}
           <div className="space-left">
             <InfoAva>
               {data.profileImg ? (

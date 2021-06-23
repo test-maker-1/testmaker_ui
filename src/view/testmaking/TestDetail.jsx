@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 import { TitleBox, Tag, NoticeAlert, Loading } from "../../components/common";
@@ -9,18 +9,25 @@ import { Input, InputFile, InputTitle, TextArea } from "../../styles";
 import useCommon from "../../hooks/making/useCommon";
 import usePage from "../../hooks/usePage";
 import useImage from "../../hooks/making/useImage";
-import { checkMakingData } from "../../utils/asyncMakingUtils";
-import { LOADING, saveTest, SUCCESS } from "../../utils/asyncUtils";
+import { checkMakingData, saveTest } from "../../utils/asyncMakingUtils";
+import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM, { lg } from "../../constants/Enum";
 import msg from "../../constants/msg";
 
 const { PREVIEW, ENTER, WARNING } = ENUM;
 
+const showAlert = (text) => {
+  NoticeAlert.open({
+    icon: ENUM.WARNING,
+    text,
+    btns: [{ name: "다시보기" }],
+  });
+};
+
 const TestDetail = () => {
   const {
     data,
-    btns,
     updateCommonByInput,
     onEnterPress,
     uploadImg,
@@ -31,14 +38,12 @@ const TestDetail = () => {
 
   const { state, onUpload, deleteImg } = useImage(
     (img) => uploadImg(img),
-    () => NoticeAlert.open(msg.errorPage[500])
+    () => showAlert(msg.errorPage[500])
   );
 
   return (
     <PageContainer>
       <Loading loading={state.status === LOADING} />
-      {/* alert */}
-      <NoticeAlert icon={WARNING} btns={btns} />
       <TitleBox>
         {/* title */}
         <InputTitle
@@ -107,7 +112,6 @@ const TestDetail = () => {
 
 const useDetail = () => {
   const { data, updateCommon, updateCommonByInput, addNewTag } = useCommon();
-  const [btns, setBtns] = useState();
   const { goPage } = usePage();
 
   const onEnterPress = (e) => {
@@ -125,16 +129,18 @@ const useDetail = () => {
     const { releasable, msg = "" } = checkMakingData(data);
 
     if (releasable) {
-      setBtns([
-        { name: "다시보기" },
-        {
-          name: "테스트 만들기",
-          callback: saveFinalTest,
-        },
-      ]);
-    } else setBtns([{ name: "다시보기" }]);
-
-    NoticeAlert.open(msg);
+      NoticeAlert.open({
+        icon: WARNING,
+        text: msg,
+        btns: [
+          { name: "다시보기" },
+          {
+            name: "테스트 만들기",
+            callback: saveFinalTest,
+          },
+        ],
+      });
+    } else showAlert(msg);
   };
 
   const saveFinalTest = async () => {
@@ -143,12 +149,11 @@ const useDetail = () => {
     if (status === SUCCESS) {
       sessionStorage.setItem("testId", data.testId);
       goPage("/test/release");
-    } else NoticeAlert.open(msg.errorPage[500]);
+    } else showAlert(msg.errorPage[500]);
   };
 
   return {
     data,
-    btns,
     updateCommonByInput,
     onEnterPress,
     uploadImg,

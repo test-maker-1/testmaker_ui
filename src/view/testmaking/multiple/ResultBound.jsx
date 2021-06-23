@@ -8,6 +8,14 @@ import { TextBox } from "../../../styles";
 import useQnA from "../../../hooks/making/useQnA";
 import ENUM from "../../../constants/Enum";
 
+const showAlert = (text) => {
+  NoticeAlert.open({
+    icon: ENUM.WARNING,
+    text,
+    btns: [{ name: "확인" }],
+  });
+};
+
 const ResultBound = () => {
   const {
     questionsCnt,
@@ -18,18 +26,15 @@ const ResultBound = () => {
   } = useQnA();
 
   const addResult = () => {
-    if (!addEmptyResult()) NoticeAlert.open("결과 개수가 너무 많아요!");
+    if (!addEmptyResult()) showAlert("결과 개수가 너무 많아요!");
   };
 
   const deleteResult = (idx) => {
-    if (!handleDeleteResult(idx))
-      NoticeAlert.open("결과는 1개 이상 있어야 해요!");
+    if (!handleDeleteResult(idx)) showAlert("결과는 1개 이상 있어야 해요!");
   };
 
   return (
     <Container>
-      <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} />
-
       <TitleBox>
         <TextBox>
           <Summary type="questions" value={questionsCnt} />
@@ -43,7 +48,7 @@ const ResultBound = () => {
           resultIdx={idx}
           result={result}
           deleteResult={deleteResult}
-          openAlert={(msg) => NoticeAlert.open(msg)}
+          openAlert={(msg) => showAlert(msg)}
         />
       ))}
 

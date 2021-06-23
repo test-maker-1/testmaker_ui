@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   initCommonData,
+  initTempData,
   initTypeData,
   updateCommonData,
   addTag,
@@ -14,7 +15,7 @@ const useCommon = () => {
   const dispatch = useDispatch();
 
   // init
-  const initCommon = (initMaker = false) => dispatch(initCommonData(initMaker));
+  const initCommon = (keepMaker) => dispatch(initCommonData(keepMaker));
   const initStateByType = (type) => {
     const { questionsCnt, resultsCnt } = getPreset(type);
     const questions = getQuestions(type, questionsCnt);
@@ -22,6 +23,7 @@ const useCommon = () => {
 
     dispatch(initTypeData({ type, questions, results }));
   };
+  const initTemp = (payload) => dispatch(initTempData(payload));
 
   // update
   const updateCommon = (key, value) => {
@@ -33,7 +35,7 @@ const useCommon = () => {
   };
   const updateStep = (step) => {
     if (data.step === step) return;
-    
+
     window.scrollTo({ top: 0 });
     updateCommon("step", step);
   };
@@ -56,6 +58,7 @@ const useCommon = () => {
     dispatch,
     // init
     initCommon,
+    initTemp,
     initStateByType,
     // update
     updateCommon,

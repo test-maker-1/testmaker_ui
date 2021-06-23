@@ -16,11 +16,16 @@ import useImage from "../../hooks/making/useImage";
 
 const { errorPage, errorMaking } = msg;
 
+const showAlert = (msg) =>
+  NoticeAlert.open({
+    text: msg,
+    btns: [{ name: "다시보기" }],
+  });
+
 const Questions = () => {
   const { questions } = useQuestion();
   return (
     <>
-      <NoticeAlert btns={[{ name: "다시보기" }]} />
       {questions.map((question, idx) => (
         <Question key={question.questionId} questionIdx={idx} data={question} />
       ))}
@@ -41,7 +46,9 @@ const Question = memo(({ questionIdx, data }) => {
 
   const { state, onUpload, deleteImg } = useImage(
     (img) => updateImg(img, questionIdx),
-    () => NoticeAlert.open(errorPage[500])
+    () => {
+      showAlert(errorPage[500]);
+    }
   );
 
   const fileInput = useRef();
@@ -49,7 +56,7 @@ const Question = memo(({ questionIdx, data }) => {
 
   const onDelete = () => {
     if (!deleteQuestionData(questionIdx)) {
-      NoticeAlert.open(errorMaking.invaliedQuestionsCnt);
+      showAlert(errorMaking.invaliedQuestionsCnt);
     }
   };
 
@@ -120,7 +127,7 @@ const BtnPreset = ({ target, setPreset }) => {
       requestSuccess();
     } else {
       requestError(data);
-      NoticeAlert.open(errorPage[500]);
+      showAlert(errorPage[500]);
     }
   };
 

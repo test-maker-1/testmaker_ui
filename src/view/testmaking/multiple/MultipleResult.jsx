@@ -16,7 +16,7 @@ import { checkResult } from "../../../utils/asyncMakingUtils";
 import ENUM from "../../../constants/Enum";
 import usePage from "../../../hooks/usePage";
 
-const { PREVIEW, WARNING } = ENUM;
+const { TEMP_SAVE, WARNING } = ENUM;
 
 const useStyles = makeStyles(() => ({
   btnRank: () => ({
@@ -57,7 +57,6 @@ const MultipleResult = () => {
 
   return (
     <Container>
-      <NoticeAlert icon={WARNING} btns={[{ name: "다시보기" }]} />
       <TitleBox noline>
         <TitleWrap>
           <Title>{currentMode}</Title>
@@ -95,13 +94,18 @@ const BtnWrapper = ({ isRankMode, top }) => {
       goPage("/test/multiple/detail");
       return;
     }
-    NoticeAlert.open(resultError || msg);
+
+    NoticeAlert.open({
+      icon: WARNING,
+      text: resultError || msg,
+      btns: [{ name: "다시보기" }],
+    });
   };
 
   return (
     <BottomBtn
       btnArr={[
-        { name: "미리보기", type: PREVIEW },
+        { name: "임시저장", type: TEMP_SAVE },
         { name: "다 적었어요", customClick: checkNextStep },
       ]}
     />

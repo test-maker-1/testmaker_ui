@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useOpen = () => {
-  const [open, setOpen] = useState(false);
+const useOpen = (initOpen = false) => {
+  const [open, setOpen] = useState(initOpen);
 
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);

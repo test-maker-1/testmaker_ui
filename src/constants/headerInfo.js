@@ -1,7 +1,8 @@
 import theme from "../styles/theme";
 
-export const [BACK, SEARCH, LOGO, MENU, NOTHING, TITLE, CUSTOM] = [
+export const [BACK, MAKING_BACK, SEARCH, LOGO, MENU, NOTHING, TITLE, CUSTOM] = [
   "back",
+  "making_back",
   "search",
   "logo",
   "menu",
@@ -23,7 +24,7 @@ const headerInfo = {
   },
 
   "/test/multiple": {
-    leftType: BACK,
+    leftType: MAKING_BACK,
     title: { type: TITLE, title: "객관식 테스트" },
   },
 

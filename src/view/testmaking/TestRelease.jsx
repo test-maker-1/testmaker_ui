@@ -8,6 +8,7 @@ import {
   Title,
   BtnShare,
   NoticeAlert,
+  LottieImg,
 } from "../../components/common";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import { FeedBtn } from "../../components/making";
@@ -22,7 +23,7 @@ import { ERROR, INIT, LOADING, SUCCESS } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
-import jellies from "../../resources/images/jellies.png";
+import jellies from "../../resources/lotties/jellies-lottie.json";
 
 const confettieConfig = {
   angle: 90,
@@ -37,7 +38,7 @@ const TestRelease = () => {
   const { status, loggedIn } = useUser();
   const { goPage } = usePage();
 
-  const { open: feed, onOpen, onClose } = useOpen();
+  const { open: feed, onOpen, onClose } = useOpen(true);
   const { open: fire, onOpen: onFire } = useOpen();
   const { state, request, requestSuccess } = useMiniReducer();
 
@@ -85,17 +86,15 @@ const TestRelease = () => {
     };
     const { status } = await MakingAPI.updateOnFeed(params);
 
-    if (status === ERROR) NoticeAlert.open(msg.errorPage[500]);
+    if (status === ERROR)
+      NoticeAlert.open({
+        text: msg.errorPage[500],
+        btns: [{ name: "홈으로", callback: () => goPage("/") }],
+      });
   };
 
   return (
     <PageContainer>
-      {/* modal */}
-      <NoticeAlert
-        icon={ENUM.WARNING}
-        btns={[{ name: "홈으로", callback: () => goPage("/") }]}
-      />
-
       <TitleBox noline>
         <ImgWrap>
           <Confetti
@@ -103,7 +102,7 @@ const TestRelease = () => {
             active={fire}
             config={confettieConfig}
           />
-          <img src={jellies} alt="success thumanil" />
+          <LottieImg lottieFile={jellies} />
           <SuccessTitle>테스트 만들기 성공!</SuccessTitle>
           <Guide>테스트 관리는 마이페이지에서 할 수 있어요!</Guide>
         </ImgWrap>
@@ -150,6 +149,7 @@ const ImgWrap = styled.div`
   .release-confetti {
     position: relative;
     height: 100px;
+    z-index: 1;
   }
 `;
 

@@ -5,6 +5,11 @@ const errorPage = {
   500: "서버에 오류가 발생했어요. 관리자에게 문의해주세요!",
 };
 
+const noticeMaking = {
+  leavePage:
+    "정말 떠나실 건가요? 제작 중인 테스트는 임시 저장에서 이어서 만들 수 있어요!",
+};
+
 const errorMaking = {
   empty: "비어있는 항목이 있어요!",
   invalied: "잘못된 항목이 있어요!",
@@ -20,6 +25,7 @@ const errorMaking = {
 
 const msg = {
   errorPage,
+  noticeMaking,
   errorMaking,
 };
 

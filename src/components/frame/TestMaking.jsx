@@ -1,13 +1,19 @@
-import React, { useCallback, useRef, useEffect, memo } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useCallback, useRef, useEffect } from "react";
+import { withRouter, useHistory } from "react-router-dom";
 
+import { NoticeAlert } from "../common";
 import Error from "../../view/Error";
+
 import useUser from "../../hooks/useUser";
 import useOpen from "../../hooks/useOpen";
-
-import { ERROR, saveTest } from "../../utils/asyncUtils";
-import components from "../../constants/testStepComponents";
 import useCommon from "../../hooks/making/useCommon";
+
+import { ERROR } from "../../utils/asyncUtils";
+import { saveTest } from "../../utils/asyncMakingUtils";
+import { handleBreak } from "../../utils/handler";
+
+import components from "../../constants/testStepComponents";
+import msg from "../../constants/msg";
 
 const SAVE_INTAERVAL = 1000 * 60; // 자동 임시저장 간격 60초
 
@@ -20,6 +26,7 @@ const TestMaking = ({
   const { logInLoading, loggedIn } = useUser();
   const { data, dispatch, initCommon, updateStep } = useCommon();
   const { open: error, onOpen: onError } = useOpen();
+  const history = useHistory();
 
   // timer utils
   const saveTimer = useRef({});
@@ -27,8 +34,8 @@ const TestMaking = ({
   const testState = useRef(data);
 
   const initTimer = useCallback(
-    (initMaker = false) => {
-      if (data.testId) dispatch(initCommon(initMaker));
+    (keepMaker = false) => {
+      if (data.testId) dispatch(initCommon(keepMaker));
       if (intervalLoading.current) intervalLoading.current = false;
 
       testState.current = {};
@@ -59,11 +66,45 @@ const TestMaking = ({
 
   useEffect(() => {
     testState.current = { ...data };
-
+    // run timer
     if (!loggedIn || error) initTimer(error);
     if (!intervalLoading.current && loggedIn) interval();
-    // run timer
-  }, [data, error, initTimer, interval, loggedIn]);
+
+    // prevent exit page
+    const unBlock = history.block(({ pathname, search }) => {
+      if (search && search.length > 0) return true;
+      if (loggedIn && data.testId) {
+        if (
+          !pathname.includes("/test/multiple") &&
+          !pathname.includes("/test/release")
+        ) {
+          NoticeAlert.open({
+            text: msg.noticeMaking.leavePage,
+            btns: [
+              { name: "돌아가기" },
+              {
+                name: "떠나기",
+                callback: () => {
+                  unBlock();
+                  history.push(pathname);
+                },
+              },
+            ],
+          });
+          return false;
+        }
+        return true;
+      }
+      return true;
+    });
+    // prevent refresh
+    window.addEventListener("beforeunload", handleBreak);
+
+    return () => {
+      unBlock();
+      window.removeEventListener("beforeunload", handleBreak);
+    };
+  }, [data, error, history, initTimer, interval, loggedIn]);
 
   useEffect(() => {
     return () => {
@@ -88,7 +129,7 @@ const TestMaking = ({
   // server error
   if (error) return <Error code={500} />;
 
-  return makingComponent[step];
+  return <>{makingComponent[step]}</>;
 };
 
-export default withRouter(memo(TestMaking));
+export default withRouter(TestMaking);

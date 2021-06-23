@@ -38,7 +38,7 @@ const useTestInfo = () => {
   const { data, updateTypeDataByInput } = useCommon();
 
   const value = useMemo(
-    () => (data.hasOwnProperty("target") ? data.target.target : FRITEND),
+    () => (data.hasOwnProperty("target") ? data.target : FRITEND),
     [data]
   );
 

@@ -207,3 +207,8 @@ export const returnTextDom = (text = "") => {
     return [item, <br key={`br${idx}`} />];
   });
 };
+
+export const handleBreak = (event) => {
+  event.preventDefault();
+  event.returnValue = "";
+};

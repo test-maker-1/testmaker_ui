@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import useUser from "../../hooks/useUser";
 import { PARTTEST, MADETEST, TEMPSTORAGE } from "../../constants/Enum";
-import TempTest from "./TempTest";
 import Card from "../Feed/Card";
 import InfinScroll from "../common/InfinScroll";
 import { StyledSpinner } from "../common/Loading";
+import TempTests from "./TempTest";
 
 const TabTests = (props) => {
   const {
@@ -51,13 +51,7 @@ const TabTests = (props) => {
     );
   } else {
     if (selectedTab === TEMPSTORAGE) {
-      return (
-        <TempContainer>
-          {tabTests.map((test) => (
-            <TempTest key={`key${test.createdAt}`} test={test} />
-          ))}
-        </TempContainer>
-      );
+      return <TempTests tests={tabTests} />;
     }
     return (
       <InfinScroll datas={tabTests} isStop={isStop} getMoreDatas={getMoreDatas}>
@@ -79,10 +73,6 @@ const TabTests = (props) => {
 };
 
 export default TabTests;
-
-const TempContainer = styled.div`
-  margin-top: 12px;
-`;
 
 const Notihing = styled.div`
   font-weight: bold;

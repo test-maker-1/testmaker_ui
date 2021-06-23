@@ -4,9 +4,12 @@ import question from "../../constants/question";
 import option from "../../constants/option";
 import result from "../../constants/result";
 
-const logOutActions = ["logOutSuccess", "logOutError", "logInError"];
-
 const prefix = "making";
+const logOutActions = [
+  "user/logOutSuccess",
+  "user/logOutError",
+  "user/logInError",
+];
 
 const making = createSlice({
   name: prefix,
@@ -18,6 +21,9 @@ const making = createSlice({
       return payload
         ? { ...initState.common, maker: { ...state.maker } }
         : initState.common;
+    },
+    initTempData: (state, { payload }) => {
+      return { ...state, ...payload };
     },
     initTypeData: (state, { payload: { type, questions, results } }) => {
       state.type = type;
@@ -129,7 +135,7 @@ const making = createSlice({
         return type.toLowerCase().includes("log");
       },
       (state, action) => {
-        if (action.type.includes(logOutActions)) {
+        if (logOutActions.includes(action.type)) {
           return initState.common;
         }
 
@@ -147,6 +153,7 @@ export const { initCommonData, initTypeData, initResultsInfo } = making.actions;
 
 /* update */
 export const {
+  initTempData,
   updateCommonData,
   updateTypeData,
   updateQuestionData,

@@ -16,7 +16,7 @@ const common = {
   coverImg: null, // 썸네일
 
   tags: [], // string[]
-  onFeed: false,
+  onFeed: true,
   optionalURL: "", // 홍보 URL (선택)
   step: "preset", // 테스트 제작 단계
 
