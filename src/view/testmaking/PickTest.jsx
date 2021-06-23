@@ -6,11 +6,11 @@ import Error from "../Error.jsx";
 
 import MakingAPI from "../../api/makingAPI.js";
 import usePage from "../../hooks/usePage.js";
-import useOpen from "../../hooks/useOpen.js";
 import useUser from "../../hooks/useUser.js";
 import useCommon from "../../hooks/making/useCommon.js";
-import { LOADING, SUCCESS } from "../../utils/asyncUtils.js";
+import useMiniReducer from "../../hooks/useMiniReducer.js";
 
+import { ERROR, LOADING, SUCCESS } from "../../utils/asyncUtils.js";
 import { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
 
@@ -19,30 +19,28 @@ const breakWidth = 350;
 const PickTest = () => {
   const { status, loggedIn } = useUser();
   const { testId, getTestId, setTestType } = usePick();
-
-  const { open: loading, onOpen: onLoading } = useOpen();
-  const { open: error, onOpen: onError } = useOpen();
+  const { state, request, requestError } = useMiniReducer();
 
   if (status === LOADING) return null;
   if (!loggedIn) return <Error code={403} />; // logOut
 
   if (testId) return <Error code={406} />; // invalied step
-  if (error) return <Error code={500} />; // server error
+  if (state.status === ERROR) return <Error code={500} />; // server error
 
   const onInitTest = async (type) => {
-    onLoading();
+    request();
 
     const successGetId = await getTestId(type);
     if (successGetId) {
       setTestType(type);
       return;
     }
-    onError();
+    requestError();
   };
 
   return (
     <div>
-      <Loading loading={loading} />
+      <Loading loading={state.status === LOADING} />
       <TitleBox title="어떤 테스트를 만드시나요?" noline>
         <TestCard type={multiple} onClick={onInitTest} />
         <TestCard type={mbti} onClick={onInitTest} />
