@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { Loading, TitleBox } from "../../components/common/index.js";
+import { Loading, NoticeAlert, TitleBox } from "../../components/common";
 import Error from "../Error.jsx";
 
 import MakingAPI from "../../api/makingAPI.js";
@@ -11,15 +11,33 @@ import useCommon from "../../hooks/making/useCommon.js";
 import useMiniReducer from "../../hooks/useMiniReducer.js";
 
 import { ERROR, LOADING, SUCCESS } from "../../utils/asyncUtils.js";
-import { mbti, multiple, weight } from "../../constants/Enum.js";
+import ENUM, { mbti, multiple, weight } from "../../constants/Enum.js";
 import testInfo from "../../constants/testInfo.js";
 
 const breakWidth = 350;
 
 const PickTest = () => {
-  const { status, loggedIn } = useUser();
-  const { testId, getTestId, setTestType } = usePick();
+  const { status, loggedIn, data } = useUser();
+  const savedTestCnt = loggedIn ? data.savedTestCnt : 0;
+
   const { state, request, requestError } = useMiniReducer();
+  const { goPage } = usePage();
+  const { testId, getTestId, initStateByType } = usePick();
+
+  useEffect(() => {
+    if (!loggedIn) return;
+
+    if (savedTestCnt > 0)
+      NoticeAlert.open({
+        icon: ENUM.WARNING,
+        text: "만들다만 테스트가 있어요!",
+        btns: [
+          { name: "새로운 테스트" },
+          { name: "이어하기", callback: () => goPage("/mypage/main") },
+        ],
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn, savedTestCnt]);
 
   if (status === LOADING) return null;
   if (!loggedIn) return <Error code={403} />; // logOut
@@ -32,7 +50,8 @@ const PickTest = () => {
 
     const successGetId = await getTestId(type);
     if (successGetId) {
-      setTestType(type);
+      initStateByType(type);
+      goPage(`/test/${type}/preset`);
       return;
     }
     requestError();
@@ -68,7 +87,6 @@ const TestCard = ({ type, onClick }) => {
 
 const usePick = () => {
   const { data, initCommon, initStateByType, updateCommon } = useCommon();
-  const { goPage } = usePage();
   const { maker } = data;
 
   const getTestId = async (type) => {
@@ -90,12 +108,7 @@ const usePick = () => {
     return false;
   };
 
-  const setTestType = (type) => {
-    initStateByType(type);
-    goPage(`/test/${type}/preset`);
-  };
-
-  return { testId: data.testId, getTestId, setTestType };
+  return { testId: data.testId, getTestId, initStateByType };
 };
 
 const Thumbnail = styled.div`
