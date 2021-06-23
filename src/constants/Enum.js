@@ -35,10 +35,26 @@ export const [
 export const [ALL] = ["전체"];
 
 // mypage
-export const [PARTTEST, MADETEST, TEMPSTORAGE] = [
+export const [
+  PARTTEST,
+  MADETEST,
+  TEMPSTORAGE,
+  CHANGEPW,
+  CHECKTERMS,
+  DELETEACCOUT,
+  MULTIPLE,
+  MBTI,
+  WEIGHT,
+] = [
   "참여 테스트",
   "만든 테스트",
   "임시저장",
+  "비밀번호 변경",
+  "약관 확인",
+  "계정 삭제",
+  "객관식 테스트",
+  "성격 테스트",
+  "유형 테스트",
 ];
 
 const ENUM = {
@@ -48,6 +64,7 @@ const ENUM = {
   MOVENEXT: "movenext",
   SHARE: "share",
   TEMP_SAVE: "temp_save",
+  LOGOUT: "logout",
 
   // svg type
   ADD: "add",

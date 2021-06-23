@@ -12,6 +12,9 @@ import {
   tempSaveTests,
   updatePartTests,
   updateMadeTests,
+  updateProfile,
+  updateNickname,
+  uploadProfile,
 } from "../reducer/userReducer";
 
 import {
@@ -66,6 +69,21 @@ const updateMadeTestsSaga = createPromiseSaga(
   UserAPI.madeTests
 );
 
+const updateProfileSaga = createPromiseSaga(
+  updateProfile.type,
+  UserAPI.updateProfile
+);
+
+const updateNicknameSaga = createPromiseSaga(
+  updateNickname.type,
+  UserAPI.updateNickname
+);
+
+const uploadProfileSaga = createPromiseSaga(
+  uploadProfile.type,
+  UserAPI.uploadImg
+);
+
 function* watchCheckLogin() {
   yield takeLeading(checkLogIn.type, checkLogInSaga);
 }
@@ -102,6 +120,18 @@ function* watchUpdateMadeTests() {
   yield takeLeading(updateMadeTests.type, updateMadeTestsSaga);
 }
 
+function* watchUpdateProfile() {
+  yield takeLeading(updateProfile.type, updateProfileSaga);
+}
+
+function* watchUpdateNickname() {
+  yield takeLeading(updateNickname.type, updateNicknameSaga);
+}
+
+function* watchUploadProfile() {
+  yield takeLeading(uploadProfile.type, uploadProfileSaga);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchCheckLogin),
@@ -113,5 +143,8 @@ export default function* userSaga() {
     fork(watchTempSaveTests),
     fork(watchUpdatePartTests),
     fork(watchUpdateMadeTests),
+    fork(watchUpdateProfile),
+    fork(watchUpdateNickname),
+    fork(watchUploadProfile),
   ]);
 }

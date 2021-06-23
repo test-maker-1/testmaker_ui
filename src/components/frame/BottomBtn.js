@@ -13,7 +13,7 @@ import { saveTest } from "../../utils/asyncMakingUtils";
 import ENUM from "../../constants/Enum";
 import { home, picktest } from "../../constants/urlInfo";
 
-const { HOME, PICKTEST, PREVIEW, MOVENEXT, TEMP_SAVE } = ENUM;
+const { HOME, PICKTEST, PREVIEW, MOVENEXT, TEMP_SAVE, LOGOUT } = ENUM;
 
 const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
   const { data } = useCommon();
@@ -55,6 +55,10 @@ const BottomBtn = memo(({ btnArr = [], history, location, match }) => {
 
         case TEMP_SAVE:
           await saveTempTest();
+          break;
+
+        case LOGOUT: // 마이페이지(계정관리)에서 로그아웃
+          history.push("/");
           break;
 
         default:

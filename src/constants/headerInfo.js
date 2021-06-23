@@ -87,6 +87,11 @@ const headerInfo = {
     leftType: BACK,
     title: { type: TITLE, title: "마이페이지" },
   },
+
+  "mypage/manage": {
+    leftType: BACK,
+    title: { type: TITLE, title: "계정 관리" },
+  },
 };
 
 export default headerInfo;
