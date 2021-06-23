@@ -10,6 +10,7 @@ import useCommon from "../../hooks/making/useCommon";
 
 import { ERROR } from "../../utils/asyncUtils";
 import { saveTest } from "../../utils/asyncMakingUtils";
+import { handleBreak } from "../../utils/handler";
 
 import components from "../../constants/testStepComponents";
 import msg from "../../constants/msg";
@@ -96,8 +97,13 @@ const TestMaking = ({
       }
       return true;
     });
+    // prevent refresh
+    window.addEventListener("beforeunload", handleBreak);
 
-    return unBlock;
+    return () => {
+      unBlock();
+      window.removeEventListener("beforeunload", handleBreak);
+    };
   }, [data, error, history, initTimer, interval, loggedIn]);
 
   useEffect(() => {
