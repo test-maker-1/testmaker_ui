@@ -59,9 +59,9 @@ const Result = memo((props) => {
 
   const openAlert = (type) => {
     if (type === "join") {
-      NoticeAlert.open("공유할건가요", SHARE);
+      // NoticeAlert.open("공유할건가요", SHARE);
     } else {
-      NoticeAlert.open("친구한테 공유할래요!", SHARE);
+      // NoticeAlert.open("친구한테 공유할래요!", SHARE);
     }
   };
 
@@ -187,7 +187,7 @@ const Result = memo((props) => {
           },
         ]}
       />
-      <NoticeAlert
+      {/* <NoticeAlert
         shareInfo={{
           link: `/testing/result?resultid=${responseUid}`,
           title: isRankMode
@@ -199,7 +199,7 @@ const Result = memo((props) => {
           imageUrl: img || "",
         }}
         onShareClick={handleShareClick}
-      />
+      /> */}
     </PageContainer>
   );
 });

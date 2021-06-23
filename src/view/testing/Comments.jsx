@@ -110,6 +110,8 @@ const Comments = (props) => {
         case "delete":
           openAlert(id, uid); //dispatch(deleteComment(uid));
           break;
+        default:
+          break;
       }
     } else {
       openAlert("join", uid);
@@ -126,6 +128,8 @@ const Comments = (props) => {
       case "delete":
       case "report":
         func = alertCallback.bind(this, type);
+        break;
+      default:
         break;
     }
 

@@ -32,8 +32,6 @@ const showAlert = (msg) =>
 const MultipleQnA = () => {
   return (
     <PageContainer>
-      {/* <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "돌아가기" }]} /> */}
-
       <RandomGuide>
         <div>
           <SVG type={ENUM.CASINO} style={svgStyles} />

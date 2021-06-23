@@ -113,17 +113,6 @@ const Welcome = () => {
           { name: "시작하기", type: MOVENEXT },
         ]}
       />
-      {/* <NoticeAlert
-        icon={alertInfo.icon}
-        btns={alertInfo.btn}
-        shareInfo={{
-          link: `/${testInfo.testLink}`,
-          title: testInfo.title,
-          description: testInfo.description,
-          imageUrl: testInfo.coverImg,
-        }}
-        onShareClick={handleShareClick}
-      /> */}
     </Container>
   );
 };

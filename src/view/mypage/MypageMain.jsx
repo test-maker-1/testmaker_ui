@@ -46,7 +46,11 @@ const MypageMain = memo((props) => {
   }, [selectedTab]);
 
   const onClick = useCallback(() => {
-    return NoticeAlert.open("곧 업데이트 예정이에요!");
+    return NoticeAlert.open({
+      icon: ENUM.WARNING,
+      text: "곧 업데이트 예정이에요!",
+      btns: [{ name: "닫기" }],
+    });
   }, []);
 
   const onClickAccount = () => {
@@ -60,7 +64,6 @@ const MypageMain = memo((props) => {
     <div style={{ width: "100%" }}>
       <InfoContainer>
         <InfoUser>
-          {/* <NoticeAlert icon={ENUM.WARNING} btns={[{ name: "닫기" }]} /> */}
           <div className="space-left">
             <InfoAva>
               {data.profileImg ? (
