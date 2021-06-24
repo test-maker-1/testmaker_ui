@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "@material-ui/core";
 import { NEXT } from "../../constants/Enum";
 import { PageContainer } from "../login/Login";
@@ -12,7 +12,8 @@ import styled, { css } from "styled-components";
 const RgEmailAuth = (props) => {
   const classes = useStyles();
   const { replace } = usePage();
-  // const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState(false);
   // const [authNumber, setAuthNumber] = useState("");
   // const [error, setError] = useState("");
 
@@ -34,28 +35,35 @@ const RgEmailAuth = (props) => {
       <Title>환영합니다!</Title>
       <EmailForm onSubmit={getAuthNumber}>
         <EmailInput
-          type="email"
-          placeholder="이메일을 적어주세요"
-          // onChange={(e) => setEmail(e.target.value)}
-          required
           className="email-input"
+          type="email"
+          required
+          placeholder="이메일을 적어주세요"
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Button type="submit" className={classes.useBtn}>
           인증번호 받기
         </Button>
       </EmailForm>
-
       <AuthForm onSubmit={onComplete}>
         <Input
           type="text"
+          className="auth-input"
+          required
           placeholder="인증번호를 적어주세요"
           // onChange={(e) => setAuthNumber(e.target.value)}
-          required
-          className="auth-input"
         />
 
         <MarginBox>
-          <BtnField type="submit" name={NEXT} color="blue" onClick={null} />
+          {/* size={md}  "blue"*/}
+          <BtnField
+            type="submit"
+            color={pass ? "blue" : "skyBlue"}
+            disabled={!pass}
+            onClick={null}
+          >
+            {NEXT}
+          </BtnField>
         </MarginBox>
       </AuthForm>
     </PageContainer>

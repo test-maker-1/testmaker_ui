@@ -54,6 +54,7 @@ export const BtnField = ({
   size = lg,
   onClick,
   children,
+  ...other
 }) => {
   const classes = useStyles({ color, size });
   return (
@@ -64,6 +65,7 @@ export const BtnField = ({
       name={name}
       value={value}
       onClick={onClick}
+      {...other}
     >
       {children}
     </Button>
