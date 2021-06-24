@@ -1,9 +1,10 @@
 import React, { memo, useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
-import confirm from "../../../resources/images/confirm.png";
+// import confirm from "../../../resources/images/confirm.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 import Mention, { EmptyMention } from "./Mention";
+import { ReactComponent as Direction } from "../../../resources/svg/direction.svg";
 
 export const ComInput = forwardRef(
   ({ word = "", hintText, onFocus, onSubmit }, ref) => {
@@ -40,7 +41,8 @@ export const ComInput = forwardRef(
             />
           </WrapInput>
           <WrapBtn>
-            <SubmitBtn src={confirm} type={"image"} />
+            <StyledDirection onClick={handleOnSubmit} />
+            {/* <SubmitBtn></SubmitBtn> */}
           </WrapBtn>
         </InputContainer>
       </form>
@@ -152,6 +154,11 @@ const Entire = styled.p`
 
 const SubmitBtn = styled.input`
   margin-top: 13px;
+`;
+
+const StyledDirection = styled(Direction)`
+  margin-top: 15px;
+  cursor: pointer;
 `;
 
 export default Reply;
