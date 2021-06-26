@@ -74,10 +74,21 @@ const updateProfileSaga = createPromiseSaga(
   UserAPI.updateProfile
 );
 
-const updateNicknameSaga = createPromiseSaga(
-  updateNickname.type,
-  UserAPI.updateNickname
-);
+function* updateNicknameSaga(action) {
+  const { status } = yield call(UserAPI.updateNickname, action.payload);
+  const { success, error } = createActionString(action.type);
+
+  if (status === SUCCESS) {
+    yield put({
+      type: success,
+    });
+    yield put({
+      type: getUserInfo.type,
+    });
+  } else {
+    yield put({ type: error });
+  }
+}
 
 const uploadProfileSaga = createPromiseSaga(
   uploadProfile.type,
