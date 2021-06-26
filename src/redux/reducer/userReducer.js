@@ -29,8 +29,7 @@ const initialState = {
   profileError: false,
 
   // 닉네임 변경
-  nicknameLoading: false,
-  nicknameError: false,
+  nickname: reducerUtils.init(),
 };
 
 const user = createSlice({
@@ -149,7 +148,6 @@ const user = createSlice({
       state.uploadLoading = true;
     },
     uploadProfileSuccess: (state, { payload: { url } }) => {
-      console.log(url);
       state.uploadLoading = false;
       state.profileUrl = url;
     },
@@ -172,14 +170,13 @@ const user = createSlice({
 
     // 닉네임 변경
     updateNickname: (state) => {
-      state.nicknameLoading = true;
+      state.nickname = reducerUtils.loading();
     },
     updateNicknameSuccess: (state) => {
-      state.nicknameLoading = false;
+      state.nickname = reducerUtils.success();
     },
     updateNicknameError: (state) => {
-      state.nicknameLoading = false;
-      state.nicknameError = true;
+      state.nickname = reducerUtils.error();
     },
   },
 
