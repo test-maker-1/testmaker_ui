@@ -27,6 +27,7 @@ const useUser = () => {
     isStop,
     tabTestsLoading,
     profileUrl,
+    nickname,
   } = useSelector((state) => state.user);
   const { data, status } = useSelector((state) => state.user.user);
   const logInLoading = useMemo(
@@ -37,6 +38,11 @@ const useUser = () => {
     () => status === SUCCESS && data !== null,
     [data, status]
   ); // 로그인 상태
+
+  const nicknameSuccess = useMemo(
+    () => [SUCCESS].includes(nickname.status),
+    [nickname.status]
+  );
 
   const dispatch = useDispatch();
 
@@ -84,6 +90,7 @@ const useUser = () => {
     putNickname,
     uploadImg,
     profileUrl,
+    nicknameSuccess,
   };
 };
 

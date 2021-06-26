@@ -10,6 +10,7 @@ import AutosizeInput from "react-input-autosize";
 import Error from "../Error";
 import BottomBtn, { PageContainer } from "../../components/frame/BottomBtn";
 import ManageList from "../../components/MyPage/ManageList";
+import { StyledSpinner } from "../../components/common/Loading";
 
 const { deepGray } = theme.colors;
 const { lg } = theme.fontSizes;
@@ -25,6 +26,7 @@ const AccountManage = () => {
     putNickname,
     uploadImg,
     logOut,
+    nicknameSuccess,
   } = useUser();
 
   const fileInput = useRef();
@@ -39,6 +41,10 @@ const AccountManage = () => {
     profileUrl && putProfile({ profileUrl: profileUrl });
   }, [profileUrl]);
 
+  useEffect(() => {
+    if (nicknameSuccess) setInputValue("");
+  }, [nicknameSuccess, setInputValue]);
+
   const onChange = useCallback(
     (e) => {
       setInputValue(e.target.value);
@@ -52,7 +58,7 @@ const AccountManage = () => {
       if (!inputValue || data.nickname === inputValue) return;
       putNickname({ nickname: inputValue });
     },
-    [inputValue]
+    [inputValue, putNickname]
   );
 
   const onKeyPress = (event) => {
@@ -82,7 +88,7 @@ const AccountManage = () => {
       }
     );
   };
-
+  console.log(nicknameSuccess);
   if (!loggedIn) return <Error code={403} />;
   return logInLoading ? (
     <Loading loading={updateUserLoading} />
@@ -91,7 +97,7 @@ const AccountManage = () => {
       <ProfileBox>
         <div>
           <Profile isHover={isHover}>
-            {data.profileImg ? (
+            {profileUrl == null && data.profileImg ? (
               <img
                 src={data.profileImg}
                 alt={"이미지"}
@@ -119,13 +125,18 @@ const AccountManage = () => {
           </SvgBox>
         </div>
         <Form onSubmit={onSubmitNick}>
-          <AutosizeInput
-            name="form-field-name"
-            placeholder={data.nickname}
-            value={inputValue}
-            onChange={onChange}
-            inputStyle={inputStyle}
-          />
+          {updateUserLoading ? (
+            <StyledSpinner />
+          ) : (
+            <AutosizeInput
+              name="form-field-name"
+              placeholder={data.nickname}
+              value={inputValue}
+              onChange={onChange}
+              inputStyle={inputStyle}
+              maxLength="15"
+            />
+          )}
           <Button type="submit">
             <SVG
               type={ENUM.CONFIRM}
