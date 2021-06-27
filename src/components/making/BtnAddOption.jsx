@@ -7,7 +7,7 @@ import theme from "../../styles/theme";
 import useOption from "../../hooks/making/useOption";
 import ENUM from "../../constants/Enum";
 
-const { white, deepGray } = theme.colors;
+const { ivory, titleGray } = theme.colors;
 
 const useStyles = makeStyles(() => ({
   addBtn: () => ({
@@ -17,8 +17,8 @@ const useStyles = makeStyles(() => ({
     fontWeight: "bold",
     lineHeight: "24px",
     letterSpacing: -0.5,
-    color: deepGray,
-    backgroundColor: white,
+    color: titleGray,
+    backgroundColor: ivory,
     borderRadius: 5,
   }),
 }));
