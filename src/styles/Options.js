@@ -7,6 +7,10 @@ export const Container = styled.li`
   margin-bottom: 9px;
   border-radius: 5px;
   background-color: ${({ theme: { colors }, bgColor }) => colors[bgColor]};
+
+  path {
+    stroke: ${({ stroke }) => stroke};
+  }
 `;
 
 export const InputContainer = styled.div`

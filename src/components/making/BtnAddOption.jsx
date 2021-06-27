@@ -19,6 +19,9 @@ const useStyles = makeStyles(() => ({
     color: titleGray,
     backgroundColor: ivory,
     borderRadius: 5,
+    "&:hover": {
+      backgroundColor: ivory,
+    },
   }),
 }));
 
