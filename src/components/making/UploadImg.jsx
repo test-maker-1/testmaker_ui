@@ -13,38 +13,53 @@ const [width, height, fill] = ["40", "40", theme.colors.blue];
 
 const UploadImg = memo(({ img, handleUpload, deleteImg }) => {
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
+  const { open: showGuide, onClose: hideGuide } = useOpen(true);
+
   return (
     <Wrapper>
       <OpenDiv onClick={onEdit} />
       <ImageView imageUrl={img} />
+      {showGuide && (
+        <Guide>
+          사진을 한 번 더 누르면 바꾸거나 지울 수 있어요!
+          <StyledCancel
+            className="icon-svg"
+            stroke={"white"}
+            onClick={hideGuide}
+          />
+        </Guide>
+      )}
 
       {edit && (
         <Dimmed>
-          <EditIcon>
-            <Change
-              className="icon-svg"
-              width={width}
-              height={height}
-              fill={fill}
-              onClick={handleUpload}
-            />
-          </EditIcon>
-          <EditIcon>
-            <StyledDelete
-              className="icon-svg"
-              width={width}
-              height={height}
-              onClick={() => deleteImg(img)}
-            />
-          </EditIcon>
-          <EditIcon>
-            <StyledCancel
-              className="icon-svg"
-              width={width}
-              height={height}
-              onClick={offEdit}
-            />
-          </EditIcon>
+          <div className="btns-edit">
+            <EditIcon>
+              <Change
+                className="icon-svg"
+                width={width}
+                height={height}
+                fill={fill}
+                onClick={handleUpload}
+              />
+            </EditIcon>
+            <EditIcon>
+              <StyledDelete
+                className="icon-svg"
+                width={width}
+                height={height}
+                onClick={() => deleteImg(img)}
+              />
+            </EditIcon>
+            <EditIcon>
+              <StyledCancel
+                className="icon-svg"
+                width={width}
+                height={height}
+                stroke={fill}
+                onClick={offEdit}
+              />
+            </EditIcon>
+          </div>
         </Dimmed>
       )}
     </Wrapper>
@@ -75,6 +90,29 @@ const Dimmed = styled.div`
   justify-content: center;
   align-items: center;
   z-index: ${({ theme: { zIndex } }) => zIndex.upImg};
+
+  .btns-edit {
+    display: flex;
+  }
+`;
+
+const Guide = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 8px 13px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
+  line-height: 21px;
+  letter-spacing: -0.3px;
+
+  border-radius: 10px 10px 0 0;
+  background: ${({ theme: { colors } }) => colors.blue};
+  color: white;
 `;
 
 const EditIcon = styled.div`
@@ -83,10 +121,6 @@ const EditIcon = styled.div`
   border-radius: 50%;
   background-color: ${({ theme: { colors } }) => colors.ghostGray};
   opacity: 0.8;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const StyledDelete = styled(Delete)`
@@ -100,7 +134,7 @@ const StyledDelete = styled(Delete)`
 
 const StyledCancel = styled(Cancel)`
   path {
-    stroke: ${fill};
+    stroke: ${({ stroke }) => stroke};
   }
 `;
 
