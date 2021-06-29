@@ -59,6 +59,7 @@ const Exam = memo((props) => {
     return () => {
       if (questsCnt > 0) dispatch(setInitExam());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

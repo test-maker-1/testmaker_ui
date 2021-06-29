@@ -14,7 +14,7 @@ export const ComInput = forwardRef(
         setWords(word);
         ref.current.focus();
       }
-    }, [word]);
+    }, [ref, word]);
 
     const handleOnFocus = (event) => {
       if (onFocus) onFocus(event);
@@ -91,10 +91,10 @@ const InputItem = styled.div`
 `;
 
 const WrapInput = styled.div`
-  display: inline-block;
   float: left;
   width: 85%;
 `;
+
 const WrapBtn = styled.div`
   display: inline-block;
   text-align: center;
@@ -132,7 +132,6 @@ const CommentTitle = styled.div`
 `;
 
 const Title = styled.h1`
-  display: inline-block;
   float: left;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
@@ -141,7 +140,6 @@ const Title = styled.h1`
 `;
 
 const Entire = styled.p`
-  display: inline-block;
   float: right;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   text-align: right;

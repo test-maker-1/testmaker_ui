@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import * as loadImage from "blueimp-load-image";
 import { getFormData } from "../../utils/asyncMakingUtils";
@@ -28,7 +29,6 @@ const AccountManage = () => {
   } = useUser();
 
   const fileInput = useRef();
-  const [isHover, setHover] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const onClick = useCallback((e) => {
@@ -90,7 +90,7 @@ const AccountManage = () => {
     <PageContainer>
       <ProfileBox>
         <div>
-          <Profile isHover={isHover}>
+          <Profile>
             {data.profileImg ? (
               <img
                 src={data.profileImg}
@@ -209,16 +209,4 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const Menu = styled.ul`
-  padding: 0 2rem 0 2rem;
-`;
-
-const Item = styled.li`
-  font-weight: bold;
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
-  line-height: 24px;
-  letter-spacing: -0.5px;
-  color: ${({ theme: { colors } }) => colors.deepGray};
 `;
