@@ -27,13 +27,14 @@ const Testing = ({
   },
   location,
 }) => {
-  const { testid, resultid } = queryString.parse(location.search);
+  const { testid, resultid, mode } = queryString.parse(location.search);
   const { loading, isError } = useSelector((state) => state.common);
   const { responseUid } = useSelector((state) => state.result);
   const dispatch = useDispatch();
   const checkModule =
-    (testid && [welcome, comments, exam].includes(module)) ||
-    (resultid && [result, otherType].includes(module));
+    (testid && [welcome, comments].includes(module)) ||
+    (resultid && [result, otherType].includes(module)) ||
+    (module === exam && (testid || mode === "preview"));
 
   useEffect(() => {
     if (checkModule) {
@@ -49,7 +50,7 @@ const Testing = ({
           break;
         case exam: // 테스트
           dispatch(setLoading(true));
-          dispatch(getTestExam(testid));
+          dispatch(getTestExam({ testid, mode }));
           break;
         case result: // (module)
         case otherType: // (module)
