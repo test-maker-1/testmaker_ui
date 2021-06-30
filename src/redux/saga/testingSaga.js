@@ -46,12 +46,14 @@ function* getTestExamInform(action) {
     result = {};
   if (payload.mode === "preview") {
     //미리보기
-    const storage = window.sessionStorage.getItem(payload.testid);
-    result =
-      storage !== null
-        ? JSON.parse(sessionStorage.getItem(payload.testid))
-        : {};
-    type = storage !== null ? SUCCESS : Error;
+    let storage = window.sessionStorage.getItem(payload.testid);
+    storage = storage ? JSON.parse(storage) : {};
+
+    if (["questions", "questsCnt"] in storage) {
+      type = SUCCESS;
+    } else {
+      type = ERROR;
+    }
   } else {
     //API 호출
     const { data, status } = yield call(testingAPI.getTesting, payload.testid);
