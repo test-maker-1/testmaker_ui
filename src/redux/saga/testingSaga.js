@@ -19,7 +19,7 @@ import {
 } from "../reducer/testingReducer";
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
-import { createPromiseSaga, SUCCESS } from "../../utils/asyncUtils"; //createPromiseSaga
+import { createPromiseSaga, SUCCESS, ERROR } from "../../utils/asyncUtils"; //createPromiseSaga
 
 //#region >> 테스트 정보 불러오기 (welcome)
 const getTestInform = createPromiseSaga(
@@ -40,10 +40,39 @@ function* getTestInformError() {
 //#endregion
 
 //#region >> 테스트 시작! (exam)
-const getTestExamInform = createPromiseSaga(
-  getTestExam.type,
-  testingAPI.getTesting
-);
+function* getTestExamInform(action) {
+  const { payload } = action;
+  let type = ERROR,
+    result = {};
+  if (payload.mode === "preview") {
+    //미리보기
+    const storage = window.sessionStorage.getItem(payload.testid);
+    result =
+      storage !== null
+        ? JSON.parse(sessionStorage.getItem(payload.testid))
+        : {};
+    type = storage !== null ? SUCCESS : Error;
+  } else {
+    //API 호출
+    const { data, status } = yield call(testingAPI.getTesting, payload.testid);
+
+    result = data;
+    type = status;
+  }
+
+  if (type === SUCCESS) {
+    yield put({
+      type: getTestExamSuccess.type,
+      payload: result,
+    });
+  } else {
+    yield put({
+      type: getTestInfoError.type,
+      payload: result,
+    });
+  }
+}
+// const getTestExamInform = createPromiseSaga(getTestExam.type,testingAPI.getTesting);
 
 function* getTestExamInformSuccess(action) {
   //로딩바 닫기
