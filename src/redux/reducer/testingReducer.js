@@ -34,8 +34,9 @@ const testing = createSlice({
     getTestExam: (state, { payload }) => {
       if (state.current_testID !== payload) {
         //console.log("현재 페이지가 아님!");
-        state.current_testID = payload;
+        state.current_testID = payload.testid;
       }
+      state.testMode = payload.mode || "default"; //preview, default
       state.answers.type = "multi"; //testType
     },
     getTestExamSuccess: (state, { payload: { questions } }) => {

@@ -49,6 +49,7 @@ const testing = {
     testLink: "",
     tags: [],
   },
+  testMode: "default",
   questsCnt: 0,
   questions: [],
   /* 정답 형식 */

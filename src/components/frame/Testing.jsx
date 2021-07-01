@@ -20,6 +20,7 @@ import { setLoading } from "../../redux/reducer/commonReducer";
 import { getTestInfo, getTestExam } from "../../redux/reducer/testingReducer";
 import { getReplyInfo } from "../../redux/reducer/replyReducer";
 import { getTestResultInfo } from "../../redux/reducer/resultReducer";
+import { preview } from "../../constants/urlInfo";
 
 const Testing = ({
   match: {
@@ -34,7 +35,7 @@ const Testing = ({
   const checkModule =
     (testid && [welcome, comments].includes(module)) ||
     (resultid && [result, otherType].includes(module)) ||
-    (module === exam && (testid || mode === "preview"));
+    (module === exam && (testid || (testid && mode === preview)));
 
   useEffect(() => {
     if (checkModule) {

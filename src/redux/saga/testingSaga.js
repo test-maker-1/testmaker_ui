@@ -20,6 +20,7 @@ import {
 import { setLoading, setError } from "../reducer/commonReducer";
 import testingAPI from "../../api/testingAPI";
 import { createPromiseSaga, SUCCESS, ERROR } from "../../utils/asyncUtils"; //createPromiseSaga
+import { preview } from "../../constants/urlInfo";
 
 //#region >> 테스트 정보 불러오기 (welcome)
 const getTestInform = createPromiseSaga(
@@ -44,13 +45,14 @@ function* getTestExamInform(action) {
   const { payload } = action;
   let type = ERROR,
     result = {};
-  if (payload.mode === "preview") {
+  if (payload.mode === preview) {
     //미리보기
     let storage = window.sessionStorage.getItem(payload.testid);
     storage = storage ? JSON.parse(storage) : {};
 
-    if (["questions", "questsCnt"] in storage) {
+    if ("questions" in storage) {
       type = SUCCESS;
+      result = storage;
     } else {
       type = ERROR;
     }
@@ -91,7 +93,7 @@ function* insertExam(action) {
   const state = yield select();
   const { payload } = action;
 
-  if (!payload.isIng) {
+  if (!payload.isIng && state.testMode === "default") {
     yield put({ type: setLoading.type, payload: true });
     //마지막 시험지일 경우 결과 페이지 이동
     const { data, status } = yield call(

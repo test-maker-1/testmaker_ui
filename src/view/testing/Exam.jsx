@@ -10,6 +10,7 @@ import {
   setInitExam,
 } from "../../redux/reducer/testingReducer";
 import usePage from "../../hooks/usePage";
+import { preview } from "../../constants/urlInfo";
 
 /**
  * anwser: "옵션1"
@@ -49,11 +50,11 @@ const Page = ({
 const Exam = memo((props) => {
   const [page, movePage] = useState(0);
   const dispatch = useDispatch();
-  const { questsCnt, questions, answers, finish } = useSelector(
+  const { questsCnt, questions, answers, finish, testMode } = useSelector(
     (state) => state.testing
   );
   const { responseUid } = useSelector((state) => state.result);
-  const { replace } = usePage();
+  const { replace, goBack } = usePage();
 
   useEffect(() => {
     return () => {
@@ -63,10 +64,16 @@ const Exam = memo((props) => {
   }, []);
 
   useEffect(() => {
-    if (responseUid && finish) {
-      replace("/testing/result", `?resultid=${responseUid}`);
+    if (finish) {
+      if (testMode === preview) {
+        //테스트 메이킹에서 미리보기 끝났을 경우
+        //goBack();
+        replace("/");
+      } else if (responseUid) {
+        replace("/testing/result", `?resultid=${responseUid}`);
+      }
     }
-  }, [replace, responseUid, finish]);
+  }, [finish, responseUid, replace, goBack]);
 
   useEffect(() => {
     //헤더 타이틀 변경
