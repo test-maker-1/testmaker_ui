@@ -65,6 +65,7 @@ const TabTests = (props) => {
             sharedCnt={test.sharedCnt}
             participatedCnt={test.participantsCnt}
             testLink={test.testLink}
+            result={selectedTab === MADETEST && true}
           />
         ))}
       </InfinScroll>
