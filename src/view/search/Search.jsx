@@ -1,7 +1,13 @@
 import React from "react";
 
+import SearchMenu from "./SearchMenu";
+
 function Search() {
-  return <div>검색 페이지</div>;
+  return (
+    <div>
+      <SearchMenu />
+    </div>
+  );
 }
 
 export default Search;
