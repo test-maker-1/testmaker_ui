@@ -2,11 +2,9 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { NoticeAlert } from "../common";
 import usePage from "../../hooks/usePage";
 
 import { BACK, MAKING_BACK, NOTHING, SEARCH } from "../../constants/headerInfo";
-import ENUM from "../../constants/Enum";
 import { seqTest } from "../../constants/urlInfo";
 
 import { ReactComponent as Search } from "../../resources/svg/search.svg";
@@ -44,11 +42,8 @@ const LeftBtn = ({ type = BACK }) => {
         return;
 
       case SEARCH:
-        return NoticeAlert.open({
-          icon: ENUM.WARNING,
-          text: "곧 업데이트 예정이에요!",
-          btns: [{ name: "닫기" }],
-        });
+        goPage("/search");
+        return;
 
       default:
         return null;
