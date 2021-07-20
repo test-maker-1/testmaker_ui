@@ -1,6 +1,7 @@
 // input
 export {
   Input,
+  InputSearch,
   TextArea,
   InputNumber,
   InputFile,
