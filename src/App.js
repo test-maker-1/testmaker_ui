@@ -14,7 +14,7 @@ import { Loading, NoticeAlert } from "./components/common";
 import Login from "./view/login/Login";
 import Error from "./view/Error";
 import Feed from "./view/Feed";
-import Search from "./view/Search";
+import Search from "./view/search/Search";
 import PickTest from "./view/testmaking/PickTest";
 import TestRelease from "./view/testmaking/TestRelease";
 
