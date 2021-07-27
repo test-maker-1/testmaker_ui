@@ -2,17 +2,19 @@ import React, { memo, useRef } from "react";
 import styled from "styled-components";
 
 import { InfoText, Loading, NoticeAlert } from "../common";
-import { SubTitle, BtnIcon, Options, BtnPoint, UploadImg } from ".";
+import { SubTitle, Options, BtnPoint, UploadImg } from ".";
 import { InputFile, InputTitle, Section } from "../../styles";
 
 import MakingAPI from "../../api/makingAPI";
 import useQuestion from "../../hooks/making/useQuestion";
 import useMiniReducer from "../../hooks/useMiniReducer";
 
-import ENUM, { md } from "../../constants/Enum";
+import { md } from "../../constants/Enum";
 import { LOADING, SUCCESS } from "../../utils/asyncUtils";
 import msg from "../../constants/msg";
 import useImage from "../../hooks/making/useImage";
+
+import { ReactComponent as Casino } from "../../resources/svg/casino.svg";
 
 const { errorPage, errorMaking } = msg;
 
@@ -134,7 +136,12 @@ const BtnPreset = ({ target, setPreset }) => {
   return (
     <>
       {state.status === LOADING && <Loading />}
-      <BtnIcon type={ENUM.CASINO} onClick={onGetPreset} />
+      <Casino
+        className="icon-svg"
+        width="28"
+        height="28"
+        onClick={onGetPreset}
+      />
     </>
   );
 };

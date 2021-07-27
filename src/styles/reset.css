@@ -196,3 +196,7 @@ table {
 #root {
   height: 100%;
 }
+
+.icon-svg {
+  cursor: pointer;
+}

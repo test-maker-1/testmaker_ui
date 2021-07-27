@@ -108,17 +108,19 @@ const Button = styled.button`
   line-height: 30px;
   letter-spacing: -0.8px;
 
-  color: white;
-  /*자식이 1개일 경우*/
+  /* 자식이 1개일 경우 */
   &:first-child:nth-last-child(1) {
-    background-color: ${({ theme: { colors } }) => colors.black};
+    background-color: ${({ theme: { colors } }) => colors.blue};
+    color: white;
   }
-  /*자식이 2개 이상일 경우 홀짝 구분*/
+  /* 자식이 2개 이상일 경우 홀짝 구분 */
   &:nth-child(2n-1) {
-    background-color: ${({ theme: { colors } }) => colors.bodyGray};
+    background-color: ${({ theme: { colors } }) => colors.skyBlue};
+    color: ${({ theme: { colors } }) => colors.blue};
   }
   &:nth-child(2n) {
-    background-color: ${({ theme: { colors } }) => colors.black};
+    background-color: ${({ theme: { colors } }) => colors.blue};
+    color: white;
   }
 `;
 

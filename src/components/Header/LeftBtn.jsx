@@ -1,12 +1,22 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 
-import { NoticeAlert, SVG } from "../common";
+import { NoticeAlert } from "../common";
 import usePage from "../../hooks/usePage";
 
 import { BACK, MAKING_BACK, NOTHING, SEARCH } from "../../constants/headerInfo";
 import ENUM from "../../constants/Enum";
 import { seqTest } from "../../constants/urlInfo";
+
+import { ReactComponent as Search } from "../../resources/svg/search.svg";
+import { ReactComponent as Back } from "../../resources/svg/back.svg";
+
+const svgList = {
+  [BACK]: <Back />,
+  [SEARCH]: <Search />,
+  [NOTHING]: null,
+};
 
 // type: string;
 const LeftBtn = ({ type = BACK }) => {
@@ -29,7 +39,7 @@ const LeftBtn = ({ type = BACK }) => {
 
         const prevIDX = sequence.indexOf(step) - 1;
 
-        if (prevIDX < 0) goBack();
+        if (prevIDX < 0) goPage("/test/pick-test");
         else goPage(`/test/${module}/${sequence[prevIDX]}`);
         return;
 
@@ -46,12 +56,16 @@ const LeftBtn = ({ type = BACK }) => {
   };
 
   return (
-    <SVG
-      type={type === MAKING_BACK ? BACK : type}
-      onClick={onClickEvent}
-      style={{ width: "24", height: "24" }}
-    />
+    <Wrapper onClick={onClickEvent}>
+      {svgList[type === MAKING_BACK ? BACK : type]}
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  svg {
+    cursor: pointer;
+  }
+`;
 
 export default LeftBtn;
