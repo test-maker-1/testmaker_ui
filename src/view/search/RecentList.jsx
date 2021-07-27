@@ -4,16 +4,18 @@ import styled from "styled-components";
 import { ReactComponent as Clock } from "../../resources/svg/clock.svg";
 import { ReactComponent as Cancel } from "../../resources/svg/cancel.svg";
 
-function RecentList() {
+function RecentList({ recentList = [] }) {
   return (
     <Container>
-      <RecentItem>
-        <TextWrap>
-          <Clock className="icon" />
-          <span className="text">방탄 소년단 아미 테스트</span>
-        </TextWrap>
-        <Cancel />
-      </RecentItem>
+      {recentList.map((item) => (
+        <RecentItem>
+          <TextWrap>
+            <Clock className="icon" />
+            <span className="text">{item.item}</span>
+          </TextWrap>
+          <Cancel />
+        </RecentItem>
+      ))}
     </Container>
   );
 }
