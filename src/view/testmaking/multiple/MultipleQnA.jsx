@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 
 import BottomBtn, { PageContainer } from "../../../components/frame/BottomBtn";
-import { NoticeAlert, SVG } from "../../../components/common";
+import { NoticeAlert } from "../../../components/common";
 import { Questions, BtnAdd } from "../../../components/making";
 import theme from "../../../styles/theme";
 
@@ -13,14 +13,10 @@ import useQuestion from "../../../hooks/making/useQuestion";
 import msg from "../../../constants/msg";
 import ENUM from "../../../constants/Enum";
 
-const { errorMaking } = msg;
-const { blue, white, bodyGray, darkGray } = theme.colors;
+import { ReactComponent as Casino } from "../../../resources/svg/casino.svg";
 
-const svgStyles = {
-  width: 32,
-  height: 32,
-  fill: blue,
-};
+const { errorMaking } = msg;
+const { white, bodyGray, darkGray } = theme.colors;
 
 const showAlert = (msg) =>
   NoticeAlert.open({
@@ -34,7 +30,7 @@ const MultipleQnA = () => {
     <PageContainer>
       <RandomGuide>
         <div>
-          <SVG type={ENUM.CASINO} style={svgStyles} />
+          <Casino />
         </div>
         <GuideText className="guide">
           <h2>질문 생각하는 게 힘드시다구요?</h2>

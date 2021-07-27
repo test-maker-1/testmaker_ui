@@ -1,14 +1,13 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { SVG } from "../common";
+
 import ENUM from "../../constants/Enum";
+import { ReactComponent as Picture } from "../../resources/svg/picture.svg";
+import { ReactComponent as Delete } from "../../resources/svg/delete.svg";
 
 const { PICTURE, DELETE } = ENUM;
 
-/*
- * title: string;
- * onUpload, onDelete: function;
- */
+// title: string;
 const SubTitle = ({ title, onUpload, onDelete, children }) => {
   return (
     <Container>
@@ -22,27 +21,25 @@ const SubTitle = ({ title, onUpload, onDelete, children }) => {
   );
 };
 
-/*
- * type: string;
- * onClick: function;
- */
+// type: string;
 export const BtnIcon = ({ type, onClick }) => {
-  const svgStyles =
-    type !== PICTURE ? { width: 24, height: 24 } : { width: 18, height: 18 };
-
   return (
-    <li className="item-btn">
-      <SVG type={type} style={svgStyles} onClick={onClick} />
+    <li>
+      {type === PICTURE ? (
+        <Picture className="icon-svg" onClick={onClick} />
+      ) : (
+        <Delete className="icon-svg" onClick={onClick} />
+      )}
     </li>
   );
 };
 
 const Container = styled.div`
   margin-bottom: 16px;
-  padding: 12px ${({ theme: { paddings } }) => paddings.main}rem;
+  padding: 10px ${({ theme: { paddings } }) => paddings.main}rem;
   display: flex;
   justify-content: space-between;
-  background-color: ${({ theme: { colors } }) => colors.white};
+  background-color: ${({ theme: { colors } }) => colors.ivory};
 
   .title {
     color: ${({ theme: { colors } }) => colors.BodyGray};
@@ -56,14 +53,8 @@ const Container = styled.div`
 const Btns = styled.ul`
   display: flex;
   align-items: center;
-
-  .item-btn {
+  .icon-svg {
     margin-left: 8px;
-  }
-
-  path {
-    fill: ${({ theme: { colors } }) => colors.gray};
-    cursor: pointer;
   }
 `;
 

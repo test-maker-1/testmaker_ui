@@ -1,52 +1,68 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 
-import { SVG, ImageView } from "../common/index";
-import theme from "../../styles/theme";
-
+import { ImageView } from "../common";
 import useOpen from "../../hooks/useOpen";
-import ENUM from "../../constants/Enum";
 
-const { CHANGE, DELETE, CANCEL } = ENUM;
+import theme from "../../styles/theme";
+import { ReactComponent as Change } from "../../resources/svg/change.svg";
+import { ReactComponent as Delete } from "../../resources/svg/delete.svg";
+import { ReactComponent as Cancel } from "../../resources/svg/cancel.svg";
 
-const svgStyles = {
-  width: 40,
-  height: 40,
-  fill: theme.colors.deepGray,
-};
-
-const cancelStyles = {
-  ...svgStyles,
-  stroke: theme.colors.deepGray,
-};
+const [width, height, fill] = ["40", "40", theme.colors.blue];
 
 const UploadImg = memo(({ img, handleUpload, deleteImg }) => {
   const { open: edit, onOpen: onEdit, onClose: offEdit } = useOpen();
+  const { open: showGuide, onClose: hideGuide } = useOpen(true);
+
   return (
-    <>
-      <Wrapper>
-        <OpenDiv onClick={onEdit} />
-        <ImageView imageUrl={img} />
-        {/* edit */}
-        {edit && (
-          <Dimmed>
+    <Wrapper>
+      <OpenDiv onClick={onEdit} />
+      <ImageView imageUrl={img} />
+      {showGuide && (
+        <Guide>
+          사진을 한 번 더 누르면 바꾸거나 지울 수 있어요!
+          <StyledCancel
+            className="icon-svg"
+            stroke={"white"}
+            onClick={hideGuide}
+          />
+        </Guide>
+      )}
+
+      {edit && (
+        <Dimmed>
+          <div className="btns-edit">
             <EditIcon>
-              <SVG type={CHANGE} style={svgStyles} onClick={handleUpload} />
+              <Change
+                className="icon-svg"
+                width={width}
+                height={height}
+                fill={fill}
+                onClick={handleUpload}
+              />
             </EditIcon>
             <EditIcon>
-              <SVG
-                type={DELETE}
-                style={svgStyles}
+              <StyledDelete
+                className="icon-svg"
+                width={width}
+                height={height}
                 onClick={() => deleteImg(img)}
               />
             </EditIcon>
             <EditIcon>
-              <SVG type={CANCEL} style={cancelStyles} onClick={offEdit} />
+              <StyledCancel
+                className="icon-svg"
+                width={width}
+                height={height}
+                stroke={fill}
+                onClick={offEdit}
+              />
             </EditIcon>
-          </Dimmed>
-        )}
-      </Wrapper>
-    </>
+          </div>
+        </Dimmed>
+      )}
+    </Wrapper>
   );
 });
 
@@ -64,32 +80,62 @@ const OpenDiv = styled.div`
 `;
 
 const Dimmed = styled.div`
-  margin-bottom: 16px;
   position: absolute;
   top: 0;
-  left: 0;
+  margin-bottom: 16px;
   width: 100%;
   height: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: ${({ theme: { zIndex } }) => zIndex.upImg};
-  transition: all 0.2s ease-in-out;
+
+  .btns-edit {
+    display: flex;
+  }
+`;
+
+const Guide = styled.div`
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 8px 13px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
+  line-height: 21px;
+  letter-spacing: -0.3px;
+
+  border-radius: 10px 10px 0 0;
+  background: ${({ theme: { colors } }) => colors.blue};
+  color: white;
 `;
 
 const EditIcon = styled.div`
   margin: 0 4px;
-  width: 80px;
-  height: 80px;
+  padding: 20px;
   border-radius: 50%;
   background-color: ${({ theme: { colors } }) => colors.ghostGray};
   opacity: 0.8;
+`;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const StyledDelete = styled(Delete)`
+  path {
+    fill: ${fill};
+  }
+  rect {
+    fill: white;
+  }
+`;
+
+const StyledCancel = styled(Cancel)`
+  path {
+    stroke: ${({ stroke }) => stroke};
+  }
 `;
 
 export default UploadImg;

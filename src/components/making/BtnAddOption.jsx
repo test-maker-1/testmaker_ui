@@ -1,13 +1,12 @@
 import React, { memo } from "react";
+import styled from "styled-components";
 import { Button, makeStyles } from "@material-ui/core";
 
-import { SVG } from "../common";
-import theme from "../../styles/theme";
-
 import useOption from "../../hooks/making/useOption";
-import ENUM from "../../constants/Enum";
+import theme from "../../styles/theme";
+import { ReactComponent as Add } from "../../resources/svg/add.svg";
 
-const { white, deepGray } = theme.colors;
+const { ivory, titleGray } = theme.colors;
 
 const useStyles = makeStyles(() => ({
   addBtn: () => ({
@@ -17,9 +16,12 @@ const useStyles = makeStyles(() => ({
     fontWeight: "bold",
     lineHeight: "24px",
     letterSpacing: -0.5,
-    color: deepGray,
-    backgroundColor: white,
+    color: titleGray,
+    backgroundColor: ivory,
     borderRadius: 5,
+    "&:hover": {
+      backgroundColor: ivory,
+    },
   }),
 }));
 
@@ -32,12 +34,18 @@ const BtnAddOption = ({ questionIdx }) => {
       className={classes.addBtn}
       varient="text"
       fullWidth={true}
-      startIcon={<SVG type={ENUM.ADD} />}
+      startIcon={<StyledAdd className="icon-svg" />}
       onClick={() => addEmptyOption(questionIdx)}
     >
       선택지 추가하기
     </Button>
   );
 };
+
+const StyledAdd = styled(Add)`
+  path {
+    stroke: ${titleGray};
+  }
+`;
 
 export default memo(BtnAddOption);

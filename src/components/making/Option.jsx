@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import { NoticeAlert, SVG } from "../common";
+import { NoticeAlert } from "../common";
 import { BtnAddOption } from ".";
 
 import {
@@ -13,8 +13,10 @@ import {
 import theme from "../../styles/theme";
 
 import useOption from "../../hooks/making/useOption";
-import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
+
+import { ReactComponent as Check } from "../../resources/svg/check.svg";
+import { ReactComponent as Cancel } from "../../resources/svg/cancel.svg";
 
 const { errorMaking } = msg;
 const { lightGray } = theme.colors;
@@ -51,7 +53,7 @@ const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
   const { onUpdate, checkAnswer, deleteOption } = useOption();
 
   const isAnswer = useMemo(() => answer && option === answer, [answer, option]);
-  const svgStyle = { stroke: isAnswer ? "white" : lightGray };
+  const [bgColor, stroke] = isAnswer ? ["blue", "white"] : ["white", lightGray];
 
   const handleUpdate = (e) => {
     const value = e.target.value;
@@ -84,10 +86,10 @@ const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
   };
 
   return (
-    <Container bgColor={isAnswer ? "blue" : "white"}>
+    <Container bgColor={bgColor} stroke={stroke}>
       <InputContainer>
         <CheckWrap>
-          <SVG type={ENUM.CHECK} style={svgStyle} onClick={onCheck} />
+          <Check className="icon-svg" onClick={onCheck} />
         </CheckWrap>
         <InputWrap>
           <OptionText
@@ -100,7 +102,7 @@ const Option = memo(({ option, answer, idxs, optionsCnt, isExist }) => {
         </InputWrap>
       </InputContainer>
       <CancelWrap>
-        <SVG type={ENUM.CANCEL} style={svgStyle} onClick={onDelete} />
+        <Cancel className="icon-svg" onClick={onDelete} />
       </CancelWrap>
     </Container>
   );
