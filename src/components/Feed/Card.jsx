@@ -16,6 +16,7 @@ const Card = ({
   sharedCnt,
   participatedCnt,
   testLink,
+  result = false,
 }) => {
   const { goPage } = usePage();
   // const [bookMark, setBookMark] = useState(false);
@@ -28,7 +29,11 @@ const Card = ({
   const onClickTest = useCallback(
     (e) => {
       const testid = testLink.split("?")[1];
-      goPage(`/testing/welcome`, testid);
+      if (result) {
+        goPage(`/result`, testid);
+      } else {
+        goPage(`/testing/welcome`, testid);
+      }
     },
     [goPage, testLink]
   );

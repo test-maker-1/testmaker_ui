@@ -83,14 +83,21 @@ const headerInfo = {
     background: "#fff",
   },
 
-  "mypage/main": {
+  "/mypage/main": {
     leftType: BACK,
     title: { type: TITLE, title: "마이페이지" },
   },
 
-  "mypage/manage": {
+  "/mypage/manage": {
     leftType: BACK,
     title: { type: TITLE, title: "계정 관리" },
+  },
+
+  "/result": {
+    leftType: BACK,
+    title: { type: NOTHING },
+    rightType: NOTHING,
+    background: theme.colors.lightblue,
   },
 };
 

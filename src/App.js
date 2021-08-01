@@ -25,6 +25,7 @@ import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import initialize from "./utils/initialize";
+import Result from "./components/frame/Result";
 
 const App = () => {
   const { checkLogIn, status } = useUser();
@@ -56,7 +57,10 @@ const App = () => {
           <Route exact path="/register/:module" component={RegisterFrame} />
           {/* Testing */}
           <Route exact path="/testing/:module" component={Testing} />
+          {/* mypage */}
           <Route exact path="/mypage/:module" component={Mypage} />
+          {/* result */}
+          <Route exact path="/result" component={Result} />
           <Route exact component={Error} />
         </Switch>
       </MainForm>
