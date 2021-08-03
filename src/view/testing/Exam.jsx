@@ -84,9 +84,9 @@ const Exam = memo((props) => {
   const onClickAnswer = (idx, value, event) => {
     event.stopPropagation();
 
-    movePage(page + 1);
-
     const isIng = page + 1 < questsCnt;
+
+    if (isIng) movePage(page + 1);
 
     // post answer & go to result page
     dispatch(saveAnwerByStep({ page, isIng, value }));

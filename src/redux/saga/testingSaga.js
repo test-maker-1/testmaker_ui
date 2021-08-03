@@ -93,7 +93,7 @@ function* insertExam(action) {
   const state = yield select();
   const { payload } = action;
 
-  if (!payload.isIng && state.testMode === "default") {
+  if (!payload.isIng && state.testing.testMode === "default") {
     yield put({ type: setLoading.type, payload: true });
     //마지막 시험지일 경우 결과 페이지 이동
     const { data, status } = yield call(
