@@ -3,6 +3,7 @@ import React from "react";
 import { TitleBox } from "../../components/common";
 import RecentList from "./RecentList";
 import PopularList from "./PopularList";
+import PopularTagList from "./PopularTagList";
 
 const tempList = [
   {
@@ -28,6 +29,18 @@ const popularList = [
   },
 ];
 
+const tagList = [
+  "우정테스트",
+  "성격테스트",
+  "성격",
+  "성격파탄자",
+  "재밌는",
+  "우주하마",
+  "음식",
+  "선배",
+  "뭐하지",
+];
+
 function SearchMenu() {
   return (
     <div>
@@ -37,7 +50,9 @@ function SearchMenu() {
       <TitleBox title="인기 검색어">
         <PopularList popularList={popularList} />
       </TitleBox>
-      <TitleBox title="인기 태그"></TitleBox>
+      <TitleBox title="인기 태그" noline>
+        <PopularTagList popularTagList={tagList} />
+      </TitleBox>
     </div>
   );
 }
