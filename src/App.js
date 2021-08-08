@@ -14,6 +14,8 @@ import { Loading, NoticeAlert } from "./components/common";
 import Login from "./view/login/Login";
 import Error from "./view/Error";
 import Feed from "./view/Feed";
+import Search from "./view/search/Search";
+import Result from "./view/result/Result";
 import PickTest from "./view/testmaking/PickTest";
 import TestRelease from "./view/testmaking/TestRelease";
 
@@ -43,6 +45,8 @@ const App = () => {
       <MainForm>
         <Switch>
           <Route exact path="/" component={Feed} />
+          <Route exact path="/search" component={Search} />
+          <Route exact path="/search/result" component={Result} />
           {/* test making */}
           <Route exact path="/test/pick-test" component={PickTest} />
           <Route exact path="/test/release" component={TestRelease} />
@@ -57,6 +61,7 @@ const App = () => {
           {/* Testing */}
           <Route exact path="/testing/:module" component={Testing} />
           <Route exact path="/mypage/:module" component={Mypage} />
+
           <Route exact component={Error} />
         </Switch>
       </MainForm>

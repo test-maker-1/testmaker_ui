@@ -18,6 +18,12 @@ export const initHeader = {
 };
 
 const headerInfo = {
+  "/search": {
+    leftType: BACK,
+    rightType: SEARCH,
+    title: { type: SEARCH },
+  },
+
   "/release": {
     leftType: BACK,
     title: { type: TITLE, title: "오늘의 테스트" },
