@@ -96,7 +96,7 @@ function* updateComments(action) {
   const state = yield select();
   const param = action.payload;
 
-  const { status } = yield call(
+  yield call(
     testingAPI.updateComment,
     state.reply.testUid, //state.testing.current_testID,
     param.comment_id,
@@ -110,7 +110,7 @@ function* deleteComments(action) {
   const state = yield select();
   const param = action.payload;
 
-  const { status } = yield call(
+  yield call(
     testingAPI.deleteComment,
     state.reply.testUid, //state.testing.current_testID,
     param

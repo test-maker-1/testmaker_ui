@@ -37,7 +37,7 @@ const LeftBtn = ({ type = BACK }) => {
 
         const prevIDX = sequence.indexOf(step) - 1;
 
-        if (prevIDX < 0) goBack();
+        if (prevIDX < 0) goPage("/test/pick-test");
         else goPage(`/test/${module}/${sequence[prevIDX]}`);
         return;
 
