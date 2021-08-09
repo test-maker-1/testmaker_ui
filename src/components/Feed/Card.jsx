@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import ImageView from "../common/ImageView";
-import SVG from "../common/SVG";
+import { ImageView, SVG, Loading } from "../common";
 import { Title } from "./Carousel";
 
+import FeedAPI from "../../api/feedAPI";
 import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
-import FeedAPI from "../../api/feedAPI";
-import { ERROR } from "../../utils/asyncUtils";
+import useMiniReducer from "../../hooks/useMiniReducer";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
@@ -24,9 +24,11 @@ const Card = ({
   participatedCnt,
   testLink,
 }) => {
+  const _isBookmark = useRef(false);
+
   const { data } = useUser();
   const { goPage } = usePage();
-  const _isBookmark = useRef(false);
+  const { state, request, requestSuccess, requestError } = useMiniReducer();
 
   const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
   _isBookmark.current = !isEmptyBookmark
@@ -45,19 +47,24 @@ const Card = ({
   };
 
   const handleToggleBookmark = async () => {
+    request();
     const { status } = await FeedAPI.addBookmark(uid);
 
     if (status === ERROR) {
       alert("북마크 에러 발생");
+      requestError();
       return;
     }
+
     setIsBookmark((prevIsBookmark) => !prevIsBookmark);
+    requestSuccess();
   };
 
   useEffect(() => setIsBookmark(_isBookmark.current), [isEmptyBookmark]);
 
   return (
     <CardBox>
+      {state.status === LOADING && <Loading />}
       <PaddingBox>
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
