@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { ImageView, SVG, Loading } from "../common";
+import { ImageView, SVG, Loading, NoticeAlert } from "../common";
 import { Title } from "./Carousel";
 
 import FeedAPI from "../../api/feedAPI";
@@ -11,6 +11,8 @@ import useMiniReducer from "../../hooks/useMiniReducer";
 import { ERROR, LOADING } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
+import msg from "../../constants/msg";
+
 import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
 import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
 
@@ -51,8 +53,11 @@ const Card = ({
     const { status } = await FeedAPI.addBookmark(uid);
 
     if (status === ERROR) {
-      alert("북마크 에러 발생");
-      requestError();
+      requestError(500);
+      NoticeAlert.open({
+        text: msg.errorPage[500],
+        btns: [{ name: "돌아가기" }],
+      });
       return;
     }
 
