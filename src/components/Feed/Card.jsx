@@ -28,7 +28,7 @@ const Card = ({
 }) => {
   const _isBookmark = useRef(false);
 
-  const { data } = useUser();
+  const { data, loggedIn } = useUser();
   const { goPage } = usePage();
   const { state, request, requestSuccess, requestError } = useMiniReducer();
 
@@ -49,6 +49,14 @@ const Card = ({
   };
 
   const handleToggleBookmark = async () => {
+    if (!loggedIn) {
+      NoticeAlert.open({
+        text: msg.errorPage[403],
+        btns: [{ name: "돌아가기" }],
+      });
+      return;
+    }
+
     request();
     const { status } = await FeedAPI.addBookmark(uid);
 
