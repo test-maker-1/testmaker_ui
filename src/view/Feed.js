@@ -63,6 +63,7 @@ const Feed = () => {
             {testsByTag.map((test) => (
               <Card
                 key={`test ${test.uid}`}
+                uid={test.uid}
                 title={test.title}
                 coverImg={test.coverImg}
                 makerName={test.maker.name}

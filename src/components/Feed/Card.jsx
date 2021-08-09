@@ -1,14 +1,23 @@
-import React, { useCallback } from "react";
-import ImageView from "../common/ImageView";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Title } from "./Carousel";
-import SVG from "../common/SVG";
-import ENUM from "../../constants/Enum";
-// import theme from "../../styles/theme";
-import usePage from "../../hooks/usePage";
 
-// const { blue, deepGray } = theme.colors;
+import { ImageView, SVG, Loading, NoticeAlert } from "../common";
+import { Title } from "./Carousel";
+
+import FeedAPI from "../../api/feedAPI";
+import usePage from "../../hooks/usePage";
+import useUser from "../../hooks/useUser";
+import useMiniReducer from "../../hooks/useMiniReducer";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
+
+import ENUM from "../../constants/Enum";
+import msg from "../../constants/msg";
+
+import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
+import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
+
 const Card = ({
+  uid,
   title,
   coverImg,
   makerName,
@@ -17,56 +26,68 @@ const Card = ({
   participatedCnt,
   testLink,
 }) => {
-  const { goPage } = usePage();
-  // const [bookMark, setBookMark] = useState(false);
-  // const onClickBookMark = useCallback(
-  //   (e) => {
-  //     setBookMark(!bookMark);
-  //   },
-  //   [bookMark, setBookMark]
-  // );
-  const onClickTest = useCallback(
-    (e) => {
-      const testid = testLink.split("?")[1];
-      goPage(`/testing/welcome`, testid);
-    },
-    [goPage, testLink]
-  );
+  const _isBookmark = useRef(false);
 
-  const numberFormat = useCallback((n) => {
+  const { data, loggedIn } = useUser();
+  const { goPage } = usePage();
+  const { state, request, requestSuccess, requestError } = useMiniReducer();
+
+  const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
+  _isBookmark.current = !isEmptyBookmark
+    ? data.bookmarkedTestUids.includes(uid)
+    : false;
+
+  const [isBookmark, setIsBookmark] = useState(_isBookmark);
+
+  const onClickTest = () => {
+    const testid = testLink.split("?")[1];
+    goPage(`/testing/welcome`, testid);
+  };
+
+  const numberFormat = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }, []);
+  };
+
+  const handleToggleBookmark = async () => {
+    if (!loggedIn) {
+      NoticeAlert.open({
+        text: msg.errorPage[403],
+        btns: [{ name: "돌아가기" }],
+      });
+      return;
+    }
+
+    request();
+    const { status } = await FeedAPI.addBookmark(uid);
+
+    if (status === ERROR) {
+      requestError(500);
+      NoticeAlert.open({
+        text: msg.errorPage[500],
+        btns: [{ name: "돌아가기" }],
+      });
+      return;
+    }
+
+    setIsBookmark((prevIsBookmark) => !prevIsBookmark);
+    requestSuccess();
+  };
+
+  useEffect(() => setIsBookmark(_isBookmark.current), [isEmptyBookmark]);
 
   return (
     <CardBox>
+      {state.status === LOADING && <Loading />}
       <PaddingBox>
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
-          {/* <div>
-            {bookMark ? (
-              <SVG
-                type={ENUM.AFTER_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: blue,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
+          <div>
+            {!isBookmark ? (
+              <BeforeBookmark onClick={handleToggleBookmark} />
             ) : (
-              <SVG
-                type={ENUM.BEFORE_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: deepGray,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
+              <AfterBookmark onClick={handleToggleBookmark} />
             )}
-          </div> */}
+          </div>
         </TitleBox>
 
         <ImageBox onClick={onClickTest}>
