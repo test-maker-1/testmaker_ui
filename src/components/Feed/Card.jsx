@@ -1,13 +1,14 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import ImageView from "../common/ImageView";
 import SVG from "../common/SVG";
 import { Title } from "./Carousel";
 
-import useOpen from "../../hooks/useOpen";
 import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
+import FeedAPI from "../../api/feedAPI";
+import { ERROR } from "../../utils/asyncUtils";
 
 import ENUM from "../../constants/Enum";
 import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
@@ -23,27 +24,37 @@ const Card = ({
   participatedCnt,
   testLink,
 }) => {
-  const { data, loggedIn } = useUser();
+  const { data } = useUser();
   const { goPage } = usePage();
+  const _isBookmark = useRef(false);
 
   const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
-  const _isBookmark = !isEmptyBookmark
+  _isBookmark.current = !isEmptyBookmark
     ? data.bookmarkedTestUids.includes(uid)
     : false;
 
-  const { open: isBookmark, onToggle } = useOpen(_isBookmark);
+  const [isBookmark, setIsBookmark] = useState(_isBookmark);
 
-  const onClickTest = useCallback(
-    (e) => {
-      const testid = testLink.split("?")[1];
-      goPage(`/testing/welcome`, testid);
-    },
-    [goPage, testLink]
-  );
+  const onClickTest = () => {
+    const testid = testLink.split("?")[1];
+    goPage(`/testing/welcome`, testid);
+  };
 
-  const numberFormat = useCallback((n) => {
+  const numberFormat = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }, []);
+  };
+
+  const handleToggleBookmark = async () => {
+    const { status } = await FeedAPI.addBookmark(uid);
+
+    if (status === ERROR) {
+      alert("북마크 에러 발생");
+      return;
+    }
+    setIsBookmark((prevIsBookmark) => !prevIsBookmark);
+  };
+
+  useEffect(() => setIsBookmark(_isBookmark.current), [isEmptyBookmark]);
 
   return (
     <CardBox>
@@ -51,10 +62,10 @@ const Card = ({
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
           <div>
-            {!loggedIn || isEmptyBookmark || !isBookmark ? (
-              <BeforeBookmark />
+            {!isBookmark ? (
+              <BeforeBookmark onClick={handleToggleBookmark} />
             ) : (
-              <AfterBookmark />
+              <AfterBookmark onClick={handleToggleBookmark} />
             )}
           </div>
         </TitleBox>
