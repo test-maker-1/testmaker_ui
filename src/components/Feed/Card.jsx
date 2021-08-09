@@ -24,6 +24,8 @@ const Card = ({
   const { data, loggedIn } = useUser();
   const { goPage } = usePage();
 
+  const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
+
   const onClickTest = useCallback(
     (e) => {
       const testid = testLink.split("?")[1];
@@ -41,7 +43,13 @@ const Card = ({
       <PaddingBox>
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
-          <div>{!loggedIn ? <BeforeBookmark /> : <AfterBookmark />}</div>
+          <div>
+            {!loggedIn || isEmptyBookmark ? (
+              <BeforeBookmark />
+            ) : (
+              <AfterBookmark />
+            )}
+          </div>
         </TitleBox>
 
         <ImageBox onClick={onClickTest}>
