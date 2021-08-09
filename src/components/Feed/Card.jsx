@@ -5,6 +5,7 @@ import ImageView from "../common/ImageView";
 import SVG from "../common/SVG";
 import { Title } from "./Carousel";
 
+import useOpen from "../../hooks/useOpen";
 import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
 
@@ -13,6 +14,7 @@ import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_boo
 import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
 
 const Card = ({
+  uid,
   title,
   coverImg,
   makerName,
@@ -25,6 +27,11 @@ const Card = ({
   const { goPage } = usePage();
 
   const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
+  const _isBookmark = !isEmptyBookmark
+    ? data.bookmarkedTestUids.includes(uid)
+    : false;
+
+  const { open: isBookmark, onToggle } = useOpen(_isBookmark);
 
   const onClickTest = useCallback(
     (e) => {
@@ -44,7 +51,7 @@ const Card = ({
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
           <div>
-            {!loggedIn || isEmptyBookmark ? (
+            {!loggedIn || isEmptyBookmark || !isBookmark ? (
               <BeforeBookmark />
             ) : (
               <AfterBookmark />
