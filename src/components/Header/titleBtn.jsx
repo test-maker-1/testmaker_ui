@@ -3,10 +3,18 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SVG } from "../common";
+import { InputSearch } from "../../styles";
+
 import usePage from "../../hooks/usePage";
 
 import ENUM from "../../constants/Enum";
-import { LOGO, NOTHING, TITLE, CUSTOM } from "../../constants/headerInfo";
+import {
+  LOGO,
+  NOTHING,
+  TITLE,
+  CUSTOM,
+  SEARCH,
+} from "../../constants/headerInfo";
 
 // type: string;
 const TitleBtn = ({ type = LOGO, title = null }) => {
@@ -18,6 +26,8 @@ const TitleBtn = ({ type = LOGO, title = null }) => {
   if (type === NOTHING) return null;
   if (type === TITLE) return <TitleText>{title}</TitleText>;
   if (type === CUSTOM) return <Step>{headTitle}</Step>;
+  if (type === SEARCH)
+    return <InputSearch placeholder="테스트 이름, 태그명, 닉네임으로 검색" />;
 
   const onClick = () => {
     if (type === LOGO) return goPage("/");
