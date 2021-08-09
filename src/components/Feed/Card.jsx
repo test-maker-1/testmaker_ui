@@ -1,13 +1,17 @@
 import React, { useCallback } from "react";
-import ImageView from "../common/ImageView";
 import styled from "styled-components";
-import { Title } from "./Carousel";
-import SVG from "../common/SVG";
-import ENUM from "../../constants/Enum";
-// import theme from "../../styles/theme";
-import usePage from "../../hooks/usePage";
 
-// const { blue, deepGray } = theme.colors;
+import ImageView from "../common/ImageView";
+import SVG from "../common/SVG";
+import { Title } from "./Carousel";
+
+import usePage from "../../hooks/usePage";
+import useUser from "../../hooks/useUser";
+
+import ENUM from "../../constants/Enum";
+import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
+import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
+
 const Card = ({
   title,
   coverImg,
@@ -17,14 +21,9 @@ const Card = ({
   participatedCnt,
   testLink,
 }) => {
+  const { data, loggedIn } = useUser();
   const { goPage } = usePage();
-  // const [bookMark, setBookMark] = useState(false);
-  // const onClickBookMark = useCallback(
-  //   (e) => {
-  //     setBookMark(!bookMark);
-  //   },
-  //   [bookMark, setBookMark]
-  // );
+
   const onClickTest = useCallback(
     (e) => {
       const testid = testLink.split("?")[1];
@@ -42,31 +41,7 @@ const Card = ({
       <PaddingBox>
         <TitleBox>
           <TestTitle onClick={onClickTest}>{title}</TestTitle>
-          {/* <div>
-            {bookMark ? (
-              <SVG
-                type={ENUM.AFTER_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: blue,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
-            ) : (
-              <SVG
-                type={ENUM.BEFORE_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: deepGray,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
-            )}
-          </div> */}
+          <div>{!loggedIn ? <BeforeBookmark /> : <AfterBookmark />}</div>
         </TitleBox>
 
         <ImageBox onClick={onClickTest}>
