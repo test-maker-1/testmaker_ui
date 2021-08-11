@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { ImageView, SVG, Loading, NoticeAlert } from "../common";
+import { ImageView, Loading, NoticeAlert } from "../common";
 import { Title } from "./Carousel";
 
 import FeedAPI from "../../api/feedAPI";
@@ -10,11 +10,11 @@ import useUser from "../../hooks/useUser";
 import useMiniReducer from "../../hooks/useMiniReducer";
 import { ERROR, LOADING } from "../../utils/asyncUtils";
 
-import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
-
 import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
 import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
+import { ReactComponent as Share } from "../../resources/svg/share.svg";
+import { ReactComponent as Part } from "../../resources/svg/part.svg";
 
 const Card = ({
   uid,
@@ -105,24 +105,9 @@ const Card = ({
           <Name>{makerName}</Name>
 
           <CountItems>
-            <SVG
-              type={ENUM.SHARE}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
+            <Share className="svg-margin" />
             <Count>{numberFormat(sharedCnt)}</Count>
-
-            <SVG
-              type={ENUM.PART}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
+            <Part className="svg-margin" />
             <Count>{numberFormat(participatedCnt)}</Count>
           </CountItems>
         </InfoBox>
