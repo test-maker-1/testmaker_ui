@@ -80,7 +80,7 @@ const Card = ({
       {state.status === LOADING && <Loading />}
       <PaddingBox>
         <TitleBox>
-          <TestTitle onClick={onClickTest}>{title}</TestTitle>
+          <Title onClick={onClickTest}>{title}</Title>
           <div>
             {!isBookmark ? (
               <BeforeBookmark onClick={handleToggleBookmark} />
@@ -149,8 +149,6 @@ const TitleBox = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-
-const TestTitle = styled(Title)``;
 
 const ImageBox = styled.div`
   padding: 0.8rem 0 0.8rem 0;
