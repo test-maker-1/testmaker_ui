@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ReactComponent as Clock } from "../../resources/svg/clock.svg";
-import { ReactComponent as Cancel } from "../../resources/svg/cancel.svg";
+import { ReactComponent as Clock } from "../../../resources/svg/clock.svg";
+import { ReactComponent as Cancel } from "../../../resources/svg/cancel.svg";
 
 function RecentList({ recentList = [] }) {
   return (

@@ -16,16 +16,10 @@ import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookm
 import { ReactComponent as Share } from "../../resources/svg/share.svg";
 import { ReactComponent as Part } from "../../resources/svg/part.svg";
 
-const Card = ({
-  uid,
-  title,
-  coverImg,
-  makerName,
-  makerProfile,
-  sharedCnt,
-  participatedCnt,
-  testLink,
-}) => {
+const Card = ({ test, maker }) => {
+  const { uid, title, coverImg, sharedCnt, testLink, participantsCnt } = test;
+  const { name: makerName, profileImg: makerProfile } = maker;
+
   const _isBookmark = useRef(false);
 
   const { data, loggedIn } = useUser();
@@ -108,7 +102,7 @@ const Card = ({
             <Share className="svg-margin" />
             <Count>{numberFormat(sharedCnt)}</Count>
             <Part className="svg-margin" />
-            <Count>{numberFormat(participatedCnt)}</Count>
+            <Count>{numberFormat(participantsCnt)}</Count>
           </CountItems>
         </InfoBox>
       </PaddingBox>

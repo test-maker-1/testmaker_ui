@@ -1,6 +1,6 @@
 import React from "react";
 
-import SearchMenu from "./SearchMenu";
+import SearchMenu from "./SearchMenu/SearchMenu";
 
 function Search() {
   return (

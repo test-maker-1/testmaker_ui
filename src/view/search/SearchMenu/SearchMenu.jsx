@@ -1,6 +1,6 @@
 import React from "react";
 
-import { TitleBox } from "../../components/common";
+import { TitleBox } from "../../../components/common";
 import RecentList from "./RecentList";
 import PopularList from "./PopularList";
 import PopularTagList from "./PopularTagList";
