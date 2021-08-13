@@ -8,7 +8,7 @@ function RecentList({ recentList = [] }) {
   return (
     <Container>
       {recentList.map((item) => (
-        <RecentItem>
+        <RecentItem key={item.item}>
           <TextWrap>
             <Clock className="icon" />
             <span className="text">{item.item}</span>
