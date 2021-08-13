@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -18,7 +19,7 @@ import {
 } from "../../constants/headerInfo";
 
 // type: string;
-const TitleBtn = ({ type = LOGO, title = null }) => {
+const TitleBtn = ({ type = LOGO, title = null, location }) => {
   const { query } = useSelector((state) => state.common);
   const dispatch = useDispatch();
 
@@ -78,4 +79,4 @@ const Step = styled.p`
   color: ${({ theme: { colors } }) => colors.blue};
 `;
 
-export default TitleBtn;
+export default withRouter(TitleBtn);
