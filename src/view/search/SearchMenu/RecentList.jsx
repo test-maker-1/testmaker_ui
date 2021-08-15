@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ReactComponent as Clock } from "../../resources/svg/clock.svg";
-import { ReactComponent as Cancel } from "../../resources/svg/cancel.svg";
+import { ReactComponent as Clock } from "../../../resources/svg/clock.svg";
+import { ReactComponent as Cancel } from "../../../resources/svg/cancel.svg";
 
 function RecentList({ recentList = [] }) {
   return (
     <Container>
       {recentList.map((item) => (
-        <RecentItem>
+        <RecentItem key={item.item}>
           <TextWrap>
             <Clock className="icon" />
             <span className="text">{item.item}</span>

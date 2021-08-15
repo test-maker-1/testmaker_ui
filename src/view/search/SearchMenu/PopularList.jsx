@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { RankingRow } from "../../components/common";
+import { RankingRow } from "../../../components/common";
 
 function PopularList({ popularList = [] }) {
   return (

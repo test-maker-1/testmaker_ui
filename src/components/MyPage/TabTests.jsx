@@ -56,16 +56,7 @@ const TabTests = (props) => {
     return (
       <InfinScroll datas={tabTests} isStop={isStop} getMoreDatas={getMoreDatas}>
         {tabTests.map((test) => (
-          <Card
-            key={`test ${test.uid}`}
-            title={test.title}
-            coverImg={test.coverImg}
-            makerName={test.maker.name}
-            makerProfile={test.maker.profileImg}
-            sharedCnt={test.sharedCnt}
-            participatedCnt={test.participantsCnt}
-            testLink={test.testLink}
-          />
+          <Card key={`test ${test.uid}`} test={test} maker={test.maker} />
         ))}
       </InfinScroll>
     );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import { ImageView, SVG, Loading, NoticeAlert } from "../common";
+import { ImageView, Loading, NoticeAlert } from "../common";
 import { Title } from "./Carousel";
 
 import FeedAPI from "../../api/feedAPI";
@@ -10,22 +10,16 @@ import useUser from "../../hooks/useUser";
 import useMiniReducer from "../../hooks/useMiniReducer";
 import { ERROR, LOADING } from "../../utils/asyncUtils";
 
-import ENUM from "../../constants/Enum";
 import msg from "../../constants/msg";
-
 import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
 import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
+import { ReactComponent as Share } from "../../resources/svg/share.svg";
+import { ReactComponent as Part } from "../../resources/svg/part.svg";
 
-const Card = ({
-  uid,
-  title,
-  coverImg,
-  makerName,
-  makerProfile,
-  sharedCnt,
-  participatedCnt,
-  testLink,
-}) => {
+const Card = ({ test, maker }) => {
+  const { uid, title, coverImg, sharedCnt, testLink, participantsCnt } = test;
+  const { name: makerName, profileImg: makerProfile } = maker;
+
   const _isBookmark = useRef(false);
 
   const { data, loggedIn } = useUser();
@@ -80,7 +74,7 @@ const Card = ({
       {state.status === LOADING && <Loading />}
       <PaddingBox>
         <TitleBox>
-          <TestTitle onClick={onClickTest}>{title}</TestTitle>
+          <Title onClick={onClickTest}>{title}</Title>
           <div>
             {!isBookmark ? (
               <BeforeBookmark onClick={handleToggleBookmark} />
@@ -105,25 +99,10 @@ const Card = ({
           <Name>{makerName}</Name>
 
           <CountItems>
-            <SVG
-              type={ENUM.SHARE}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
+            <Share className="svg-margin" />
             <Count>{numberFormat(sharedCnt)}</Count>
-
-            <SVG
-              type={ENUM.PART}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
-            <Count>{numberFormat(participatedCnt)}</Count>
+            <Part className="svg-margin" />
+            <Count>{numberFormat(participantsCnt)}</Count>
           </CountItems>
         </InfoBox>
       </PaddingBox>
@@ -149,8 +128,6 @@ const TitleBox = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-
-const TestTitle = styled(Title)``;
 
 const ImageBox = styled.div`
   padding: 0.8rem 0 0.8rem 0;

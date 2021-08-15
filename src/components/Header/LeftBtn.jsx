@@ -26,6 +26,9 @@ const LeftBtn = ({ type = BACK }) => {
   const onClickEvent = () => {
     switch (type) {
       case BACK:
+        if (pathname.startsWith("/search")) {
+          return goPage("/");
+        }
         return goBack();
 
       case MAKING_BACK:
