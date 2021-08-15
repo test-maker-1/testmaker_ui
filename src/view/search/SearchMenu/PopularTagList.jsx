@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Tag } from "../../components/common";
+import { Tag } from "../../../components/common";
 
 function PopularTagList({ popularTagList = [] }) {
   return (
