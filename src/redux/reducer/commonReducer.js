@@ -6,6 +6,7 @@ export const commonInitState = {
   headTitle: "",
   loading: false,
   isError: null,
+  query: "",
 };
 
 const common = createSlice({
@@ -18,6 +19,9 @@ const common = createSlice({
     setHeadTitle: (state, { payload }) => {
       state.headTitle = payload;
     },
+    setQuery: (state, { payload }) => {
+      state.query = payload;
+    },
     setLoading: (state, { payload }) => {
       state.loading = payload;
     },
@@ -28,6 +32,6 @@ const common = createSlice({
 });
 
 //actions
-export const { setHeadTitle, setLoading, setError } = common.actions;
+export const { setHeadTitle, setQuery, setLoading, setError } = common.actions;
 
 export default common;

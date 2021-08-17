@@ -1,72 +1,87 @@
-import React, { useCallback } from "react";
-import ImageView from "../common/ImageView";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+
+import { ImageView, Loading, NoticeAlert } from "../common";
 import { Title } from "./Carousel";
-import SVG from "../common/SVG";
-import ENUM from "../../constants/Enum";
-// import theme from "../../styles/theme";
+
+import FeedAPI from "../../api/feedAPI";
 import usePage from "../../hooks/usePage";
+import useUser from "../../hooks/useUser";
+import useMiniReducer from "../../hooks/useMiniReducer";
+import { ERROR, LOADING } from "../../utils/asyncUtils";
 
-// const { blue, deepGray } = theme.colors;
-const Card = ({
-  title,
-  coverImg,
-  makerName,
-  makerProfile,
-  sharedCnt,
-  participatedCnt,
-  testLink,
-}) => {
+import msg from "../../constants/msg";
+import { ReactComponent as BeforeBookmark } from "../../resources/svg/before_bookmark.svg";
+import { ReactComponent as AfterBookmark } from "../../resources/svg/after_bookmark.svg";
+import { ReactComponent as Share } from "../../resources/svg/share.svg";
+import { ReactComponent as Part } from "../../resources/svg/part.svg";
+
+const Card = ({ test, maker }) => {
+  const { uid, title, coverImg, sharedCnt, testLink, participantsCnt } = test;
+  const { name: makerName, profileImg: makerProfile } = maker;
+
+  const _isBookmark = useRef(false);
+
+  const { data, loggedIn } = useUser();
   const { goPage } = usePage();
-  // const [bookMark, setBookMark] = useState(false);
-  // const onClickBookMark = useCallback(
-  //   (e) => {
-  //     setBookMark(!bookMark);
-  //   },
-  //   [bookMark, setBookMark]
-  // );
-  const onClickTest = useCallback(
-    (e) => {
-      const testid = testLink.split("?")[1];
-      goPage(`/testing/welcome`, testid);
-    },
-    [goPage, testLink]
-  );
+  const { state, request, requestSuccess, requestError } = useMiniReducer();
 
-  const numberFormat = useCallback((n) => {
+  const isEmptyBookmark = !data || !data.hasOwnProperty("bookmarkedTestUids");
+  _isBookmark.current = !isEmptyBookmark
+    ? data.bookmarkedTestUids.includes(uid)
+    : false;
+
+  const [isBookmark, setIsBookmark] = useState(_isBookmark);
+
+  const onClickTest = () => {
+    const testid = testLink.split("?")[1];
+    goPage(`/testing/welcome`, testid);
+  };
+
+  const numberFormat = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }, []);
+  };
+
+  const handleToggleBookmark = async () => {
+    if (!loggedIn) {
+      NoticeAlert.open({
+        text: msg.errorPage[403],
+        btns: [{ name: "돌아가기" }],
+      });
+      return;
+    }
+
+    request();
+    const { status } = await FeedAPI.addBookmark(uid);
+
+    if (status === ERROR) {
+      requestError(500);
+      NoticeAlert.open({
+        text: msg.errorPage[500],
+        btns: [{ name: "돌아가기" }],
+      });
+      return;
+    }
+
+    setIsBookmark((prevIsBookmark) => !prevIsBookmark);
+    requestSuccess();
+  };
+
+  useEffect(() => setIsBookmark(_isBookmark.current), [isEmptyBookmark]);
 
   return (
     <CardBox>
+      {state.status === LOADING && <Loading />}
       <PaddingBox>
         <TitleBox>
-          <TestTitle onClick={onClickTest}>{title}</TestTitle>
-          {/* <div>
-            {bookMark ? (
-              <SVG
-                type={ENUM.AFTER_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: blue,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
+          <Title onClick={onClickTest}>{title}</Title>
+          <div>
+            {!isBookmark ? (
+              <BeforeBookmark onClick={handleToggleBookmark} />
             ) : (
-              <SVG
-                type={ENUM.BEFORE_BOOKMARK}
-                style={{
-                  width: "24",
-                  height: "24",
-                  fill: deepGray,
-                }}
-                className="svg"
-                onClick={onClickBookMark}
-              />
+              <AfterBookmark onClick={handleToggleBookmark} />
             )}
-          </div> */}
+          </div>
         </TitleBox>
 
         <ImageBox onClick={onClickTest}>
@@ -84,25 +99,10 @@ const Card = ({
           <Name>{makerName}</Name>
 
           <CountItems>
-            <SVG
-              type={ENUM.SHARE}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
+            <Share className="svg-margin" />
             <Count>{numberFormat(sharedCnt)}</Count>
-
-            <SVG
-              type={ENUM.PART}
-              style={{
-                width: "22",
-                height: "22",
-              }}
-              className="svg-margin"
-            />
-            <Count>{numberFormat(participatedCnt)}</Count>
+            <Part className="svg-margin" />
+            <Count>{numberFormat(participantsCnt)}</Count>
           </CountItems>
         </InfoBox>
       </PaddingBox>
@@ -128,8 +128,6 @@ const TitleBox = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-
-const TestTitle = styled(Title)``;
 
 const ImageBox = styled.div`
   padding: 0.8rem 0 0.8rem 0;

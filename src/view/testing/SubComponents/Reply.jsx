@@ -1,9 +1,10 @@
 import React, { memo, useState, useEffect, forwardRef } from "react";
 import styled from "styled-components";
-import confirm from "../../../resources/images/confirm.png";
+// import confirm from "../../../resources/images/confirm.png";
 import usePage from "../../../hooks/usePage";
 import { testing, comments } from "../../../constants/urlInfo";
 import Mention, { EmptyMention } from "./Mention";
+import { ReactComponent as Direction } from "../../../resources/svg/direction.svg";
 
 export const ComInput = forwardRef(
   ({ word = "", hintText, onFocus, onSubmit }, ref) => {
@@ -14,7 +15,7 @@ export const ComInput = forwardRef(
         setWords(word);
         ref.current.focus();
       }
-    }, [word]);
+    }, [ref, word]);
 
     const handleOnFocus = (event) => {
       if (onFocus) onFocus(event);
@@ -40,7 +41,8 @@ export const ComInput = forwardRef(
             />
           </WrapInput>
           <WrapBtn>
-            <SubmitBtn src={confirm} type={"image"} />
+            <StyledDirection onClick={handleOnSubmit} />
+            {/* <SubmitBtn></SubmitBtn> */}
           </WrapBtn>
         </InputContainer>
       </form>
@@ -91,10 +93,10 @@ const InputItem = styled.div`
 `;
 
 const WrapInput = styled.div`
-  display: inline-block;
   float: left;
   width: 85%;
 `;
+
 const WrapBtn = styled.div`
   display: inline-block;
   text-align: center;
@@ -132,7 +134,6 @@ const CommentTitle = styled.div`
 `;
 
 const Title = styled.h1`
-  display: inline-block;
   float: left;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.extra}rem; /*24px*/
   font-weight: bold;
@@ -141,7 +142,6 @@ const Title = styled.h1`
 `;
 
 const Entire = styled.p`
-  display: inline-block;
   float: right;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem; /*16px*/
   text-align: right;
@@ -152,6 +152,11 @@ const Entire = styled.p`
 
 const SubmitBtn = styled.input`
   margin-top: 13px;
+`;
+
+const StyledDirection = styled(Direction)`
+  margin-top: 15px;
+  cursor: pointer;
 `;
 
 export default Reply;

@@ -21,6 +21,14 @@ export const Input = styled.input`
   line-height: 22px;
 `;
 
+export const InputSearch = styled.input`
+  ${inputStyles}
+  background-color: transparent !important;
+  color: ${({ theme: { gray } }) => gray};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
+  line-height: 24px;
+`;
+
 export const TextArea = styled.textarea`
   ${inputStyles}
   padding: 16px;

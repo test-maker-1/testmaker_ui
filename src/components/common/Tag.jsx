@@ -32,7 +32,12 @@ const Tag = ({ tag, selected, selectable, deletable }) => {
   };
 
   return (
-    <TagBox onClick={onSelectTag} selected={selected} deletable={deletable}>
+    <TagBox
+      className="tag"
+      onClick={onSelectTag}
+      selected={selected}
+      deletable={deletable}
+    >
       <span>{tag === ALL ? tag : `#${tag}`}</span>
       {/* delete btn */}
       {deletable && (

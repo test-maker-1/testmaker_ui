@@ -9,17 +9,22 @@ import { TitleBox } from ".";
  }
  * idx: number;
  */
-export const RankingRow = ({ ranking, rank }) => {
+export const RankingRow = ({
+  ranking = {
+    name: "",
+    point: null,
+  },
+  rank,
+}) => {
   const { name, point } = ranking;
+
   return (
     <Wrapper>
       <Ranking>
         <span>{rank}</span>
       </Ranking>
       <Name className="name">{name}</Name>
-      <div className="point">
-        <span>{point}점</span>
-      </div>
+      <div className="point">{point && <span>{point}점</span>}</div>
     </Wrapper>
   );
 };

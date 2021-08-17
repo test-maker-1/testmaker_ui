@@ -1,23 +1,45 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { withRouter } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { SVG } from "../common";
+import { InputSearch } from "../../styles";
+
+import { setQuery } from "../../redux/reducer/commonReducer";
 import usePage from "../../hooks/usePage";
 
 import ENUM from "../../constants/Enum";
-import { LOGO, NOTHING, TITLE, CUSTOM } from "../../constants/headerInfo";
+import {
+  LOGO,
+  NOTHING,
+  TITLE,
+  CUSTOM,
+  SEARCH,
+} from "../../constants/headerInfo";
 
 // type: string;
-const TitleBtn = ({ type = LOGO, title = null }) => {
-  const { goPage } = usePage();
+const TitleBtn = ({ type = LOGO, title = null, location }) => {
+  const { query } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+
   const { headTitle } = useSelector((state) => ({
     headTitle: state.common.headTitle,
   }));
+  const { goPage } = usePage();
 
   if (type === NOTHING) return null;
   if (type === TITLE) return <TitleText>{title}</TitleText>;
   if (type === CUSTOM) return <Step>{headTitle}</Step>;
+  if (type === SEARCH) {
+    return (
+      <InputSearch
+        placeholder="테스트 이름, 태그명, 닉네임으로 검색"
+        value={query}
+        onChange={(e) => dispatch(setQuery(e.target.value))}
+      />
+    );
+  }
 
   const onClick = () => {
     if (type === LOGO) return goPage("/");
@@ -57,4 +79,4 @@ const Step = styled.p`
   color: ${({ theme: { colors } }) => colors.blue};
 `;
 
-export default TitleBtn;
+export default withRouter(TitleBtn);

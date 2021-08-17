@@ -14,7 +14,7 @@ const TagSwiper = ({
   const resultTag = selectedTag === "" ? "전체" : selectedTag;
   return (
     <Container noPadding={noPadding} useable={useable}>
-      <Swiper slidesPerView={"auto"} spaceBetween={0} className="tag-swiper">
+      <Swiper slidesPerView={"auto"} freeMode={true} className="tag-swiper">
         <SwiperSlide>
           {tags.map((tag, idx) => (
             <Tag

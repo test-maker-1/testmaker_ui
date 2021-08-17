@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import theme from "../../styles/theme";
 import { PARTTEST, MADETEST, TEMPSTORAGE } from "../../constants/Enum";
 import useUser from "../../hooks/useUser";
-import { useEffect } from "react";
 
 const { darkGray, bodyGray } = theme.colors;
 const TabScroll = (props) => {

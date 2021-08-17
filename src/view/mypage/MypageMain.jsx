@@ -43,6 +43,7 @@ const MypageMain = memo((props) => {
       default:
         return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTab]);
 
   const onClick = useCallback(() => {
@@ -102,7 +103,7 @@ const MypageMain = memo((props) => {
             <InfoSubBox>
               <InfoInBox>
                 <InfoTitle>참여 테스트</InfoTitle>
-                <InfoCnt>{data.participantsCnt}개</InfoCnt>
+                <InfoCnt>{data.testParticipantsCnt}개</InfoCnt>
               </InfoInBox>
             </InfoSubBox>
           </InfoArea>

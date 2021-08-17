@@ -22,7 +22,8 @@ const ManageList = (props) => {
         break;
     }
     return;
-  });
+  }, []);
+  
   return (
     <Menu>
       {list.map((li) => (
