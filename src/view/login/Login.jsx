@@ -9,7 +9,7 @@ import testingAPI from "../../api/testingAPI";
 import { ERROR } from "../../utils/asyncUtils";
 
 import { key } from "../../constants/config";
-import ENUM, { EMAIL, KAKAO } from "../../constants/Enum";
+import ENUM, { OTHER, KAKAO } from "../../constants/Enum";
 import links from "../../constants/links";
 import kakao from "../../resources/images/kakaoSm.png";
 
@@ -89,7 +89,7 @@ const Login = () => {
           </BtnKakaoLogin>
           {/* redirect email login */}
           <BtnField color="skyBlue" onClick={onClickEmail}>
-            {EMAIL}
+            {OTHER}
           </BtnField>
         </div>
       </TitleWrap>

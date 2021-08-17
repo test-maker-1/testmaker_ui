@@ -5,6 +5,9 @@ import { LOGIN } from "../../constants/Enum";
 import { PageContainer, Summary } from "./Login";
 import usePage from "../../hooks/usePage";
 import { BtnField, InfoText } from "../../components/common";
+import { NAVER, GOOGLE } from "../../constants/Enum";
+import naver from "../../resources/images/naver.png";
+import google from "../../resources/images/google.png";
 
 const Email = () => {
   const { replace } = usePage();
@@ -16,7 +19,8 @@ const Email = () => {
       e.preventDefault();
 
       // 이메일 검증
-      const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+      const regExp =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
       if (email.match(regExp) == null) {
         setErrors({
           ...errors,
@@ -54,14 +58,41 @@ const Email = () => {
         />
         {errors.password && <InfoText text={errors.password} color="alert" />}
         <MarginBox>
-          <BtnField type="submit" name={LOGIN} color="blue" />
+          <BtnField type="submit" color="blue">
+            {LOGIN}
+          </BtnField>
         </MarginBox>
+        <div style={{ margin: "8px 0px", textAlign: "center" }}>
+          <PText>or</PText>
+        </div>
+        {/* kakao login */}
+        <BtnNaverLogin
+        // token={key.kakao}
+        // onSuccess={onSuccessKakao}
+        // onFail={console.error} 카카오 에러 처리
+        // onLogout={console.info}
+        // getProfile={true}
+        >
+          <Icon2>
+            <img src={naver} alt="naver" />
+          </Icon2>
+          {NAVER}
+        </BtnNaverLogin>
+        <BtnGoggleLogin>
+          <Icon>
+            <img src={google} alt="google" />
+          </Icon>
+          {GOOGLE}
+        </BtnGoggleLogin>
       </Form>
 
       <SummaryLink>
-        테스트메이커 계정이 없으신가요?
+        <span style={{ marginRight: "8px" }}>
+          테스트메이커 계정이 없으신가요?
+        </span>
         <Link to="/register/email-auth">회원가입</Link> <br />
-        비밀번호를 잊으셨나요? <Link to="/login/find-pw/email-auth">찾기</Link>
+        <span style={{ marginRight: "8px" }}>비밀번호를 잊으셨나요?</span>
+        <Link to="/login/find-pw/email-auth">찾기</Link>
       </SummaryLink>
     </PageContainer>
   );
@@ -70,7 +101,7 @@ const Email = () => {
 export default Email;
 
 export const Title = styled.div`
-  margin: 82px 0 24px 0;
+  margin: auto 0 24px 0;
   text-align: start;
   font-size: 3rem; /* 30px */
   font-weight: 700;
@@ -165,4 +196,73 @@ const SummaryLink = styled(Summary)`
 
 export const MarginBox = styled.div`
   margin-top: 18px;
+`;
+
+const PText = styled.h1`
+  height: 24px;
+  font-weight: bold;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md}rem;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  color: ${({ theme: { colors } }) => colors.titleGray};
+`;
+
+export const Icon = styled.span`
+  margin-right: 8px;
+  display: flex;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+export const Icon2 = styled.span`
+  margin-right: 8px;
+  display: flex;
+
+  img {
+    width: 16px;
+    height: 15px;
+  }
+`;
+
+const BtnNaverLogin = styled.button`
+  background: #22ce62;
+  border-radius: 8px;
+  width: 100% !important;
+  padding: 13.5px !important;
+  height: unset !important;
+
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem !important;
+  font-weight: bold;
+  color: ${({ theme: { colors } }) => colors.snow};
+
+  letter-spacing: -0.6px;
+  line-height: 27px !important;
+  letter-spacing: -0.6px;
+`;
+
+const BtnGoggleLogin = styled.button`
+  background: #f1f2f4;
+  border-radius: 8px;
+  width: 100% !important;
+  padding: 13.5px !important;
+  height: unset !important;
+
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg}rem !important;
+  font-weight: bold;
+  color: ${({ theme: { colors } }) => colors.bodyGray};
+
+  letter-spacing: -0.6px;
+  line-height: 27px !important;
+  letter-spacing: -0.6px;
 `;

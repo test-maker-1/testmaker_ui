@@ -13,7 +13,7 @@ const Other = () => {
     <PageContainer>
       <Logo />
       {/* <Name>TEST MAKER</Name> */}
-      <BtnField name={EMAIL} onClick={() => goPage("/login/email")} />
+      <BtnField onClick={() => goPage("/login/email")}>{EMAIL}</BtnField>
       <Or>or</Or>
       <BtnField name={NAVER} onClick={() => goPage("/login/naver")} />
       <BtnField name={GOOGLE} onClick={() => goPage("/login/google")} />
