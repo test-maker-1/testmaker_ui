@@ -135,7 +135,7 @@ export const EmailInput = styled.input`
   background: ${({ theme: { colors } }) => colors.white};
   height: 5.4rem;
   margin: 6px 0;
-  font-size: 1.5rem; /* 15px */
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm}rem; /* 15px */
   color: ${({ theme: { colors } }) => colors.darkGray};
   line-height: 22px;
   padding: 1.35rem;

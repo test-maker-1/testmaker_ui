@@ -20,6 +20,7 @@ const colors = {
   body: "#515966 ",
   // warning
   alert: "#ff5146",
+  error: "#ff0e1c"
 };
 
 const fontSizes = {

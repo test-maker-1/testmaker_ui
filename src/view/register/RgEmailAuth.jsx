@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import styled, { css } from "styled-components";
 import { Button } from "@material-ui/core";
 import { NEXT } from "../../constants/Enum";
 import { PageContainer } from "../login/Login";
@@ -7,7 +8,8 @@ import { EmailInput } from "../login/findPw/PwEmailAuth";
 import usePage from "../../hooks/usePage";
 import { useStyles } from "../../view/login/findPw/PwEmailAuth";
 import { BtnField } from "../../components/common";
-import styled, { css } from "styled-components";
+import { Icon } from "../login/Email";
+import error from "../../resources/images/error_outline.png";
 
 const RgEmailAuth = (props) => {
   const classes = useStyles();
@@ -15,7 +17,7 @@ const RgEmailAuth = (props) => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState(false);
   // const [authNumber, setAuthNumber] = useState("");
-  // const [error, setError] = useState("");
+  const [err, setErr] = useState(null);
 
   const getAuthNumber = useCallback((e) => {
     e.preventDefault();
@@ -32,7 +34,7 @@ const RgEmailAuth = (props) => {
 
   return (
     <PageContainer>
-      <Title>환영합니다!</Title>
+      <Title style={{ margin: "82px 0 24px 0" }}>환영합니다!</Title>
       <EmailForm onSubmit={getAuthNumber}>
         <EmailInput
           className="email-input"
@@ -45,6 +47,14 @@ const RgEmailAuth = (props) => {
           인증번호 받기
         </Button>
       </EmailForm>
+      {err === "dup" && (
+        <ErrorTxt>
+          <Icon>
+            <img src={error} alt="error"></img>
+          </Icon>
+          중복된 이메일이에요! 다시 확인해주세요
+        </ErrorTxt>
+      )}
       <AuthForm onSubmit={onComplete}>
         <Input
           type="text"
@@ -53,7 +63,7 @@ const RgEmailAuth = (props) => {
           placeholder="인증번호를 적어주세요"
           // onChange={(e) => setAuthNumber(e.target.value)}
         />
-
+        {err === "valid" && <ErrorTxt>다시 확인해주세요</ErrorTxt>}
         <MarginBox>
           {/* size={md}  "blue"*/}
           <BtnField
@@ -108,4 +118,12 @@ const AuthForm = styled.form`
       }}
     }
   }
+`;
+
+const ErrorTxt = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.xs}rem;
+  line-height: 21px;
+  letter-spacing: -0.3px;
+  color: ${({ theme: { colors } }) => colors.error};
+  margin: 0px 4px;
 `;
