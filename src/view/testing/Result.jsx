@@ -14,6 +14,7 @@ import { postFeedback } from "../../redux/reducer/resultReducer";
 import { testing, welcome } from "../../constants/urlInfo";
 import { returnTextDom } from "../../utils/handler";
 import { LOADING } from "../../utils/asyncUtils";
+import { NoticeAlert } from "../../components/common";
 
 const { HOME, SHARE } = ENUM;
 
@@ -54,9 +55,26 @@ const Result = memo((props) => {
 
   const openAlert = (type) => {
     if (type === "join") {
-      // NoticeAlert.open("공유할건가요", SHARE);
+      NoticeAlert.open("공유할건가요", SHARE);
     } else {
-      // NoticeAlert.open("친구한테 공유할래요!", SHARE);
+      NoticeAlert.open(
+        {
+          icon: null,
+          text: "친구한테 공유할래요!",
+          shareInfo: {
+            link: `/testing/result?resultid=${responseUid}`,
+            title: isRankMode
+              ? `내 점수는 ${userTestResult.score}점`
+              : userTestResult,
+            description: isRankMode
+              ? `전체 참여자 중 ${userTestResult.rank}등이에요!`
+              : description || "",
+            imageUrl: img || "",
+          },
+          btns: [{ name: SHARE }],
+        },
+        SHARE
+      );
     }
   };
 
@@ -182,19 +200,6 @@ const Result = memo((props) => {
           },
         ]}
       />
-      {/* <NoticeAlert
-        shareInfo={{
-          link: `/testing/result?resultid=${responseUid}`,
-          title: isRankMode
-            ? `내 점수는 ${userTestResult.score}점`
-            : userTestResult,
-          description: isRankMode
-            ? `전체 참여자 중 ${userTestResult.rank}등이에요!`
-            : description || "",
-          imageUrl: img || "",
-        }}
-        onShareClick={handleShareClick}
-      /> */}
     </PageContainer>
   );
 });
