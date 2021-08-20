@@ -28,9 +28,20 @@ class NoticeAlert extends PureComponent {
     this.setState(initState);
   }
 
-  static open({ icon, text, btns, onShareClick = null }, mode = null) {
+  static open(
+    { icon, text, btns, shareInfo, onShareClick = null },
+    mode = null
+  ) {
     if (!that.state.open) {
-      that.setState({ open: true, icon, text, btns, onShareClick, mode });
+      that.setState({
+        open: true,
+        icon,
+        text,
+        btns,
+        shareInfo,
+        onShareClick,
+        mode,
+      });
     }
   } // open 여부, 내용을 소스 내에서 관리
 

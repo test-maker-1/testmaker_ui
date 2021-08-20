@@ -11,9 +11,10 @@ import usePage from "../../hooks/usePage";
 import useUser from "../../hooks/useUser";
 import ENUM from "../../constants/Enum";
 import { postFeedback } from "../../redux/reducer/resultReducer";
-import { testing, welcome } from "../../constants/urlInfo";
+import { testing, welcome, login } from "../../constants/urlInfo";
 import { returnTextDom } from "../../utils/handler";
 import { LOADING } from "../../utils/asyncUtils";
+import { NoticeAlert } from "../../components/common";
 
 const { HOME, SHARE } = ENUM;
 
@@ -52,11 +53,40 @@ const Result = memo((props) => {
     goPage(`/${testing}/${welcome}`, `?testid=${testUid}`);
   };
 
+  const moveToLogin = () => goPage(`/${login}`);
+
   const openAlert = (type) => {
     if (type === "join") {
-      // NoticeAlert.open("공유할건가요", SHARE);
+      NoticeAlert.open({
+        text: [
+          "오늘의 테스트 멤버가되면",
+          <br key={`br${1}`} />,
+          "공개 댓글을 달 수 있어요!",
+        ],
+        btns: [
+          { name: "다음에 할래요" },
+          { name: "회원가입", callback: moveToLogin },
+        ],
+      });
     } else {
-      // NoticeAlert.open("친구한테 공유할래요!", SHARE);
+      NoticeAlert.open(
+        {
+          icon: null,
+          text: "친구한테 공유할래요!",
+          shareInfo: {
+            link: `/testing/result?resultid=${responseUid}`,
+            title: isRankMode
+              ? `내 점수는 ${userTestResult.score}점`
+              : userTestResult,
+            description: isRankMode
+              ? `전체 참여자 중 ${userTestResult.rank}등이에요!`
+              : description || "",
+            imageUrl: img || "",
+          },
+          btns: [{ name: SHARE }],
+        },
+        SHARE
+      );
     }
   };
 
@@ -182,19 +212,6 @@ const Result = memo((props) => {
           },
         ]}
       />
-      {/* <NoticeAlert
-        shareInfo={{
-          link: `/testing/result?resultid=${responseUid}`,
-          title: isRankMode
-            ? `내 점수는 ${userTestResult.score}점`
-            : userTestResult,
-          description: isRankMode
-            ? `전체 참여자 중 ${userTestResult.rank}등이에요!`
-            : description || "",
-          imageUrl: img || "",
-        }}
-        onShareClick={handleShareClick}
-      /> */}
     </PageContainer>
   );
 });
