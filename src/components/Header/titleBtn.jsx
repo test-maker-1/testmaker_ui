@@ -3,13 +3,12 @@ import { withRouter } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { SVG } from "../common";
+import { LottieImg } from "../common";
 import { InputSearch } from "../../styles";
 
 import { setQuery } from "../../redux/reducer/commonReducer";
 import usePage from "../../hooks/usePage";
 
-import ENUM from "../../constants/Enum";
 import {
   LOGO,
   NOTHING,
@@ -17,6 +16,7 @@ import {
   CUSTOM,
   SEARCH,
 } from "../../constants/headerInfo";
+import logo from "../../resources/lotties/logo-lottie.json";
 
 // type: string;
 const TitleBtn = ({ type = LOGO, title = null, location }) => {
@@ -50,13 +50,16 @@ const TitleBtn = ({ type = LOGO, title = null, location }) => {
 
 const titleBtn = {
   [LOGO]: (onClick = null) => (
-    <SVG
-      type={ENUM.HEADERLOGO}
-      style={{ width: 85, height: 24 }}
-      onClick={onClick}
-    />
+    <LogoLottie onClick={onClick}>
+      <LottieImg lottieFile={logo} />
+    </LogoLottie>
   ),
 };
+
+const LogoLottie = styled.div`
+  margin: auto;
+  width: 73px;
+`;
 
 const TitleText = styled.p`
   text-align: center;
