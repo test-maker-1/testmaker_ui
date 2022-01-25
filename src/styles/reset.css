@@ -1,13 +1,58 @@
+/* fonts */
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@font-face {
+  font-family: "yg-jalnan";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
+  font-size: 10px;
   vertical-align: baseline;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
+
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+/* input */
+input,
+textarea {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+select {
+  cursor: pointer;
+  -webkit-appearance: none; /* chrome */
+  -moz-appearance: none; /* FireFox */
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
 div,
 span,
 applet,
@@ -111,6 +156,7 @@ section {
 body {
   line-height: 1;
 }
+li,
 ol,
 ul {
   list-style: none;
@@ -126,10 +172,31 @@ q:after {
   content: "";
   content: none;
 }
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  outline: none;
+  border: none;
+  resize: none;
+}
+textarea::-webkit-scrollbar {
+  display: none;
+}
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 #root {
-  height: 100%
+  height: 100%;
+}
+
+.icon-svg {
+  cursor: pointer;
 }

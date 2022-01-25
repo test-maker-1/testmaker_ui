@@ -1,10 +1,18 @@
-import { combineReducers } from 'redux';
-import { all } from 'redux-saga/effects';
-import userSaga from './userSaga';
-
-export const rootReducer = combineReducers({ userReducer })
+import { all, fork } from "redux-saga/effects";
+import userSaga from "./userSaga";
+import registerSaga from "./registerSaga";
+import feedSaga from "./feedSaga";
+import testingsaga from "./testingSaga";
+import replySaga from "./replySaga";
+import resultSaga from "./resultSaga";
 
 export function* rootSaga() {
-  //all 은 배열 안의 여러 사가를 동시에 실행
-  yield all([userSaga()]); 
+  yield all([
+    fork(userSaga),
+    fork(registerSaga),
+    fork(feedSaga),
+    fork(testingsaga),
+    fork(replySaga),
+    fork(resultSaga),
+  ]);
 }

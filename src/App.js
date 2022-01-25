@@ -1,13 +1,72 @@
-import React from "react";
-import MainBox from "./components/MainForm";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const App = () =>{
+import LoginFrame from "./components/frame/Login";
+import RegisterFrame from "./components/frame/Register";
+import MainForm from "./components/frame/MainForm";
+import Testing from "./components/frame/Testing";
+import TestMaking from "./components/frame/TestMaking";
+import Mypage from "./components/frame/MyPage";
+import { Loading, NoticeAlert } from "./components/common";
+
+import Login from "./view/login/Login";
+import Error from "./view/Error";
+import Feed from "./view/Feed";
+import Search from "./view/search/Search";
+import Result from "./view/result/Result";
+import PickTest from "./view/testmaking/PickTest";
+import TestRelease from "./view/testmaking/TestRelease";
+
+import { initFeed } from "./redux/reducer/feedReducer";
+import useUser from "./hooks/useUser";
+import { LOADING } from "./utils/asyncUtils";
+
+import "swiper/swiper.min.css";
+import "swiper/components/pagination/pagination.min.css";
+import "swiper/components/navigation/navigation.min.css";
+import initialize from "./utils/initialize";
+
+const App = () => {
+  const { checkLogIn, status } = useUser();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    checkLogIn();
+    initialize();
+    dispatch(initFeed());
+  }, [dispatch]);
+
   return (
-    <MainBox>
-      <header className='App-header'>TEST MAKER</header>
-      <div>WOW</div>
-    </MainBox>
-  )
-}
+    <BrowserRouter>
+      <Loading loading={status === LOADING} />
+      <NoticeAlert />
+      <MainForm>
+        <Switch>
+          <Route exact path="/" component={Feed} />
+          <Route exact path="/search" component={Search} />
+          <Route exact path="/search/result" component={Result} />
+          {/* test making */}
+          <Route exact path="/test/pick-test" component={PickTest} />
+          <Route exact path="/test/release" component={TestRelease} />
+          {/* module: multiple, mbti, weight */}
+          <Route exact path="/test/:module/:step" component={TestMaking} />
+          {/* login */}
+          <Route exact path="/login" component={Login} />
+          {/* module: kakao, other, naver, google, email */}
+          <Route exact path="/login/:module/:step?" component={LoginFrame} />
+          {/* register */}
+          <Route exact path="/register/:module" component={RegisterFrame} />
+          {/* Testing */}
+          <Route exact path="/testing/:module" component={Testing} />
+          <Route exact path="/mypage/:module" component={Mypage} />
 
-export default App
+          <Route exact component={Error} />
+        </Switch>
+      </MainForm>
+    </BrowserRouter>
+  );
+};
+
+export default App;
